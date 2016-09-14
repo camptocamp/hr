@@ -31,7 +31,7 @@ def build_path(path, from_file=None):
 PROJECT_ID = '1882'
 VERSION_FILE = build_path('odoo/VERSION')
 VERSION_RANCHER_FILES = (
-    build_path('rancher/integration/docker-compose.yml'),
+#     build_path('rancher/integration/docker-compose.yml'),
 )
 HISTORY_FILE = build_path('HISTORY.rst')
 DOCKER_IMAGE = 'camptocamp/bso_odoo'

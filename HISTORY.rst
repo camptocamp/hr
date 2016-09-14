@@ -16,10 +16,23 @@
 Release History
 ---------------
 
-latest (unreleased)
-+++++++++++++++++++
+9.1.0 (2016-09-14)
+++++++++++++++++++
 
 *Features and Improvements*
+
+* install base modules:
+    - ``hr``
+    - ``sale_contract``
+    - ``sale_service``
+    - ``crm``
+    - ``account``
+    - ``analytic``
+    - ``hr_holidays``
+    - ``hr_expense``
+    - ``document``
+
+* install ``fr_FR`` language in addition of ``en_US``
 
 *Bugfixes*
 

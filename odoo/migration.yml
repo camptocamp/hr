@@ -35,3 +35,4 @@ migration:
           # - purchase
           #### local-src
           # - my_addon
+    - version: 9.2.0
