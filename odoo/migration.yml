@@ -21,6 +21,15 @@ migration:
               - anthem songs.install.data_demo::main
       addons:
         upgrade:
+          - hr
+          - sale_contract
+          - sale_service
+          - crm
+          - account
+          - analytic
+          - hr_holidays
+          - hr_expense
+          - document
           #### core
           # - sale_stock
           # - purchase
