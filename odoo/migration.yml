@@ -21,18 +21,26 @@ migration:
               - anthem songs.install.data_demo::main
       addons:
         upgrade:
-          - hr
-          - sale_contract
-          - sale_service
-          - crm
           - account
           - analytic
-          - hr_holidays
-          - hr_expense
+          - crm
           - document
-          #### core
-          # - sale_stock
-          # - purchase
-          #### local-src
-          # - my_addon
+          - hr
+          - hr_expense
+          - hr_holidays
+          - sale_contract
+          - sale_service
     - version: 9.2.0
+      addons:
+        upgrade:
+          #### core
+          - hr_timesheet_sheet
+          - purchase
+          - stock
+          #### OCA Addons
+          ## oca/connector
+          - connector
+          ## oca/product-variant
+          ## manage supplier pricelist on variant (product.product) instead of
+          ## the template (product.template)
+          # - product_variant_supplierinfo
