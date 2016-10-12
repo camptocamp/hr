@@ -48,7 +48,7 @@ def setup_company(ctx):
 @anthem.log
 def setup_language(ctx):
     """ Installing language and configuring locale formatting """
-    for code in ('fr_FR',):
+    for code in ('fr_FR', 'es_ES'):
         ctx.env['base.language.install'].create({'lang': code}).lang_install()
     ctx.env['res.lang'].search([]).write({
         'grouping': [3, 0],
