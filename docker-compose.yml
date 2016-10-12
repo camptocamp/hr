@@ -9,7 +9,7 @@ services:
   odoo:
     build: ./odoo/
     # Enable if you use oca/connector:
-    # command: "odoo.py --load=web,connector"
+    command: "odoo.py --load=web,connector"
     depends_on:
       - db
     volumes:
