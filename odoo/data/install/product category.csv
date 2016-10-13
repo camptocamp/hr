@@ -1,0 +1,9 @@
+id,type,name,parent_id
+product.product_category_all,Normal,All,
+hr_expense.cat_expense,Normal,Expenses,All
+product.product_category_1,Normal,Saleable,All
+scen.cat_expense_1,Normal,Travel,Expenses
+scen.cat_expense_2,Normal,Accomodation,Expenses
+scen.cat_expense_3,Normal,Supplies,Expenses
+scen.cat_expense_4,Normal,Shipping,Expenses
+scen.cat_expense_5,Normal,Miscellaneous,Expenses
