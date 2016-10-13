@@ -32,9 +32,8 @@ migration:
           - sale_service
     - version: 9.2.0
       operations:
-        pre:
-          - anthem songs.install.csv_import::main
         post:
+          - anthem songs.install.csv_import::main
           - anthem songs.install.accounting::main
       addons:
         upgrade:
