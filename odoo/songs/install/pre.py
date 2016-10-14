@@ -1,22 +1,20 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-
-# from base64 import b64encode
-# from pkg_resources import resource_string
+from pkg_resources import resource_stream
 
 import anthem
-
-# from anthem.lyrics.records import create_or_update
-
-# from ..common import req
+from anthem.lyrics.loaders import load_csv_stream
+from ..common import req
 
 
 @anthem.log
 def setup_company(ctx):
     """ Setup company """
-    company = ctx.env.ref('base.main_company')
-    company.name = 'BSO Network Solutions'
+    # company = ctx.env.ref('base.main_company')
+    content = resource_stream(req, 'data/install/res.company.csv')
+    load_csv_stream(ctx, 'res.company', content, delimiter=',')
+    # company.name = 'BSO Network Solutions'
 
     # load logo on company
 #    logo_content = resource_string(req, 'data/images/company_main_logo.png')
@@ -67,6 +65,6 @@ def set_web_base_url(ctx):
 @anthem.log
 def main(ctx):
     """ Main: creating demo data """
-    setup_company(ctx)
+    # setup_company(ctx)
     setup_language(ctx)
     set_web_base_url(ctx)

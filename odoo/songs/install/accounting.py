@@ -42,7 +42,30 @@ def create_bank_accounts(ctx):
 
 
 @anthem.log
+def base_conf(ctx):
+    """ Configuring analytic for purchase/sale """
+    account_settings = ctx.env['account.config.settings']
+    coa_dict = {
+        'base.main_company': 'l10n_fr',
+        # 'scenario.lim_lu'
+        # 'scenario.lim_dz'
+        # 'scenario.lim_us'
+        # 'scenario.lim_bf'
+    }
+    for company_xml_id, coa in coa_dict.iteritems():
+        company = ctx.env.ref(company_xml_id)
+        acs = account_settings.with_context(company_id=company.id).create(
+            {'group_analytic_account_for_purchases': True,
+             'group_analytic_account_for_sales': False,
+             'group_analytic_accounting': True,
+             }
+        )
+        acs.execute()
+
+
+@anthem.log
 def main(ctx):
     """ Configuring accounting """
     activate_multicurrency(ctx)
-    create_bank_accounts(ctx)
+    # create_bank_accounts(ctx)
+    base_conf(ctx)

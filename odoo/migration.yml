@@ -31,10 +31,15 @@ migration:
           - sale_contract
           - sale_service
     - version: 9.2.0
+      operations:
+        post:
+          - anthem songs.install.csv_import::main
+          - anthem songs.install.accounting::main
       addons:
         upgrade:
           #### core
           - hr_timesheet_sheet
+          - l10n_fr
           - purchase
           - stock
           #### OCA Addons
