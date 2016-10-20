@@ -1,0 +1,22 @@
+id,name
+scen.hr_employee_category_001,Accounting
+scen.hr_employee_category_002,Accounting manager
+scen.hr_employee_category_003,Delivery
+scen.hr_employee_category_004,Direction
+scen.hr_employee_category_005,HR Manager
+scen.hr_employee_category_006,Manager/Strategy
+scen.hr_employee_category_007,Marketing manager
+scen.hr_employee_category_008,Network Engineer
+scen.hr_employee_category_009,Network manager
+scen.hr_employee_category_010,Network technician
+scen.hr_employee_category_011,Presales
+scen.hr_employee_category_012,Project Manager
+scen.hr_employee_category_013,Sales
+scen.hr_employee_category_014,Sales manager
+scen.hr_employee_category_015,Supply
+scen.hr_employee_category_016,Deployment
+scen.hr_employee_category_018,G&A
+scen.hr_employee_category_019,Network
+scen.hr_employee_category_020,Operations
+scen.hr_employee_category_021,Systems
+scen.hr_employee_category_022,Transverse

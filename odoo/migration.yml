@@ -35,9 +35,11 @@ migration:
         post:
           - anthem songs.install.csv_import::main
           - anthem songs.install.accounting::main
+          - anthem songs.install.ldap::main
       addons:
         upgrade:
           #### core
+          - auth_ldap
           - hr_timesheet_sheet
           - l10n_fr
           - purchase
@@ -49,4 +51,7 @@ migration:
           ## manage supplier pricelist on variant (product.product) instead of
           ## the template (product.template)
           # - product_variant_supplierinfo
+          ## oca/server-tools
+          - users_ldap_populate
+          #### local-src
           - specific_hr

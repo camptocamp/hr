@@ -40,9 +40,17 @@ def import_expense_products(ctx):
 
 
 @anthem.log
+def import_ldap_template_user(ctx):
+    """ import ldap template user """
+    content = resource_stream(req, 'data/install/res.users.ldap.csv')
+    load_csv_stream(ctx, 'res.users', content, delimiter=',')
+
+
+@anthem.log
 def main(ctx):
     """ Main: creating demo data """
     activate_currencies(ctx, ['GBP', 'EUR', 'USD'])
     import_companies(ctx)
     import_expense_categ(ctx)
     import_expense_products(ctx)
+    import_ldap_template_user(ctx)

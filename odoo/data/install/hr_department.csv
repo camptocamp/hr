@@ -1,0 +1,23 @@
+id,company_id,name,manager_id,note,parent_id
+scen.hr_dept_001,BSO Ltd,Top Management,Michael OURABAH,,
+scen.hr_dept_002,BSO Network Solutions Ldt,Sales & Marketing,Fraser BELL,,Top Management
+scen.hr_dept_003,BSO Network Solutions Ldt,Sales UK,Tom FULLFORD-BROWN,,Sales & Marketing
+scen.hr_dept_004,BSO Network Solutions SAS,Sales FR,Thomas LANAUTE,,Sales & Marketing
+scen.hr_dept_005,"BSO Network Inc,",Sales US,Steve MC CONNELL,,Sales & Marketing
+scen.hr_dept_006,BSO Network Solutions Ldt,Pre-Sales,Michael BAUER,,Sales & Marketing
+scen.hr_dept_007,BSO Network Solutions Ldt,Marketing,Frankie ANDREWS,,Sales & Marketing
+scen.hr_dept_008,BSO Network Solutions SAS,G & A,Wilfried JOSEPH,,Top Management
+scen.hr_dept_009,BSO Network Solutions SAS,Finance,Wilfried JOSEPH,,G & A
+scen.hr_dept_010,BSO Network Solutions SAS,Human Resources,Mélanie LAGES,,Top Management
+scen.hr_dept_011,BSO Ltd,Operations,Emmanuel PELLE,,Top Management
+scen.hr_dept_012,BSO Network Solutions Ldt,Global Network Services,Tony JONES,,Operations
+scen.hr_dept_013,BSO Network Solutions SAS,Cloud & Managed Services,Alexandre LEGRIX,,Operations
+scen.hr_dept_014,BSO Network Solutions Ldt,NOC,Tony JONES,,Global Network Services
+scen.hr_dept_015,BSO Network Solutions SAS,Hosting,Alexandre LEGRIX,,Cloud & Managed Services
+scen.hr_dept_016,BSO Network Solutions SAS,Platforms,Rudy PAMPHILE,,Cloud & Managed Services
+scen.hr_dept_017,BSO Network Solutions Ldt,Service Delivery,Tony JONES,,Global Network Services
+scen.hr_dept_018,BSO Network Solutions Ldt,Network Engineering,Benoit DELMAS,,Global Network Services
+scen.hr_dept_019,BSO Network Solutions SAS,Dev Ops & Internal Tools,Thibaut DELOFFRE,,Cloud & Managed Services
+scen.hr_dept_020,BSO Ltd,Supply Management,Tony JONES,,Global Network Services
+scen.hr_dept_021,BSO Network Solutions SAS,Internal IT,Romeo ALALAYIN,,Cloud & Managed Services
+scen.hr_dept_022,BSO Network Solutions SAS,Network Engineering,Lisa ABADIE,,Cloud & Managed Services

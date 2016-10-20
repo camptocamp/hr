@@ -1,0 +1,2 @@
+id,groups_id/id,login,name,company_id/id
+scen.ldap_template_user,base.group_partner_manager,tmpl,LDAP User Template,base.main_company
