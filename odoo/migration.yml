@@ -49,3 +49,4 @@ migration:
           ## manage supplier pricelist on variant (product.product) instead of
           ## the template (product.template)
           # - product_variant_supplierinfo
+          - specific_hr
