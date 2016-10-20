@@ -55,11 +55,16 @@ class HrContract(models.Model):
                 order='date_end DESC',
                 limit=1)
 
-    @api.depends('previous_contract_id.wage_package', 'wage_package')
+    @api.depends('previous_contract_id.wage_package',
+                 'previous_contract_id.bonus_exceptional',
+                 'wage_package',
+                 'bonus_exceptional')
     def _get_wage_raise(self):
         for rec in self:
             if rec.previous_contract_id:
-                rec.wage_raise = (rec.wage_package -
-                                  rec.previous_contract_id.wage_package)
+                rec.wage_raise = (rec.wage_package +
+                                  rec.bonus_exceptional -
+                                  rec.previous_contract_id.wage_package -
+                                  rec.previous_contract_id.bonus_exceptional)
             else:
                 rec.wage_raise = 0
