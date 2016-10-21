@@ -16,8 +16,12 @@
              ],
  'website': 'http://www.camptocamp.com',
  'data': [
+     'security/ir.model.access.csv',
      'views/hr_contract.xml',
      'views/hr_employee.xml',
+     'views/hr_contract_category.xml',
+     'views/hr_syntec_position.xml',
+     'views/hr_employee_family.xml',
  ],
  'installable': True,
  }

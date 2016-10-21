@@ -7,9 +7,15 @@ from openerp import models, api, fields
 
 class HrContract(models.Model):
     _inherit = 'hr.contract'
-    syntec_position = fields.Char()
+    syntec_position_id = fields.Many2one(
+        comodel_name='hr.syntec.position',
+        string='Syntec Position'
+    )
     syntec_coeff = fields.Integer()
-    category = fields.Text()
+    category_id = fields.Many2one(
+        comodel_name='hr.contract.category',
+        string="Category"
+    )
     wage_variable = fields.Float(
         'Variable wage', digits=(16, 2)
     )
@@ -70,3 +76,15 @@ class HrContract(models.Model):
                                   rec.previous_contract_id.bonus_exceptional)
             else:
                 rec.wage_raise = 0
+
+
+class HrSyntecPosition(models.Model):
+    _name = 'hr.syntec.position'
+
+    name = fields.Char(required=True)
+
+
+class HrContractCategory(models.Model):
+    _name = 'hr.contract.category'
+
+    name = fields.Char(required=True)

@@ -10,5 +10,15 @@ class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
     user_login = fields.Char()
-    title = fields.Char()
-    family = fields.Text()
+    title = fields.Char(string="Employee Title")
+    family_id = fields.Many2one(
+        comodel_name='hr.employee.family',
+        string="Family"
+    )
+    job_id = fields.Many2one(string="Job Profile")
+
+
+class HrEmployeeFamily(models.Model):
+    _name = 'hr.employee.family'
+
+    name = fields.Char(required=True)

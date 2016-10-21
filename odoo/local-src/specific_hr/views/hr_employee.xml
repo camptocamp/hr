@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='manager']" position="after">
-                <field name="family"/>
+                <field name="family_id"/>
             </xpath>
             <xpath expr="//field[@name='job_id']" position="after">
                 <field name="title"/>
