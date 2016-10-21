@@ -17,6 +17,7 @@
  'website': 'http://www.camptocamp.com',
  'data': [
      'views/hr_contract.xml',
+     'views/hr_employee.xml',
  ],
  'installable': True,
  }

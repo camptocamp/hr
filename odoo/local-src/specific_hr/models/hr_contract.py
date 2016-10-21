@@ -7,7 +7,9 @@ from openerp import models, api, fields
 
 class HrContract(models.Model):
     _inherit = 'hr.contract'
-
+    syntec_position = fields.Char()
+    syntec_coeff = fields.Integer()
+    category = fields.Text()
     wage_variable = fields.Float(
         'Variable wage', digits=(16, 2)
     )

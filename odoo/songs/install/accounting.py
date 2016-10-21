@@ -47,10 +47,6 @@ def base_conf(ctx):
     account_settings = ctx.env['account.config.settings']
     coa_dict = {
         'base.main_company': 'l10n_fr',
-        # 'scenario.lim_lu'
-        # 'scenario.lim_dz'
-        # 'scenario.lim_us'
-        # 'scenario.lim_bf'
     }
     for company_xml_id, coa in coa_dict.iteritems():
         company = ctx.env.ref(company_xml_id)

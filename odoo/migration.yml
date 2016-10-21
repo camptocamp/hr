@@ -36,6 +36,7 @@ migration:
           - anthem songs.install.csv_import::main
           - anthem songs.install.accounting::main
           - anthem songs.install.ldap::main
+          - anthem songs.install.hr::main
       addons:
         upgrade:
           #### core

@@ -10,3 +10,5 @@ class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
     user_login = fields.Char()
+    title = fields.Char()
+    family = fields.Text()
