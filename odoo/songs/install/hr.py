@@ -15,12 +15,6 @@ def import_hr_job(ctx):
 
 
 @anthem.log
-def import_hr_employee_categ(ctx):
-    content = resource_stream(req, 'data/install/hr_employee_category.csv')
-    load_csv_stream(ctx, 'hr.employee.category', content, delimiter=',')
-
-
-@anthem.log
 def import_hr_department1(ctx):
     content = resource_stream(req, 'data/install/hr_department1.csv')
     load_csv_stream(ctx, 'hr.department', content, delimiter=',')
@@ -28,7 +22,7 @@ def import_hr_department1(ctx):
 
 @anthem.log
 def import_hr_employee1(ctx):
-    content = resource_stream(req, 'data/install/hr_employee2.csv')
+    content = resource_stream(req, 'data/install/hr_employee1.csv')
     load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
 
 
@@ -40,25 +34,46 @@ def import_partner_employee_home_address(ctx):
     load_csv_stream(ctx, 'res.partner', content, delimiter=',')
 
 
-# @anthem.log
-# def import_hr_department2(ctx):
-#     content = resource_stream(req, 'data/install/product_expense.csv')
-#     load_csv_stream(ctx, 'product.product', content, delimiter=',')
+@anthem.log
+def import_hr_department2(ctx):
+    content = resource_stream(req, 'data/install/hr_department2.csv')
+    load_csv_stream(ctx, 'hr.department', content, delimiter=',')
 
 
-# @anthem.log
-# def import_hr_employee2(ctx):
-#     content = resource_stream(req, 'data/install/res.users.ldap.csv')
-#     load_csv_stream(ctx, 'res.users', content, delimiter=',')
+@anthem.log
+def import_hr_employee2(ctx):
+    content = resource_stream(req, 'data/install/hr_employee_manager.csv')
+    load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
+
+
+@anthem.log
+def import_employee_family(ctx):
+    content = resource_stream(req, 'data/install/hr_employee_family.csv')
+    load_csv_stream(ctx, 'hr.employee.family', content, delimiter=',')
+
+
+@anthem.log
+def import_syntec_position(ctx):
+    content = resource_stream(req, 'data/install/hr_syntec_position.csv')
+    load_csv_stream(ctx, 'hr.syntec.position', content, delimiter=',')
+
+
+@anthem.log
+def import_contract_category(ctx):
+    content = resource_stream(req, 'data/install/hr_contract_category.csv')
+    load_csv_stream(ctx, 'hr.contract.category', content, delimiter=',')
 
 
 @anthem.log
 def main(ctx):
     """ Main: creating demo data """
     import_hr_job(ctx)
-    import_hr_employee_categ(ctx)
     import_hr_department1(ctx)
     import_partner_employee_home_address(ctx)
     import_hr_employee1(ctx)
-    # import_hr_department2(ctx)
-    # import_hr_employee2(ctx)
+    import_hr_department2(ctx)
+    import_hr_employee2(ctx)
+    import_employee_family(ctx)
+    import_syntec_position(ctx)
+    import_contract_category(ctx)
+    # import_employee_family_rel(ctx)

@@ -16,6 +16,8 @@ class HrEmployee(models.Model):
         string="Family"
     )
     job_id = fields.Many2one(string="Job Profile")
+    marital = fields.Selection(selection_add=[('pacs', 'PACS'),
+                                              ('cohabiting', 'Cohabiting')])
 
 
 class HrEmployeeFamily(models.Model):

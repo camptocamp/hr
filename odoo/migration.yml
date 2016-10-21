@@ -42,12 +42,15 @@ migration:
           #### core
           - auth_ldap
           - hr_timesheet_sheet
+          - hr_recruitment
           - l10n_fr
           - purchase
           - stock
           #### OCA Addons
           ## oca/connector
           - connector
+          ## oca/hr
+          - hr_family
           ## oca/product-variant
           ## manage supplier pricelist on variant (product.product) instead of
           ## the template (product.template)
