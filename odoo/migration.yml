@@ -34,19 +34,31 @@ migration:
       operations:
         post:
           - anthem songs.install.csv_import::main
+          - anthem songs.install.company::main
           - anthem songs.install.accounting::main
+          - anthem songs.install.ldap::main
+          - anthem songs.install.hr::main
       addons:
         upgrade:
           #### core
+          - auth_ldap
           - hr_timesheet_sheet
+          - hr_recruitment
           - l10n_fr
           - purchase
           - stock
           #### OCA Addons
           ## oca/connector
           - connector
+          ## oca/hr
+          - hr_family
           ## oca/product-variant
           ## manage supplier pricelist on variant (product.product) instead of
           ## the template (product.template)
           # - product_variant_supplierinfo
+          ## oca/server-tools
+          - users_ldap_populate
+          ## oca/web
+          - web_easy_switch_company
+          #### local-src
           - specific_hr

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-# © 2016 Camptocamp (alexandre.fayolle@camptocamp.com)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Author: Damien Crier, Alexandre Fayolle
+# Copyright 2016 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from . import res_users
+from . import hr_employee
 from . import hr_contract
-

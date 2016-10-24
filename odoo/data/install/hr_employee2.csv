@@ -1,0 +1,186 @@
+id,coach_id,company_id,birthday,department_id,gender,vehicle_distance,identification_id,manager,medic_exam,name,country_id,notes,children,passport_id,place_of_birth,work_email,work_location,mobile_phone,work_phone,address_home_id/id
+BSO_employee.depart002,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Vincent AARON,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart002
+BSO_employee.lgaury,,BSO Network Solutions Luxembourg SARL,1988-04-27,Cloud & Managed Services,Female,,2 88 04 75 114 747 33,0,,Lise ABADIE,LU,,0,,Paris 14 (75),lise.gaury@bsonetwork.com,BSO Network Solutions Luxembourg SARL,33621140600,33177361146,BSO_employee_home_address.lgaury
+BSO_employee.depart004,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Rémi AGOB,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart004
+BSO_employee.depart005,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Rémi AGOB,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart005
+BSO_employee.depart006,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Tahid AHMED,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart006
+BSO_employee.depart007,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Michael ALDRIDGE,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart007
+BSO_employee.depart008,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Samaad ALLADIN,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart008
+BSO_employee.depart009,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Guillaume ALLARD,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart009
+BSO_employee.rallayin,,BSO Network Solutions Luxembourg SARL,,Cloud & Managed Services,Male,,0,0,,Romeo ALLAYIN,LU,,0,,,romeo.allayin@bsonetwork.com,BSO Network Solutions Luxembourg SARL,,,BSO_employee_home_address.rallayin
+BSO_employee.depart011,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Ugo  Allegre,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart011
+BSO_employee.depart012,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Christophe AMANDJULES,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart012
+BSO_employee.fandrews,,BSO Network Solutions Ldt,1990-01-20,Cloud & Managed Services,Female,,0,0,,Frankie ANDREWS,GB,,0,,,frankie.andrews@bsonetwork.com,BSO Network Solutions Ldt,447702100450,442072224555,BSO_employee_home_address.fandrews
+BSO_employee.depart014,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Kevin ANNIES,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart014
+BSO_employee.gapale,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Gianne APALE,GB,,0,,,gianne.apale@bsonetwork.com,BSO Network Solutions Ldt,,,BSO_employee_home_address.gapale
+BSO_employee.depart016,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Morgan ARCHER,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart016
+BSO_employee.depart017,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Emilie ARIS,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart017
+BSO_employee.depart018,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Sophie ARTONNE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart018
+BSO_employee.depart019,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Nicolas AUVRAY,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart019
+BSO_employee.depart020,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Maëlle BAQUET,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart020
+BSO_employee.depart021,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Christophe BARRE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart021
+BSO_employee.depart022,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Julien BARRITAUD,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart022
+BSO_employee.depart023,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Jules BARTHELEMY,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart023
+BSO_employee.mbauer,,BSO Network Solutions Ldt,1973-01-19,Cloud & Managed Services,Male,,0,0,,Michael BAUER,GB,,1,,,michael.bauer@bsonetwork.com,BSO Network Solutions Ldt,447920487842,442072224555,BSO_employee_home_address.mbauer
+BSO_employee.depart025,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Jean Christian BEDIER,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart025
+BSO_employee.fbell,,BSO Network Solutions Ldt,1976-03-18,Cloud & Managed Services,Male,,0,0,,Fraser BELL,GB,,0,,,fraser.bell@bsonetwork.com,BSO Network Solutions Ldt,447500770300,442072224555,BSO_employee_home_address.fbell
+BSO_employee.depart027,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Hugo BENAINOUS,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart027
+BSO_employee.depart028,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Khadija BENAISSI,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart028
+BSO_employee.depart029,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,François BENATRE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart029
+BSO_employee.depart030,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Abdelwahid BENSLIMANE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart030
+BSO_employee.depart031,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Nadia BERIBECHE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart031
+BSO_employee.depart032,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Serge BERTAINA DUBOIS,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart032
+BSO_employee.cabeyney,,BSO Network Solutions Luxembourg SARL,1982-09-29,Cloud & Managed Services,Male,,0,0,,Charles-Antoine BEYNEY,LU,,1,,,charles-antoine.beyney@bsonetwork.com,BSO Network Solutions Luxembourg SARL,352691000300,33683597661,BSO_employee_home_address.cabeyney
+BSO_employee.ebird,,BSO Network Solutions Ldt,1991-04-09,Cloud & Managed Services,Female,,0,0,,Emma BIRD,GB,,0,,,emma.bird@bsonetwork.com,BSO Network Solutions Ldt,447710083534,442072224555,BSO_employee_home_address.ebird
+BSO_employee.depart035,,BSO Network Solutions Ldt,1981-01-11,Cloud & Managed Services,Male,,0,0,,Nicolas BONNET,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart035
+BSO_employee.depart036,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Sabrina BOUDJI,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart036
+BSO_employee.depart037,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Eddy BOULARES,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart037
+BSO_employee.depart038,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,François BREJOT,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart038
+BSO_employee.depart039,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Clement BRUNEAU,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart039
+BSO_employee.jcantones,,BSO Network Solutions Luxembourg SARL,,Cloud & Managed Services,Male,,0,0,,Jayson CANTONES,LU,,0,,,jayson.cantones@bsonetwork.com,BSO Network Solutions Luxembourg SARL,,,BSO_employee_home_address.jcantones
+BSO_employee.dcarmona,,BSO Network Solutions Luxembourg SARL,,Cloud & Managed Services,Male,,0,0,,Daryl CARMONA,LU,,0,,,daryl.carmona@bsonetwork.com,BSO Network Solutions Luxembourg SARL,,,BSO_employee_home_address.dcarmona
+BSO_employee.depart042,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Cyril CAUDROY,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart042
+BSO_employee.pcervantes,,BSO Network Solutions Luxembourg SARL,,Cloud & Managed Services,Male,,0,0,,Paolo CERVANTES,LU,,0,,,paolo.cervantes@bsonetwork.com,BSO Network Solutions Luxembourg SARL,,,BSO_employee_home_address.pcervantes
+BSO_employee.tcheronneau,,BSO Network Solutions Luxembourg SARL,1990-04-09,Cloud & Managed Services,Male,,1 90 04 67 482 191,0,,Thomas CHERONNEAU,LU,,0,,Strasbourg,thomas.cheronneau@bsonetwork.com,BSO Network Solutions Luxembourg SARL,33776068950,33177361182,BSO_employee_home_address.tcheronneau
+BSO_employee.depart045,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Sylvain CHEVALIER,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart045
+BSO_employee.depart046,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Sylvain CHEVALIER,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart046
+BSO_employee.depart047,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Hélène CHIRON,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart047
+BSO_employee.depart048,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Nethanel COHEN SOLAL,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart048
+BSO_employee.depart049,,BSO Network Solutions Luxembourg SARL,,Cloud & Managed Services,Male,,0,0,,Hugo COLLIGNON,LU,,0,,,,BSO Network Solutions Luxembourg SARL,,,BSO_employee_home_address.depart049
+BSO_employee.depart050,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Marie CORSINI ,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart050
+BSO_employee.depart051,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Gaspard COUDURIER,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart051
+BSO_employee.depart052,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Aniss DAHMANE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart052
+BSO_employee.bdelmas,,BSO Network Solutions SAS,1980-10-03,Cloud & Managed Services,Male,,1 80 10 15 014 019 02,0,,Benoit DELMAS,FR,,2,,Aurillac (15),benoit.delmas@bsonetwork.com,BSO Network Solutions SAS,33631569273,33177361157,BSO_employee_home_address.bdelmas
+BSO_employee.tdeloffre,,BSO Network Solutions SAS,1987-07-05,Cloud & Managed Services,Male,,1 87 07 75 114 150 01,0,,Thibaut DELOFFRE,FR,,0,,Paris 14 (75),thibaut.deloffre@bsonetwork.com,BSO Network Solutions SAS,33637367827,33177361168,BSO_employee_home_address.tdeloffre
+BSO_employee.depart055,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Guillaume DELTOUR,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart055
+BSO_employee.depart056,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Clement DEMONCHY,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart056
+BSO_employee.depart057,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Matthieu DEROZE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart057
+BSO_employee.depart058,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,François DEVIENNE ,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart058
+BSO_employee.depart059,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Marianne DHERENS,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart059
+BSO_employee.depart060,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Frederic DHIEUX,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart060
+BSO_employee.depart061,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Ibrahim DIA,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart061
+BSO_employee.depart062,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Maxime DOUAILIN,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart062
+BSO_employee.depart063,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Gaetan DU PELOUX,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart063
+BSO_employee.dduarte,,BSO Network Solutions SAS,1990-11-29,Cloud & Managed Services,Male,,1 90 11 78 158 089 33,0,,Davy DUARTE,FR,,0,,Le Chesnay (78),davy.duarte@bsonetwork.com,BSO Network Solutions SAS,33643318582,33177361145,BSO_employee_home_address.dduarte
+BSO_employee.depart065,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Fideline ELENGA ,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart065
+BSO_employee.depart066,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Gilles FABRE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart066
+BSO_employee.depart067,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Radu- Adrian FEURDEAN,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart067
+BSO_employee.depart068,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Alexandre FIGURA,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart068
+BSO_employee.tfulford-brown,,BSO Network Solutions Ldt,1979-06-18,Cloud & Managed Services,Male,,0,0,,Tom FULLFORD- BROWN,GB,,1,,,tom.fullford-brown@bsonetwork.com,BSO Network Solutions Ldt,447702752998,442072224555,BSO_employee_home_address.tfulford-brown
+BSO_employee.jfyffe,,BSO Network Solutions Ldt,1976-12-30,Cloud & Managed Services,Male,,0,0,,Jamie FYFFE,GB,,2,,,jamie.fyffe@bsonetwork.com,BSO Network Solutions Ldt,447712857172,442072224555,BSO_employee_home_address.jfyffe
+BSO_employee.depart071,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Christophe GASMI,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart071
+BSO_employee.depart072,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Sally GAY,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart072
+BSO_employee.depart073,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Moez GHANEM,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart073
+BSO_employee.depart074,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Clément GUINE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart074
+BSO_employee.depart075,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Cyril GUITTON,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart075
+BSO_employee.depart076,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Yassine HADDAG,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart076
+BSO_employee.depart077,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Yassine HADDAG,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart077
+BSO_employee.depart078,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Jérome HADJIMANOLIS,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart078
+BSO_employee.depart079,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Stephen HADLEY,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart079
+BSO_employee.depart080,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Saliha HAMANI,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart080
+BSO_employee.nhargraves,,BSO Network Solutions Ldt,1988-05-11,Cloud & Managed Services,Male,,0,0,,Neil HARGRAVES,GB,,0,,,neil.hargraves@bsonetwork.com,BSO Network Solutions Ldt,447718686148,442072224555,BSO_employee_home_address.nhargraves
+BSO_employee.zhazzaz,,BSO Network Solutions SAS,1992-08-28,Cloud & Managed Services,Male,,1 92 08 99 350 294 48,0,,Zakaria HAZZAZ,FR,,0,,Casablanca (Maroc),zakaria.hazzaz@bsonetwork.com,BSO Network Solutions SAS,33627640458,3317737113,BSO_employee_home_address.zhazzaz
+BSO_employee.depart083,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Mathilde HUSSON,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart083
+BSO_employee.depart084,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Romain ILLARI,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart084
+BSO_employee.depart085,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Celia ITOUA,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart085
+BSO_employee.depart086,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Lamar JELIKH,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart086
+BSO_employee.tjones,,BSO Network Solutions Ldt,1966-09-13,Cloud & Managed Services,Male,,0,0,,Tony JONES,GB,,2,,,tony.jones@bsonetwork.com,BSO Network Solutions Ldt,447718752929,442072224555,BSO_employee_home_address.tjones
+BSO_employee.wjoseph,,BSO Network Solutions SAS,1975-08-08,Cloud & Managed Services,Male,,1 75 08 79 191 053 30,0,,Wilfried JOSEPH,FR,,0,,Niort (79),wilfried.joseph@bsonetwork.com,BSO Network Solutions SAS,33619842344,33177361193,BSO_employee_home_address.wjoseph
+BSO_employee.depart089,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Stephane JOSEPH,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart089
+BSO_employee.depart090,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Kieran JOYEUX,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart090
+BSO_employee.depart091,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Kieran JOYEUX,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart091
+BSO_employee.depart092,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Anais KAFFEMANE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart092
+BSO_employee.depart093,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Maxime KAFFEMANE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart093
+BSO_employee.depart094,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Nicolas KARAMUJIC,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart094
+BSO_employee.akelekis,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,André KELEKIS,FR,,0,,,andré.kelekis@bsonetwork.com,BSO Network Solutions SAS,,33177361165,BSO_employee_home_address.akelekis
+BSO_employee.rkergreis,,BSO Network Solutions SAS,1979-07-24,Cloud & Managed Services,Male,,1 79 07 22 27 81 90,0,,Régis KERGREIS,FR,,1,,Saint- Brieuc (22),regis.kergreis@bsonetwork.com,BSO Network Solutions SAS,33634250482,33177361133,BSO_employee_home_address.rkergreis
+BSO_employee.depart097,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Tasawar KHAN,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart097
+BSO_employee.depart098,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Mehrez KHEDIRI,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart098
+BSO_employee.depart099,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Pascaline KISHTOO,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart099
+BSO_employee.depart100,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Morgan KORCHIA,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart100
+BSO_employee.depart101,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Anais KOWALCZYK,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart101
+BSO_employee.depart102,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Marie KUPERMINC,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart102
+BSO_employee.depart103,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Fadh LAFHEL,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart103
+BSO_employee.mlages,,BSO Network Solutions SAS,1981-10-18,Cloud & Managed Services,Female,,2 81 10 95 063 037 38,0,,Mélanie LAGES,FR,,1,,Bezons (95),melanie.lages@bsonetwork.com,BSO Network Solutions SAS,33637366014,33177361197,BSO_employee_home_address.mlages
+BSO_employee.depart105,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Djil LAINCER,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart105
+BSO_employee.depart106,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Romain LAMAISON,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart106
+BSO_employee.tlanaute,,BSO Network Solutions SAS,1975-12-07,Cloud & Managed Services,Male,,1 75 12 751 120 66 37,0,,Thomas LANAUTE,FR,,0,,Paris 12 (75),thomas.lanaute@bsonetwork.com,BSO Network Solutions SAS,33788103776,33177361177,BSO_employee_home_address.tlanaute
+BSO_employee.depart108,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Rémi LANVIN,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart108
+BSO_employee.depart109,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Gaelle LAPORT,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart109
+BSO_employee.depart110,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Ysaline LE BON,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart110
+BSO_employee.depart111,,BSO Network Solutions Ldt,,Cloud & Managed Services,Female,,0,0,,Manon LEDDA,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart111
+BSO_employee.alegrix,,BSO Network Solutions SAS,1982-10-06,Cloud & Managed Services,Male,,1 82 10  14 220 021 54,0,,Alexandre LEGRIX,FR,,1,,Deauville (14),alexandre.legrix@bsonetwork.com,BSO Network Solutions SAS,33632232109,33177361131,BSO_employee_home_address.alegrix
+BSO_employee.depart113,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Karen LEMONNIER,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart113
+BSO_employee.depart114,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Francois LESUEUR ,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart114
+BSO_employee.depart115,,BSO Network Solutions Ldt,1957-06-20,Cloud & Managed Services,Male,,0,0,,Guy LUBBOCK,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart115
+BSO_employee.depart116,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Raphael LUDWIG,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart116
+BSO_employee.depart117,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Stojan LUKIC,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart117
+BSO_employee.nmargueritte,,BSO Ltd,1976-12-31,Cloud & Managed Services,Male,,0,0,,Nirina MARGUERITTE,IE,,0,,,nirina.margueritte@bsonetwork.com,BSO Ltd,33648132272,33177361172,BSO_employee_home_address.nmargueritte
+BSO_employee.dmatilos,,BSO Network Solutions Luxembourg SARL,,Cloud & Managed Services,Male,,0,0,,Daniel MATILOS,LU,,0,,,daniel.matilos@bsonetwork.com,BSO Network Solutions Luxembourg SARL,,,BSO_employee_home_address.dmatilos
+BSO_employee.rmazet,,BSO Network Solutions SAS,1981-10-26,Cloud & Managed Services,Male,,1 81 10 94 028 166 66,0,,Romain MAZET,FR,,1,,Créteil (94),romain.mazet@bsonetwork.com,BSO Network Solutions SAS,33673130083,33177361135,BSO_employee_home_address.rmazet
+BSO_employee.smcconnell,,"BSO Network Inc,",,Cloud & Managed Services,Male,,0,0,,Steve MC CONNELL,US,,0,,,steve.mcconnell@bsonetwork.com,"BSO Network Inc,,",++1 (973) 865-2161,,BSO_employee_home_address.smcconnell
+BSO_employee.depart122,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,François MILLER,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart122
+BSO_employee.depart123,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Diana MOCKEL,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart123
+BSO_employee.depart124,,BSO Network Solutions Ldt,,Cloud & Managed Services,Female,,0,0,,Freya MOORE,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart124
+BSO_employee.depart125,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Sacha MORARD,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart125
+BSO_employee.gmoreau,,BSO Network Solutions Luxembourg SARL,1988-01-27,Cloud & Managed Services,Male,,1 88 01 45 284 09385,0,,Guillaume MOREAU,LU,,0,,Saint Jean De Braye (45),guillaume.moreau@bsonetwork.com,BSO Network Solutions Luxembourg SARL,++33 (0) 7 76 02 35 00,33177361181,BSO_employee_home_address.gmoreau
+BSO_employee.depart127,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Gregoire MORPAIN,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart127
+BSO_employee.depart128,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Nicolas MOULIN,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart128
+BSO_employee.mtmullen,,BSO Ltd,,Cloud & Managed Services,Female,,0,0,,Marie-Therese MULLEN,IE,,2,,,marie-therese.mullen@bsonetwork.com,BSO Ltd,353872583698,35314417814,BSO_employee_home_address.mtmullen
+BSO_employee.depart130,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Pierre-Henry MULLER,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart130
+BSO_employee.snaipaul,,BSO Network Solutions Ldt,1982-10-02,Cloud & Managed Services,Male,,0,0,,Shaun NAIPAUL,GB,,0,,,shaun.naipaul@bsonetwork.com,BSO Network Solutions Ldt,447730142284,442072224555,BSO_employee_home_address.snaipaul
+BSO_employee.jbndzaghe,,BSO Network Solutions SAS,1967-07-04,Cloud & Managed Services,Male,,1 67 07 99 328 052 25,0,,Jean-Blaise NDZAGHE,FR,,2,,Ndjole (Gabon),jean-blaise.ndzaghe@bsonetwork.com,BSO Network Solutions SAS,33689973150,33177361156,BSO_employee_home_address.jbndzaghe
+BSO_employee.depart133,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Julien NEWLAAND ,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart133
+BSO_employee.depart134,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Vlady NONO,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart134
+BSO_employee.depart135,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Kahina NOUGAOUI,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart135
+BSO_employee.depart136,,BSO Network Solutions Ldt,1977-08-01,Cloud & Managed Services,Male,,0,0,,Alan O' GRADY,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart136
+BSO_employee.depart137,,BSO Network Solutions Ldt,1965-07-02,Cloud & Managed Services,Male,,0,0,,Ben OKUSAGA,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart137
+BSO_employee.mourabah,,BSO Ltd,1982-10-11,Cloud & Managed Services,Male,,0,0,,Michael OURABAH,IE,,0,,,michael.ourabah@bsonetwork.com,"BSO Network Inc,",447920487848,33680201036,BSO_employee_home_address.mourabah
+BSO_employee.rpamphile,,BSO Network Solutions SAS,1983-02-01,Cloud & Managed Services,Male,,1 83 02 97 230 013 60,0,,Rudy PAMPHILE,FR,,1,,Trinité (97),rudy.pamphile@bsonetwork.com,BSO Network Solutions SAS,33632232191,33177361153,BSO_employee_home_address.rpamphile
+BSO_employee.depart140,,BSO Network Solutions Ldt,,Cloud & Managed Services,Female,,0,0,,JO PARSONS,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart140
+BSO_employee.jpavey,,BSO Network Solutions Ldt,1970-06-25,Cloud & Managed Services,Male,,0,0,,Jason PAVEY,GB,,2,,,jason.pavey@bsonetwork.com,BSO Network Solutions Ldt,447718771440,442072224555,BSO_employee_home_address.jpavey
+BSO_employee.epelle,,BSO Ltd,1972-10-28,Cloud & Managed Services,Male,,0,0,,Emmanuel PELLE,IE,,3,,,emmanuel.pelle@bsonetwork.com,"BSO Network Inc,",33632019815,33177361194,BSO_employee_home_address.epelle
+BSO_employee.depart143,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Thibaud PERAS,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart143
+BSO_employee.mperette,,BSO Network Solutions Ldt,1986-12-15,Cloud & Managed Services,Male,,1 86 12 54 395 185 89,0,,Maxime PERETTE,GB,,0,,Nancy (54),maxime.perette@bsonetwork.com,BSO Network Solutions Ldt,447710085961,442072224555,BSO_employee_home_address.mperette
+BSO_employee.depart145,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Maxime PERETTE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart145
+BSO_employee.jperez,,BSO Network Solutions Ldt,,Cloud & Managed Services,Female,,0,0,,Judith PEREZ,GB,,0,,,judith.perez@bsonetwork.com,BSO Network Solutions Ldt,447803518942,442072224555,BSO_employee_home_address.jperez
+BSO_employee.fpestel,,BSO Network Solutions SAS,1991-04-20,Cloud & Managed Services,Male,,1 91 04 94 052 307 74,0,,François PESTEL,FR,,0,,Nogent sur Marne (94),françois.pestel@bsonetwork.com,BSO Network Solutions SAS,33689974465,33177361142,BSO_employee_home_address.fpestel
+BSO_employee.depart148,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Richard PHAN CHAN THE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart148
+BSO_employee.depart149,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Charles PIQUENOT FAUSTIN,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart149
+BSO_employee.depart150,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Maxence POULAIN,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart150
+BSO_employee.eprieto,,BSO Network Solutions SAS,1985-01-23,Cloud & Managed Services,Female,,2 85 01 93 010 091 27,0,,Emmanuelle PRIETO,FR,,0,,Bondy (93),emmanuel.prieto@bsonetwork.com,BSO Network Solutions SAS,,33177361198,BSO_employee_home_address.eprieto
+BSO_employee.equinquis,,BSO Network Solutions SAS,1971-10-22,Cloud & Managed Services,Female,,2 71 10 77 055 052 75,0,,Estelle QUINQUIS,FR,,0,,Brou sur Chantereine (77),estelle.quinquis@bsonetwork.com,BSO Network Solutions SAS,33689971233,33177361143,BSO_employee_home_address.equinquis
+BSO_employee.depart153,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Jean- Luc RAKOTOVAO,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart153
+BSO_employee.depart154,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Aymeric RAMBAUD,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart154
+BSO_employee.srialsotelo,,BSO Ltd,1975-05-31,Cloud & Managed Services,Male,,0,0,,Sergio RIAL SOTELO,IE,,1,,,sergio.rialsotelo@bsonetwork.com,BSO Ltd,,35315341127,BSO_employee_home_address.srialsotelo
+BSO_employee.depart156,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Arnaud RIET,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart156
+BSO_employee.depart157,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Jennifer RIMETZ,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart157
+BSO_employee.depart158,,BSO Network Solutions Ldt,1975-08-25,Cloud & Managed Services,Male,,0,0,,Scott RITCHIE,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart158
+BSO_employee.depart159,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Francois ROBIN-CHAMPIGNEUL,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart159
+BSO_employee.depart160,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Mounir SAADI,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart160
+BSO_employee.depart161,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Samir SADALLAH,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart161
+BSO_employee.rsanchez,,BSO Network Solutions Luxembourg SARL,,Cloud & Managed Services,Male,,0,0,,Rechie SANCHEZ,LU,,0,,,rechie.sanchez@bsonetwork.com,BSO Network Solutions Luxembourg SARL,,,BSO_employee_home_address.rsanchez
+BSO_employee.ssanjurjo,,BSO Network Solutions Ldt,1980-12-15,Cloud & Managed Services,Male,,0,0,,Santiago SANJURJO,GB,,0,,,santiago.sanjurjo@bsonetwrok.com,BSO Network Solutions Ldt,447803513740,442072224555,BSO_employee_home_address.ssanjurjo
+BSO_employee.dsantangelo,,BSO Network Solutions Luxembourg SARL,1989-06-17,Cloud & Managed Services,Male,,1 89 06 54 382 045 85,0,,Denis SANTANGELO,LU,,1,,Mont-Saint-Martin (54),denis.santangelo@bsonetwork.com,BSO Network Solutions Luxembourg SARL,33687632865,33177361144,BSO_employee_home_address.dsantangelo
+BSO_employee.depart165,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Andrew SCOTT,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart165
+BSO_employee.lsegrestaa,,BSO Network Solutions SAS,1971-10-02,Cloud & Managed Services,Male,,1 71 10 75 118 027 60,0,,Laurent SEGRESTAA,FR,,0,,Paris 18 (75),laurent.segrestaa@bsonetwork.com,BSO Network Solutions SAS,33674942752,++33 (1) 77 36 11 49,BSO_employee_home_address.lsegrestaa
+BSO_employee.depart167,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Emmanuel SEVRAY,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart167
+BSO_employee.nsingleton,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Neil SINGLETON,GB,,0,,,neil.singleton@bsonetwork.com,BSO Network Solutions Ldt,,442072224555,BSO_employee_home_address.nsingleton
+BSO_employee.depart169,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Halimatou SOUMARE,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart169
+BSO_employee.depart170,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Julien SYX,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart170
+BSO_employee.depart171,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Pascal TARIN,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart171
+BSO_employee.depart172,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Julien TARNOWSKI,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart172
+BSO_employee.ctaylor,,BSO Network Solutions Ldt,1959-05-11,Cloud & Managed Services,Male,,0,0,,Chris TAYLOR,GB,,3,,,chris.taylor@bsonetwork.com,BSO Network Solutions Ldt,447518397912,442072224555,BSO_employee_home_address.ctaylor
+BSO_employee.athomassin,,BSO Network Solutions Luxembourg SARL,1986-03-14,Cloud & Managed Services,Male,,1 86 03 54 184 025,0,,Antoine THOMASSIN,LU,,0,,Essey les Nancy (54),antoine.thomassin@bsonetwork.com,BSO Network Solutions Luxembourg SARL,33689975734,33177361183,BSO_employee_home_address.athomassin
+BSO_employee.strandafir,,BSO Network Solutions SAS,1992-04-03,Cloud & Managed Services,Male,,1 92 04 78 551 252,0,,Shayan TRANDAFIR,FR,,0,,Saint Germain en Laye (78),shayan.trandafir@bsonetwork.com,BSO Network Solutions SAS,33607841395,33177361190,BSO_employee_home_address.strandafir
+BSO_employee.depart176,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Florent TRECOURT,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart176
+BSO_employee.depart177,,BSO Network Solutions Ldt,1981-07-31,Cloud & Managed Services,Male,,0,0,,Robbie TURTLE,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart177
+BSO_employee.depart178,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Emmanuel VAILLANT,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart178
+BSO_employee.depart179,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Fabien VANEENOO,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart179
+BSO_employee.jveloso,,BSO Network Solutions Luxembourg SARL,,Cloud & Managed Services,Male,,0,0,,JohnDave VELOSO,LU,,0,,,johndave.veloso@bsonetwork.com,BSO Network Solutions Luxembourg SARL,,,BSO_employee_home_address.jveloso
+BSO_employee.depart181,,BSO Network Solutions Ldt,1973-08-03,Cloud & Managed Services,Male,,0,0,,Stefan VESNIC,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart181
+BSO_employee.depart182,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Xavier VITARD,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart182
+BSO_employee.depart183,,BSO Network Solutions Ldt,,Cloud & Managed Services,Female,,0,0,,Lorène WATRIN CLAUDE,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart183
+BSO_employee.depart184,,BSO Network Solutions Ldt,,Cloud & Managed Services,Male,,0,0,,Duncan WAUGH,GB,,0,,,,BSO Network Solutions Ldt,,,BSO_employee_home_address.depart184
+BSO_employee.depart185,,BSO Network Solutions SAS,,Cloud & Managed Services,Female,,0,0,,Ingrid ZELLER,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart185
+BSO_employee.depart186,,BSO Network Solutions SAS,,Cloud & Managed Services,Male,,0,0,,Stéphane ZENG,FR,,0,,,,BSO Network Solutions SAS,,,BSO_employee_home_address.depart186

@@ -19,3 +19,6 @@
 [submodule "odoo/external-src/hr-timesheet"]
 	path = odoo/external-src/hr-timesheet
 	url = git@github.com:OCA/hr-timesheet.git
+[submodule "odoo/external-src/hr"]
+	path = odoo/external-src/hr
+	url = git@github.com:OCA/hr.git

@@ -16,6 +16,37 @@
 Release History
 ---------------
 
+9.2.0 (2016-10-24)
+++++++++++++++++++
+
+*Features and Improvements*
+
+* install base modules:
+    - ``hr_recruitment``
+    - ``auth_ldap``
+    - ``hr_timesheet_sheet``
+    - ``hr_recruitment``
+    - ``l10n_fr``
+    - ``purchase``
+    - ``stock``
+    - ``connector``
+    - ``hr_family``
+    - ``users_ldap_populate``
+    - ``web_easy_switch_company``
+    - ``specific_hr``
+
+* install ``es_ES`` language in addition of ``en_US`` and ``fr_FR``
+* import companies, employees (and some HR stuff)
+
+*Bugfixes*
+
+*Build*
+
+*Documentation*
+    - when creating a user, an employee is created and linked to this user if
+      an employee with this login or with the field ``user_login`` is not found
+
+
 9.1.0 (2016-09-14)
 ++++++++++++++++++
 

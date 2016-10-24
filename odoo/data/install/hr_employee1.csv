@@ -1,0 +1,186 @@
+id,coach_id,company_id,birthday,department_id,gender,address_home_id/id,vehicle_distance,identification_id,manager,job_id,marital,medic_exam,name,country_id,notes,children,passport_id,place_of_birth,work_email,work_location,mobile_phone,work_phone
+BSO_employee.depart002,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart002,,0,0,,,,Vincent AARON,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.lgaury,,BSO Network Solutions Luxembourg SARL,1988-04-27,Network Engineering,Female,BSO_employee_home_address.lgaury,,2 88 04 75 114 747 33,1,Network Engineer,married,,Lise ABADIE,LU,,0,,Paris 14 (75),lise.gaury@bsonetwork.com,BSO Network Solutions Luxembourg SARL,33621140600,33177361146
+BSO_employee.depart004,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart004,,0,0,,,,Rémi AGOB,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart005,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart005,,0,0,,,,Rémi AGOB,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart006,,BSO Network Solutions Ldt,,,Male,BSO_employee_home_address.depart006,,0,0,,,,Tahid AHMED,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart007,,BSO Network Solutions Ldt,,,Male,BSO_employee_home_address.depart007,,0,0,,,,Michael ALDRIDGE,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart008,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart008,,0,0,,,,Samaad ALLADIN,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart009,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart009,,0,0,,,,Guillaume ALLARD,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.rallayin,,BPO Technology,,Internal IT,Male,BSO_employee_home_address.rallayin,,0,1,Network and SystemsTechnician,,,Romeo ALLAYIN,PH,,0,,,romeo.allayin@bsonetwork.com,BPO Technology,,
+BSO_employee.depart011,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart011,,0,0,,,,Ugo  Allegre,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart012,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart012,,0,0,,,,Christophe AMANDJULES,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.fandrews,,BSO Network Solutions Ldt,1990-01-20,Marketing,Female,BSO_employee_home_address.fandrews,,0,1,Marketing Manager,Single,,Frankie ANDREWS,GB,,0,,,frankie.andrews@bsonetwork.com,BSO Network Solutions Ldt,447702100450,442072224555
+BSO_employee.depart014,,BSO Network Solutions Ldt,,,Male,BSO_employee_home_address.depart014,,0,0,,,,Kevin ANNIES,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.gapale,,BSO Network Solutions Ldt,,NOC,Male,BSO_employee_home_address.gapale,,0,0,Network and SystemsTechnician,,,Gianne APALE,GB,,0,,,gianne.apale@bsonetwork.com,BSO Network Solutions Ldt,,
+BSO_employee.depart016,,BSO Network Solutions Ldt,,,Male,BSO_employee_home_address.depart016,,0,0,,,,Morgan ARCHER,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart017,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart017,,0,0,,,,Emilie ARIS,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart018,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart018,,0,0,,,,Sophie ARTONNE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart019,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart019,,0,0,,,,Nicolas AUVRAY,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart020,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart020,,0,0,,,,Maëlle BAQUET,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart021,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart021,,0,0,,,,Christophe BARRE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart022,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart022,,0,0,,,,Julien BARRITAUD,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart023,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart023,,0,0,,,,Jules BARTHELEMY,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.mbauer,,BSO Network Solutions Ldt,1973-01-19,Pre-Sales,Male,BSO_employee_home_address.mbauer,,0,1,Presales Manager,Cohabiting,,Michael BAUER,GB,,1,,,michael.bauer@bsonetwork.com,BSO Network Solutions Ldt,447920487842,442072224555
+BSO_employee.depart025,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart025,,0,0,,,,Jean Christian BEDIER,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.fbell,,BSO Network Solutions Ldt,1976-03-18,Sales & Marketing,Male,BSO_employee_home_address.fbell,,0,1,Manager / Strategy,Married,,Fraser BELL,GB,,0,,,fraser.bell@bsonetwork.com,BSO Network Solutions Ldt,447500770300,442072224555
+BSO_employee.depart027,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart027,,0,0,,,,Hugo BENAINOUS,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart028,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart028,,0,0,,,,Khadija BENAISSI,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart029,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart029,,0,0,,,,François BENATRE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart030,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart030,,0,0,,,,Abdelwahid BENSLIMANE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart031,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart031,,0,0,,,,Nadia BERIBECHE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart032,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart032,,0,0,,,,Serge BERTAINA DUBOIS,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.cabeyney,,BSO Network Solutions Luxembourg SARL,1982-09-29,Top Management,Male,BSO_employee_home_address.cabeyney,,0,1,Direction,Married,,Charles-Antoine BEYNEY,LU,,1,,,charles-antoine.beyney@bsonetwork.com,BSO Network Solutions Luxembourg SARL,352691000300,33683597661
+BSO_employee.ebird,,BSO Network Solutions Ldt,1991-04-09,Marketing,Female,BSO_employee_home_address.ebird,,0,0,Marketing Executive,Single,,Emma BIRD,GB,,0,,,emma.bird@bsonetwork.com,BSO Network Solutions Ldt,447710083534,442072224555
+BSO_employee.depart035,,BSO Network Solutions Ldt,1981-01-11,,Male,BSO_employee_home_address.depart035,,0,0,,,,Nicolas BONNET,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart036,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart036,,0,0,,,,Sabrina BOUDJI,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart037,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart037,,0,0,,,,Eddy BOULARES,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart038,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart038,,0,0,,,,François BREJOT,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart039,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart039,,0,0,,,,Clement BRUNEAU,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.jcantones,,BPO Technology,,Dev Ops & Internal Tools,Male,BSO_employee_home_address.jcantones,,0,0,DevOps Systems,,,Jayson CANTONES,PH,,0,,,jayson.cantones@bsonetwork.com,BPO Technology,,
+BSO_employee.dcarmona,,BPO Technology,,NOC,Male,BSO_employee_home_address.dcarmona,,0,0,Network Technician,,,Daryl CARMONA,PH,,0,,,daryl.carmona@bsonetwork.com,BPO Technology,,
+BSO_employee.depart042,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart042,,0,0,,,,Cyril CAUDROY,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.pcervantes,,BPO Technology,,NOC,Male,BSO_employee_home_address.pcervantes,,0,0,Network Technician,,,Paolo CERVANTES,PH,,0,,,paolo.cervantes@bsonetwork.com,BPO Technology,,
+BSO_employee.tcheronneau,,BSO Network Solutions Luxembourg SARL,1990-04-09,Platforms,Male,BSO_employee_home_address.tcheronneau,,1 90 04 67 482 191,0,Systems Engineer,Single,,Thomas CHERONNEAU,LU,,0,,Strasbourg,thomas.cheronneau@bsonetwork.com,BSO Network Solutions Luxembourg SARL,33776068950,33177361182
+BSO_employee.depart045,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart045,,0,0,,,,Sylvain CHEVALIER,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart046,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart046,,0,0,,,,Sylvain CHEVALIER,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart047,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart047,,0,0,,,,Hélène CHIRON,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart048,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart048,,0,0,,,,Nethanel COHEN SOLAL,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart049,,BSO Network Solutions Luxembourg SARL,,,Male,BSO_employee_home_address.depart049,,0,0,,,,Hugo COLLIGNON,LU,,0,,,,BSO Network Solutions Luxembourg SARL,,
+BSO_employee.depart050,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart050,,0,0,,,,Marie CORSINI ,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart051,,BSO Network Solutions Ldt,,,Male,BSO_employee_home_address.depart051,,0,0,,,,Gaspard COUDURIER,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart052,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart052,,0,0,,,,Aniss DAHMANE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.bdelmas,,BSO Network Solutions SAS,1980-10-03,Network Engineering,Male,BSO_employee_home_address.bdelmas,,1 80 10 15 014 019 02,1,Network Engineer,Married,,Benoit DELMAS,FR,,2,,Aurillac (15),benoit.delmas@bsonetwork.com,BSO Network Solutions SAS,33631569273,33177361157
+BSO_employee.tdeloffre,,BSO Network Solutions SAS,1987-07-05,Dev Ops & Internal Tools,Male,BSO_employee_home_address.tdeloffre,,1 87 07 75 114 150 01,1,Systems Engineer,Single,,Thibaut DELOFFRE,FR,,0,,Paris 14 (75),thibaut.deloffre@bsonetwork.com,BSO Network Solutions SAS,33637367827,33177361168
+BSO_employee.depart055,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart055,,0,0,,,,Guillaume DELTOUR,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart056,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart056,,0,0,,,,Clement DEMONCHY,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart057,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart057,,0,0,,,,Matthieu DEROZE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart058,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart058,,0,0,,,,François DEVIENNE ,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart059,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart059,,0,0,,,,Marianne DHERENS,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart060,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart060,,0,0,,,,Frederic DHIEUX,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart061,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart061,,0,0,,,,Ibrahim DIA,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart062,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart062,,0,0,,,,Maxime DOUAILIN,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart063,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart063,,0,0,,,,Gaetan DU PELOUX,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.dduarte,,BSO Network Solutions SAS,1990-11-29,NOC,Male,BSO_employee_home_address.dduarte,,1 90 11 78 158 089 33,0,Network Technician,Single,,Davy DUARTE,FR,,0,,Le Chesnay (78),davy.duarte@bsonetwork.com,BSO Network Solutions SAS,33643318582,33177361145
+BSO_employee.depart065,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart065,,0,0,,,,Fideline ELENGA ,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart066,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart066,,0,0,,,,Gilles FABRE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart067,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart067,,0,0,,,,Radu- Adrian FEURDEAN,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart068,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart068,,0,0,,,,Alexandre FIGURA,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.tfulford-brown,,BSO Network Solutions Ldt,1979-06-18,Sales UK,Male,BSO_employee_home_address.tfulford-brown,,0,1,Sales Manager,Married,,Tom FULLFORD-BROWN,GB,,1,,,tom.fullford-brown@bsonetwork.com,BSO Network Solutions Ldt,447702752998,442072224555
+BSO_employee.jfyffe,,BSO Network Solutions Ldt,1976-12-30,Sales UK,Male,BSO_employee_home_address.jfyffe,,0,0,Sales Executive,Married,,Jamie FYFFE,GB,,2,,,jamie.fyffe@bsonetwork.com,BSO Network Solutions Ldt,447712857172,442072224555
+BSO_employee.depart071,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart071,,0,0,,,,Christophe GASMI,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart072,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart072,,0,0,,,,Sally GAY,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart073,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart073,,0,0,,,,Moez GHANEM,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart074,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart074,,0,0,,,,Clément GUINE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart075,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart075,,0,0,,,,Cyril GUITTON,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart076,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart076,,0,0,,,,Yassine HADDAG,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart077,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart077,,0,0,,,,Yassine HADDAG,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart078,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart078,,0,0,,,,Jérome HADJIMANOLIS,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart079,,BSO Network Solutions Ldt,,,Male,BSO_employee_home_address.depart079,,0,0,,,,Stephen HADLEY,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart080,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart080,,0,0,,,,Saliha HAMANI,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.nhargraves,,BSO Network Solutions Ldt,1988-05-11,Service Delivery,Male,BSO_employee_home_address.nhargraves,,0,0,Delivery Executive,Single,,Neil HARGRAVES,GB,,0,,,neil.hargraves@bsonetwork.com,BSO Network Solutions Ldt,447718686148,442072224555
+BSO_employee.zhazzaz,,BSO Network Solutions SAS,1992-08-28,Service Delivery,Male,BSO_employee_home_address.zhazzaz,,1 92 08 99 350 294 48,0,Project Manager,Single,,Zakaria HAZZAZ,FR,,0,,Casablanca (Maroc),zakaria.hazzaz@bsonetwork.com,BSO Network Solutions SAS,33627640458,3317737113
+BSO_employee.depart083,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart083,,0,0,,,,Mathilde HUSSON,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart084,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart084,,0,0,,,,Romain ILLARI,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart085,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart085,,0,0,,,,Celia ITOUA,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart086,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart086,,0,0,,,,Lamar JELIKH,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.tjones,,BSO Network Solutions Ldt,1966-09-13,Global Network Services,Male,BSO_employee_home_address.tjones,,0,1,Network Manager,Married,,Tony JONES,GB,,2,,,tony.jones@bsonetwork.com,BSO Network Solutions Ldt,447718752929,442072224555
+BSO_employee.wjoseph,,BSO Network Solutions SAS,1975-08-08,G & A,Male,BSO_employee_home_address.wjoseph,,1 75 08 79 191 053 30,1,Accounting Manager,Married,,Wilfried JOSEPH,FR,,0,,Niort (79),wilfried.joseph@bsonetwork.com,BSO Network Solutions SAS,33619842344,33177361193
+BSO_employee.depart089,,BSO Network Solutions Ldt,,,Male,BSO_employee_home_address.depart089,,0,0,,,,Stephane JOSEPH,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart090,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart090,,0,0,,,,Kieran JOYEUX,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart091,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart091,,0,0,,,,Kieran JOYEUX,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart092,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart092,,0,0,,,,Anais KAFFEMANE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart093,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart093,,0,0,,,,Maxime KAFFEMANE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart094,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart094,,0,0,,,,Nicolas KARAMUJIC,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.akelekis,,BSO Network Solutions SAS,1961-11-04,Operations,Male,BSO_employee_home_address.akelekis,,0,0,Project Manager,PACS,,André KELEKIS,FR,,1,,Paris 14 (75),andré.kelekis@bsonetwork.com,BSO Network Solutions SAS,,33177361165
+BSO_employee.rkergreis,,BSO Network Solutions SAS,1979-07-24,Network Engineering,Male,BSO_employee_home_address.rkergreis,,1 79 07 22 27 81 90,0,Network Engineer,Married,,Régis KERGREIS,FR,,1,,Saint- Brieuc (22),regis.kergreis@bsonetwork.com,BSO Network Solutions SAS,33634250482,33177361133
+BSO_employee.depart097,,BSO Network Solutions Ldt,,,Male,BSO_employee_home_address.depart097,,0,0,,,,Tasawar KHAN,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart098,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart098,,0,0,,,,Mehrez KHEDIRI,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart099,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart099,,0,0,,,,Pascaline KISHTOO,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart100,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart100,,0,0,,,,Morgan KORCHIA,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart101,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart101,,0,0,,,,Anais KOWALCZYK,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart102,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart102,,0,0,,,,Marie KUPERMINC,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart103,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart103,,0,0,,,,Fadh LAFHEL,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.mlages,,BSO Network Solutions SAS,1981-10-18,Human Resources,Female,BSO_employee_home_address.mlages,,2 81 10 95 063 037 38,1,HR Manager,Married,,Mélanie LAGES,FR,,1,,Bezons (95),melanie.lages@bsonetwork.com,BSO Network Solutions SAS,33637366014,33177361197
+BSO_employee.depart105,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart105,,0,0,,,,Djil LAINCER,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart106,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart106,,0,0,,,,Romain LAMAISON,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.tlanaute,,BSO Network Solutions SAS,1975-12-07,Sales FR,Male,BSO_employee_home_address.tlanaute,,1 75 12 751 120 66 37,1,Sales Manager,Single,,Thomas LANAUTE,FR,,0,,Paris 12 (75),thomas.lanaute@bsonetwork.com,BSO Network Solutions SAS,33788103776,33177361177
+BSO_employee.depart108,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart108,,0,0,,,,Rémi LANVIN,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart109,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart109,,0,0,,,,Gaelle LAPORT,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart110,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart110,,0,0,,,,Ysaline LE BON,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart111,,BSO Network Solutions Ldt,,,Female,BSO_employee_home_address.depart111,,0,0,,,,Manon LEDDA,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.alegrix,,BSO Network Solutions SAS,1982-10-06,Cloud & Managed Services,Male,BSO_employee_home_address.alegrix,,1 82 10  14 220 021 54,1,Systems Manager ,PACS,,Alexandre LEGRIX,FR,,1,,Deauville (14),alexandre.legrix@bsonetwork.com,BSO Network Solutions SAS,33632232109,33177361131
+BSO_employee.depart113,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart113,,0,0,,,,Karen LEMONNIER,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart114,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart114,,0,0,,,,Francois LESUEUR ,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart115,,BSO Network Solutions Ldt,1957-06-20,,Male,BSO_employee_home_address.depart115,,0,0,,,,Guy LUBBOCK,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart116,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart116,,0,0,,,,Raphael LUDWIG,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart117,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart117,,0,0,,,,Stojan LUKIC,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.nmargueritte,,BSO Ltd,1976-12-31,Supply Management,Male,BSO_employee_home_address.nmargueritte,,0,0,Delivery Executive,Single,,Nirina MARGUERITTE,IE,,0,,,nirina.margueritte@bsonetwork.com,BSO Ltd,33648132272,33177361172
+BSO_employee.dmatilos,,BPO Technology,,NOC,Male,BSO_employee_home_address.dmatilos,,0,0,Network Technician,,,Daniel MATILOS,PH,,0,,,daniel.matilos@bsonetwork.com,BPO Technology,,
+BSO_employee.rmazet,,BSO Network Solutions SAS,1981-10-26,Pre-Sales,Male,BSO_employee_home_address.rmazet,,1 81 10 94 028 166 66,0,Presales Executive,Single,,Romain MAZET,FR,,1,,Créteil (94),romain.mazet@bsonetwork.com,BSO Network Solutions SAS,33673130083,33177361135
+BSO_employee.smcconnell,,"BSO Network Inc,",,Sales US,Male,BSO_employee_home_address.smcconnell,,0,1,Sales Manager,,,Steve MC CONNELL,US,,0,,,steve.mcconnell@bsonetwork.com,"BSO Network Inc,,",++1 (973) 865-2161,
+BSO_employee.depart122,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart122,,0,0,,,,François MILLER,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart123,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart123,,0,0,,,,Diana MOCKEL,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart124,,BSO Network Solutions Ldt,,,Female,BSO_employee_home_address.depart124,,0,0,,,,Freya MOORE,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart125,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart125,,0,0,,,,Sacha MORARD,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.gmoreau,,BSO Network Solutions Luxembourg SARL,1988-01-27,Platforms,Male,BSO_employee_home_address.gmoreau,,1 88 01 45 284 09385,0,Systems Engineer,Single,,Guillaume MOREAU,LU,,0,,Saint Jean De Braye (45),guillaume.moreau@bsonetwork.com,BSO Network Solutions Luxembourg SARL,++33 (0) 7 76 02 35 00,33177361181
+BSO_employee.depart127,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart127,,0,0,,,,Gregoire MORPAIN,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart128,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart128,,0,0,,,,Nicolas MOULIN,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.mtmullen,,BSO Ltd,,Finance,Female,BSO_employee_home_address.mtmullen,,0,0,Accounting Manager,Married,,Marie-Therese MULLEN,IE,,2,,,marie-therese.mullen@bsonetwork.com,BSO Ltd,353872583698,35314417814
+BSO_employee.depart130,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart130,,0,0,,,,Pierre-Henry MULLER,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.snaipaul,,BSO Network Solutions Ldt,1982-10-02,Service Delivery,Male,BSO_employee_home_address.snaipaul,,0,0,Delivery Executive,Single,,Shaun NAIPAUL,GB,,0,,,shaun.naipaul@bsonetwork.com,BSO Network Solutions Ldt,447730142284,442072224555
+BSO_employee.jbndzaghe,,BSO Network Solutions SAS,1967-07-04,Hosting,Male,BSO_employee_home_address.jbndzaghe,,1 67 07 99 328 052 25,0,Network and SystemsTechnician,Married,,Jean-Blaise NDZAGHE,FR,,2,,Ndjole (Gabon),jean-blaise.ndzaghe@bsonetwork.com,BSO Network Solutions SAS,33689973150,33177361156
+BSO_employee.depart133,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart133,,0,0,,,,Julien NEWLAAND ,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart134,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart134,,0,0,,,,Vlady NONO,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart135,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart135,,0,0,,,,Kahina NOUGAOUI,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart136,,BSO Network Solutions Ldt,1977-08-01,,Male,BSO_employee_home_address.depart136,,0,0,,,,Alan O' GRADY,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart137,,BSO Network Solutions Ldt,1965-07-02,,Male,BSO_employee_home_address.depart137,,0,0,,,,Ben OKUSAGA,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.mourabah,,BSO Ltd,1982-10-11,Top Management,Male,BSO_employee_home_address.mourabah,,0,1,Direction,Married,,Michael OURABAH,IE,,0,,,michael.ourabah@bsonetwork.com,"BSO Network Inc,",447920487848,33680201036
+BSO_employee.rpamphile,,BSO Network Solutions SAS,1983-02-01,Platforms,Male,BSO_employee_home_address.rpamphile,,1 83 02 97 230 013 60,1,Systems Engineer,Married,,Rudy PAMPHILE,FR,,1,,Trinité (97),rudy.pamphile@bsonetwork.com,BSO Network Solutions SAS,33632232191,33177361153
+BSO_employee.depart140,,BSO Network Solutions Ldt,,,Female,BSO_employee_home_address.depart140,,0,0,,,,JO PARSONS,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.jpavey,,BSO Network Solutions Ldt,1970-06-25,Service Delivery,Male,BSO_employee_home_address.jpavey,,0,0,Delivery Executive,Married,,Jason PAVEY,GB,,2,,,jason.pavey@bsonetwork.com,BSO Network Solutions Ldt,447718771440,442072224555
+BSO_employee.epelle,,BSO Ltd,1972-10-28,Operations,Male,BSO_employee_home_address.epelle,,0,1,Manager / Strategy,Married,,Emmanuel PELLE,IE,,3,,,emmanuel.pelle@bsonetwork.com,"BSO Network Inc,",33632019815,33177361194
+BSO_employee.depart143,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart143,,0,0,,,,Thibaud PERAS,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.mperette,,BSO Network Solutions Ldt,1986-12-15,Network Engineering,Male,BSO_employee_home_address.mperette,,1 86 12 54 395 185 89,0,Network Engineer,Single,,Maxime PERETTE,GB,,0,,Nancy (54),maxime.perette@bsonetwork.com,BSO Network Solutions Ldt,447710085961,442072224555
+BSO_employee.depart145,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart145,,0,0,,,,Maxime PERETTE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.jperez,,BSO Network Solutions Ldt,,Sales UK,Female,BSO_employee_home_address.jperez,,0,0,Sales Executive,,,Judith PEREZ,GB,,0,,,judith.perez@bsonetwork.com,BSO Network Solutions Ldt,447803518942,442072224555
+BSO_employee.fpestel,,BSO Network Solutions SAS,1991-04-20,Service Delivery,Male,BSO_employee_home_address.fpestel,,1 91 04 94 052 307 74,0,Delivery Executive,Single,,François PESTEL,FR,,0,,Nogent sur Marne (94),françois.pestel@bsonetwork.com,BSO Network Solutions SAS,33689974465,33177361142
+BSO_employee.depart148,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart148,,0,0,,,,Richard PHAN CHAN THE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart149,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart149,,0,0,,,,Charles PIQUENOT FAUSTIN,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart150,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart150,,0,0,,,,Maxence POULAIN,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.eprieto,,BSO Network Solutions SAS,1985-01-23,Finance,Female,BSO_employee_home_address.eprieto,,2 85 01 93 010 091 27,0,Accounting Executive,Single,,Emmanuelle PRIETO,FR,,0,,Bondy (93),emmanuel.prieto@bsonetwork.com,BSO Network Solutions SAS,,33177361198
+BSO_employee.equinquis,,BSO Network Solutions SAS,1971-10-22,Sales FR,Female,BSO_employee_home_address.equinquis,,2 71 10 77 055 052 75,0,Sales Executive,Divorced,,Estelle QUINQUIS,FR,,0,,Brou sur Chantereine (77),estelle.quinquis@bsonetwork.com,BSO Network Solutions SAS,33689971233,33177361143
+BSO_employee.depart153,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart153,,0,0,,,,Jean- Luc RAKOTOVAO,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart154,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart154,,0,0,,,,Aymeric RAMBAUD,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.srialsotelo,,BSO Ltd,1975-05-31,Finance,Male,BSO_employee_home_address.srialsotelo,,0,0,Accounting Executive,Single,,Sergio RIAL SOTELO,IE,,1,,,sergio.rialsotelo@bsonetwork.com,BSO Ltd,,35315341127
+BSO_employee.depart156,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart156,,0,0,,,,Arnaud RIET,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart157,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart157,,0,0,,,,Jennifer RIMETZ,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart158,,BSO Network Solutions Ldt,1975-08-25,,Male,BSO_employee_home_address.depart158,,0,0,,,,Scott RITCHIE,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart159,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart159,,0,0,,,,Francois ROBIN-CHAMPIGNEUL,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart160,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart160,,0,0,,,,Mounir SAADI,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart161,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart161,,0,0,,,,Samir SADALLAH,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.rsanchez,,BPO Technology,,Dev Ops & Internal Tools,Male,BSO_employee_home_address.rsanchez,,0,0,DevOps Systems,,,Rechie SANCHEZ,PH,,0,,,rechie.sanchez@bsonetwork.com,BPO Technology,,
+BSO_employee.ssanjurjo,,BSO Network Solutions Ldt,1980-12-15,Network Engineering,Male,BSO_employee_home_address.ssanjurjo,,0,0,Network Engineer,Single,,Santiago SANJURJO,GB,,0,,,santiago.sanjurjo@bsonetwrok.com,BSO Network Solutions Ldt,447803513740,442072224555
+BSO_employee.dsantangelo,,BSO Network Solutions Luxembourg SARL,1989-06-17,NOC,Male,BSO_employee_home_address.dsantangelo,,1 89 06 54 382 045 85,0,Network and SystemsTechnician,PACS,,Denis SANTANGELO,LU,,1,,Mont-Saint-Martin (54),denis.santangelo@bsonetwork.com,BSO Network Solutions Luxembourg SARL,33687632865,33177361144
+BSO_employee.depart165,,BSO Network Solutions Ldt,,,Male,BSO_employee_home_address.depart165,,0,0,,,,Andrew SCOTT,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.lsegrestaa,,BSO Network Solutions SAS,1971-10-02,Sales FR,Male,BSO_employee_home_address.lsegrestaa,,1 71 10 75 118 027 60,0,Sales Executive,Single,,Laurent SEGRESTAA,FR,,0,,Paris 18 (75),laurent.segrestaa@bsonetwork.com,BSO Network Solutions SAS,33674942752,++33 (1) 77 36 11 49
+BSO_employee.depart167,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart167,,0,0,,,,Emmanuel SEVRAY,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.nsingleton,,BSO Network Solutions Ldt,,Pre-Sales,Male,BSO_employee_home_address.nsingleton,,0,0,Presales Executive,,,Neil SINGLETON,GB,,0,,,neil.singleton@bsonetwork.com,BSO Network Solutions Ldt,,442072224555
+BSO_employee.depart169,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart169,,0,0,,,,Halimatou SOUMARE,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart170,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart170,,0,0,,,,Julien SYX,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart171,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart171,,0,0,,,,Pascal TARIN,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart172,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart172,,0,0,,,,Julien TARNOWSKI,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.ctaylor,,BSO Network Solutions Ldt,1959-05-11,Sales UK,Male,BSO_employee_home_address.ctaylor,,0,1,Sales Manager,Married,,Chris TAYLOR,GB,,3,,,chris.taylor@bsonetwork.com,BSO Network Solutions Ldt,447518397912,442072224555
+BSO_employee.athomassin,,BSO Network Solutions Luxembourg SARL,1986-03-14,Platforms,Male,BSO_employee_home_address.athomassin,,1 86 03 54 184 025,0,Systems Engineer,PACS,,Antoine THOMASSIN,LU,,0,,Essey les Nancy (54),antoine.thomassin@bsonetwork.com,BSO Network Solutions Luxembourg SARL,33689975734,33177361183
+BSO_employee.strandafir,,BSO Network Solutions SAS,1992-04-03,Sales FR,Male,BSO_employee_home_address.strandafir,,1 92 04 78 551 252,0,Sales Executive,Single,,Shayan TRANDAFIR,FR,,0,,Saint Germain en Laye (78),shayan.trandafir@bsonetwork.com,BSO Network Solutions SAS,33607841395,33177361190
+BSO_employee.depart176,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart176,,0,0,,,,Florent TRECOURT,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart177,,BSO Network Solutions Ldt,1981-07-31,,Male,BSO_employee_home_address.depart177,,0,0,,,,Robbie TURTLE,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart178,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart178,,0,0,,,,Emmanuel VAILLANT,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart179,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart179,,0,0,,,,Fabien VANEENOO,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.jveloso,,BPO Technology,,NOC,Male,BSO_employee_home_address.jveloso,,0,0,Network Technician,,,JohnDave VELOSO,PH,,0,,,johndave.veloso@bsonetwork.com,BPO Technology,,
+BSO_employee.depart181,,BSO Network Solutions Ldt,1973-08-03,,Male,BSO_employee_home_address.depart181,,0,0,,,,Stefan VESNIC,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart182,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart182,,0,0,,,,Xavier VITARD,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart183,,BSO Network Solutions Ldt,,,Female,BSO_employee_home_address.depart183,,0,0,,,,Lorène WATRIN CLAUDE,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart184,,BSO Network Solutions Ldt,,,Male,BSO_employee_home_address.depart184,,0,0,,,,Duncan WAUGH,GB,,0,,,,BSO Network Solutions Ldt,,
+BSO_employee.depart185,,BSO Network Solutions SAS,,,Female,BSO_employee_home_address.depart185,,0,0,,,,Ingrid ZELLER,FR,,0,,,,BSO Network Solutions SAS,,
+BSO_employee.depart186,,BSO Network Solutions SAS,,,Male,BSO_employee_home_address.depart186,,0,0,,,,Stéphane ZENG,FR,,0,,,,BSO Network Solutions SAS,,

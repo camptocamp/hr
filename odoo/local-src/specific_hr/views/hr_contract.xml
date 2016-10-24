@@ -29,6 +29,11 @@
             <field name="bonus_exceptional"/>
             <field name="bonus_target_based"/>
           </group>
+          <group name="syntec" string="Syntec">
+            <field name="syntec_position_id"/>
+            <field name="syntec_coeff"/>
+            <field name="category_id"/>
+          </group>
         </group>
       </xpath>
     </field>

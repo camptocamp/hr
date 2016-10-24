@@ -1,0 +1,23 @@
+id,company_id,name,note,parent_id
+scen.hr_dept_001,BSO Ltd,Top Management,,
+scen.hr_dept_002,BSO Network Solutions Ldt,Sales & Marketing,,Top Management
+scen.hr_dept_003,BSO Network Solutions Ldt,Sales UK,,Sales & Marketing
+scen.hr_dept_004,BSO Network Solutions SAS,Sales FR,,Sales & Marketing
+scen.hr_dept_005,"BSO Network Inc,",Sales US,,Sales & Marketing
+scen.hr_dept_006,BSO Network Solutions Ldt,Pre-Sales,,Sales & Marketing
+scen.hr_dept_007,BSO Network Solutions Ldt,Marketing,,Sales & Marketing
+scen.hr_dept_008,BSO Network Solutions SAS,G & A,,Top Management
+scen.hr_dept_009,BSO Network Solutions SAS,Finance,,G & A
+scen.hr_dept_010,BSO Network Solutions SAS,Human Resources,,Top Management
+scen.hr_dept_011,BSO Ltd,Operations,,Top Management
+scen.hr_dept_012,BSO Network Solutions Ldt,Global Network Services,,Operations
+scen.hr_dept_013,BSO Network Solutions SAS,Cloud & Managed Services,,Operations
+scen.hr_dept_014,BSO Network Solutions Ldt,NOC,,Global Network Services
+scen.hr_dept_015,BSO Network Solutions SAS,Hosting,,Cloud & Managed Services
+scen.hr_dept_016,BSO Network Solutions SAS,Platforms,,Cloud & Managed Services
+scen.hr_dept_017,BSO Network Solutions Ldt,Service Delivery,,Global Network Services
+scen.hr_dept_018,BSO Network Solutions Ldt,Network Engineering,,Global Network Services
+scen.hr_dept_019,BSO Network Solutions SAS,Dev Ops & Internal Tools,,Cloud & Managed Services
+scen.hr_dept_020,BSO Ltd,Supply Management,,Global Network Services
+scen.hr_dept_021,BSO Network Solutions SAS,Internal IT,,Cloud & Managed Services
+scen.hr_dept_022,BSO Network Solutions SAS,Network Engineering,,Cloud & Managed Services
