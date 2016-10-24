@@ -34,6 +34,7 @@ migration:
       operations:
         post:
           - anthem songs.install.csv_import::main
+          - anthem songs.install.company::main
           - anthem songs.install.accounting::main
           - anthem songs.install.ldap::main
           - anthem songs.install.hr::main
@@ -57,5 +58,7 @@ migration:
           # - product_variant_supplierinfo
           ## oca/server-tools
           - users_ldap_populate
+          ## oca/web
+          - web_easy_switch_company
           #### local-src
           - specific_hr

@@ -65,8 +65,25 @@ def import_contract_category(ctx):
 
 
 @anthem.log
+def create_expense_journal(ctx):
+    """ for each company, create an 'Expense' journal """
+    account_journal = ctx.env['account.journal']
+    for company in ctx.env['res.company'].search([]):
+        if not account_journal.search([('code', '=', 'EXP'),
+                                       ('type', '=', 'purchase'),
+                                       ('company_id', '=', company.id)]):
+            values = {'name': 'Expense (%s)' % company.name,
+                      'code': 'EXP',
+                      'type': 'purchase',
+                      'company_id': company.id
+                      }
+            account_journal.create(values)
+
+
+@anthem.log
 def main(ctx):
     """ Main: creating demo data """
+    create_expense_journal(ctx)
     import_hr_job(ctx)
     import_hr_department1(ctx)
     import_partner_employee_home_address(ctx)
