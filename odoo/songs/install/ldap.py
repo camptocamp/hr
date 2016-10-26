@@ -17,8 +17,8 @@ def create_ldap_entries(ctx):
         'ldap_tls': 0,
         'ldap_binddn': 'CN=Read AD,OU=SERVICES_ACCOUNTS,DC=carinae,DC=group',
         'ldap_password': 'HVNpY4Qw',
-        'ldap_base': 'OU=USERS,OU=BSO,DC=carinae,DC=group',
-        'ldap_filter': 'sAMAccountName=%s',
+        'ldap_base': 'OU=USERS,OU=CARINAE,DC=carinae,DC=group',
+        'ldap_filter': '(&(sAMAccountName=%s)(activate=TRUE))',
         'company': company.id,
         'user': ldap_template_user.id,
     })

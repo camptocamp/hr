@@ -13,6 +13,7 @@
  'depends': ['hr',
              'hr_contract',
              'users_ldap_populate',
+             'specific_fct',
              ],
  'website': 'http://www.camptocamp.com',
  'data': [
