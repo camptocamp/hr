@@ -17,7 +17,9 @@
              ],
  'website': 'http://www.camptocamp.com',
  'data': [
+     'security/res_groups.xml',
      'security/ir.model.access.csv',
+     'security/hr_confidential/ir.model.access.csv',
      'views/hr_contract.xml',
      'views/hr_employee.xml',
      'views/hr_contract_category.xml',

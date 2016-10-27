@@ -81,6 +81,14 @@ def create_expense_journal(ctx):
 
 
 @anthem.log
+def import_employee_fix_phone_number(ctx):
+    content = resource_stream(
+        req,
+        'data/install/hr_employee_with_tel_number_correct.csv')
+    load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
+
+
+@anthem.log
 def main(ctx):
     """ Main: creating demo data """
     create_expense_journal(ctx)
@@ -93,4 +101,5 @@ def main(ctx):
     import_employee_family(ctx)
     import_syntec_position(ctx)
     import_contract_category(ctx)
+    import_employee_fix_phone_number(ctx)
     # import_employee_family_rel(ctx)

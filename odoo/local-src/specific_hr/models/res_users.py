@@ -34,10 +34,13 @@ class ResUsers(models.Model):
                 # link the employee to the user
                 emp = emp_obj.browse(emps[0])
 
-        emp.user_id = self.id
-        if emp.company_id != self.company_id:
-            # set the user company to the value of employee's one
-            self.write({'company_id': emp.company_id.id,
-                        'company_ids': [(6, 0, [emp.company_id.id])]})
+        if emp:
+            emp.user_id = self.id
+            if emp.company_id != self.company_id:
+                # set the user company to the value of employee's one
+                self.write({'company_id': emp.company_id.id,
+                            'company_ids': [(6, 0, [emp.company_id.id])]})
+                if not self.partner_id.email:
+                    self.partner_id.email = emp.work_email
 
         return emp

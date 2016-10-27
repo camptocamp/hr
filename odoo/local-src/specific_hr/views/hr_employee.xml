@@ -15,6 +15,9 @@
             <xpath expr="//field[@name='user_id']" position="before">
                 <field name="user_login"/>
             </xpath>
+            <xpath expr="//button[@name='%(hr_contract.act_hr_employee_2_hr_contract)d']" position="attributes">
+                <attribute name="groups">specific_hr.bso_hr_confidential</attribute>
+            </xpath>
         </field>
     </record>
 

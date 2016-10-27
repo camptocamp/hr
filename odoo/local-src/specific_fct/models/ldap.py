@@ -14,7 +14,7 @@ class ResCompanyLDAP(models.Model):
         values = super(ResCompanyLDAP, self).map_ldap_attributes(
             conf, login, ldap_entry)
         mapping = [
-            ('name', ['givenname', 'SN']),
+            ('name', ['givenName', 'sn']),
         ]
         for value_key, conf_name in mapping:
             values[value_key] = ' '.join(
