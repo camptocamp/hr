@@ -16,6 +16,29 @@
 Release History
 ---------------
 
+9.2.1 (2016-10-27)
+++++++++++++++++++
+
+*Features and Improvements*
+
+* create a group ``BSO HR confidential`` to manage sensitive information on
+    ``hr.contract`` object
+* import user from LDAP with givenName + SN as name instead of cn
+    add a group hr_confidential to restrict sensitive data to a indentified
+    group
+* when importing a user and try to map it to an employee, fill company and
+    email information on partner related to the user
+
+*Bugfixes*
+
+* import ``hr.employee`` with ``+`` character in phone numbers
+
+*Build*
+
+*Documentation*
+    - when creating a user, an employee is not created anymore if
+      an employee with this login or with the field ``user_login`` is not found
+
 9.2.0 (2016-10-24)
 ++++++++++++++++++
 
