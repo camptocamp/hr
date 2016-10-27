@@ -62,3 +62,8 @@ migration:
           - web_easy_switch_company
           #### local-src
           - specific_hr
+    - version: 9.2.1
+      addons:
+        upgrade:
+          - specific_fct
+          - specific_hr

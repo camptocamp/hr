@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+hr_contract.access_hr_contract_manager,hr.contract.manager,hr_contract.model_hr_contract,specific_hr.bso_hr_confidential,1,1,1,1

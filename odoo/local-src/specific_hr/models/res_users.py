@@ -10,11 +10,11 @@ class ResUsers(models.Model):
     _inherit = 'res.users'
 
     @api.model
+    @api.returns('self', lambda value: value.id)
     def create(self, values):
         # when I create a user from ldap, I will look in hr.employee object if
         # there's one with the XML ID corresponding to the "login" and if so,
-        # make the link else if not found, create an employee related to the
-        # user created and add the xml id
+        # make the link else if not found, do nothing
         user = super(ResUsers, self).create(values)
         user._get_employee(user.name, user.login)
         return user
@@ -24,7 +24,6 @@ class ResUsers(models.Model):
         data_obj = self.env['ir.model.data']
         emp_obj = self.env['hr.employee']
         emp = emp_obj.search([('user_login', '=', login)])
-        create_emp = False
         if not emp:
             # try searching on xml_id
             emps = data_obj.search(
@@ -34,20 +33,14 @@ class ResUsers(models.Model):
             if emps:
                 # link the employee to the user
                 emp = emp_obj.browse(emps[0])
-                emp.user_id = self.id
-            else:
-                create_emp = True
 
-        if create_emp:
-            emp = self.env['hr.employee'].create({
-                'name': name,
-                'user_login': login,
-                'user_id': self.id,
-                })
-            data_obj.sudo().create({'name': login,
-                                    'model': 'hr.employee',
-                                    'module': 'BSO_employee',
-                                    'res_id': emp.id
-                                    })
+        if emp:
+            emp.user_id = self.id
+            if emp.company_id != self.company_id:
+                # set the user company to the value of employee's one
+                self.write({'company_id': emp.company_id.id,
+                            'company_ids': [(6, 0, [emp.company_id.id])]})
+                if not self.partner_id.email:
+                    self.partner_id.email = emp.work_email
 
         return emp

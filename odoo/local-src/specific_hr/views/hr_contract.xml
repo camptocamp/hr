@@ -54,4 +54,9 @@
 
     </field>
   </record>
+
+  <record id="hr_contract.hr_menu_contract" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('specific_hr.bso_hr_confidential')])]"/>
+  </record>
+
 </odoo>
