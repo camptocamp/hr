@@ -9,7 +9,7 @@
 	url = git@github.com:odoo/enterprise.git
 [submodule "odoo/src"]
 	path = odoo/src
-	url = git@github.com:odoo/odoo.git
+	url = git@github.com:OCA/OCB.git
 [submodule "odoo/external-src/product-variant"]
 	path = odoo/external-src/product-variant
 	url = git@github.com:OCA/product-variant.git
