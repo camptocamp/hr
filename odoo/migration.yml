@@ -74,3 +74,5 @@ migration:
           - partner_address_street3
           - partner_multi_relation
           - base_technical_features
+          - hr_holidays_legal_leave
+          - hr_holidays_compute_days
