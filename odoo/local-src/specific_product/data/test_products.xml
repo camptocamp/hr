@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+
+
+        <record id="nyc_lon_pppt_1" model="product.product">
+            <field name="name">NYC-LON FR1 PPPT</field>
+            <field name="sale_ok" eval="1"/>
+            <field name="purchase_ok" eval="1"/>
+            <field name="type">product</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="taxes_id" eval="[(5,0,0)]"/>
+            <field name="pop_src" ref="pop1"/>
+            <field name="pop_dst" ref="pop2"/>
+            <field name="rts">12</field>
+            <field name="sla">41</field>
+            <field name="mrc">84787</field>
+            <field name="nrc">2222</field>
+        </record>
+
+        <record id="nyc_lon_pppt_2" model="product.product">
+            <field name="name">NYC-LON FR2 PPPT</field>
+            <field name="sale_ok" eval="1"/>
+            <field name="purchase_ok" eval="1"/>
+            <field name="type">product</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="taxes_id" eval="[(5,0,0)]"/>
+            <field name="pop_src" ref="pop1"/>
+            <field name="pop_dst" ref="pop2"/>
+            <field name="rts">588</field>
+            <field name="sla">221</field>
+            <field name="mrc">847</field>
+            <field name="nrc">123</field>
+        </record>
+
+        <record id="nyc_lon_pppt_3" model="product.product">
+            <field name="name">NYC-LON FR3 PPPT</field>
+            <field name="sale_ok" eval="1"/>
+            <field name="purchase_ok" eval="1"/>
+            <field name="type">product</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="taxes_id" eval="[(5,0,0)]"/>
+            <field name="pop_src" ref="pop1"/>
+            <field name="pop_dst" ref="pop2"/>
+            <field name="rts">65</field>
+            <field name="sla">8</field>
+            <field name="mrc">11528</field>
+            <field name="nrc">12</field>
+        </record>
+
+    </data>
+</openerp>

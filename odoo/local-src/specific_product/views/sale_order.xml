@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sol_specific_bso_view_form" model="ir.ui.view">
+        <field name="name">sol_specific_bso_view_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form" position="inside">
+                <group name="bso_sol_spec">
+                    <field name="latency"/>
+                    <field name="bandwith"/>
+                    <field name="geo_area"/>
+                    <field name="nrc"/>
+                    <field name="mrc"/>
+                    <button name="estimate_price" string="Estimate price" type="object" class="oe_highlight"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                <field name="latency"/>
+                <field name="bandwith"/>
+                <field name="geo_area"/>
+                <field name="nrc"/>
+                <field name="mrc"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- ajouter duration dans le contexte des champs 'order_line' et 'product_id' -->
+</odoo>

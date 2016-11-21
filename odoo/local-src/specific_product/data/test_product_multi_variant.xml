@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+
+        <record id="frs1" model="res.partner">
+            <field name="name">Fourn. 1</field>
+            <field name="customer" eval="0"/>
+            <field name="supplier" eval="1"/>
+        </record>
+        <record id="frs2" model="res.partner">
+            <field name="name">Fourn. 2</field>
+            <field name="customer" eval="0"/>
+            <field name="supplier" eval="1"/>
+        </record>
+        <record id="frs3" model="res.partner">
+            <field name="name">Fourn. 3</field>
+            <field name="customer" eval="0"/>
+            <field name="supplier" eval="1"/>
+        </record>
+
+        <record id="pop1" model="res.partner">
+            <field name="name">POP NYC</field>
+            <field name="customer" eval="0"/>
+            <field name="supplier" eval="0"/>
+        </record>
+        <record id="pop2" model="res.partner">
+            <field name="name">POP LON</field>
+            <field name="customer" eval="0"/>
+            <field name="supplier" eval="0"/>
+        </record>
+
+        <record id="nyc_lon_1" model="product.product">
+            <field name="name">NYC-LON</field>
+            <field name="name_template">NYC-LON</field>
+            <field name="variant_name">FR1</field>
+            <field name="sale_ok" eval="1"/>
+            <field name="purchase_ok" eval="1"/>
+            <field name="type">product</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="taxes_id" eval="[(5,0,0)]"/>
+            <field name="pop_src" ref="pop1"/>
+            <field name="pop_dst" ref="pop2"/>
+            <field name="rts">12</field>
+            <field name="sla">41</field>
+            <field name="mrc">84787</field>
+            <field name="nrc">2222</field>
+        </record>
+
+        <record id="nyc_lon_2" model="product.product">
+            <field name="variant_name">FR2</field>
+            <field name="product_tmpl_id" ref="nyc_lon_1_product_template"/>
+            <field name="rts">588</field>
+            <field name="sla">221</field>
+            <field name="mrc">847</field>
+            <field name="nrc">123</field>
+        </record>
+
+        <record id="nyc_lon_3" model="product.product">
+            <field name="variant_name">FR3</field>
+            <field name="product_tmpl_id" ref="nyc_lon_1_product_template"/>
+            <field name="rts">65</field>
+            <field name="sla">8</field>
+            <field name="mrc">11528</field>
+            <field name="nrc">12</field>
+        </record>
+
+    </data>
+</openerp>
