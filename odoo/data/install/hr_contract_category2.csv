@@ -1,0 +1,12 @@
+id,name
+hr_contract.hr_contract_category_001,CDD
+hr_contract.hr_contract_category_002,CDI
+hr_contract.hr_contract_category_003,Contrat d'apprentissage
+hr_contract.hr_contract_category_004,Créateur
+hr_contract.hr_contract_category_005,Indépendant
+hr_contract.hr_contract_category_006,Mandataire
+hr_contract.hr_contract_category_007,Prestataire
+hr_contract.hr_contract_category_008,Stage 
+hr_contract.hr_contract_category_009,Contrat de professionnalisation
+hr_contract.hr_contract_category_010,Intérimaire
+hr_contract.hr_contract_category_011,Apprentissage
