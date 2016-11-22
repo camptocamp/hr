@@ -105,6 +105,13 @@ def import_employee_fix_phone_number(ctx):
         'data/install/hr_employee_with_tel_number_correct2.csv')
     load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
 
+@anthem.log
+def import_leaves(ctx):
+    content = resource_stream(
+        req,
+        'data/install/hr_legal_leaves.csv')
+    load_csv_stream(ctx, 'hr.holidays.status', content, delimiter=',')
+
 
 @anthem.log
 def main(ctx):
