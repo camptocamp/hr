@@ -4,9 +4,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields
-from openerp.osv import fields as ofields
+# from openerp.osv import fields as ofields
 
-import openerp.addons.decimal_precision as dp
+# import openerp.addons.decimal_precision as dp
 
 
 class ProductProduct(models.Model):
