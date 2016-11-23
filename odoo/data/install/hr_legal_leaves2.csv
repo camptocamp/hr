@@ -1,0 +1,6 @@
+id,is_annual
+scen.leave_fr,True
+scen.leave_gb,True
+scen.leave_lu,True
+scen.leave_us,True
+scen.leave_PBO,True
