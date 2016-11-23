@@ -63,15 +63,6 @@ def import_contract_category(ctx):
     content = resource_stream(req, 'data/install/hr_contract_category.csv')
     load_csv_stream(ctx, 'hr.contract.category', content, delimiter=',')
 
-@anthem.log
-def import_contract_category2(ctx):
-    content = resource_stream(req, 'data/install/hr_contract_category2.csv')
-    load_csv_stream(ctx, 'hr.contract.category', content, delimiter=',')
-
-@anthem.log
-def import_contract_type(ctx):
-    content = resource_stream(req, 'data/install/hr_contract_type.csv')
-    load_csv_stream(ctx, 'hr.contract.type', content, delimiter=',')
 
 @anthem.log
 def import_contract_type(ctx):
@@ -114,6 +105,7 @@ def import_employee_fix_phone_number(ctx):
         'data/install/hr_employee_with_tel_number_correct2.csv')
     load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
 
+
 @anthem.log
 def import_leaves(ctx):
     content = resource_stream(
@@ -125,32 +117,6 @@ def import_leaves(ctx):
         'data/install/hr_legal_leaves2.csv')
     load_csv_stream(ctx, 'hr.holidays.status', content, delimiter=',')
 
-
-
-@anthem.log
-def import_hr_employee2(ctx):
-    content = resource_stream(req, 'data/install/hr_employee2.csv')
-    load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
-
-@anthem.log
-def import_hr_employee3(ctx):
-    content = resource_stream(req, 'data/install/hr_employee3.csv')
-    load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
-
-@anthem.log
-def import_hr_employee3_active(ctx):
-    content = resource_stream(req, 'data/install/hr_employee3_active_ok.csv')
-    load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
-
-# @anthem.log
-# def import_hr_contract(ctx):
-#    content = resource_stream(req, 'data/install/hr_contract.csv')
-#    load_csv_stream(ctx, 'hr.contract', content, delimiter=',')
-
-@anthem.log
-def import_hr_contract2(ctx):
-    content = resource_stream(req, 'data/install/hr_contract2.csv')
-    load_csv_stream(ctx, 'hr.contract', content, delimiter=',')
 
 @anthem.log
 def main(ctx):
@@ -165,12 +131,8 @@ def main(ctx):
     import_hr_employee2(ctx)
     import_syntec_position(ctx)
     import_contract_category(ctx)
-    # import_contract_category2(ctx)
-    import_contract_type(ctx)
     import_employee_fix_phone_number(ctx)
     import_contract_type(ctx)
     import_contracts(ctx)
     import_employee_active(ctx)
     # import_employee_family_rel(ctx)
-    # import_hr_contract(ctx)
-    # import_hr_contract2(ctx)
