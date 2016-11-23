@@ -173,4 +173,4 @@ def main(ctx):
     import_employee_active(ctx)
     # import_employee_family_rel(ctx)
     # import_hr_contract(ctx)
-    import_hr_contract2(ctx)
+    # import_hr_contract2(ctx)

@@ -1,6 +1,6 @@
-id,name,is_annual,double_validation,company_id,exclude_rest_days,exclude_public_holidays,color_name
-scen.leave_fr,Annual Leave FR,True,False,BSO Network Solutions SAS,True,True,red
-scen.leave_gb,Annual Leave GB,True,False,BSO Network Solutions Ldt,True,True,red
-scen.leave_lu,Annual Leave LU,True,False,BSO Network Solutions Luxembourg SARL,True,True,red
-scen.leave_us,Annual Leave US,True,False,"BSO Network Inc,",True,True,red
-scen.leave_PBO,Annual Leave PBO,True,False,BPO Technology,True,True,red
+id,name,is_annual,double_validation,company_id,exclude_rest_days,exclude_public_holidays,color_name,annual_leaves
+scen.leave_fr,Annual Leave FR,True,False,BSO Network Solutions SAS,True,True,red,25
+scen.leave_gb,Annual Leave GB,True,False,BSO Network Solutions Ldt,True,True,red,25
+scen.leave_lu,Annual Leave LU,True,False,BSO Network Solutions Luxembourg SARL,True,True,red,25
+scen.leave_us,Annual Leave US,True,False,"BSO Network Inc,",True,True,red,25
+scen.leave_PBO,Annual Leave PBO,True,False,BPO Technology,True,True,red,25
