@@ -67,3 +67,9 @@ migration:
         upgrade:
           - specific_fct
           - specific_hr
+    - version: 9.3.0
+      addons:
+        upgrade:
+          #### oca/partner-contact
+          - partner_address_street3
+          - partner_multi_relation

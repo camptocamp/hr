@@ -16,6 +16,16 @@
 Release History
 ---------------
 
+9.3.0 (2016-11-23)
+++++++++++++++++++
+
+*Features and Improvements*
+
+* install ``partner_address_street3`` and ``partner_multi_relation`` from
+``OCA/partner-contact`` repo
+
+
+
 9.2.1 (2016-10-27)
 ++++++++++++++++++
 
