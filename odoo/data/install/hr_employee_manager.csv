@@ -1,186 +1,52 @@
 id,parent_id
-BSO_employee.depart002,
 BSO_employee.lgaury,Alexandre LEGRIX
-BSO_employee.depart004,
-BSO_employee.depart005,
-BSO_employee.depart006,
-BSO_employee.depart007,
-BSO_employee.depart008,
-BSO_employee.depart009,
 BSO_employee.rallayin,Alexandre LEGRIX
-BSO_employee.depart011,
-BSO_employee.depart012,
 BSO_employee.fandrews,Fraser BELL
-BSO_employee.depart014,
 BSO_employee.gapale,Tony JONES
-BSO_employee.depart016,
-BSO_employee.depart017,
-BSO_employee.depart018,
-BSO_employee.depart019,
-BSO_employee.depart020,
-BSO_employee.depart021,
-BSO_employee.depart022,
-BSO_employee.depart023,
 BSO_employee.mbauer,Fraser BELL
-BSO_employee.depart025,
 BSO_employee.fbell,Michael OURABAH
-BSO_employee.depart027,
-BSO_employee.depart028,
-BSO_employee.depart029,
-BSO_employee.depart030,
-BSO_employee.depart031,
-BSO_employee.depart032,
-BSO_employee.cabeyney,
 BSO_employee.ebird,Frankie ANDREWS
-BSO_employee.depart035,
-BSO_employee.depart036,
-BSO_employee.depart037,
-BSO_employee.depart038,
-BSO_employee.depart039,
 BSO_employee.jcantones,Alexandre LEGRIX
 BSO_employee.dcarmona,Tony JONES
-BSO_employee.depart042,
 BSO_employee.pcervantes,Tony JONES
 BSO_employee.tcheronneau,Alexandre LEGRIX
-BSO_employee.depart045,
-BSO_employee.depart046,
-BSO_employee.depart047,
-BSO_employee.depart048,
-BSO_employee.depart049,
-BSO_employee.depart050,
-BSO_employee.depart051,
-BSO_employee.depart052,
 BSO_employee.bdelmas,Tony JONES
 BSO_employee.tdeloffre,Alexandre LEGRIX
-BSO_employee.depart055,
-BSO_employee.depart056,
-BSO_employee.depart057,
-BSO_employee.depart058,
-BSO_employee.depart059,
-BSO_employee.depart060,
-BSO_employee.depart061,
-BSO_employee.depart062,
-BSO_employee.depart063,
 BSO_employee.dduarte,Tony JONES
-BSO_employee.depart065,
-BSO_employee.depart066,
-BSO_employee.depart067,
-BSO_employee.depart068,
 BSO_employee.tfulford-brown,Fraser BELL
-BSO_employee.jfyffe,Tom FULLFORD-BROWN
-BSO_employee.depart071,
-BSO_employee.depart072,
-BSO_employee.depart073,
-BSO_employee.depart074,
-BSO_employee.depart075,
-BSO_employee.depart076,
-BSO_employee.depart077,
-BSO_employee.depart078,
-BSO_employee.depart079,
-BSO_employee.depart080,
+BSO_employee.jfyffe,Tom FULLFORD- BROWN
 BSO_employee.nhargraves,Tony JONES
 BSO_employee.zhazzaz,Alexandre LEGRIX
-BSO_employee.depart083,
-BSO_employee.depart084,
-BSO_employee.depart085,
-BSO_employee.depart086,
 BSO_employee.tjones,Emmanuel PELLE
 BSO_employee.wjoseph,Michael OURABAH
-BSO_employee.depart089,
-BSO_employee.depart090,
-BSO_employee.depart091,
-BSO_employee.depart092,
-BSO_employee.depart093,
-BSO_employee.depart094,
 BSO_employee.akelekis,Emmanuel PELLE
 BSO_employee.rkergreis,Benoit DELMAS
-BSO_employee.depart097,
-BSO_employee.depart098,
-BSO_employee.depart099,
-BSO_employee.depart100,
-BSO_employee.depart101,
-BSO_employee.depart102,
-BSO_employee.depart103,
 BSO_employee.mlages,Michael OURABAH
-BSO_employee.depart105,
-BSO_employee.depart106,
 BSO_employee.tlanaute,Fraser BELL
-BSO_employee.depart108,
-BSO_employee.depart109,
-BSO_employee.depart110,
-BSO_employee.depart111,
 BSO_employee.alegrix,Emmanuel PELLE
-BSO_employee.depart113,
-BSO_employee.depart114,
-BSO_employee.depart115,
-BSO_employee.depart116,
-BSO_employee.depart117,
 BSO_employee.nmargueritte,Tony JONES
 BSO_employee.dmatilos,Tony JONES
 BSO_employee.rmazet,Thomas LANAUTE
 BSO_employee.smcconnell,Michael OURABAH
-BSO_employee.depart122,
-BSO_employee.depart123,
-BSO_employee.depart124,
-BSO_employee.depart125,
 BSO_employee.gmoreau,Alexandre LEGRIX
-BSO_employee.depart127,
-BSO_employee.depart128,
 BSO_employee.mtmullen,Wilfried JOSEPH
-BSO_employee.depart130,
 BSO_employee.snaipaul,Tony JONES
 BSO_employee.jbndzaghe,Alexandre LEGRIX
-BSO_employee.depart133,
-BSO_employee.depart134,
-BSO_employee.depart135,
-BSO_employee.depart136,
-BSO_employee.depart137,
-BSO_employee.mourabah,
 BSO_employee.rpamphile,Alexandre LEGRIX
-BSO_employee.depart140,
 BSO_employee.jpavey,Tony JONES
 BSO_employee.epelle,Michael OURABAH
-BSO_employee.depart143,
 BSO_employee.mperette,Tony JONES
-BSO_employee.depart145,
 BSO_employee.jperez,Chris TAYLOR
 BSO_employee.fpestel,Tony JONES
-BSO_employee.depart148,
-BSO_employee.depart149,
-BSO_employee.depart150,
 BSO_employee.eprieto,Wilfried JOSEPH
 BSO_employee.equinquis,Thomas LANAUTE
-BSO_employee.depart153,
-BSO_employee.depart154,
 BSO_employee.srialsotelo,Wilfried JOSEPH
-BSO_employee.depart156,
-BSO_employee.depart157,
-BSO_employee.depart158,
-BSO_employee.depart159,
-BSO_employee.depart160,
-BSO_employee.depart161,
 BSO_employee.rsanchez,Alexandre LEGRIX
 BSO_employee.ssanjurjo,Tony JONES
 BSO_employee.dsantangelo,Alexandre LEGRIX
-BSO_employee.depart165,
 BSO_employee.lsegrestaa,Thomas LANAUTE
-BSO_employee.depart167,
 BSO_employee.nsingleton,Michael BAUER
-BSO_employee.depart169,
-BSO_employee.depart170,
-BSO_employee.depart171,
-BSO_employee.depart172,
 BSO_employee.ctaylor,Fraser BELL
 BSO_employee.athomassin,Alexandre LEGRIX
 BSO_employee.strandafir,Thomas LANAUTE
-BSO_employee.depart176,
-BSO_employee.depart177,
-BSO_employee.depart178,
-BSO_employee.depart179,
 BSO_employee.jveloso,Tony JONES
-BSO_employee.depart181,
-BSO_employee.depart182,
-BSO_employee.depart183,
-BSO_employee.depart184,
-BSO_employee.depart185,
-BSO_employee.depart186,

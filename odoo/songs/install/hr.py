@@ -21,8 +21,14 @@ def import_hr_department1(ctx):
 
 
 @anthem.log
+def import_hr_employee_family(ctx):
+    content = resource_stream(req, 'data/install/hr_employee_family.csv')
+    load_csv_stream(ctx, 'hr.employee.family', content, delimiter=',')
+
+
+@anthem.log
 def import_hr_employee1(ctx):
-    content = resource_stream(req, 'data/install/hr_employee1.csv')
+    content = resource_stream(req, 'data/install/hr_employee3.csv')
     load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
 
 
@@ -47,12 +53,6 @@ def import_hr_employee2(ctx):
 
 
 @anthem.log
-def import_employee_family(ctx):
-    content = resource_stream(req, 'data/install/hr_employee_family.csv')
-    load_csv_stream(ctx, 'hr.employee.family', content, delimiter=',')
-
-
-@anthem.log
 def import_syntec_position(ctx):
     content = resource_stream(req, 'data/install/hr_syntec_position.csv')
     load_csv_stream(ctx, 'hr.syntec.position', content, delimiter=',')
@@ -62,6 +62,24 @@ def import_syntec_position(ctx):
 def import_contract_category(ctx):
     content = resource_stream(req, 'data/install/hr_contract_category.csv')
     load_csv_stream(ctx, 'hr.contract.category', content, delimiter=',')
+
+
+@anthem.log
+def import_contract_type(ctx):
+    content = resource_stream(req, 'data/install/hr_contract_type.csv')
+    load_csv_stream(ctx, 'hr.contract.type', content, delimiter=',')
+
+
+@anthem.log
+def import_contracts(ctx):
+    content = resource_stream(req, 'data/install/hr_contract2.csv')
+    load_csv_stream(ctx, 'hr.contract', content, delimiter=',')
+
+
+@anthem.log
+def import_employee_active(ctx):
+    content = resource_stream(req, 'data/install/hr_employee3_active_ok.csv')
+    load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
 
 
 @anthem.log
@@ -84,7 +102,7 @@ def create_expense_journal(ctx):
 def import_employee_fix_phone_number(ctx):
     content = resource_stream(
         req,
-        'data/install/hr_employee_with_tel_number_correct.csv')
+        'data/install/hr_employee_with_tel_number_correct2.csv')
     load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
 
 
@@ -95,11 +113,14 @@ def main(ctx):
     import_hr_job(ctx)
     import_hr_department1(ctx)
     import_partner_employee_home_address(ctx)
+    import_hr_employee_family(ctx)
     import_hr_employee1(ctx)
     import_hr_department2(ctx)
     import_hr_employee2(ctx)
-    import_employee_family(ctx)
     import_syntec_position(ctx)
     import_contract_category(ctx)
     import_employee_fix_phone_number(ctx)
+    import_contract_type(ctx)
+    import_contracts(ctx)
+    import_employee_active(ctx)
     # import_employee_family_rel(ctx)
