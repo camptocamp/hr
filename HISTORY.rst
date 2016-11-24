@@ -21,15 +21,28 @@ Latest (Unreleased)
 
 *Features and Improvements*
 
+
+**Features and Improvements**
+
 * install ``partner_address_street3`` and ``partner_multi_relation`` from
 ``OCA/partner-contact`` repo
 
+* Add hr employee import
+
+**Bugfixes**
+
+* Fix pep8 in specific_hr & specific_fct
+
+**Build**
+
+* switch to OCA/OCB
+* update docker-odoo-template to 1.7.0
 
 
 9.2.1 (2016-10-27)
 ++++++++++++++++++
 
-*Features and Improvements*
+**Features and Improvements**
 
 * create a group ``BSO HR confidential`` to manage sensitive information on
     ``hr.contract`` object
@@ -39,20 +52,20 @@ Latest (Unreleased)
 * when importing a user and try to map it to an employee, fill company and
     email information on partner related to the user
 
-*Bugfixes*
+**Bugfixes**
 
 * import ``hr.employee`` with ``+`` character in phone numbers
 
-*Build*
+**Build**
 
-*Documentation*
+**Documentation**
     - when creating a user, an employee is not created anymore if
       an employee with this login or with the field ``user_login`` is not found
 
 9.2.0 (2016-10-24)
 ++++++++++++++++++
 
-*Features and Improvements*
+**Features and Improvements**
 
 * install base modules:
     - ``hr_recruitment``
@@ -71,11 +84,11 @@ Latest (Unreleased)
 * install ``es_ES`` language in addition of ``en_US`` and ``fr_FR``
 * import companies, employees (and some HR stuff)
 
-*Bugfixes*
+**Bugfixes**
 
-*Build*
+**Build**
 
-*Documentation*
+**Documentation**
     - when creating a user, an employee is created and linked to this user if
       an employee with this login or with the field ``user_login`` is not found
 
@@ -83,7 +96,7 @@ Latest (Unreleased)
 9.1.0 (2016-09-14)
 ++++++++++++++++++
 
-*Features and Improvements*
+**Features and Improvements**
 
 * install base modules:
     - ``hr``
@@ -98,8 +111,8 @@ Latest (Unreleased)
 
 * install ``fr_FR`` language in addition of ``en_US``
 
-*Bugfixes*
+**Bugfixes**
 
-*Build*
+**Build**
 
-*Documentation*
+**Documentation**
