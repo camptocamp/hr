@@ -63,6 +63,11 @@ migration:
           #### local-src
           - specific_hr
     - version: 9.2.1
+      addons:
+        upgrade:
+          - specific_fct
+          - specific_hr
+    - version: 9.3.0
       operations:
         post:
           - anthem songs.install.hr::import_leaves
