@@ -5,7 +5,7 @@ version: '2'
 
 services:
   jira:
-    image: cptactionhank/atlassian-jira:latest
+    image: cptactionhank/atlassian-jira-software:latest
     volumes:
       - "data-jira:/var/atlassian/jira"
     ports:
