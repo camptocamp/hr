@@ -9,7 +9,7 @@
         <field name="numbercall">-1</field>
         <field name="doall" eval="False"/>
         <field name="model" eval="'res.partner'"/>
-        <field name="function" eval="'check_membership_payment'"/>
+        <field name="function" eval="'update_leaves_allocation'"/>
         <field name="args" eval="'()'"/>
     </record>
 

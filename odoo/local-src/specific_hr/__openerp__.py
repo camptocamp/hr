@@ -10,6 +10,7 @@
  'license': 'AGPL-3',
  'depends': ['hr',
              'hr_contract',
+             'hr_holidays_legal_leave',
              'users_ldap_populate',
              'specific_fct',
              ],
@@ -23,6 +24,7 @@
      'views/hr_contract_category.xml',
      'views/hr_syntec_position.xml',
      'views/hr_employee_family.xml',
+     'views/hr_holidays_status.xml',
  ],
  'installable': True,
  }
