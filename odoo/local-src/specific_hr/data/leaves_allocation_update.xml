@@ -1,16 +1,18 @@
 <?xml version="1.0"?>
-<odoo>
+<openerp>
+    <data noupdate="1">
 
-    <record model="ir.cron" id="cron_leaves_allocation_update">
-        <field name="name">Update leaves allocations</field>
-        <field name="interval_number">1</field>
-        <field name="priority">10</field>
-        <field name="interval_type">minutes</field>
-        <field name="numbercall">-1</field>
-        <field name="doall" eval="False"/>
-        <field name="model" eval="'res.partner'"/>
-        <field name="function" eval="'update_leaves_allocation'"/>
-        <field name="args" eval="'()'"/>
-    </record>
-
-</odoo>
+        <record model="ir.cron" id="cron_leaves_allocation_update">
+            <field name="name">Update leaves allocations</field>
+            <field name="interval_number">1</field>
+            <field name="priority">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'hr.holidays.status'"/>
+            <field name="function" eval="'update_leaves_cron'"/>
+            <field name="args" eval="'()'"/>
+            <field name="active" eval="False"/>
+        </record>
+    </data>
+</openerp>
