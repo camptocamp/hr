@@ -19,6 +19,7 @@
      'security/res_groups.xml',
      'security/ir.model.access.csv',
      'security/hr_confidential/ir.model.access.csv',
+     'data/leaves_allocation_update.xml',
      'views/hr_contract.xml',
      'views/hr_employee.xml',
      'views/hr_contract_category.xml',

@@ -7,9 +7,14 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']"
                     position="after">
-                <field name="is_annual" />
-                <field name='annual_leaves'/>
-                <button string="Update Leaves" name='update_leaves_allocation'/>
+                <!-- <field name="is_annual" /> -->
+                <label for="annual_leaves"/>
+                <div>
+                    <field name="annual_leaves"/>
+                    <button name="update_leaves_allocation" type="object"
+                        string="Update Leaves"
+                        class="fa fa-calendar o_icon_button oe_edit_only"/>
+                </div>
             </xpath>
         </field>
     </record>
