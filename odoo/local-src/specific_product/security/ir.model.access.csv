@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bso_network_pop_user,bso.network.pop.user,model_bso_network_pop,base.group_user,1,0,0,0
+access_bso_network_pop_manager,bso.network.pop.manager,model_bso_network_pop,base.group_erp_manager,1,1,1,1
+access_bso_network_device_user,bso.network.device.user,model_bso_network_device,base.group_user,1,0,0,0
+access_bso_network_device_manager,bso.network.device.manager,model_bso_network_device,base.group_erp_manager,1,1,1,1
+access_bso_network_link_user,bso.network.link.user,model_bso_network_link,base.group_user,1,0,0,0
+access_bso_network_link_manager,bso.network.link.manager,model_bso_network_link,base.group_erp_manager,1,1,1,1
+access_bso_network_cablesystem_user,bso.network.cablesystem.user,model_bso_network_cablesystem,base.group_user,1,0,0,0
+access_bso_network_cablesystem_manager,bso.network.cablesystem.manager,model_bso_network_cablesystem,base.group_erp_manager,1,1,1,1
+access_sale_order_line_network_link,access_sale_order_line_network_link,model_sale_order_line_network_link,base.group_sale_salesman,1,1,1,1
