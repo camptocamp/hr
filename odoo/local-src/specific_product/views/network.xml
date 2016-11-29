@@ -150,6 +150,7 @@
                 <group>
                     <field name="partner_id"/>
                     <field name="currency_id"/>
+                    <field name="cablesystem_id"/>
                 </group>
             </form>
         </field>
@@ -190,6 +191,7 @@
                 <field name="latency"/>
                 <field name="nrc"/>
                 <field name="mrc"/>
+                <field name="cablesystem_id"/>
             </search>
         </field>
     </record>
@@ -202,4 +204,47 @@
         <field name="search_view_id" ref="bso_network_link_search_view"/>
     </record>
     <menuitem id="menu_base_network_link" action="action_bso_network_link" parent="menu_base_network_config" string="Links"/>
+
+
+
+    <record id="bso_network_cablesystem_form_view" model="ir.ui.view">
+        <field name="name">bso_network_cablesystem_form_view</field>
+        <field name="model">bso.network.cablesystem</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="bso_network_cablesystem_tree_view" model="ir.ui.view">
+        <field name="name">bso_network_cablesystem_tree_view</field>
+        <field name="model">bso.network.cablesystem</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bso_network_cablesystem_search_view" model="ir.ui.view">
+        <field name="name">bso_network_cablesystem_search_view</field>
+        <field name="model">bso.network.cablesystem</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_bso_network_cablesystem" model="ir.actions.act_window">
+        <field name="name">Cable system</field>
+        <field name="res_model">bso.network.cablesystem</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="bso_network_cablesystem_search_view"/>
+    </record>
+    <menuitem id="menu_base_network_cablesystem" action="action_bso_network_cablesystem" parent="menu_base_network_config" string="Cable systems"/>
 </odoo>

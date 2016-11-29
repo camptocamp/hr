@@ -30,6 +30,7 @@
                                 <field name="latency"/>
                                 <field name="mrc"/>
                                 <field name="nrc"/>
+                                <field name="cablesystem_id"/>
                             </tree>
                             <form>
                                 <group>
@@ -53,6 +54,9 @@
                                     <group>
                                         <field name="mrc"/>
                                         <field name="nrc"/>
+                                    </group>
+                                    <group>
+                                        <field name="cablesystem_id"/>
                                     </group>
                                 </group>
                             </form>

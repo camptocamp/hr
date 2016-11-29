@@ -100,3 +100,6 @@ class SaleOrderLineNetworkLink(models.Model):
     latency = fields.Float(related='link_id.latency')
     mrc = fields.Float(related='link_id.mrc')
     nrc = fields.Float(related='link_id.nrc')
+    cablesystem_id = fields.Many2one(comodel_name='bso.network.cablesystem',
+                                     string='Cable system',
+                                     related='link_id.cablesystem_id')

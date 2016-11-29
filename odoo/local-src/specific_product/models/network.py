@@ -37,6 +37,8 @@ class NetworkLink(models.Model):
     )
     partner_id = fields.Many2one(comodel_name='res.partner',
                                  string="Partner")
+    cablesystem_id = fields.Many2one(comodel_name='bso.network.cablesystem',
+                                     string="Cable system")
 
 
 class NetworkDevice(models.Model):
@@ -60,3 +62,9 @@ class NetworkPop(models.Model):
     geo_area = fields.Char(string='Geographical area')
     longitude = fields.Float()
     latitude = fields.Float()
+
+
+class NetworkCableSystem(models.Model):
+    _name = 'bso.network.cablesystem'
+
+    name = fields.Char(required=True)
