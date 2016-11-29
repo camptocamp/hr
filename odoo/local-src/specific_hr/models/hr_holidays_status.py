@@ -34,8 +34,8 @@ class HrHolidays(models.Model):
         created = self.env['hr.holidays']
         for employee in employee_rs:
             vals = {
-                'number_of_days_temp': leave_type.annual_leaves,
-                'name': _('auto allocation'),
+                'number_of_days_temp': employee.per_month_legal_allocation,
+                'name': _('Auto Allocation'),
                 'employee_id': employee.id,
                 'type': 'add',
                 'holiday_status_id': leave_type.id,

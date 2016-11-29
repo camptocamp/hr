@@ -18,6 +18,10 @@
             <xpath expr="//button[@name='%(hr_contract.act_hr_employee_2_hr_contract)d']" position="attributes">
                 <attribute name="groups">specific_hr.bso_hr_confidential</attribute>
             </xpath>
+            <xpath expr="//field[@name='vehicle_distance']" position="after">
+                <field name="seniority_days"/>
+                <field name="per_month_legal_allocation"/>
+            </xpath>
         </field>
     </record>
 

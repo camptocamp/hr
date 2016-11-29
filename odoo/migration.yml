@@ -73,14 +73,10 @@ migration:
           - anthem songs.install.hr::import_leaves
       addons:
         upgrade:
-          - specific_fct
-          - specific_hr
-    - version: 9.3.0
-      addons:
-        upgrade:
-          #### oca/partner-contact
-          - partner_address_street3
-          - partner_multi_relation
           - base_technical_features
           - hr_holidays_legal_leave
           - hr_holidays_compute_days
+          - partner_address_street3
+          - partner_multi_relation
+          - specific_fct
+          - specific_hr
