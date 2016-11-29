@@ -22,3 +22,7 @@
 [submodule "odoo/external-src/hr"]
 	path = odoo/external-src/hr
 	url = git@github.com:OCA/hr.git
+[submodule "odoo/external-src/partner-contact"]
+	path = odoo/external-src/partner-contact
+	url = git@github.com:OCA/partner-contact.git
+	branch = 9.0
