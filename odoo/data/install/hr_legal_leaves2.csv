@@ -1,0 +1,7 @@
+id,is_annual
+__setup__.leave_fr,True
+__setup__.leave_gb,True
+__setup__.leave_lu,True
+__setup__.leave_us,True
+__setup__.leave_PBO,True
+__setup__.leave_main,True

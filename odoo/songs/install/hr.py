@@ -107,6 +107,18 @@ def import_employee_fix_phone_number(ctx):
 
 
 @anthem.log
+def import_leaves(ctx):
+    content = resource_stream(
+        req,
+        'data/install/hr_legal_leaves.csv')
+    load_csv_stream(ctx, 'hr.holidays.status', content, delimiter=',')
+    content = resource_stream(
+        req,
+        'data/install/hr_legal_leaves2.csv')
+    load_csv_stream(ctx, 'hr.holidays.status', content, delimiter=',')
+
+
+@anthem.log
 def main(ctx):
     """ Main: creating demo data """
     create_expense_journal(ctx)
