@@ -19,15 +19,20 @@ Release History
 Latest (Unreleased)
 +++++++++++++++++++
 
-*Features and Improvements*
-
-
 **Features and Improvements**
 
 * install ``partner_address_street3`` and ``partner_multi_relation`` from
-``OCA/partner-contact`` repo
+    ``OCA/partner-contact`` repo
+* add module ``specific_product`` to manage the following objects:
 
+    - POPs: Point of Presence
+    - POP devices: devices in POPs
+    - cable sytem
+    - Links: links between 2 PoPs and characterized by bandwith, latency, nrc,
+        mrc
+    - integration of those objects in sales
 * Add hr employee import
+* holidays allocations are incremented each month
 
 **Bugfixes**
 
@@ -36,7 +41,7 @@ Latest (Unreleased)
 **Build**
 
 * switch to OCA/OCB
-* update docker-odoo-template to 1.7.0
+* update docker-odoo-template to 1.7.1
 
 
 9.2.1 (2016-10-27)
