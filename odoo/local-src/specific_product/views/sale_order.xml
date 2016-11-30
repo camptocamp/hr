@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sol_specific_bso_view_form" model="ir.ui.view">
+        <field name="name">sol_specific_bso_view_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form" position="inside">
+                <group>
+                    <group name="bso_sol_spec">
+                        <field name="latency"/>
+                        <field name="bandwith"/>
+                        <field name="geo_area"/>
+                        <field name="nrc"/>
+                        <field name="mrc"/>
+                    </group>
+                    <group name="bso_sol_spec2">
+                        <field name="pop1_id"/>
+                        <field name="pop2_id"/>
+                        <field name="network_link_ids">
+                            <tree>
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                                <field name="pop1_id"/>
+                                <field name="pop1_device_id"/>
+                                <field name="pop2_id"/>
+                                <field name="pop2_device_id"/>
+                                <field name="bandwith"/>
+                                <field name="latency"/>
+                                <field name="mrc"/>
+                                <field name="nrc"/>
+                                <field name="cablesystem_id"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group colspan="4">
+                                        <field name="sequence"/>
+                                        <field name="link_id"/>
+                                        <field name="name" invisible="1"/>
+                                    </group>
+                                    <group name="pop1" string="POP A">
+                                        <field name="pop1_id"/>
+                                        <field name="pop1_device_id"/>
+                                    </group>
+                                    <group name="pop2" string="POP B">
+                                        <field name="pop2_id"/>
+                                        <field name="pop2_device_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="bandwith"/>
+                                        <field name="latency"/>
+                                    </group>
+                                    <group>
+                                        <field name="mrc"/>
+                                        <field name="nrc"/>
+                                    </group>
+                                    <group>
+                                        <field name="cablesystem_id"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                <field name="latency"/>
+                <field name="bandwith"/>
+                <field name="geo_area"/>
+                <field name="nrc"/>
+                <field name="mrc"/>
+            </xpath>
+
+            <xpath expr="//field[@name='project_id']" position="after">
+                <field name="duration"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="context">{'default_duration': duration}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
+                <attribute name="context">{'default_duration': parent.duration, 'duration':parent.duration, 'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="after">
+                <field name="duration" context="{'default_duration': parent.duration, 'duration':parent.duration, 'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

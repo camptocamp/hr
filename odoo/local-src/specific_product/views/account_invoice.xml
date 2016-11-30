@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="invoice_specific_bso_view_form" model="ir.ui.view">
+        <field name="name">invoice_specific_bso_view_form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+                <field name="latency"/>
+                <field name="bandwith"/>
+                <field name="geo_area"/>
+                <field name="nrc"/>
+                <field name="mrc"/>
+            </xpath>
+
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="duration"/>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']" position="attributes">
+                <attribute name="context">{'default_duration': duration}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='product_id']" position="attributes">
+                <attribute name="context">{'default_duration': parent.duration, 'duration':parent.duration}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='product_id']" position="after">
+                <field name="duration" context="{'default_duration': parent.duration, 'duration':parent.duration}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
