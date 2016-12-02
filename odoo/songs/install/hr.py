@@ -116,6 +116,10 @@ def import_leaves(ctx):
         req,
         'data/install/hr_legal_leaves2.csv')
     load_csv_stream(ctx, 'hr.holidays.status', content, delimiter=',')
+    content = resource_stream(
+        req,
+        'data/install/hr_holidays_status.csv')
+    load_csv_stream(ctx, 'hr.holidays.status', content, delimiter=',')
 
 
 @anthem.log
