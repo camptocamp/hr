@@ -21,7 +21,9 @@ class HolidaysType(models.Model):
 
     @api.model
     def update_leaves_cron(self):
-        self.search([('is_annual', '=', True)]).update_leaves_allocation()
+        leaves = self.env['res.company'].search([]).mapped(
+            'legal_holidays_status_id')
+        leaves.update_leaves_allocation()
 
 
 class HrHolidays(models.Model):

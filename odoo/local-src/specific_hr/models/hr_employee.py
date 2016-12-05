@@ -9,14 +9,18 @@ from openerp import models, fields, api
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    @api.depends('seniority_days')
+    @api.depends('seniority_days',
+                 'partial_time', 'partial_percent',
+                 'company_id.legal_holidays_status_id',
+                 'company_id.legal_holidays_status_id.annual_leaves'
+                 )
     def _get_per_month_legal_allocation(self):
         for rec in self:
-            legal = self.env['hr.holidays.status'].search(
-                [('is_annual', '=', True),
-                 ('company_id', '=', rec.company_id.id)],
-                limit=1).annual_leaves
-            rec.per_month_legal_allocation = (legal + rec.seniority_days) / 12.
+            legal = rec.company_id.legal_holidays_status_id.annual_leaves
+            days = (legal + rec.seniority_days) / 12.
+            if rec.partial_time:
+                days *= rec.partial_percent / 100.
+            rec.per_month_legal_allocation = days
 
     user_login = fields.Char()
     title = fields.Char(string="Employee Title")
@@ -32,6 +36,8 @@ class HrEmployee(models.Model):
         digits=(16, 3),
         compute='_get_per_month_legal_allocation'
     )
+    partial_time = fields.Boolean(default=False)
+    partial_percent = fields.Integer()
 
 
 class HrEmployeeFamily(models.Model):

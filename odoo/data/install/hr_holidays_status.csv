@@ -1,0 +1,16 @@
+id,color_name,limit,company_id,name
+BSO_holidays_status.type_001,lightcoral,True,BSO Network Solutions SAS,Mariage
+BSO_holidays_status.type_002,lightcoral,True,BSO Network Solutions SAS,Mariage d'un de ses enfants
+BSO_holidays_status.type_003,lightcoral,True,BSO Network Solutions SAS,Obsèques de son conjoint ou d’un de ses enfants
+BSO_holidays_status.type_004,lightcoral,True,BSO Network Solutions SAS,Obsèques de ses ascendants
+BSO_holidays_status.type_005,lightcoral,True,BSO Network Solutions SAS,Obsèques des collatéraux jusqu’au 2ème degré
+BSO_holidays_status.type_006,lightcoral,True,BSO Network Solutions SAS,Congé naissance enfants
+BSO_holidays_status.type_007,lightcoral,True,BSO Network Solutions SAS,Congés parentaux
+BSO_holidays_status.type_008,lightcoral,True,BSO Network Solutions SAS,Congés de formation
+BSO_holidays_status.type_009,lightcoral,True,BSO Network Solutions SAS,Congé sabbatique
+BSO_holidays_status.type_010,lightcoral,True,BSO Network Solutions SAS,Congé sans solde
+BSO_holidays_status.type_011,lavender,True,BSO Network Solutions SAS,Travail à distance
+BSO_holidays_status.type_012,lavender,True,BSO Network Solutions SAS,Formation
+BSO_holidays_status.type_013,lavender,True,BSO Network Solutions SAS,Déplacement
+BSO_holidays_status.type_014,lightcoral,True,BSO Network Solutions SAS,Maladie
+BSO_holidays_status.type_015,lightcoral,True,BSO Network Solutions SAS,Enfant malade
