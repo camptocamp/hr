@@ -23,7 +23,9 @@
             <xpath expr="//field[@name='vehicle_distance']" position="after">
                 <field name="seniority_days"/>
                 <field name="per_month_legal_allocation"/>
+                <field name="per_month_rtt_allocation"/>
             </xpath>
+
         </field>
     </record>
 

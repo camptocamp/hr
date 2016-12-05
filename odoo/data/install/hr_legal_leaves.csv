@@ -5,3 +5,4 @@ __setup__.leave_lu,Annual Leave LU,False,BSO Network Solutions Luxembourg SARL,T
 __setup__.leave_us,Annual Leave US,False,"BSO Network Inc,",True,True,red,25
 __setup__.leave_PBO,Annual Leave PBO,False,BPO Technology,True,True,red,25
 __setup__.leave_main,Annual Leave BSO,False,BSO Ltd,True,True,red,25
+__setup__.leave_rtt,RTT,False,,True,True,blue,10
