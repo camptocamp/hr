@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+9.3.0 (2016-12-06)
+++++++++++++++++++
+
+**Features and Improvements**
+
 * install ``partner_address_street3`` and ``partner_multi_relation`` from
     ``OCA/partner-contact`` repo
 * add module ``specific_product`` to manage the following objects:
@@ -32,7 +44,12 @@ Latest (Unreleased)
         mrc
     - integration of those objects in sales
 * Add hr employee import
-* holidays allocations are incremented each month
+* holidays and compensatory allocations are incremented each month
+* Seniority of an employee is managed on its record
+* Manage holidays on half-day basis
+* Add imposed days
+* Manage legal leaves and compensatory allocations per company
+
 
 **Bugfixes**
 
