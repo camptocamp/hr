@@ -14,6 +14,7 @@
              'users_ldap_populate',
              'specific_fct',
              'hr_holidays_compute_days',
+             'hr_holidays_imposed_days',
              ],
  'website': 'http://www.camptocamp.com',
  'data': [
