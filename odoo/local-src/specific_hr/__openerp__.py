@@ -13,6 +13,7 @@
              'hr_holidays_legal_leave',
              'users_ldap_populate',
              'specific_fct',
+             'hr_holidays_compute_days',
              ],
  'website': 'http://www.camptocamp.com',
  'data': [
