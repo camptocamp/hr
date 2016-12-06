@@ -17,10 +17,19 @@ class HrEmployee(models.Model):
     def _get_per_month_legal_allocation(self):
         for rec in self:
             legal = rec.company_id.legal_holidays_status_id.annual_leaves
-            days = (legal + rec.seniority_days) / 12.
+            days = (legal + rec.seniority_days)
             if rec.partial_time:
                 days *= rec.partial_percent / 100.
-            rec.per_month_legal_allocation = days
+            rec.per_month_legal_allocation = days / 12.
+
+    def _get_per_month_rtt(self):
+        for rec in self:
+            rtt = self.env['hr.holidays.status'].search(
+                [('is_rtt', '=', True), ('company_id', '=', rec.company_id.id)]
+            ).annual_leaves
+            if rec.partial_time:
+                rtt *= rec.partial_percent / 100.
+            rec.per_month_rtt_allocation = rtt / 12.0
 
     user_login = fields.Char()
     title = fields.Char(string="Employee Title")
@@ -38,6 +47,10 @@ class HrEmployee(models.Model):
     )
     partial_time = fields.Boolean(default=False)
     partial_percent = fields.Integer()
+    per_month_rtt_allocation = fields.Float(
+        digits=(16, 3),
+        compute='_get_per_month_rtt'
+    )
 
 
 class HrEmployeeFamily(models.Model):

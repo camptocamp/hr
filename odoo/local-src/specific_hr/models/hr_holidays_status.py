@@ -11,6 +11,8 @@ class HolidaysType(models.Model):
         digits=(16, 3),
     )
 
+    is_rtt = fields.Boolean()
+
     @api.multi
     def update_leaves_allocation(self):
         for rec in self:
@@ -24,6 +26,7 @@ class HolidaysType(models.Model):
         leaves = self.env['res.company'].search([]).mapped(
             'legal_holidays_status_id')
         leaves.update_leaves_allocation()
+        self.search([('is_rtt', '=', True)]).update_leaves_allocation()
 
 
 class HrHolidays(models.Model):
@@ -35,8 +38,12 @@ class HrHolidays(models.Model):
     def create_allocation(self, employee_rs, leave_type):
         created = self.env['hr.holidays']
         for employee in employee_rs:
+            if leave_type.is_annual:
+                nb_days = employee.per_month_legal_allocation
+            else:
+                nb_days = employee.per_month_rtt_allocation
             vals = {
-                'number_of_days_temp': employee.per_month_legal_allocation,
+                'number_of_days_temp': nb_days,
                 'name': _('Auto Allocation'),
                 'employee_id': employee.id,
                 'type': 'add',
