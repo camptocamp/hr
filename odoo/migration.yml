@@ -75,6 +75,7 @@ migration:
         upgrade:
           - base_technical_features
           - hr_holidays_legal_leave
+          - hr_holidays_imposed_days
           - hr_holidays_compute_days
           - partner_address_street3
           - partner_multi_relation
