@@ -27,3 +27,6 @@
 	path = odoo/external-src/partner-contact
 	url = git@github.com:OCA/partner-contact.git
 	branch = 9.0
+[submodule "odoo/external-src/connector-jira"]
+	path = odoo/external-src/connector-jira
+	url = git@github.com:camptocamp/connector-jira.git

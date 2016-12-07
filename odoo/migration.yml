@@ -71,6 +71,7 @@ migration:
       operations:
         post:
           - anthem songs.install.hr::import_leaves
+          - anthem songs.install.jira::main
       addons:
         upgrade:
           - base_technical_features
@@ -81,3 +82,4 @@ migration:
           - partner_multi_relation
           - specific_fct
           - specific_hr
+          - connector_jira

@@ -1,0 +1,19 @@
+# If you want to use Odoo with Jira,
+# run the composition with
+# docker-compose -f docker-compose.yml -f docker-compose.override.yml -f jira.yml up
+version: '2'
+
+services:
+  jira:
+    image: cptactionhank/atlassian-jira-software:latest
+    volumes:
+      - "data-jira:/var/atlassian/jira"
+    ports:
+      - 8080:8080
+
+  odoo:
+    depends_on:
+      - jira
+
+volumes:
+  data-jira:
