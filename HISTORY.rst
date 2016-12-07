@@ -28,6 +28,22 @@ Latest (Unreleased)
 **Documentation**
 
 
+9.4.0 (2016-12-07)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* add Jira (7.2) connector
+
+**Bugfixes**
+
+* issue in ``hr_holidays_imposed_days`` module on creating an employee
+
+**Build**
+
+**Documentation**
+
+
 9.3.0 (2016-12-06)
 ++++++++++++++++++
 

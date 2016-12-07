@@ -83,3 +83,8 @@ migration:
           - specific_fct
           - specific_hr
           - connector_jira
+    - version: 9.4.0
+      addons:
+        upgrade:
+          - hr_holidays_imposed_days
+          - connector_jira
