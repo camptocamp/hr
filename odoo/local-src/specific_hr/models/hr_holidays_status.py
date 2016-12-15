@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import datetime
+import calendar
 
 from openerp import fields, models, api, _
 from openerp import tools
@@ -47,6 +48,17 @@ class HrHolidays(models.Model):
                 nb_days = employee.per_month_legal_allocation
             else:
                 nb_days = employee.per_month_rtt_allocation
+            date_begin = employee.contract_id.date_start
+            date_now = fields.Datetime.now()
+
+            if date_begin[0:4] == date_now[0:4] and \
+               date_begin[5:7] == date_now[5:7]:
+                yr_nw = int(date_now[0:4])
+                mth_nw = int(date_now[5:7])
+                nb_days_month = calendar.monthrange(yr_nw, mth_nw)[1]
+                nb_days_worked = nb_days_month-int(date_begin[9:11])+1
+                ratio = nb_days_worked / float(nb_days_month)
+                nb_days = ratio * nb_days
             vals = {
                 'number_of_days_temp': nb_days,
                 'name': _('Auto Allocation'),
