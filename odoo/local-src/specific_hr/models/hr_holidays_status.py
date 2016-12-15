@@ -16,6 +16,8 @@ class HolidaysType(models.Model):
 
     is_rtt = fields.Boolean()
 
+    exclude_rest_days = fields.Boolean('Exclude week-end')
+
     @api.multi
     def update_leaves_allocation(self):
         for rec in self:

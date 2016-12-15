@@ -42,8 +42,6 @@ class HrHolidaysImposed(models.Model):
                 diff_days -= .5
             if to_dt_h < to_dt_h1330:
                 diff_days += .5
-            else:
-                diff_days += 1
 
             date_from2 = fields.Datetime.from_string(date_from)
             date_to2 = fields.Datetime.from_string(date_to)
