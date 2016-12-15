@@ -58,3 +58,8 @@ class HrHolidaysImposed(models.Model):
 
             return days + diff_days
         return 0
+
+    @api.onchange('status_id', 'company_id')
+    def onchange_status_id(self):
+        if self.status_id.company_id:
+            self.company_id = self.status_id.company_id

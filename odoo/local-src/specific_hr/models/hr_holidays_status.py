@@ -14,7 +14,7 @@ class HolidaysType(models.Model):
         digits=(16, 3),
     )
 
-    is_rtt = fields.Boolean()
+    is_rtt = fields.Boolean('Is RTT')
 
     exclude_rest_days = fields.Boolean('Exclude week-end')
 
