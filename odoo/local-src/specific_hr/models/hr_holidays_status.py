@@ -48,7 +48,7 @@ class HrHolidays(models.Model):
                 nb_days = employee.per_month_legal_allocation
             else:
                 nb_days = employee.per_month_rtt_allocation
-            date_begin = employee.contract_id.date_start
+            date_begin = employee.crt_date_start
             date_now = fields.Date.today()
             date_begin_yr = fields.Date.from_string(date_begin).strftime('%Y')
             date_now_yr = fields.Date.from_string(date_now).strftime('%Y')

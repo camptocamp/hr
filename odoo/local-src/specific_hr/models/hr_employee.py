@@ -31,7 +31,6 @@ class HrEmployee(models.Model):
                 rtt *= rec.partial_percent / 100.
             rec.per_month_rtt_allocation = rtt / 12.0
 
-
     user_login = fields.Char()
     title = fields.Char(string="Employee Title")
     family_id = fields.Many2one(
@@ -56,6 +55,8 @@ class HrEmployee(models.Model):
     date_lst_contract = fields.Date(compute="get_date_lst_contract")
 
     remaining_leaves = fields.Integer(readonly=True, )
+
+    crt_date_start = fields.Date("Contract start date")
 
 
 class HrEmployeeFamily(models.Model):
