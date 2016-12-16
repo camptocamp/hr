@@ -37,7 +37,10 @@ class SaleOrderLine(models.Model):
             if rec.product_id.is_epl:
                 rec.nrc = sum(rec.mapped('network_link_ids.nrc'))
                 rec.mrc = sum(rec.mapped('network_link_ids.mrc'))
-                rec.bandwith = min(rec.mapped('network_link_ids.bandwith'))
+                if rec.mapped('network_link_ids.bandwith'):
+                    rec.bandwith = min(rec.mapped('network_link_ids.bandwith'))
+                else:
+                    rec.bandwith = 0
                 rec.latency = sum(rec.mapped('network_link_ids.latency'))
 
     latency = fields.Float(compute='get_amounts', store=True)
