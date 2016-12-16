@@ -1,0 +1,29 @@
+migration:
+  options:
+    install_command: odoo.py
+  versions:
+    - version: 10.0.0
+      operations:
+        pre:
+          - anthem songs.install.pre::main
+        post:
+          - anthem openerp.addons.cloud_platform.songs::install_exoscale
+          - anthem songs.install.accounting::main
+          - anthem songs.install.logistics::main
+          - anthem songs.install.data_all::main
+      modes:
+        full:
+          operations:
+            post:
+              - anthem songs.install.data_full::main
+        demo:
+          operations:
+            post:
+              - anthem songs.install.data_demo::main
+      addons:
+        upgrade:
+          #### core
+          # - sale_stock
+          # - purchase
+          #### local-src
+          # - my_addon
