@@ -49,14 +49,19 @@ class HrHolidays(models.Model):
             else:
                 nb_days = employee.per_month_rtt_allocation
             date_begin = employee.contract_id.date_start
-            date_now = fields.Datetime.now()
+            date_now = fields.Date.today()
+            date_begin_yr = fields.Date.from_string(date_begin).strftime('%Y')
+            date_now_yr = fields.Date.from_string(date_now).strftime('%Y')
+            date_begin_mth = fields.Date.from_string(date_begin).strftime('%m')
+            date_now_mth = fields.Date.from_string(date_now).strftime('%m')
+            date_begin_day = fields.Date.from_string(date_now).strftime('%d')
 
-            if date_begin[0:4] == date_now[0:4] and \
-               date_begin[5:7] == date_now[5:7]:
-                yr_nw = int(date_now[0:4])
-                mth_nw = int(date_now[5:7])
+            if date_begin_yr == date_now_yr and \
+               date_begin_mth == date_now_mth:
+                yr_nw = int(date_now_yr)
+                mth_nw = int(date_now_mth)
                 nb_days_month = calendar.monthrange(yr_nw, mth_nw)[1]
-                nb_days_worked = nb_days_month-int(date_begin[9:11])+1
+                nb_days_worked = nb_days_month-int(date_begin_day) + 1
                 ratio = nb_days_worked / float(nb_days_month)
                 nb_days = ratio * nb_days
             vals = {
