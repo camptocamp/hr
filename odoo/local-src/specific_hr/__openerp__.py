@@ -28,6 +28,7 @@
      'views/hr_syntec_position.xml',
      'views/hr_employee_family.xml',
      'views/hr_holidays_status.xml',
+     'views/hr_imposed_days.xml',
  ],
  'installable': True,
  }

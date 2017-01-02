@@ -24,6 +24,7 @@
                 <field name="seniority_days"/>
                 <field name="per_month_legal_allocation"/>
                 <field name="per_month_rtt_allocation"/>
+                <field name='crt_date_start'/>
             </xpath>
 
         </field>

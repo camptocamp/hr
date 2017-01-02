@@ -21,7 +21,20 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* Computation of holidays & rtt on prorata for the first month
+
 **Bugfixes**
+
+* Change label "Per month rtt allocation" to set RTT in capitals
+* Field "remaining legal leaves" to readonly
+* Change Label "Is rtt" in "Is RTT"
+* Change label "Exclude rest days" in "Exclude week-end"
+* set group "base.group_no_one" on button "update leaves"
+* Correction on days caluculation for the imposed days
+* Onchange leave_type update company_id
+* Domain on leave_type a company is selected
+* Domain on employees if s company is selected
+
 
 **Build**
 

@@ -49,8 +49,14 @@ class HrEmployee(models.Model):
     partial_percent = fields.Integer()
     per_month_rtt_allocation = fields.Float(
         digits=(16, 3),
-        compute='_get_per_month_rtt'
+        compute='_get_per_month_rtt',
+        string="Per month RTT allocation"
     )
+    date_lst_contract = fields.Date(compute="get_date_lst_contract")
+
+    remaining_leaves = fields.Integer(readonly=True, )
+
+    crt_date_start = fields.Date("Contract start date")
 
 
 class HrEmployeeFamily(models.Model):

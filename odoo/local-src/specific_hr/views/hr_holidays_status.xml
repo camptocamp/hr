@@ -13,7 +13,8 @@
                     <field name="annual_leaves"/>
                     <button name="update_leaves_allocation" type="object"
                         string="Update Leaves"
-                        class="fa fa-calendar o_icon_button oe_edit_only"/>
+                        class="fa fa-calendar o_icon_button oe_edit_only"
+                        group="base.group_no_one"/>
                 </div>
                 <field name='is_rtt'/>
             </xpath>

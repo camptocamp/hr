@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="hr_holidays_imposed_view_form" model="ir.ui.view">
+    <field name="name">hr.holidays.imposed.view.form.onchange</field>
+    <field name="model">hr.holidays.imposed</field>
+    <field name="inherit_id" ref="hr_holidays_imposed_days.hr_holidays_imposed_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='status_id']" position="replace">
+        <field name="status_id" domain="[('company_id', '=', company_id)]"/>
+      </xpath>
+
+      <xpath expr="//field[@name='employee_ids']" position="replace">
+        <field name="employee_ids" domain="[('company_id', '=', company_id)]"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>
