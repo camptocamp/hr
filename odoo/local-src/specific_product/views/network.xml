@@ -11,6 +11,7 @@
             <form>
                 <group>
                     <group>
+                        <field name="bso_id"/>
                         <field name="name"/>
                         <field name="partner_id"/>
                         <field name='active'/>
@@ -33,6 +34,7 @@
         <field name="model">bso.network.pop</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="bso_id"/>
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="geo_area"/>
@@ -47,6 +49,7 @@
         <field name="model">bso.network.pop</field>
         <field name="arch" type="xml">
             <search>
+                <field name="bso_id"/>
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="geo_area"/>
@@ -75,6 +78,7 @@
             <form>
                 <group>
                     <group>
+                        <field name="bso_id"/>
                         <field name="name"/>
                         <field name='active'/>
                         <field name="partner_id"/>
@@ -90,6 +94,7 @@
         <field name="model">bso.network.device</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="bso_id"/>
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="pop_id"/>
@@ -102,6 +107,7 @@
         <field name="model">bso.network.device</field>
         <field name="arch" type="xml">
             <search>
+                <field name="bso_id"/>
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="pop_id"/>
@@ -127,6 +133,8 @@
         <field name="arch" type="xml">
             <form>
                 <group>
+                    <field name="bso_id"/>
+                    <field name="is_protected"/>
                     <field name="name"/>
                     <field name='active'/>
                 </group>
@@ -164,6 +172,8 @@
         <field name="model">bso.network.link</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="bso_id"/>
+                <field name="is_protected"/>
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="pop1_id"/>
@@ -184,6 +194,8 @@
         <field name="model">bso.network.link</field>
         <field name="arch" type="xml">
             <search>
+                <field name="bso_id"/>
+                <field name="is_protected"/>
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="pop1_id"/>
@@ -216,6 +228,7 @@
         <field name="arch" type="xml">
             <form>
                 <group>
+                    <field name="bso_id"/>
                     <field name="name"/>
                     <field name='active'/>
                 </group>
@@ -228,6 +241,7 @@
         <field name="model">bso.network.cablesystem</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="bso_id"/>
                 <field name="name"/>
             </tree>
         </field>
@@ -238,6 +252,7 @@
         <field name="model">bso.network.cablesystem</field>
         <field name="arch" type="xml">
             <search>
+                <field name="bso_id"/>
                 <field name="name"/>
                 <field name='active'/>
             </search>

@@ -40,6 +40,8 @@ class NetworkLink(models.Model):
     cablesystem_id = fields.Many2one(comodel_name='bso.network.cablesystem',
                                      string="Cable system")
     active = fields.Boolean('Active', default=True)
+    is_protected = fields.Boolean('Is protected', default=False)
+    bso_id = fields.Integer(required=True)
 
 
 class NetworkDevice(models.Model):
@@ -52,6 +54,7 @@ class NetworkDevice(models.Model):
     partner_id = fields.Many2one(comodel_name='res.partner',
                                  string="Partner")
     active = fields.Boolean('Active', default=True)
+    bso_id = fields.Integer(required=True)
 
 
 class NetworkPop(models.Model):
@@ -65,6 +68,7 @@ class NetworkPop(models.Model):
     longitude = fields.Float()
     latitude = fields.Float()
     active = fields.Boolean('Active', default=True)
+    bso_id = fields.Integer(required=True)
 
 
 class NetworkCableSystem(models.Model):
@@ -72,3 +76,4 @@ class NetworkCableSystem(models.Model):
 
     name = fields.Char(required=True)
     active = fields.Boolean('Active', default=True)
+    bso_id = fields.Integer(required=True)
