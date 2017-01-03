@@ -7,7 +7,10 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/form" position="inside">
-                <group>
+                <group name="product_bso_type">
+                    <field name="is_epl"/>
+                </group>
+                <group attrs="{'invisible': [('is_epl', '!=', True)]}">
                     <group name="bso_sol_spec">
                         <field name="latency"/>
                         <field name="bandwith"/>
@@ -70,6 +73,11 @@
                 <field name="geo_area"/>
                 <field name="nrc"/>
                 <field name="mrc"/>
+<!--                                <field name="latency" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
+                <field name="bandwith" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
+                <field name="geo_area" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
+                <field name="nrc" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
+                <field name="mrc" attrs="{'invisible': [('is_epl', '!=', True)]}"/>     -->
             </xpath>
 
             <xpath expr="//field[@name='project_id']" position="after">
