@@ -89,6 +89,10 @@ migration:
           - hr_holidays_imposed_days
           - connector_jira
     - version: 9.4.1
+      operations:
+        post:
+          - anthem songs.install.sale::main
       addons:
         upgrade:
           - specific_hr
+          - specific_product
