@@ -70,6 +70,11 @@
                 <field name="geo_area"/>
                 <field name="nrc"/>
                 <field name="mrc"/>
+<!--                                <field name="latency" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
+                <field name="bandwith" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
+                <field name="geo_area" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
+                <field name="nrc" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
+                <field name="mrc" attrs="{'invisible': [('is_epl', '!=', True)]}"/>     -->
             </xpath>
 
             <xpath expr="//field[@name='project_id']" position="after">
