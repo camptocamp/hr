@@ -55,13 +55,14 @@ class SaleOrderLine(models.Model):
                               string='POP B')
     network_link_ids = fields.One2many('sale.order.line.network.link',
                                        'sale_line_id')
+    is_epl = fields.Boolean(related='product_id.is_epl', readonly=True)
 
     @api.onchange('product_id')
     def product_id_change(self):
         if not self.product_id:
             return {'domain': {'product_uom': []}}
         res = super(SaleOrderLine, self).product_id_change()
-        if self.product_id:
+        if self.product_id and self.is_epl:
             self.nrc = self.product_id.nrc
             self.mrc = self.product_id.mrc
         return res
