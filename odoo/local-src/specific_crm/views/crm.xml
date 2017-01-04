@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="crm_case_form_view_oppor_bso">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='planned_revenue']/parent::div/parent::h2" position="before">
+                <h2 class="o_row">
+                    <div>
+                        <label for="planned_duration"/>
+                        <div class="o_row">
+                            <field name="planned_duration"/>
+                            <span>months </span>
+                        </div>
+                    </div>
+                </h2><br/>
+                <h2 class="o_row">
+                    <div>
+                        <label for="planned_revenue_nrc"/>
+                        <div class="o_row">
+                            <field name="company_currency" invisible="1"/>
+                            <field name="planned_revenue_nrc" widget='monetary' options="{'currency_field': 'company_currency'}"/>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="planned_revenue_mrc"/>
+                        <div class="o_row">
+                            <field name="company_currency" invisible="1"/>
+                            <field name="planned_revenue_mrc" widget='monetary' options="{'currency_field': 'company_currency'}"/>
+                        </div>
+                    </div>
+                </h2><br/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
