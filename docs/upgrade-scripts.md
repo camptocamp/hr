@@ -194,3 +194,17 @@ When you don't want the migration to run at all, you can disable it with:
 ```
 $ docker-compose run --rm -e MIGRATE=False odoo
 ```
+
+### Upgrade all modules
+
+If you upgrade `odoo/src` and any other `odoo/external-src/*` repos,
+you might want to update all the installed modules.
+You should just declare `base` in the addons section, like this:
+
+```yaml
+  versions:
+    - version: 9.0.1
+      addons:
+        upgrade:
+          - base
+```
