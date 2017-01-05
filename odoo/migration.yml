@@ -92,7 +92,9 @@ migration:
       operations:
         post:
           - anthem songs.install.sale::main
+          - anthem songs.install.crm::main
       addons:
         upgrade:
           - specific_hr
           - specific_product
+          - specific_crm

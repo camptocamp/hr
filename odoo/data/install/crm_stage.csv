@@ -1,0 +1,7 @@
+id,on_change,fold,probability,sequence,name,type
+crm.stage_lead1,True,False,5,0,Lead,Both
+crm.stage_lead2,True,False,30,1,Qualified,Opportunity
+crm.stage_lead3,True,False,50,2,Proposition,Opportunity
+BSO_crm_stage.crm_stage_legal,True,False,80,3,Legal,Opportunity
+crm.stage_lead5,True,True,100,4,Won,Opportunity
+BSO_crm_stage.crm_stage_lost,True,True,0,5,Lost,Opportunity
