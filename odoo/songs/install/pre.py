@@ -19,7 +19,7 @@ def setup_company(ctx):
     company.name = 'RocTool'
 
     # load logo on company
-    logo_content = resource_string(req, 'data/images/company_main_logo.png')
+    logo_content = resource_string(req, 'data/images/company_main_logo.jpg')
     b64_logo = b64encode(logo_content)
     company.logo = b64_logo
 
@@ -29,18 +29,18 @@ def setup_company(ctx):
             'street': "",
             'zip': "",
             'city': "",
-            'country_id': ctx.env.ref('base.ch').id,
-            'phone': "+41 00 000 00 00",
-            'fax': "+41 00 000 00 00",
-            'email': "contact@roctool.ch",
-            'website': "http://www.roctool.ch",
-            'vat': "VAT",
-            'parent_id': company.id,
+            'country_id': ctx.env.ref('base.fr').id,
+            'phone': "+33 00 000 00 00",
+            'fax': "+33 00 000 00 00",
+            'email': "contact@roctool.fr",
+            'website': "http://www.roctool.com",
+            'vat': "EU-VAT",
+            # 'parent_id': company.id,
             'logo': b64_logo,
-            'currency_id': ctx.env.ref('base.CHF').id,
+            'currency_id': ctx.env.ref('base.EUR').id,
         }
         create_or_update(ctx, 'res.company',
-                         'scenario.roctool_ch',
+                         'base.main_company',
                          values)
 
 

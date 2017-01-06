@@ -3,7 +3,7 @@
 	url = git@github.com:odoo/enterprise.git
 [submodule "odoo/src"]
 	path = odoo/src
-	url = git@github.com:odoo/odoo.git
+	url = git@github.com:OCA/OCB.git
 [submodule "odoo/external-src/server-tools"]
 	path = odoo/external-src/server-tools
 	url = git@github.com:oca/server-tools.git
