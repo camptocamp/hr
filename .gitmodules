@@ -7,3 +7,11 @@
 [submodule "odoo/external-src/server-tools"]
 	path = odoo/external-src/server-tools
 	url = git@github.com:oca/server-tools.git
+[submodule "odoo/external-src/hr"]
+	path = odoo/external-src/hr
+	url = git@github.com:OCA/hr.git
+	branch = 10.0
+[submodule "odoo/external-src/hr-timesheet"]
+	path = odoo/external-src/hr-timesheet
+	url = git@github.com:OCA/hr-timesheet.git
+	branch = 10.0
