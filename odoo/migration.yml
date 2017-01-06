@@ -30,6 +30,7 @@ migration:
           - hr_holidays
           - hr_timesheet
           - hr_timesheet_sheet
+          - l10n_fr
           - mrp
           - project
           - purchase
