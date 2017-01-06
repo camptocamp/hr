@@ -1,0 +1,7 @@
+id,parent_id/id,name,street,street2,city,zip,country_id/id,website,phone,fax,email,vat,company_registry,currency_id
+base.main_company,,RocTool SA,,,,,base.fr,,,,,,,EUR
+__setup__.roctool_inc,base.main_company,RocTool Inc.,,,,,base.us,,,,,,,USD
+__setup__.roctool_gmbh,base.main_company,RocTool Gmbh,,,,,base.de,,,,,,,EUR
+__setup__.roctool_taiwan,base.main_company,RocTool Taiwan,,,,,base.tw,,,,,,,TWD
+__setup__.roctool_japan,base.main_company,RocTool Japan,,,,,base.jp,,,,,,,JPY
+__setup__.roctool_china,base.main_company,RocTool China,,,,,base.cn,,,,,,,CNY
