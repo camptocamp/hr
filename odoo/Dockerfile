@@ -16,6 +16,7 @@ RUN pip install -r requirements.txt
 ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/src/addons, \
   /opt/odoo/external-src/server-tools, \
+  /opt/odoo/external-src/odoo-cloud-platform, \
   /opt/odoo/external-src/hr, \
   /opt/odoo/external-src/hr-timesheet, \
   /opt/odoo/local-src," \

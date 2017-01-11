@@ -1,0 +1,20 @@
+# If you want to use Odoo with Redis,
+# run the composition with
+# docker-compose -f docker-compose.yml \
+#                -f docker-compose.override.yml \
+#                -f redis.yml up
+version: '2'
+
+services:
+  redis:
+    image: redis
+    volumes:
+      - "data-redis:/data"
+  odoo:
+    environment:
+      - ODOO_SESSION_REDIS=1
+      - ODOO_SESSION_REDIS_HOST=redis
+      - ODOO_SESSION_REDIS_PREFIX=roctool-odoo-dev
+
+volumes:
+  data-redis:

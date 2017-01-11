@@ -15,3 +15,7 @@
 	path = odoo/external-src/hr-timesheet
 	url = git@github.com:OCA/hr-timesheet.git
 	branch = 10.0
+[submodule "odoo/external-src/odoo-cloud-platform"]
+	path = odoo/external-src/odoo-cloud-platform
+	url = git@github.com:camptocamp/odoo-cloud-platform.git
+	branch = 10.0
