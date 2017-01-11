@@ -155,6 +155,8 @@ def bump(ctx, feature=False, patch=False):
     pattern = r'^(\s*)image:\s+{}:\d+.\d+.\d+$'.format(DOCKER_IMAGE)
     replacement = r'\1image: {}:{}'.format(DOCKER_IMAGE, version)
     for rancher_file in VERSION_RANCHER_FILES:
+        if not os.path.exists(rancher_file):
+            continue
         # with fileinput, stdout is redirected to the file in place
         for line in fileinput.input(rancher_file, inplace=True):
             if DOCKER_IMAGE in line:
@@ -206,9 +208,8 @@ def translate_generate(ctx, addon_path, update_po=True):
     addon = addon_path.split('/')[-1]
     assert os.path.exists(build_path(addon_path)), "%s not found" % addon_path
     container_path = os.path.join('/opt', addon_path, 'i18n')
-    i18n_dir = os.path.join(build_path(addon_path), 'i18n')
-    if not os.path.exists(i18n_dir):
-        os.mkdir(i18n_dir)
+    if not os.path.exists(container_path):
+        os.mkdir(os.path.join(build_path(addon_path), 'i18n'))
     container_po_path = os.path.join(container_path, '%s.po' % addon)
     user_id = ctx.run(['id --user'], hide='both').stdout.strip()
     cmd = ('docker-compose run --rm  -e LOCAL_USER_ID=%(user)s '
@@ -224,6 +225,7 @@ def translate_generate(ctx, addon_path, update_po=True):
             'dropdb %s -U odoo -h db' % dbname)
 
     # mv .po to .pot
+    i18n_dir = build_path(os.path.join(addon_path, 'i18n'))
     source = os.path.join(i18n_dir, '%s.po' % addon)
     pot_file = source + 't'
     ctx.run('mv %s %s' % (source, pot_file))
