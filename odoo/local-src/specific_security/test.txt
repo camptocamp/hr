@@ -1,0 +1,12 @@
+base.res_users_rule
+['|',('company_ids','child_of',[user.company_id.id]),('company_id','parent_of',[user.company_id.id])]
+
+NEW object::hr.employee
+[('company_id', 'parent_of', [user.company_id.id])]
+
+analytic.analytic_comp_rule
+['|','|',('company_id','=',False),('company_id','child_of',[user.company_id.id]),('company_id', 'parent_of', [user.company_id.id])]
+
+project.project_comp_rule ;; project.task_comp_rule ;; project.report_project_task_user_report_comp_rule
+['|','|', ('company_id', '=', False),('company_id', 'child_of', [user.company_id.id]),('company_id', 'parent_of', [user.company_id.id])]
+
