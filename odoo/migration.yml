@@ -98,3 +98,4 @@ migration:
           - specific_hr
           - specific_product
           - specific_crm
+          - specific_security
