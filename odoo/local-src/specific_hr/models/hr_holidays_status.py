@@ -40,6 +40,10 @@ class HrHolidays(models.Model):
 
     number_of_days_temp = fields.Float(digits=(16, 3))
 
+    @api.onchange('holiday_status_id')
+    def _onchange_holiday_status_id(self):
+        self.number_of_days_temp = self._check_and_recompute_days()
+
     @api.model
     def create_allocation(self, employee_rs, leave_type):
         created = self.env['hr.holidays']

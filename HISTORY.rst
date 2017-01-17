@@ -22,6 +22,8 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * Computation of holidays & rtt on prorata for the first month
+* ``EPL`` product on sale order line
+* POC on access rights
 
 **Bugfixes**
 
