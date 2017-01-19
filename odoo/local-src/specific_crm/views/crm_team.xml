@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sales_team_form_view_in_crm_roctool" model="ir.ui.view">
+        <field name="name">crm.team.form.inherit.roctool</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="crm.sales_team_form_view_in_crm"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="survey_id"/>
+                <field name="project_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

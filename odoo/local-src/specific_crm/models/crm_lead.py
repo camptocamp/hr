@@ -28,6 +28,12 @@ class CrmLead(models.Model):
         string='Survey number', compute='_count_survey_input',
         store=True)
 
+    @api.onchange('team_id')
+    def onchange_team_id(self):
+        if self.team_id:
+            self.survey_id = self.team_id.survey_id.id
+            self.project_id = self.team_id.project_id.id
+
     @api.depends('survey_inputs')
     def _count_survey_input(self):
         for rec in self:
