@@ -34,6 +34,6 @@ def import_users(ctx):
 @anthem.log
 def main(ctx):
     """ Configuring products """
-    change_admin_language(ctx)
+    # change_admin_language(ctx)
     admin_user_password(ctx)
-    # import_users(ctx)
+    import_users(ctx)

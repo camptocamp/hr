@@ -1,0 +1,9 @@
+id,on_change,fold,sequence,name,probability
+__setup__.crm_stage_intial_demand,True,False,0,Initial Demand,10
+__setup__.crm_stage_nda,True,False,10,NDA,20
+__setup__.crm_stage_info_collection,True,False,20,Information collection,30
+__setup__.crm_stage_feasability_study,True,False,30,Feasability Study,40
+__setup__.crm_stage_go_nogo,True,False,40,GO / NOGO,50
+__setup__.crm_stage_commercial_offer,True,False,50,Commercial Offer,60
+crm.stage_lead4,True,True,60,Won,100
+__setup__.crm_stage_cancel,True,False,70,Cancel,0

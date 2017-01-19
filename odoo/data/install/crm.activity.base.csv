@@ -1,0 +1,9 @@
+id,name
+__setup__.crm_activity_sign_nda,Sign NDA
+__setup__.crm_activity_qualify_demand,Qualify demand
+__setup__.crm_activity_collect_information,Collect information
+__setup__.crm_activity_study_feasability,Study feasability
+__setup__.crm_activity_state_on_go_/_nogo,State on Go / NoGo
+__setup__.crm_activity_mark_as_won,Mark as won
+__setup__.crm_activity_mark_as_cancelled,Mark as cancelled
+__setup__.crm_activity_do_a_commercial_offer,Do a commercial offer
