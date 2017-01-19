@@ -19,9 +19,9 @@ def import_crm_stages(ctx):
 @anthem.log
 def import_crm_activities(ctx):
     content = resource_stream(req, 'data/install/crm.activity.base.csv')
-    load_csv_stream(ctx, 'crm.stage', content, delimiter=',')
+    load_csv_stream(ctx, 'crm.activity', content, delimiter=',')
     content = resource_stream(req, 'data/install/crm.activity.links.csv')
-    load_csv_stream(ctx, 'crm.stage', content, delimiter=',')
+    load_csv_stream(ctx, 'crm.activity', content, delimiter=',')
 
 
 @anthem.log
