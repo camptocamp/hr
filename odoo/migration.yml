@@ -28,6 +28,7 @@ migration:
           #### core
           - account
           - crm
+          - document
           - hr
           - hr_expense
           - hr_holidays
