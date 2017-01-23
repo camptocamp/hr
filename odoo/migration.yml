@@ -50,3 +50,10 @@ migration:
       addons:
         upgrade:
           - specific_crm
+    - version: 10.0.3
+      operations:
+        pre:
+          - anthem songs.install.sale::main
+      addons:
+        upgrade:
+          - website_quote
