@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <template id="inherit_survey_sfinished" inherit_id="survey.sfinished">
+        <xpath expr="//t[@t-call='survey.back']" position="after">
+            <t t-call="specific_crm.back_lead" />
+        </xpath>
+    </template>
+
+<!--     <template id="inherit_survey_init" inherit_id="survey.survey_init">
+        <xpath expr="//t[@t-call='survey.back']" position="after">
+            <t t-call="specific_base.back_partner" />
+        </xpath>
+    </template> -->
+<!--     <template id="inherit_survey_survey" inherit_id="survey.survey">
+        <xpath expr="//t[@t-call='survey.back']" position="after">
+            <t t-call="specific_base.back_partner" />
+        </xpath>
+    </template> -->
+
+
+    <template id="back_lead" name="BackLead">
+        <div t-ignore="true" class="pull-right">
+            <a t-attf-href="/web#view_type=form&amp;model=crm.lead&amp;id=#{user_input.lead_id.id}&amp;action=crm.crm_lead_opportunities_tree_view" class="btn btn-default">Back to Lead</a>
+        </div>
+    </template>
+
+
+</data>
+</openerp>

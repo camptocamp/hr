@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="crm_case_form_view_oppor_roctool" model="ir.ui.view">
+        <field name="name">crm.lead.form.opportunity</field>
+        <field name="model">crm.lead</field>
+        <field name="priority">20</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="RocTool" name="roctool">
+                    <group>
+                        <field name="domain"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="signature_ids"/>
+                        <field name="project_id"/>
+                        <field name="survey_id"/>
+                        <field name="survey_input_lines"/>
+                        <field name="survey_inputs"/>
+                        <field name="survey_input_count"/>
+                    </group>
+                    <group>
+                        <button type="object" name="answer_selected_survey" string="Answer Survey" class="oe_highlight"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
