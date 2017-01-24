@@ -50,3 +50,7 @@ migration:
       addons:
         upgrade:
           - specific_crm
+    - version: 10.0.3
+      operations:
+        post:
+          - anthem  songs.install.products::main

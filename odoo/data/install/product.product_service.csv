@@ -1,0 +1,10 @@
+id,name,barcode,type,purchase_ok,rental,sale_ok,standard_price,list_price,uom_id/id,uom_po_id/id,track_service
+roctool_imports_product_product_installation,Installation,,service,False,False,True,,11000,product.product_uom_unit,product.product_uom_unit,task
+roctool_imports_product_product_trials,Trials,,service,False,False,True,,2000,product.product_uom_day,product.product_uom_day,task
+roctool_imports_product_product_maintenance,Maintenance,,service,False,False,True,,,product.product_uom_unit,product.product_uom_unit,task
+roctool_imports_product_product_training,Training,,service,False,False,True,,,product.product_uom_unit,product.product_uom_unit,task
+roctool_imports_product_product_license,License,,service,False,False,True,,,product.product_uom_unit,product.product_uom_unit,task
+roctool_imports_product_product_shipping,Shipping,,service,True,False,True,,,product.product_uom_unit,product.product_uom_unit,task
+roctool_imports_product_product_simulation_study,Engineering - Simulation study,,service,True,False,True,,6000,product.product_uom_unit,product.product_uom_unit,task
+roctool_imports_product_product_tool_design_support,Engineering - Tool design support,,service,True,False,True,,6000,product.product_uom_unit,product.product_uom_unit,task
+roctool_imports_product_product_flow_study,Engineering - Flow analysis study,,service,True,False,True,,3000,product.product_uom_unit,product.product_uom_unit,task

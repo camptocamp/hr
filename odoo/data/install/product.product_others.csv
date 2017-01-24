@@ -1,0 +1,31 @@
+id,default_code,name,barcode,type,purchase_ok,rental,sale_ok,standard_price,list_price,uom_id/id,uom_po_id/id
+roctool_imports_product_product_tooling_components,Tooling components,Tooling components,,consu,False,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_packaging_suitcase_inductor,Packaging inductor suitcase,Packaging inductor suitcase,,product,False,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_set_coils_terminals,Set of coils and terminals,Set of coils and terminals,,product,False,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_copper_connectors,Copper connectors,Copper connectors,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_connection_boxes,Connexion boxes,Connexion boxes,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_gen_50kw,Generator Equipment 50kW,Generator Equipment 50kW,,product,False,False,True,,63000,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_gen_100kw,Generator Equipment 100kW,Generator Equipment 100kW,,product,False,False,True,,84000,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_gen_150kw,Generator Equipment 150kW,Generator Equipment 150kW,,product,False,False,True,,96000,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_gen_200kw,Generator Equipment 200kW,Generator Equipment 200kW,,product,False,False,True,,105000,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_gen_300kw,Generator Equipment 300kW,Generator Equipment 300kW,,product,False,False,True,,124000,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_gen_dz_100kw,Generator Equipment DZ100kW,Generator Equipment DZ100kW,,product,False,False,True,,117000,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_gen_dz_150kw,Generator Equipment DZ150kW,Generator Equipment DZ150kW,,product,False,False,True,,140000,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_ind_50kw,Induction generator 50kW,Induction generator 50kW,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_ind_100kw,Induction generator 100kW,Induction generator 100kW,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_ind_150kw,Induction generator 150kW,Induction generator 150kW,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_ind_200kw,Induction generator 200kW,Induction generator 200kW,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_ind_300kw,Induction generator 300kW,Induction generator 300kW,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_ind_dz_100kw,Induction generator DZ100 KW,Induction generator DZ100 KW,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_ind_dz_150kw,Induction generator DZ150 KW,Induction generator DZ150 KW,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_interface_rt11,Interface controller RT11,Interface controller RT11,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_interface_rt12,Interface controller RT12,Interface controller RT12,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_interface_rt21,Interface controller RT21,Interface controller RT21,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_interface_rt24,Interface controller RT24,Interface controller RT24,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_hyd_kit,Hydraulic kit,Hydraulic kit,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_rpc_c2c,RPC C2C,RPC C2C,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_rpc_c2s,RPC C2S,RPC C2S,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_rpc_c6,RPC C6 / C6VS,RPC C6 / C6VS,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_rpc_c12,RPC C12 / C12VS,RPC C12 / C12VS,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_rpc_c24,RPC C24 / C24VS,RPC C24 / C24VS,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit
+roctool_imports_product_product_rpc_t9,RPC T9 / T9VS,RPC T9 / T9VS,,product,True,False,True,,,product.product_uom_unit,product.product_uom_unit

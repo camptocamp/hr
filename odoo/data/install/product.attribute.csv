@@ -1,0 +1,6 @@
+id,name,create_variant
+roctool_imports.att_copper_cavity,Cavity,False
+roctool_imports.att_coils_terminals,Pod size,False
+roctool_imports.att_cooling_unit_rxx,Rxx,False
+roctool_imports.att_cooling_unit_micro_compact,Micro / Compact,False
+roctool_imports.att_cooling_unit_vs,VS (True/False),False
