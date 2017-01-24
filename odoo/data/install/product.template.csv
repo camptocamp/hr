@@ -1,0 +1,4 @@
+id,default_code,name,barcode,type,purchase_ok,rental,sale_ok
+roctool_imports.product_template_copper_induction,,Copper induction coils RI,,product,False,False,True
+roctool_imports.product_template_coils_terminal,,Coils terminals,,product,False,False,True
+roctool_imports.product_template_cooling_unit,,Cooling Unit,,product,False,False,True
