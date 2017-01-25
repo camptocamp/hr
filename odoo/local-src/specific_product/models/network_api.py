@@ -18,13 +18,14 @@ class NetworkApi(models.Model):
     user = fields.Char(required=True)
     password = fields.Char(required=True)
     path = fields.Char(required=True)
+    status_path = fields.Char(required=True, default='status')
 
     @api.multi
     def test_connection(self):
         self.ensure_one()
         try:
             r = requests.get('%(url)s/%(path)s' % {'url': self.url,
-                                                   'path': self.path
+                                                   'path': self.status_path
                                                    },
                              auth=(self.user, self.password),
                              verify=False)
@@ -36,14 +37,17 @@ class NetworkApi(models.Model):
         return True
 
     @api.multi
-    def call(self, start, end, sort=1, backup=1, details=1):
+    def call(self, start, end, user, sort=1, backup=1, details=1):
         """ @param::sort INTEGER :: 1=latency, 2=mrc, 3=latency/mrc"""
         self.ensure_one()
         payload = {'start': start,
                    'end': end,
                    'sort': sort,
                    'backup': backup,
-                   'details': details}
+                   'details': details,
+                   'user_id': user.id,
+                   'user_login': user.login
+                   }
 
         r = requests.get('%(url)s/%(path)s' % {'url': self.url,
                                                'path': self.path
@@ -57,8 +61,10 @@ class NetworkApi(models.Model):
     def test_call(self):
         """ start=SYD-ASX&end=AMS-TEL2&sort=1&backup=1&details=1 """
         self.ensure_one()
-        res = self.call('SYD-ASX', 'AMS-TEL2', sort=1, backup=1, details=1)
-        res2 = self.call('SYD-ASX', 'AMS-TEL2', sort=1, backup=1, details=0)
+        res = self.call('SYD-ASX', 'AMS-TEL2', self.env.user,
+                        sort=1, backup=1, details=1)
+        res2 = self.call('SYD-ASX', 'AMS-TEL2', self.env.user,
+                         sort=1, backup=1, details=0)
         print res
         print "*"*80
         print res2

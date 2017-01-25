@@ -285,6 +285,7 @@
                 <group>
                     <field name="url"/>
                     <field name="path"/>
+                    <field name="status_path"/>
                 </group>
                 <group>
                     <field name="user"/>
