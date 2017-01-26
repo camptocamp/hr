@@ -1,0 +1,1 @@
+update hr_department set company_id=null;

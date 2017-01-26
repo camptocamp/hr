@@ -21,7 +21,21 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+9.4.1 (2017-01-17)
+++++++++++++++++++
+
+**Features and Improvements**
+
 * Computation of holidays & rtt on prorata for the first month
+* ``EPL`` product on sale order line
+* POC on access rights
 
 **Bugfixes**
 
