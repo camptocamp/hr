@@ -56,6 +56,7 @@ migration:
           - anthem songs.install.sale::main
         post:
           - anthem  songs.install.products::main
+          - anthem songs.install.general_settings::main
       addons:
         upgrade:
           - website_quote
