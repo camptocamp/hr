@@ -38,9 +38,10 @@ class SaleOrderLine(models.Model):
         for rec in self:
             if rec.product_id.is_epl:
                 rec.nrc_backup = sum(rec.mapped('network_backup_link_ids.nrc'))
-                rec.mrc_backup = sum(
-                    map(lambda x: x*self.asked_bandwidth,
-                        rec.mapped('network_backup_link_ids.mrc_bd')))
+                rec.mrc_backup = (
+                    rec.asked_bandwidth *
+                    sum(rec.mapped('network_backup_link_ids.mrc_bd'))
+                )
 
     @api.depends('product_id',
                  'network_link_ids',
@@ -53,8 +54,10 @@ class SaleOrderLine(models.Model):
         for rec in self:
             if rec.product_id.is_epl:
                 rec.nrc = sum(rec.mapped('network_link_ids.nrc'))
-                rec.mrc = sum(map(lambda x: x*self.asked_bandwidth,
-                                  rec.mapped('network_link_ids.mrc_bd')))
+                rec.mrc = (
+                    rec.asked_bandwidth *
+                    sum(rec.mapped('network_link_ids.mrc_bd'))
+                )
                 if rec.mapped('network_link_ids.bandwith'):
                     rec.bandwith = min(rec.mapped('network_link_ids.bandwith'))
                 else:
