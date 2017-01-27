@@ -21,6 +21,7 @@
           'views/product.xml',
           'views/account_invoice.xml',
           'views/network.xml',
+          'views/res_company.xml',
           # 'data/test_product_multi_variant.xml',
           # 'data/test_products.xml',
           ],

@@ -267,4 +267,65 @@
         <field name="search_view_id" ref="bso_network_cablesystem_search_view"/>
     </record>
     <menuitem id="menu_base_network_cablesystem" action="action_bso_network_cablesystem" parent="menu_base_network_config" string="Cable systems"/>
+
+
+    <record id="bso_network_api_form_view" model="ir.ui.view">
+        <field name="name">bso_network_api_form_view</field>
+        <field name="model">bso.network.api</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button type="object" name="test_connection" string="Test connection" class="oe_highlight"/>
+                    <button type="object" name="test_call" string="Test CALL" class="oe_highlight"/>
+                </header>
+                <group>
+                    <field name="name"/>
+                    <field name='active'/>
+                </group>
+                <group>
+                    <field name="url"/>
+                    <field name="path"/>
+                    <field name="status_path"/>
+                </group>
+                <group>
+                    <field name="user"/>
+                    <field name="password"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="bso_network_api_tree_view" model="ir.ui.view">
+        <field name="name">bso_network_api_tree_view</field>
+        <field name="model">bso.network.api</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="url"/>
+                <field name="path"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bso_network_api_search_view" model="ir.ui.view">
+        <field name="name">bso_network_api_search_view</field>
+        <field name="model">bso.network.api</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="url"/>
+                <field name="path"/>
+                <field name='active'/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_bso_network_api" model="ir.actions.act_window">
+        <field name="name">Network API</field>
+        <field name="res_model">bso.network.api</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="bso_network_api_search_view"/>
+    </record>
+    <menuitem id="menu_base_network_api" action="action_bso_network_api" parent="menu_base_network_config" string="Network API"/>
 </odoo>

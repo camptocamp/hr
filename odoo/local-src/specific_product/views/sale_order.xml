@@ -10,74 +10,144 @@
                 <group name="product_bso_type">
                     <field name="is_epl"/>
                 </group>
-                <group attrs="{'invisible': [('is_epl', '!=', True)]}">
-                    <group name="bso_sol_spec">
-                        <field name="latency"/>
-                        <field name="bandwith"/>
-                        <field name="geo_area"/>
-                        <field name="nrc"/>
-                        <field name="mrc"/>
+                <div attrs="{'invisible': [('is_epl', '!=', True)]}">
+                    <group>
+                        <group name="bso_sol_spec2">
+                            <field name="asked_bandwidth"/>
+                            <field name="pop1_id"/>
+                            <field name="pop2_id"/>
+                            <field name="find_backup"/>
+                            <field name="route_sort"/>
+                        </group>
+                        <group name="bso_sol_spec">
+                            <field name="latency"/>
+                            <field name="bandwith"/>
+                            <field name="geo_area"/>
+                            <field name="nrc"/>
+                            <field name="mrc"/>
+                        </group>
                     </group>
-                    <group name="bso_sol_spec2">
-                        <field name="pop1_id"/>
-                        <field name="pop2_id"/>
-                        <field name="network_link_ids">
-                            <tree>
-                                <field name="sequence" widget="handle"/>
-                                <field name="name"/>
-                                <field name="pop1_id"/>
-                                <field name="pop1_device_id"/>
-                                <field name="pop2_id"/>
-                                <field name="pop2_device_id"/>
-                                <field name="bandwith"/>
-                                <field name="latency"/>
-                                <field name="mrc"/>
-                                <field name="nrc"/>
-                                <field name="cablesystem_id"/>
-                            </tree>
-                            <form>
-                                <group>
-                                    <group colspan="4">
-                                        <field name="sequence"/>
-                                        <field name="link_id"/>
-                                        <field name="name" invisible="1"/>
+                    <notebook>
+                        <page name="main_route" string="Main route">
+                            <field name="network_link_ids" context="{'default_is_backup': False}">
+                                <tree>
+                                    <field name="is_backup" invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="pop1_id"/>
+                                    <field name="pop1_device_id"/>
+                                    <field name="pop2_id"/>
+                                    <field name="pop2_device_id"/>
+                                    <field name="bandwith"/>
+                                    <field name="latency"/>
+                                    <field name="mrc"/>
+                                    <field name="nrc"/>
+                                    <field name="mrc_bd"/>
+                                    <field name="cablesystem_id"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group colspan="4">
+                                            <field name="is_backup" invisible="1"/>
+                                            <field name="sequence"/>
+                                            <field name="link_id"/>
+                                            <field name="name" invisible="1"/>
+                                        </group>
+                                        <group name="pop1" string="POP A">
+                                            <field name="pop1_id"/>
+                                            <field name="pop1_device_id"/>
+                                        </group>
+                                        <group name="pop2" string="POP B">
+                                            <field name="pop2_id"/>
+                                            <field name="pop2_device_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="bandwith"/>
+                                            <field name="latency"/>
+                                        </group>
+                                        <group>
+                                            <field name="mrc"/>
+                                            <field name="nrc"/>
+                                        </group>
+                                        <group>
+                                            <field name="cablesystem_id"/>
+                                        </group>
                                     </group>
-                                    <group name="pop1" string="POP A">
+                                </form>
+                            </field>
+                        </page>
+                        <page name="backup_route" string="Backup route"> <!-- attrs="{'invisible': [('find_backup', '=', False)]}"> -->
+                            <group>
+                                <field name="price_main_route"/>
+                                <field name="price_backup_route"/>
+                                <field name="backup_discount_amount" invisible="1"/>
+                                <field name="backup_discount_percent"/>
+                                <field name="price_backup_route_discounted"/>
+                                <field name="network_backup_link_ids" nolabel="1" colspan="2" context="{'default_is_backup': True}">
+                                    <tree>
+                                        <field name="is_backup" invisible="1"/>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
                                         <field name="pop1_id"/>
                                         <field name="pop1_device_id"/>
-                                    </group>
-                                    <group name="pop2" string="POP B">
                                         <field name="pop2_id"/>
                                         <field name="pop2_device_id"/>
-                                    </group>
-                                    <group>
                                         <field name="bandwith"/>
                                         <field name="latency"/>
-                                    </group>
-                                    <group>
                                         <field name="mrc"/>
                                         <field name="nrc"/>
-                                    </group>
-                                    <group>
+                                        <field name="mrc_bd"/>
                                         <field name="cablesystem_id"/>
-                                    </group>
-                                </group>
-                            </form>
-                        </field>
-                    </group>
-                </group>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <group colspan="4">
+                                                <field name="is_backup" invisible="1"/>
+                                                <field name="sequence"/>
+                                                <field name="link_id"/>
+                                                <field name="name" invisible="1"/>
+                                            </group>
+                                            <group name="pop1" string="POP A">
+                                                <field name="pop1_id"/>
+                                                <field name="pop1_device_id"/>
+                                            </group>
+                                            <group name="pop2" string="POP B">
+                                                <field name="pop2_id"/>
+                                                <field name="pop2_device_id"/>
+                                            </group>
+                                            <group>
+                                                <field name="bandwith"/>
+                                                <field name="latency"/>
+                                            </group>
+                                            <group>
+                                                <field name="mrc"/>
+                                                <field name="nrc"/>
+                                            </group>
+                                            <group>
+                                                <field name="cablesystem_id"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                </field>
+                            </group>
+                        </page>
+                        <page name="warning" string="Warnings">
+                            <field name="epl_warnings"/>
+                        </page>
+                    </notebook>
+                </div>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                <field name="asked_bandwidth"/>
                 <field name="latency"/>
                 <field name="bandwith"/>
                 <field name="geo_area"/>
                 <field name="nrc"/>
                 <field name="mrc"/>
-<!--                                <field name="latency" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
-                <field name="bandwith" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
-                <field name="geo_area" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
-                <field name="nrc" attrs="{'invisible': [('is_epl', '!=', True)]}"/>
-                <field name="mrc" attrs="{'invisible': [('is_epl', '!=', True)]}"/>     -->
+                <field name="price_main_route"/>
+                <field name="price_backup_route"/>
+                <field name="backup_discount_percent"/>
+                <field name="price_backup_route_discounted"/>
             </xpath>
 
             <xpath expr="//field[@name='project_id']" position="after">
