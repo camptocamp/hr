@@ -3,11 +3,14 @@
 # Copyright 2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, api
+from openerp import models, api, fields
 
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
+
+    expensify_id = fields.Char(string='Expensify ID')
+    expensify_secret = fields.Char(string='Expensify secret')
 
     @api.model
     @api.returns('self', lambda value: value.id)
