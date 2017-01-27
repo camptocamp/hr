@@ -21,16 +21,24 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
-* EPL: automatically filled by API calls
-* Users: add fields for Expensify
-
 **Bugfixes**
 
 **Build**
 
-* speed up travis builds
-
 **Documentation**
+
+
+9.5.0 (2017-01-27)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* EPL: automatically filled by API calls
+* Users: add fields for Expensify
+
+**Build**
+
+* speed up travis builds
 
 
 9.4.1 (2017-01-17)
