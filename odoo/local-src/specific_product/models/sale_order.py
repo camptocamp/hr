@@ -88,10 +88,15 @@ class SaleOrderLine(models.Model):
         'sale_line_id',
         domain=[('is_backup', '=', True)])
     backup_discount_amount = fields.Float()
-    backup_discount_percent = fields.Float()
+    backup_discount_percent = fields.Float(default=50.)
     is_epl = fields.Boolean(related='product_id.is_epl', readonly=True)
     epl_warnings = fields.Text()
     asked_bandwidth = fields.Float(default=1.0)
+    route_sort = fields.Selection(selection=[('1', 'Latency'),
+                                             ('2', 'MRC'),
+                                             ('3', 'Latency/MRC')],
+                                  default='1',
+                                  )
 
     @api.onchange('product_id')
     def product_id_change(self):
@@ -117,18 +122,18 @@ class SaleOrderLine(models.Model):
             if self.find_backup:
                 self.price_backup_route = self.nrc_backup + (self.mrc_backup *
                                                              self.duration)
-                if self.price_backup_route:
-                    self.backup_discount_percent = (
-                        self.backup_discount_amount / self.price_backup_route
-                    ) * 100
-            else:
-                self.backup_discount_percent = 100
+            #     if self.price_backup_route:
+            #         self.backup_discount_percent = (
+            #             self.backup_discount_amount / self.price_backup_route
+            #         ) * 100
+            # else:
+            #     self.backup_discount_percent = 100
 
     @api.onchange('backup_discount_percent', 'price_backup_route')
     def onchange_backup_discount_percent(self):
         if self.backup_discount_percent:
             self.price_backup_route_discounted = (
-                self.price_backup_route *
+                self.price_main_route *
                 (100 - self.backup_discount_percent) / 100
             )
 
@@ -215,9 +220,10 @@ class SaleOrderLine(models.Model):
                            'network_link_ids': [(5, 0)]
                             })
 
-    @api.onchange('pop1_id', 'pop2_id', 'find_backup')
+    @api.onchange('pop1_id', 'pop2_id', 'find_backup', 'route_sort')
     def get_route(self):
         """ call(self, start, end, user, sort=1, backup=1, details=1): """
+        res = {'warning': ''}
         self.empty_routes()
         if self.pop1_id and self.pop2_id:
             backup = self.find_backup and 1 or 0
@@ -225,11 +231,16 @@ class SaleOrderLine(models.Model):
                 self.pop1_id.name,
                 self.pop2_id.name,
                 self.env.user,
-                backup=backup)
+                backup=backup,
+                sort=int(self.route_sort)
+            )
             self.epl_warnings = '\n'.join(result['warnings'])
             self.fill_main_route(result['route'])
             if result['backup']:
                 self.fill_backup_route(result['backup'])
+            if result['warnings']:
+                res['warning'] = {'message': self.epl_warnings}
+                return res
 
 
 class SaleOrderLineNetworkLink(models.Model):
@@ -259,4 +270,21 @@ class SaleOrderLineNetworkLink(models.Model):
     @api.depends('mrc', 'bandwith')
     def _get_mrc_bandwith(self):
         for rec in self:
-            rec.mrc_bd = rec.mrc / rec.bandwith
+            if rec.bandwith:
+                rec.mrc_bd = rec.mrc / rec.bandwith
+
+    @api.onchange('link_id')
+    def onchange_link_id(self):
+        if self.link_id:
+            self.update(
+                {'pop1_id': self.link_id.pop1_id,
+                 'pop1_device_id': self.link_id.pop1_device_id,
+                 'pop2_id': self.link_id.pop2_id,
+                 'pop2_device_id': self.link_id.pop2_device_id,
+                 'bandwith': self.link_id.bandwith,
+                 'latency': self.link_id.latency,
+                 'mrc': self.link_id.mrc,
+                 'nrc': self.link_id.nrc,
+                 'cablesystem_id': self.link_id.cablesystem_id,
+                 }
+            )
