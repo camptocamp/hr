@@ -99,3 +99,8 @@ migration:
           - specific_product
           - specific_crm
           - specific_security
+    - version: 9.5.0
+      addons:
+        upgrade:
+          - specific_hr
+          - specific_product

@@ -21,9 +21,14 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* EPL: automatically filled by API calls
+* Users: add fields for Expensify
+
 **Bugfixes**
 
 **Build**
+
+* speed up travis builds
 
 **Documentation**
 
