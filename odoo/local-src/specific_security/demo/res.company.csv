@@ -1,0 +1,7 @@
+id,parent_id,name,currency_id,street,street2,zip,city,country_id,email,fax,vat,phone,website
+base.main_company,,BSO Ltd,EUR,13 Wentworth House,"2nd Floor, Office Suite 202",2,Dublin,IE,hello@bsonetwork.com,none,IE9736440M,+353 1 4417814,www.bsonetwork.com
+scen.company_fr,BSO Ltd,BSO Network Solutions SAS,EUR,81 avenue François Arago,,92000,Nanterre,FR,hello@bsonetwork.com,+33 1 45 06 46 50,FR73452456585,+33 1 77 36 11 00,www.bsonetwork.com
+scen.company_gb,BSO Ltd,BSO Network Solutions Ldt,GBP,44-48 Paul Street,,EC2A 4LB,London,GB,hello@bsonetwork.com,none,GB931686015,+44 20 7222 4555,www.bsonetwork.com
+scen.company_lu,BSO Ltd,BSO Network Solutions Luxembourg SARL,EUR,"5, rue de Strasbourg",,L-2561,Luxembourg,LU,hello@bsonetwork.com,none,LU27439508,+33 1 77 36 11 00,www.bsonetwork.com
+scen.company_us,BSO Ltd,"BSO Network Inc,",USD,101 Hudson Street,21st Floor,NJ-07302,Jersey City,US,hello@bsonetwork.com,none,EUIN 99-0366764,+1 646 838 0100,www.bsonetwork.com
+scen.company_bpo,,"BPO Technology",USD,,,,,,,,,,www.bsonetwork.com

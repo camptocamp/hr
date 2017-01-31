@@ -52,7 +52,7 @@ class HrEmployee(models.Model):
         compute='_get_per_month_rtt',
         string="Per month RTT allocation"
     )
-    date_lst_contract = fields.Date(compute="get_date_lst_contract")
+    # date_lst_contract = fields.Date(compute="get_date_lst_contract")
 
     remaining_leaves = fields.Integer(readonly=True, )
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="hr.department" id="dept_test_01">
+            <field name="name">TEST Top Management</field>
+        </record>
+
+        <record model="hr.department" id="dept_test_02">
+            <field name="name">TEST Human Resources</field>
+            <field name="parent_id" ref="dept_test_01"/>
+        </record>
+
+        <record model="hr.department" id="dept_test_03">
+            <field name="name">TEST Operations</field>
+            <field name="parent_id" ref="dept_test_01"/>
+        </record>
+
+        <record model="hr.department" id="dept_test_04">
+            <field name="name">TEST Global Network Services</field>
+            <field name="parent_id" ref="dept_test_03"/>
+        </record>
+    </data>
+</openerp>
