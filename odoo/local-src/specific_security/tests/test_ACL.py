@@ -21,6 +21,13 @@ class TestACL(common.TransactionCase):
         self.emp_andre = self.env.ref('specific_security.emp_andre')
         self.emp_damien = self.env.ref('specific_security.emp_damien')
 
+        test_users = self.env['res.users']
+        test_users |= self.melanie
+        test_users |= self.emmanuel
+        test_users |= self.damien
+        test_users |= self.andre
+        self.test_users = test_users
+
     def test_rh_001_employee_see_manager(self):
         self.assertEquals(
             self.emp_melanie.sudo(user=self.melanie).parent_id.name,
@@ -165,11 +172,118 @@ class TestACL(common.TransactionCase):
                 'date_to': '2017-05-12 19:00:00'
                 }
         # next instruction must fail
-        with self.assertRaises(AccessError):
-            leave_request = self.env['hr.holidays'].sudo(
-                user=self.emmanuel).create(vals)
+
         leave_request = self.env['hr.holidays'].sudo(
-            user=self.melanie).create(vals)
+            user=self.emmanuel).create(vals)
+        # leave_request = self.env['hr.holidays'].sudo(
+        #     user=self.melanie).create(vals)
         self.assertTrue(leave_request)
         leave_request.sudo(user=self.melanie).signal_workflow('validate')
         self.assertEquals(leave_request.state, 'validate')
+
+    def test_create_leave_type(self):
+        for company in self.env['res.company'].search([]):
+            vals = {'name': 'TEST same company',
+                    'company_id': company.id}
+            if company in self.melanie.company_ids:
+                req = self.env['hr.holidays.status'].sudo(
+                    user=self.melanie).create(vals)
+                self.assertTrue(req)
+            else:
+                with self.assertRaises(AccessError):
+                    req = self.env['hr.holidays.status'].sudo(
+                        user=self.melanie).create(vals)
+
+    def test_create_leave_allocation(self):
+        leaves_types = {}
+        for company in self.melanie.company_ids:
+            vals = {'name': 'TEST company',
+                    'company_id': company.id}
+            if company in self.melanie.company_ids:
+                leaves_types[company.id] = self.env['hr.holidays.status'].sudo(
+                    user=self.melanie).create(vals)
+        self.assertEquals(len(leaves_types), 6)
+
+        for employee in self.env['hr.employee'].search([]):
+            vals = {
+                'holiday_status_id': leaves_types[employee.company_id.id].id,
+                'employee_id': employee.id,
+                'number_of_days_temp': 25.,
+                'type': 'add',
+                }
+            leave_allocation = self.env['hr.holidays'].sudo(
+                user=self.melanie).create(vals)
+            self.assertTrue(leave_allocation)
+
+    def test_create_leave_request(self):
+        leaves_types = {}
+        for company in self.melanie.company_ids:
+            vals = {'name': 'TEST company',
+                    'company_id': company.id}
+            if company in self.melanie.company_ids:
+                leaves_types[company.id] = self.env['hr.holidays.status'].sudo(
+                    user=self.melanie).create(vals)
+        self.assertEquals(len(leaves_types), 6)
+        emp_obj = self.env['hr.employee']
+        for employee in emp_obj.search([('user_id', '!=', False)]):
+            vals = {
+                'holiday_status_id': leaves_types[employee.company_id.id].id,
+                'employee_id': employee.id,
+                'number_of_days_temp': 25.,
+                'type': 'add',
+                }
+            leave_allocation = self.env['hr.holidays'].sudo(
+                user=self.melanie).create(vals)
+            self.assertTrue(leave_allocation)
+            leave_allocation.sudo(
+                user=self.melanie).signal_workflow('validate')
+
+        for employee in emp_obj.search([('user_id', '!=', False)]):
+            vals = {
+                'holiday_status_id': leaves_types[employee.company_id.id].id,
+                'employee_id': employee.id,
+                'date_from': '2017-05-11 07:00:00',
+                'date_to': '2017-05-12 19:00:00'
+                }
+            leave_request = self.env['hr.holidays'].sudo(
+                user=employee.user_id).create(vals)
+            self.assertTrue(leave_request)
+
+    def test_validate_subordinates_holidays(self):
+        leaves_types = {}
+        for company in self.melanie.company_ids:
+            vals = {'name': 'TEST company',
+                    'company_id': company.id}
+            if company in self.melanie.company_ids:
+                leaves_types[company.id] = self.env['hr.holidays.status'].sudo(
+                    user=self.melanie).create(vals)
+        self.assertEquals(len(leaves_types), 6)
+        emp_obj = self.env['hr.employee']
+        for employee in emp_obj.search([('user_id', 'in', self.test_users.ids)]):
+            vals = {
+                'holiday_status_id': leaves_types[employee.company_id.id].id,
+                'employee_id': employee.id,
+                'number_of_days_temp': 25.,
+                'type': 'add',
+                }
+            leave_allocation = self.env['hr.holidays'].sudo(
+                user=self.melanie).create(vals)
+            self.assertTrue(leave_allocation)
+            leave_allocation.sudo(
+                user=self.melanie).signal_workflow('validate')
+
+        leaves_requests = []
+        for employee in emp_obj.search([('user_id', 'in', self.test_users.ids)]):
+            vals = {
+                'holiday_status_id': leaves_types[employee.company_id.id].id,
+                'employee_id': employee.id,
+                'date_from': '2017-05-11 07:00:00',
+                'date_to': '2017-05-12 19:00:00'
+                }
+            leave_request = self.env['hr.holidays'].sudo(
+                user=employee.user_id).create(vals)
+            self.assertTrue(leave_request)
+            leaves_requests.append(leave_request)
+
+        for leave in leaves_requests:
+            leave.sudo(user=self.emmanuel).signal_workflow('validate')

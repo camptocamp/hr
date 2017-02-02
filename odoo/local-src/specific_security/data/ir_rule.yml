@@ -1,6 +1,7 @@
 -
   !python {model: ir.rule, id: hr_holidays.hr_holidays_status_rule_multi_company} : |
       self.domain_force = "['|',('company_id','=',False),('company_id','in',user.company_ids.ids)]"
+      self.perm_read = False
 -
   !python {model: ir.rule, id: base.res_company_rule} : |
       self.domain_force = "['|',('id','=',False),('id','in',user.company_ids.ids)]"
@@ -37,3 +38,6 @@
 -
   !python {model: ir.rule, id: stock.stock_location_path_comp_rule} : |
      self.domain_force = "['|',('company_id','=',False),('company_id','in',user.company_ids.ids)]"
+-
+  !python {model: ir.rule, id: hr_holidays.property_rule_holidays_employee_write} : |
+    self.domain_force = "['|', '&', ('employee_id', 'child_of', user.employee_ids.ids),('employee_id.user_id','=',user.id), ('state', 'in', ['draft', 'confirm', 'cancel'])]"
