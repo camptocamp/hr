@@ -259,7 +259,8 @@ class TestACL(common.TransactionCase):
                     user=self.melanie).create(vals)
         self.assertEquals(len(leaves_types), 6)
         emp_obj = self.env['hr.employee']
-        for employee in emp_obj.search([('user_id', 'in', self.test_users.ids)]):
+        for employee in emp_obj.search([('user_id', 'in',
+                                         self.test_users.ids)]):
             vals = {
                 'holiday_status_id': leaves_types[employee.company_id.id].id,
                 'employee_id': employee.id,
@@ -273,7 +274,8 @@ class TestACL(common.TransactionCase):
                 user=self.melanie).signal_workflow('validate')
 
         leaves_requests = []
-        for employee in emp_obj.search([('user_id', 'in', self.test_users.ids)]):
+        for employee in emp_obj.search([('user_id', 'in',
+                                         self.test_users.ids)]):
             vals = {
                 'holiday_status_id': leaves_types[employee.company_id.id].id,
                 'employee_id': employee.id,
