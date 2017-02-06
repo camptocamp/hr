@@ -2,4 +2,4 @@ odoo:
   lb_config:
     port_rules:
       - target_port: 80
-hostname: ${DOMAIN_NAME}
+        hostname: ${DOMAIN_NAME}

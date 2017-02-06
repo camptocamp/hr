@@ -77,4 +77,4 @@ letsencrypt:
     io.rancher.container.agent.role: environment
   image: janeczku/rancher-letsencrypt:v0.3.0
   volumes:
-- roctool-test-certs:/etc/letsencrypt/production/certs
+    - roctool-test-certs:/etc/letsencrypt/production/certs
