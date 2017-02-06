@@ -28,5 +28,5 @@ def import_companies(ctx):
 @anthem.log
 def main(ctx):
     """ Main: creating demo data """
-    activate_currencies(ctx, ['GBP', 'EUR', 'USD', 'TWD', 'JPY', 'CNY'])
+    activate_currencies(ctx, ['GBP', 'EUR', 'USD', 'TWD', 'JPY'])
     import_companies(ctx)

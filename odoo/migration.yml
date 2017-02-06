@@ -60,3 +60,7 @@ migration:
       addons:
         upgrade:
           - website_quote
+    - version: 10.0.4
+      operations:
+        pre:
+          - anthem songs.install.multi_company::import_companies
