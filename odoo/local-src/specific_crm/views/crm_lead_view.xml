@@ -9,6 +9,11 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="RocTool" name="roctool">
+                    <group name="project_name_computation" string="Project configuration">
+                        <field name="project_zone_id"/>
+                        <field name="project_process_id"/>
+                        <field name="project_market_id"/>
+                    </group>
                     <group>
                         <field name="domain"/>
                         <field name="start_date"/>

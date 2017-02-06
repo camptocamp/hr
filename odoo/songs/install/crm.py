@@ -42,8 +42,29 @@ def add_stage_to_sale_team(ctx):
 
 
 @anthem.log
+def import_project_zone(ctx):
+    content = resource_stream(req, 'data/install/project.zone.csv')
+    load_csv_stream(ctx, 'project.zone', content, delimiter=',')
+
+
+@anthem.log
+def import_project_process(ctx):
+    content = resource_stream(req, 'data/install/project.process.csv')
+    load_csv_stream(ctx, 'project.process', content, delimiter=',')
+
+
+@anthem.log
+def import_project_market(ctx):
+    content = resource_stream(req, 'data/install/project.market.csv')
+    load_csv_stream(ctx, 'project.market', content, delimiter=',')
+
+
+@anthem.log
 def main(ctx):
     """ Main: creating demo data """
     import_crm_stages(ctx)
     add_stage_to_sale_team(ctx)
     import_crm_activities(ctx)
+    import_project_zone(ctx)
+    import_project_process(ctx)
+    import_project_market(ctx)

@@ -1,0 +1,7 @@
+id,code,name
+__setup__.project_zone_we,WE,Western Europe
+__setup__.project_zone_ee,EE,Central-Eastern Europe
+__setup__.project_zone_us,US,USA
+__setup__.project_zone_as,AS,Asia
+__setup__.project_zone_jp,JP,Japan
+__setup__.project_zone_ot,OT,Other

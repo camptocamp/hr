@@ -64,3 +64,11 @@ migration:
       operations:
         pre:
           - anthem songs.install.multi_company::import_companies
+        post:
+          - anthem songs.install.crm::import_project_zone
+          - anthem songs.install.crm::import_project_process
+          - anthem songs.install.crm::import_project_market
+      addons:
+        upgrade:
+          - specific_crm
+          - specific_sale

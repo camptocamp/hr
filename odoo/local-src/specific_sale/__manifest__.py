@@ -3,17 +3,13 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "RocTool specific crm module",
+    "name": "RocTool specific sale module",
     "version": "10.0.1.0.0",
-    "depends": ['crm', 'survey', 'project'],
+    "depends": ['specific_crm', 'sale', 'sale_crm'],
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "website": "http://www.camptocamp.com",
     "license": "GPL-3 or any later version",
-    "category": "CRM",
-    "data": ['data/ir_sequence.xml',
-             'views/crm_lead_view.xml',
-             'views/survey_templates.xml',
-             'views/crm_team.xml',
-             ],
+    "category": "Sale",
+    "data": ['views/sale_order_crm.xml'],
     'installable': True,
 }

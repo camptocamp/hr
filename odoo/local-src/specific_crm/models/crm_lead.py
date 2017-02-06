@@ -27,6 +27,9 @@ class CrmLead(models.Model):
     survey_input_count = fields.Integer(
         string='Survey number', compute='_count_survey_input',
         store=True)
+    project_zone_id = fields.Many2one(comodel_name='project.zone')
+    project_process_id = fields.Many2one(comodel_name='project.process')
+    project_market_id = fields.Many2one(comodel_name='project.market')
 
     @api.onchange('team_id')
     def onchange_team_id(self):

@@ -1,0 +1,6 @@
+id,code,name
+__setup__.project_market_au,AU,Automotive
+__setup__.project_market_el,EL,"Electronic (phone,PCs)"
+__setup__.project_market_cg,CG,Consumer goods
+__setup__.project_market_ae,AE,Aeronautic
+__setup__.project_market_ot,OT,Other
