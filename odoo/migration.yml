@@ -64,3 +64,12 @@ migration:
       operations:
         pre:
           - anthem songs.install.multi_company::import_companies
+        post:
+          - anthem songs.install.accounting::configure_chart_of_account
+          - anthem songs.install.accounting::configure_tax_cash_basis
+          - anthem songs.install.crm::import_crm_stages
+      addons:
+        upgrade:
+          - l10n_jp
+          - l10n_us
+          - l10n_de_skr03
