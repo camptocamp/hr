@@ -289,3 +289,41 @@ class TestACL(common.TransactionCase):
 
         for leave in leaves_requests:
             leave.sudo(user=self.emmanuel).signal_workflow('validate')
+
+    def test_create_expense(self):
+        emp_obj = self.env['hr.employee']
+        product_expense = self.env.ref('scen.expense_product_0013')
+        for employee in emp_obj.search([('user_id', 'in',
+                                         self.test_users.ids)]):
+            vals = {
+                'name': "Expense %s" % employee.name,
+                'employee_id': employee.id,
+                'product_id': product_expense.id,
+                'unit_amount': 123.45,
+                }
+            print vals
+            expense = self.env['hr.expense'].sudo(
+                user=employee.user_id).create(vals)
+            self.assertTrue(expense)
+            expense.sudo(user=employee.user_id.id).submit_expenses()
+
+    def test_create_expense_and_validate(self):
+        emp_obj = self.env['hr.employee']
+        product_expense = self.env.ref('scen.expense_product_0013')
+        for employee in emp_obj.search([('user_id', 'in',
+                                         self.test_users.ids)]):
+            vals = {
+                'name': "Expense %s" % employee.name,
+                'employee_id': employee.id,
+                'product_id': product_expense.id,
+                'unit_amount': 123.45,
+                }
+            print vals
+            expense = self.env['hr.expense'].sudo(
+                user=employee.user_id).create(vals)
+            self.assertTrue(expense)
+            expense.sudo(user=employee.user_id.id).submit_expenses()
+            user = self.melanie
+            if employee.parent_id:
+                user = employee.parent_id.user_id.id
+            expense.sudo(user=user).approve_expenses()

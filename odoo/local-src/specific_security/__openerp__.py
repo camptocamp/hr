@@ -2,6 +2,7 @@
 # Author: Damien Crier
 # Copyright 2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 {'name': 'Specific security',
  'summary': "Specific security for BSO",
  'version': '1.0',
@@ -35,6 +36,8 @@
           'data/ir_rule.yml',
           'demo/currency.sql',
           'demo/res.company.csv',
+          'demo/product.category.csv',
+          'demo/product.product.csv',
           'demo/users.xml',
           'demo/department.xml',
           'demo/add_home.xml',

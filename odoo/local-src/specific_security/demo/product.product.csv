@@ -1,0 +1,16 @@
+id,can_be_expensed,company_id,description,categ_id,default_code,name,type,uom_id/id,uom_po_id/id
+scen.expense_product_0011,True,BSO Ltd,Meals for staff including tips,Accomodation,SRS,Restaurant (staff),service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0012,True,BSO Ltd,Meals for customers  including tips,Accomodation,CRS,Restaurant (customer),service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0013,True,BSO Ltd,Hotel nights,Accomodation,HOT,Hotel,service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0014,True,BSO Ltd,Plane ticket,Travel,PLT,Plane ticket,service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0015,True,BSO Ltd,Train & Subway & Bus ticket,Travel,TRT,Train ticket,service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0016,True,BSO Ltd,"Taxi, Uber… including tips",Travel,TAX,Taxi,service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0017,True,BSO Ltd,Car rental,Travel,CAR,Car rental,service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0018,True,BSO Ltd,Office supplies,Supplies,OFS,Office supplies,product,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0019,True,BSO Ltd,Shipment,Shipping,SHP,Shipping,service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0020,True,BSO Ltd,Gift to customers,Miscellaneous,CGFT,Customer gift,service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0021,True,BSO Ltd,Miscellaneous,Miscellaneous,MIS,Miscellaneous,service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0022,True,BSO Ltd,"Books, documentation…",Supplies,DOC,Documentation,product,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0023,True,BSO Ltd,"Kilometrage, Mileage…",Travel,KMA,Km allowance,service,product.product_uom_km,product.product_uom_km
+scen.expense_product_0024,True,BSO Ltd,House/appartment rentals,Accomodation,RENT,Rentals,service,product.product_uom_unit,product.product_uom_unit
+scen.expense_product_0025,True,BSO Ltd,Postal charges,Shipping,POST,Postal ,service,product.product_uom_unit,product.product_uom_unit
