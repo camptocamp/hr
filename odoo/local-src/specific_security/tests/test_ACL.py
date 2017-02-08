@@ -301,7 +301,6 @@ class TestACL(common.TransactionCase):
                 'product_id': product_expense.id,
                 'unit_amount': 123.45,
                 }
-            print vals
             expense = self.env['hr.expense'].sudo(
                 user=employee.user_id).create(vals)
             self.assertTrue(expense)
@@ -318,7 +317,6 @@ class TestACL(common.TransactionCase):
                 'product_id': product_expense.id,
                 'unit_amount': 123.45,
                 }
-            print vals
             expense = self.env['hr.expense'].sudo(
                 user=employee.user_id).create(vals)
             self.assertTrue(expense)
