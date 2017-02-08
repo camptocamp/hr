@@ -105,7 +105,11 @@ migration:
           - specific_hr
           - specific_product
     - version: 9.6.0
+      operations:
+        post:
+          - anthem songs.install.products::main
       addons:
         upgrade:
+          - specific_product
           - partner_firstname
           - hr_employee_firstname
