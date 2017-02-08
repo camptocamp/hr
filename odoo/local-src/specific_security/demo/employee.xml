@@ -16,7 +16,7 @@
       <field name="title">COO</field>
       <field name="user_login">emmanuel_test</field>
       <field name="user_id" ref="demo_emmanuel"/>
-      <field name="work_email">test@test.test</field>
+      <field name="work_email">emmanuel@example.com</field>
       <field name="work_phone">+33177361131</field>
     </record>
 
@@ -35,7 +35,7 @@
       <field name="title">CP</field>
       <field name="user_login">andre_test</field>
       <field name="user_id" ref="demo_andre"/>
-      <field name="work_email">test@test.test</field>
+      <field name="work_email">andre@example.com</field>
       <field name="work_phone">+33177361131</field>
     </record>
 
@@ -54,7 +54,7 @@
       <field name="title">CP</field>
       <field name="user_login">damien.crier_test</field>
       <field name="user_id" ref="demo_damien"/>
-      <field name="work_email">test@test.test</field>
+      <field name="work_email">damien.crier@example.com</field>
       <field name="work_phone">+33177361131</field>
     </record>
 
@@ -74,7 +74,7 @@
       <field name="title">Responsable RH</field>
       <field name="user_login">melanie_test</field>
       <field name="user_id" ref="demo_melanie"/>
-      <field name="work_email">test@test.test</field>
+      <field name="work_email">melanie@example.com</field>
       <field name="work_location">BSO Network Solutions SAS</field>
       <field name="work_phone">+33177361131</field>
     </record>

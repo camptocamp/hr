@@ -8,12 +8,14 @@
 -
   !python {model: ir.rule, id: analytic.analytic_comp_rule} : |
       self.domain_force = "['|',('company_id','=',False),('company_id','in',user.company_ids.ids)]"
+      self.perm_read = False
 -
   !python {model: ir.rule, id: analytic.analytic_line_comp_rule} : |
       self.domain_force = "['|',('company_id','=',False),('company_id','in',user.company_ids.ids)]"
 -
   !python {model: ir.rule, id: project.project_comp_rule} : |
       self.domain_force = "['|',('company_id','=',False),('company_id','in',user.company_ids.ids)]"
+      self.perm_read = False
 -
   !python {model: ir.rule, id: project.task_comp_rule} : |
       self.domain_force = "['|',('company_id','=',False),('company_id','in',user.company_ids.ids)]"
@@ -41,3 +43,6 @@
 -
   !python {model: ir.rule, id: hr_holidays.property_rule_holidays_employee_write} : |
     self.domain_force = "['|', '&', ('employee_id', 'child_of', user.employee_ids.ids),('employee_id.user_id','=',user.id), ('state', 'in', ['draft', 'confirm', 'cancel'])]"
+-
+  !python {model: ir.rule, id: hr_timesheet_sheet.timesheet_comp_rule} : |
+    self.domain_force = "['|', '|',('company_id','=',False),('company_id','child_of',[user.company_id.id]),('employee_id', 'child_of', user.employee_ids.ids)]"
