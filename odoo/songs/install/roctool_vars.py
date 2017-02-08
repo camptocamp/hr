@@ -13,3 +13,13 @@ coa_dict = {
     # https://github.com/odoo/odoo/issues/15384
     # OPW reported on 2017-02-07
 }
+
+crm_stages = [
+    '__setup__.crm_stage_intial_demand',
+    '__setup__.crm_stage_nda_engaged',
+    '__setup__.crm_stage_trf',
+    '__setup__.crm_stage_study',
+    '__setup__.crm_stage_quote',
+    '__setup__.crm_stage_won',
+    '__setup__.crm_stage_cancel',
+]

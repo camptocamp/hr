@@ -27,6 +27,8 @@ class CrmLead(models.Model):
     survey_input_count = fields.Integer(
         string='Survey number', compute='_count_survey_input',
         store=True)
+    business_type = fields.Selection(selection=[('injection', 'Injection'),
+                                                ('composite', 'Composite')])
 
     @api.onchange('team_id')
     def onchange_team_id(self):
