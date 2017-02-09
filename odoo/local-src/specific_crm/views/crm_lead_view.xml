@@ -15,6 +15,7 @@
                         <field name="project_market_id"/>
                     </group>
                     <group>
+                        <field name="business_type"/>
                         <field name="domain"/>
                         <field name="start_date"/>
                         <field name="end_date"/>
