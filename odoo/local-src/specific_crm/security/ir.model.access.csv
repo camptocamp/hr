@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_market_user,access_project_market_user,specific_crm.model_project_market,base.group_user,1,0,0,0
+access_project_market_user,access_project_market_user,specific_crm.model_project_market,base.group_erp_manager,1,1,1,1
+access_project_process_user,access_project_process_user,specific_crm.model_project_process,base.group_user,1,0,0,0
+access_project_process_user,access_project_process_user,specific_crm.model_project_process,base.group_erp_manager,1,1,1,1
+access_project_market_user,access_project_market_user,specific_crm.model_project_market,base.group_user,1,0,0,0
+access_project_market_user,access_project_market_user,specific_crm.model_project_market,base.group_erp_manager,1,1,1,1

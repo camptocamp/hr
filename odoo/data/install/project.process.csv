@@ -1,0 +1,5 @@
+id,code,name
+__setup__.project_process_in,IN,Injection
+__setup__.project_process_co,CO,Composite
+__setup__.project_process_rd,RD,R&D
+__setup__.project_process_ot,OT,Other
