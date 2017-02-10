@@ -104,3 +104,8 @@ migration:
         upgrade:
           - specific_hr
           - specific_product
+    - version: 9.6.0
+      addons:
+        upgrade:
+          - partner_firstname
+          - hr_employee_firstname
