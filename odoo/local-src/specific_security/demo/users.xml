@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+  <data>
+    <record model="res.users" id="demo_melanie">
+      <field name="company_id" ref="scen.company_fr"/>
+      <field name="company_ids" eval="[(4, ref('scen.company_bpo')), (4, ref('base.main_company')), (4, ref('scen.company_us')), (4, ref('scen.company_gb')), (4, ref('scen.company_lu')), (4, ref('scen.company_fr'))]"/>
+      <field name="groups_id" eval="[(4, ref('analytic.group_analytic_accounting')), (4, ref('purchase.group_analytic_accounting')), (4, ref('base.group_hr_attendance')), (4, ref('specific_hr.bso_hr_confidential')), (4, ref('base.group_partner_manager')), (4, ref('base.group_user')), (4, ref('base.group_light_multi_company')), (4, ref('product.group_uom')), (4, ref('product.group_pricelist_item')), (4, ref('base.group_hr_manager')), (4, ref('base.group_multi_company')), (4, ref('base.group_multi_currency')), (4, ref('base.group_hr_user')), (4, ref('sale.group_mrp_properties')), (4, ref('product.group_sale_pricelist')), (4, ref('project.group_tasks_work_on_tasks')), (4, ref('base.group_no_one')), (4, ref('project.group_time_work_estimation_tasks')), (4, ref('base.group_survey_user'))]"/>
+      <field name="in_group_11" eval="1"/>
+      <field name="in_group_12" eval="0"/>
+      <field name="in_group_13" eval="0"/>
+      <field name="in_group_16" eval="1"/>
+      <field name="in_group_19" eval="1"/>
+      <field name="in_group_20" eval="1"/>
+      <field name="in_group_21" eval="1"/>
+      <field name="in_group_22" eval="0"/>
+      <field name="in_group_23" eval="1"/>
+      <field name="in_group_24" eval="0"/>
+      <field name="in_group_25" eval="0"/>
+      <field name="in_group_26" eval="0"/>
+      <field name="in_group_27" eval="0"/>
+      <field name="in_group_31" eval="0"/>
+      <field name="in_group_33" eval="0"/>
+      <field name="in_group_36" eval="1"/>
+      <field name="in_group_37" eval="1"/>
+      <field name="in_group_38" eval="0"/>
+      <field name="in_group_39" eval="1"/>
+      <field name="in_group_40" eval="0"/>
+      <field name="in_group_41" eval="0"/>
+      <field name="in_group_42" eval="0"/>
+      <field name="in_group_5" eval="1"/>
+      <field name="in_group_50" eval="1"/>
+      <field name="in_group_51" eval="0"/>
+      <field name="in_group_54" eval="0"/>
+      <field name="in_group_55" eval="0"/>
+      <field name="in_group_56" eval="0"/>
+      <field name="in_group_57" eval="0"/>
+      <field name="in_group_58" eval="0"/>
+      <field name="in_group_6" eval="1"/>
+      <field name="in_group_61" eval="1"/>
+      <field name="in_group_62" eval="0"/>
+      <field name="in_group_63" eval="0"/>
+      <field name="in_group_64" eval="0"/>
+      <field name="in_group_65" eval="0"/>
+      <field name="in_group_66" eval="0"/>
+      <field name="in_group_7" eval="1"/>
+      <field name="in_group_8" eval="1"/>
+      <field name="lang">en_US</field>
+      <field name="login">melanie_test</field>
+      <field name="name">mélanie</field>
+      <field name="password">test</field>
+      <field name="email">melanie@example.com</field>
+      <field name="sel_groups_14_15" eval="False"/>
+      <field name="sel_groups_1_2_3" eval="False"/>
+      <field name="sel_groups_28_29_30" eval="False"/>
+      <field name="sel_groups_34_35" eval="False"/>
+      <field name="sel_groups_43_44" eval="False"/>
+      <field name="sel_groups_45_46" eval="False"/>
+      <field name="sel_groups_47" eval="False"/>
+      <field name="sel_groups_48_49" eval="48"/>
+      <field name="sel_groups_4_17_18" eval="18"/>
+      <field name="sel_groups_52_53" eval="False"/>
+      <field name="sel_groups_59_60" eval="False"/>
+      <field name="sel_groups_9_32_10" eval="False"/>
+      <field name="show_technical_features" eval="1"/>
+    </record>
+
+    <record model="res.users" id="demo_andre">
+      <field name="company_id" ref="scen.company_fr"/>
+      <field name="company_ids" eval="[(4, ref('scen.company_bpo')), (4, ref('base.main_company')), (4, ref('scen.company_us')), (4, ref('scen.company_gb')), (4, ref('scen.company_lu')), (4, ref('scen.company_fr'))]"/>
+      <field name="groups_id" eval="[(4, ref('base.group_erp_manager')), (4, ref('account.group_account_user')), (4, ref('account.group_account_manager')), (4, ref('analytic.group_analytic_accounting')), (4, ref('purchase.group_analytic_accounting')), (4, ref('sale.group_analytic_accounting')), (4, ref('base.group_hr_attendance')), (4, ref('account.group_account_invoice')), (4, ref('specific_hr.bso_hr_confidential')), (4, ref('specific_product.bso_networking')), (4, ref('base.group_configuration')), (4, ref('connector.group_connector_manager')), (4, ref('base.group_partner_manager')), (4, ref('base.group_website_publisher')), (4, ref('base.group_website_designer')), (4, ref('base.group_user')), (4, ref('base.group_light_multi_company')), (4, ref('sale_contract.group_sale_contract_manager')), (4, ref('stock.group_locations')), (4, ref('product.group_uom')), (4, ref('product.group_pricelist_item')), (4, ref('stock.group_stock_manager')), (4, ref('marketing.group_lead_automation_manager')), (4, ref('purchase.group_purchase_manager')), (4, ref('base.group_survey_manager')), (4, ref('base.group_hr_manager')), (4, ref('project.group_project_manager')), (4, ref('base.group_sale_manager')), (4, ref('base.group_multi_company')), (4, ref('base.group_multi_currency')), (4, ref('base.group_hr_user')), (4, ref('sale.group_mrp_properties')), (4, ref('product.group_sale_pricelist')), (4, ref('base.group_sale_salesman_all_leads')), (4, ref('sale_contract.group_sale_contract_view')), (4, ref('base.group_sale_salesman')), (4, ref('base.group_system')), (4, ref('project.group_tasks_work_on_tasks')), (4, ref('base.group_no_one')), (4, ref('project.group_time_work_estimation_tasks')), (4, ref('marketing.group_lead_automation_user')), (4, ref('stock.group_stock_user')), (4, ref('project.group_project_user')), (4, ref('base.group_survey_user')), (4, ref('purchase.group_purchase_user'))]"/>
+      <field name="lang">en_US</field>
+      <field name="login">andre_test</field>
+      <field name="name">andre</field>
+      <field name="password">test</field>
+      <field name="email">andre@example.com</field>
+      <field name="show_technical_features" eval="1"/>
+    </record>
+    <record model="res.users" id="demo_damien">
+      <field name="company_id" ref="scen.company_fr"/>
+      <field name="company_ids" eval="[(4, ref('scen.company_bpo')), (4, ref('base.main_company')), (4, ref('scen.company_us')), (4, ref('scen.company_gb')), (4, ref('scen.company_lu')), (4, ref('scen.company_fr'))]"/>
+      <field name="groups_id" eval="[(4, ref('base.group_erp_manager')), (4, ref('account.group_account_user')), (4, ref('account.group_account_manager')), (4, ref('analytic.group_analytic_accounting')), (4, ref('purchase.group_analytic_accounting')), (4, ref('sale.group_analytic_accounting')), (4, ref('base.group_hr_attendance')), (4, ref('account.group_account_invoice')), (4, ref('specific_hr.bso_hr_confidential')), (4, ref('specific_product.bso_networking')), (4, ref('base.group_configuration')), (4, ref('connector.group_connector_manager')), (4, ref('base.group_partner_manager')), (4, ref('base.group_website_publisher')), (4, ref('base.group_website_designer')), (4, ref('base.group_user')), (4, ref('base.group_light_multi_company')), (4, ref('sale_contract.group_sale_contract_manager')), (4, ref('stock.group_locations')), (4, ref('product.group_uom')), (4, ref('product.group_pricelist_item')), (4, ref('project.group_project_manager')), (4, ref('base.group_sale_manager')), (4, ref('base.group_survey_manager')), (4, ref('stock.group_stock_manager')), (4, ref('purchase.group_purchase_manager')), (4, ref('base.group_hr_manager')), (4, ref('marketing.group_lead_automation_manager')), (4, ref('base.group_multi_company')), (4, ref('base.group_multi_currency')), (4, ref('base.group_hr_user')), (4, ref('sale.group_mrp_properties')), (4, ref('product.group_sale_pricelist')), (4, ref('base.group_sale_salesman_all_leads')), (4, ref('sale_contract.group_sale_contract_view')), (4, ref('base.group_sale_salesman')), (4, ref('base.group_system')), (4, ref('project.group_tasks_work_on_tasks')), (4, ref('base.group_no_one')), (4, ref('base_technical_features.group_technical_features')), (4, ref('project.group_time_work_estimation_tasks')), (4, ref('marketing.group_lead_automation_user')), (4, ref('base.group_survey_user')), (4, ref('stock.group_stock_user')), (4, ref('project.group_project_user')), (4, ref('purchase.group_purchase_user'))]"/>
+      <field name="lang">en_US</field>
+      <field name="login">damien.crier_test</field>
+      <field name="password">test</field>
+      <field name="name">damien.crier</field>
+      <field name="email">damien.crier@example.com</field>
+      <field name="show_technical_features" eval="1"/>
+    </record>
+    <record model="res.users" id="demo_emmanuel">
+      <field name="company_id" ref="base.main_company"/>
+      <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+      <field name="groups_id" eval="[(4, ref('base.group_erp_manager')), (4, ref('account.group_account_user')), (4, ref('account.group_account_manager')), (4, ref('analytic.group_analytic_accounting')), (4, ref('purchase.group_analytic_accounting')), (4, ref('sale.group_analytic_accounting')), (4, ref('base.group_hr_attendance')), (4, ref('account.group_account_invoice')), (4, ref('specific_hr.bso_hr_confidential')), (4, ref('specific_product.bso_networking')), (4, ref('base.group_configuration')), (4, ref('connector.group_connector_manager')), (4, ref('base.group_partner_manager')), (4, ref('base.group_website_publisher')), (4, ref('base.group_website_designer')), (4, ref('base.group_user')), (4, ref('base.group_light_multi_company')), (4, ref('sale_contract.group_sale_contract_manager')), (4, ref('stock.group_locations')), (4, ref('product.group_uom')), (4, ref('product.group_pricelist_item')), (4, ref('marketing.group_lead_automation_manager')), (4, ref('base.group_survey_manager')), (4, ref('purchase.group_purchase_manager')), (4, ref('stock.group_stock_manager')), (4, ref('base.group_hr_manager')), (4, ref('project.group_project_manager')), (4, ref('base.group_sale_manager')), (4, ref('base.group_multi_company')), (4, ref('base.group_multi_currency')), (4, ref('base.group_hr_user')), (4, ref('sale.group_mrp_properties')), (4, ref('product.group_sale_pricelist')), (4, ref('base.group_sale_salesman_all_leads')), (4, ref('sale_contract.group_sale_contract_view')), (4, ref('base.group_sale_salesman')), (4, ref('base.group_system')), (4, ref('project.group_tasks_work_on_tasks')), (4, ref('base.group_no_one')), (4, ref('project.group_time_work_estimation_tasks')), (4, ref('base.group_survey_user')), (4, ref('project.group_project_user')), (4, ref('marketing.group_lead_automation_user')), (4, ref('stock.group_stock_user')), (4, ref('purchase.group_purchase_user'))]"/>
+      <field name="lang">en_US</field>
+      <field name="login">emmanuel_test</field>
+      <field name="password">test</field>
+      <field name="name">emmanuel</field>
+      <field name="email">emmanuel@example.com</field>
+      <field name="show_technical_features" eval="1"/>
+    </record>
+  </data>
+</openerp>

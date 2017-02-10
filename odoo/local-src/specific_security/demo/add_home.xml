@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="res.partner" id="add_h_damien">
+            <field name="name">Damien Home</field>
+            <field name="street">Street</field>
+        </record>
+        <record model="res.partner" id="add_h_andre">
+            <field name="name">André Home</field>
+            <field name="street">Street</field>
+        </record>
+        <record model="res.partner" id="add_h_epelle">
+            <field name="name">Emmanuel Home</field>
+            <field name="street">Street</field>
+        </record>
+        <record model="res.partner" id="add_h_melanie">
+            <field name="name">Mélanie Home</field>
+            <field name="street">Street</field>
+        </record>
+    </data>
+</openerp>

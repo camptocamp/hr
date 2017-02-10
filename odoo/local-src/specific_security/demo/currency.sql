@@ -1,0 +1,1 @@
+UPDATE res_currency set active=true where name in ('EUR', 'USD', 'GBP');

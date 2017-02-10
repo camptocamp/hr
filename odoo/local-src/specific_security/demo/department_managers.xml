@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="hr.department" id="dept_test_01">
+            <field name="manager_id" ref="emp_epelle"/>
+        </record>
+
+        <record model="hr.department" id="dept_test_02">
+            <field name="manager_id" ref="emp_melanie"/>
+        </record>
+
+        <record model="hr.department" id="dept_test_03">
+            <field name="manager_id" ref="emp_andre"/>
+        </record>
+
+        <record model="hr.department" id="dept_test_04">
+            <field name="manager_id" ref="emp_damien"/>
+        </record>
+    </data>
+</openerp>
