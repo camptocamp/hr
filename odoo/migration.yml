@@ -111,5 +111,6 @@ migration:
       addons:
         upgrade:
           - specific_product
+          - specific_security
           - partner_firstname
           - hr_employee_firstname
