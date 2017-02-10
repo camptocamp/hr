@@ -20,14 +20,29 @@ Latest (Unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
-* Add module contact firstname
-* Add module employee firstname
 
 **Bugfixes**
 
 **Build**
 
 **Documentation**
+
+
+9.6.0 (2017-02-10)
+++++++++++++++++++
+
+**Features and Improvements**
+* Add module contact firstname
+* Add module employee firstname
+* Add access rights management for HR part
+    - holidays
+    - expense
+    - timesheets
+    - employees
+
+**Build**
+* version 2.0.0 of base odoo image
+
 
 
 9.5.0 (2017-01-27)
