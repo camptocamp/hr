@@ -20,6 +20,9 @@ Latest (Unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
+* Add module contact firstname
+* Add module employee firstname
+* Base COA configuration for companies
 
 **Bugfixes**
 
