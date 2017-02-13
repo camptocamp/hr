@@ -28,6 +28,19 @@ Latest (Unreleased)
 **Documentation**
 
 
+9.6.1 (2017-02-13)
+++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+* error at install (put demo files as demo (not data))
+
+**Build**
+
+**Documentation**
+
+
 9.6.0 (2017-02-10)
 ++++++++++++++++++
 
