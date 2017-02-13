@@ -29,7 +29,6 @@ class SaleOrderLine(models.Model):
 
     @api.depends('product_id',
                  'network_backup_link_ids',
-                 'network_backup_link_ids.nrc',
                  'network_backup_link_ids.mrc',
                  'network_backup_link_ids.mrc_bd',
                  'asked_bandwidth')
@@ -37,7 +36,6 @@ class SaleOrderLine(models.Model):
         """ compute nrc and mrc from link lines """
         for rec in self:
             if rec.product_id.is_epl:
-                rec.nrc_backup = sum(rec.mapped('network_backup_link_ids.nrc'))
                 rec.mrc_backup = (
                     rec.asked_bandwidth *
                     sum(rec.mapped('network_backup_link_ids.mrc_bd'))
@@ -45,15 +43,13 @@ class SaleOrderLine(models.Model):
 
     @api.depends('product_id',
                  'network_link_ids',
-                 'network_link_ids.nrc',
                  'network_link_ids.mrc',
                  'network_link_ids.mrc_bd',
                  'asked_bandwidth')
     def get_amounts(self):
-        """ compute nrc and mrc from link lines """
+        """ compute mrc from link lines """
         for rec in self:
             if rec.product_id.is_epl:
-                rec.nrc = sum(rec.mapped('network_link_ids.nrc'))
                 rec.mrc = (
                     rec.asked_bandwidth *
                     sum(rec.mapped('network_link_ids.mrc_bd'))
@@ -64,17 +60,37 @@ class SaleOrderLine(models.Model):
                     rec.bandwith = 0
                 rec.latency = sum(rec.mapped('network_link_ids.latency'))
 
+    @api.depends('product_id', 'mrc', 'duration', 'asked_bandwidth',
+                 'mrc_backup', 'find_backup',
+                 'backup_discount_percent')
+    def get_computed_route_amounts(self):
+        for rec in self:
+            if rec.product_id.is_epl:
+                rec.price_main_route = rec.mrc * rec.duration
+                rec.backup_discount_amount = rec.price_main_route * .5  # 50%
+                rec.price_backup_route = rec.mrc_backup * rec.duration
+                rec.price_backup_route_discounted = (
+                    rec.price_main_route *
+                    (100 - rec.backup_discount_percent) / 100
+                )
+                if rec.find_backup and rec.backup_discount_percent == 100:
+                    rec.backup_discount_percent = 50
+                if not self.find_backup:
+                    rec.backup_discount_percent = 100
+
     latency = fields.Float(compute='get_amounts', store=True)
-    bandwith = fields.Float(compute='get_amounts', store=True)
+    bandwith = fields.Float(string='Bandwidth', compute='get_amounts',
+                            store=True)
     geo_area = fields.Char()
     mrc = fields.Float(compute='get_amounts', store=True)
-    nrc = fields.Float(compute='get_amounts', store=True)
     mrc_backup = fields.Float(compute='get_amounts_backup', store=True)
-    nrc_backup = fields.Float(compute='get_amounts_backup', store=True)
     duration = fields.Integer()
-    price_main_route = fields.Float()
-    price_backup_route = fields.Float()
-    price_backup_route_discounted = fields.Float(digits=(16, 2))
+    price_main_route = fields.Float(compute='get_computed_route_amounts',
+                                    store=True)
+    price_backup_route = fields.Float(compute='get_computed_route_amounts',
+                                      store=True)
+    price_backup_route_discounted = fields.Float(
+        compute='get_computed_route_amounts', store=True)
     pop1_id = fields.Many2one(comodel_name='bso.network.pop',
                               string='POP A')
     pop2_id = fields.Many2one(comodel_name='bso.network.pop',
@@ -87,7 +103,8 @@ class SaleOrderLine(models.Model):
         'sale.order.line.network.link',
         'sale_line_id',
         domain=[('is_backup', '=', True)])
-    backup_discount_amount = fields.Float()
+    backup_discount_amount = fields.Float(compute='get_computed_route_amounts',
+                                          store=True)
     backup_discount_percent = fields.Float(default=50.)
     is_epl = fields.Boolean(related='product_id.is_epl', readonly=True)
     epl_warnings = fields.Text()
@@ -104,45 +121,35 @@ class SaleOrderLine(models.Model):
             return {'domain': {'product_uom': []}}
         res = super(SaleOrderLine, self).product_id_change()
         if self.product_id and self.is_epl:
-            self.nrc = self.product_id.nrc
             self.mrc = self.product_id.mrc
         return res
 
-    @api.onchange('product_id', 'mrc', 'nrc', 'duration')
+    @api.onchange('product_id', 'mrc', 'duration')
     def onchange_nrc_mrc(self):
         if self.product_id.is_epl:
-            self.price_main_route = self.nrc + (self.mrc * self.duration)
+            self.price_main_route = self.mrc * self.duration
             self.backup_discount_amount = self.price_main_route * .5  # 50%
 
-    @api.onchange('product_id', 'mrc_backup', 'nrc_backup', 'duration',
+    @api.onchange('product_id', 'mrc_backup', 'duration',
                   'price_backup_route', 'backup_discount_amount',
                   'find_backup')
-    def onchange_nrc_mrc_backup(self):
+    def onchange_mrc_backup(self):
         if self.product_id.is_epl:
             if self.find_backup:
-                self.price_backup_route = self.nrc_backup + (self.mrc_backup *
-                                                             self.duration)
-            #     if self.price_backup_route:
-            #         self.backup_discount_percent = (
-            #             self.backup_discount_amount / self.price_backup_route
-            #         ) * 100
-            # else:
-            #     self.backup_discount_percent = 100
+                self.price_backup_route = self.mrc_backup * self.duration
 
     @api.onchange('backup_discount_percent', 'price_backup_route')
     def onchange_backup_discount_percent(self):
-        if self.backup_discount_percent:
-            self.price_backup_route_discounted = (
-                self.price_main_route *
-                (100 - self.backup_discount_percent) / 100
-            )
+        self.price_backup_route_discounted = (
+            self.price_main_route *
+            (100 - self.backup_discount_percent) / 100
+        )
 
     @api.multi
     def _prepare_invoice_line(self, qty):
         self.ensure_one()
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
         res.update(duration=self.duration,
-                   nrc=self.nrc,
                    mrc=self.mrc,
                    price_unit=self.price_unit)
         return res
@@ -177,7 +184,6 @@ class SaleOrderLine(models.Model):
                                  detail['equip_end'])
             if link:
                 vals['link_id'] = link.id
-                vals['nrc'] = link.nrc
                 vals['mrc'] = link.mrc
                 vals['name'] = link.name
                 vals['pop1_id'] = link.pop1_id.id
@@ -201,7 +207,6 @@ class SaleOrderLine(models.Model):
                                  detail['equip_end'])
             if link:
                 vals['link_id'] = link.id
-                vals['nrc'] = link.nrc
                 vals['mrc'] = link.mrc
                 vals['name'] = link.name
                 vals['pop1_id'] = link.pop1_id.id
@@ -258,12 +263,12 @@ class SaleOrderLineNetworkLink(models.Model):
     pop2_id = fields.Many2one(comodel_name='bso.network.pop',
                               string='POP B')
     pop2_device_id = fields.Many2one(comodel_name='bso.network.device',
-                                     string='POP A device')
-    bandwith = fields.Float()
+                                     string='POP B device')
+    bandwith = fields.Float(string='Bandwidth')
     latency = fields.Float()
     mrc = fields.Float()
-    mrc_bd = fields.Float(compute='_get_mrc_bandwith', store=True)
-    nrc = fields.Float()
+    mrc_bd = fields.Float(compute='_get_mrc_bandwith', digits=(16, 3),
+                          store=True)
     cablesystem_id = fields.Many2one(comodel_name='bso.network.cablesystem',
                                      string='Cable system')
 
@@ -284,7 +289,6 @@ class SaleOrderLineNetworkLink(models.Model):
                  'bandwith': self.link_id.bandwith,
                  'latency': self.link_id.latency,
                  'mrc': self.link_id.mrc,
-                 'nrc': self.link_id.nrc,
                  'cablesystem_id': self.link_id.cablesystem_id,
                  }
             )

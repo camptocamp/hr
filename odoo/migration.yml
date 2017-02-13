@@ -114,3 +114,8 @@ migration:
           - specific_security
           - partner_firstname
           - hr_employee_firstname
+    - version: 9.6.1
+    - version: 9.6.2
+      addons:
+        upgrade:
+          - specific_product
