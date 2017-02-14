@@ -65,7 +65,6 @@
                         <field name="rts"/>
                         <field name="sla"/> -->
                         <field name="mrc"/>
-                        <field name="nrc"/>
                         <field name="is_epl"/>
                     </group>
                 </page>

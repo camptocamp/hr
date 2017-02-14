@@ -11,7 +11,6 @@
                 <field name="latency"/>
                 <field name="bandwith"/>
                 <field name="geo_area"/>
-                <field name="nrc"/>
                 <field name="mrc"/>
             </xpath>
 
