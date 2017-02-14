@@ -119,3 +119,5 @@ migration:
       addons:
         upgrade:
           - specific_product
+          - website_quote
+          - website_contract

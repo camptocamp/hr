@@ -78,6 +78,15 @@ class SaleOrderLine(models.Model):
                 if not rec.find_backup:
                     rec.backup_discount_percent = 100
 
+    @api.depends('price_backup_route',
+                 'price_backup_route_discounted',
+                 'duration')
+    def get_total_duration_amount(self):
+        for rec in self:
+            rec.price_total_duration = (
+                rec.price_main_route + rec.price_backup_route_discounted
+            ) * rec.duration
+
     latency = fields.Float(compute='get_amounts', store=True)
     bandwith = fields.Float(string='Bandwidth', compute='get_amounts',
                             store=True)
@@ -85,6 +94,8 @@ class SaleOrderLine(models.Model):
     mrc = fields.Float(compute='get_amounts', store=True)
     mrc_backup = fields.Float(compute='get_amounts_backup', store=True)
     duration = fields.Integer()
+    price_total_duration = fields.Float(compute='get_total_duration_amount',
+                                        store=True)
     price_main_route = fields.Float(compute='get_computed_route_amounts',
                                     store=True)
     price_backup_route = fields.Float(compute='get_computed_route_amounts',

@@ -142,6 +142,7 @@
                 <field name="price_backup_route"/>
                 <field name="backup_discount_percent"/>
                 <field name="price_backup_route_discounted"/>
+                <field name="price_total_duration"/>
             </xpath>
 
             <xpath expr="//field[@name='project_id']" position="after">
@@ -156,6 +157,7 @@
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="after">
                 <field name="duration" context="{'default_duration': parent.duration, 'duration':parent.duration, 'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"/>
+                <field name="price_total_duration"/>
             </xpath>
         </field>
     </record>
