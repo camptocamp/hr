@@ -21,6 +21,8 @@ latest (unreleased)
 
 **Features and Improvements**
 
+* Configure margin on SO
+
 **Bugfixes**
 
 **Build**
