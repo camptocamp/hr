@@ -80,3 +80,4 @@ migration:
           - l10n_jp
           - l10n_us
           - l10n_de_skr03
+          - website_sale
