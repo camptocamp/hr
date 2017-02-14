@@ -28,17 +28,13 @@ Latest (Unreleased)
 **Documentation**
 
 
-9.6.1 (2017-02-13)
+9.6.2 (2017-02-14)
 ++++++++++++++++++
 
 **Features and Improvements**
 
-**Bugfixes**
-* error at install (put demo files as demo (not data))
+* simplify EPL management
 
-**Build**
-
-**Documentation**
 
 
 9.6.0 (2017-02-10)
