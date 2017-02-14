@@ -66,16 +66,16 @@ class SaleOrderLine(models.Model):
     def get_computed_route_amounts(self):
         for rec in self:
             if rec.product_id.is_epl:
-                rec.price_main_route = rec.mrc * rec.duration
+                rec.price_main_route = rec.mrc  # * rec.duration
                 rec.backup_discount_amount = rec.price_main_route * .5  # 50%
-                rec.price_backup_route = rec.mrc_backup * rec.duration
+                rec.price_backup_route = rec.mrc_backup  # * rec.duration
                 rec.price_backup_route_discounted = (
                     rec.price_main_route *
                     (100 - rec.backup_discount_percent) / 100
                 )
                 if rec.find_backup and rec.backup_discount_percent == 100:
                     rec.backup_discount_percent = 50
-                if not self.find_backup:
+                if not rec.find_backup:
                     rec.backup_discount_percent = 100
 
     latency = fields.Float(compute='get_amounts', store=True)
@@ -98,11 +98,13 @@ class SaleOrderLine(models.Model):
     find_backup = fields.Boolean(default=True)
     network_link_ids = fields.One2many('sale.order.line.network.link',
                                        'sale_line_id',
-                                       domain=[('is_backup', '=', False)])
+                                       domain=[('is_backup', '=', False)],
+                                       copy=True)
     network_backup_link_ids = fields.One2many(
         'sale.order.line.network.link',
         'sale_line_id',
-        domain=[('is_backup', '=', True)])
+        domain=[('is_backup', '=', True)],
+        copy=True)
     backup_discount_amount = fields.Float(compute='get_computed_route_amounts',
                                           store=True)
     backup_discount_percent = fields.Float(default=50.)
@@ -113,6 +115,7 @@ class SaleOrderLine(models.Model):
                                              ('2', 'MRC'),
                                              ('3', 'Latency/MRC')],
                                   default='1',
+                                  copy=True,
                                   )
 
     @api.onchange('product_id')
@@ -127,7 +130,7 @@ class SaleOrderLine(models.Model):
     @api.onchange('product_id', 'mrc', 'duration')
     def onchange_nrc_mrc(self):
         if self.product_id.is_epl:
-            self.price_main_route = self.mrc * self.duration
+            self.price_main_route = self.mrc  # * self.duration
             self.backup_discount_amount = self.price_main_route * .5  # 50%
 
     @api.onchange('product_id', 'mrc_backup', 'duration',
@@ -136,7 +139,7 @@ class SaleOrderLine(models.Model):
     def onchange_mrc_backup(self):
         if self.product_id.is_epl:
             if self.find_backup:
-                self.price_backup_route = self.mrc_backup * self.duration
+                self.price_backup_route = self.mrc_backup  # * self.duration
 
     @api.onchange('backup_discount_percent', 'price_backup_route')
     def onchange_backup_discount_percent(self):
