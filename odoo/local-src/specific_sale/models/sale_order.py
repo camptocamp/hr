@@ -54,3 +54,27 @@ class SaleOrder(models.Model):
                 ),
                 'project_market_id': self.opportunity_id.project_market_id.id,
                 })
+
+    @api.onchange('order_line')
+    def onchange_order_line(self):
+        order_line = self.order_line
+        option_lines = []
+        for line in order_line:
+            if line.product_id:
+                for product in line.product_id.optional_product_ids:
+                    if self.pricelist_id:
+                        price = self.pricelist_id.with_context(
+                            uom=product.uom_id.id).get_product_price(
+                            product, 1, False)
+                    else:
+                        price = product.list_price
+                    data = {
+                        'product_id': product.id,
+                        'name': product.name,
+                        'quantity': 1,
+                        'uom_id': product.uom_id.id,
+                        'price_unit': price,
+                        'discount': 0,
+                    }
+                    option_lines.append((0, 0, data))
+        self.options = option_lines

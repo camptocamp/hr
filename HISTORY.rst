@@ -21,6 +21,8 @@ latest (unreleased)
 
 **Features and Improvements**
 
+* Add product options on SO
+
 **Bugfixes**
 
 **Build**
