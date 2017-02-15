@@ -1,3 +1,4 @@
 id,active,domain,name,model_id
 __setup__.filter_crm_lead_1_2,True,"['|',('stage_id.name', 'ilike', '1'), ('stage_id.name', 'ilike', '2')]",Demand |NDA,crm.lead
 __setup__.filter_crm_lead_3,True,"[('stage_id.name', 'ilike', '3')]",Lead TRF,crm.lead
+__setup__.filter_crm_lead_4,True,"[('stage_id.name', 'ilike', '4')]",Lead Feasability,crm.lead

@@ -7,7 +7,7 @@ import uuid
 from datetime import datetime, timedelta
 
 from odoo import models, fields, api
-from odoo import exceptions
+from odoo import exceptions, _
 
 
 class CrmLead(models.Model):
@@ -102,3 +102,10 @@ class CrmLead(models.Model):
 
         if msg:
             raise exceptions.Warning('\n'.join(msg))
+
+    def check_survey_state(self):
+        for s_input in self.survey_inputs:
+            if s_input.state == 'done':
+                return True
+
+        raise exceptions.Warning(_('Survey not completly answered'))

@@ -12,3 +12,9 @@ __setup__.server_action_crm_lead_check_3_arrival,check fields,code,ir.actions.se
 fields = ['project_id', 'start_date', 'end_date', 'signature_ids']
 record.check_fields(fields=fields)
 "
+__setup__.server_action_crm_lead_check_4_arrival,check fields,code,ir.actions.server,crm.model_crm_lead,True,"
+fields = ['survey_id', 'survey_inputs']
+record.check_fields(fields=fields)
+
+record.check_survey_state()
+"

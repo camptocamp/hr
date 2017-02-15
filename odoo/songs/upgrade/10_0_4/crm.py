@@ -47,6 +47,20 @@ def create_base_action_rules(ctx):
             'server_action_ids': [
                 (4, ctx.env.ref(
                     '__setup__.server_action_crm_lead_check_3_arrival').id)],
+        },
+        '__setup__.bar_crm_lead_4_arrival': {
+            'active': True,
+            'model_id': lead_model.id,
+            'sequence': 1,
+            'name': 'cannot go to feasability state',
+            'kind': 'on_write',
+            'filter_pre_id': ctx.env.ref('__setup__.filter_crm_lead_3').id,
+            'filter_pre_domain': "[('stage_id.name', 'ilike', '4')]",
+            'filter_id': ctx.env.ref('__setup__.filter_crm_lead_4').id,
+            'filter_domain': "[('stage_id.name', 'ilike', '4')]",
+            'server_action_ids': [
+                (4, ctx.env.ref(
+                    '__setup__.server_action_crm_lead_check_4_arrival').id)],
         }
     }
 
