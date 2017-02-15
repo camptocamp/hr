@@ -109,3 +109,8 @@ class CrmLead(models.Model):
                 return True
 
         raise exceptions.Warning(_('Survey not completly answered'))
+
+    def create_linked_task(self):
+        self.env['project.task'].create({'project_id': self.project_id.id,
+                                         'lead_id': self.id,
+                                         'name': self.name})

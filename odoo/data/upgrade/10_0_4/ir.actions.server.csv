@@ -1,5 +1,5 @@
-id,name,state,type,model_id/id,condition,code
-__setup__.server_action_crm_lead_check_3_arrival,check fields,code,ir.actions.server,crm.model_crm_lead,True,"# Available variables:
+id,name,state,type,model_id/id,condition,sequence,code
+__setup__.server_action_crm_lead_check_3_arrival,check fields,code,ir.actions.server,crm.model_crm_lead,True,1,"# Available variables:
 #  - time, datetime, dateutil, timezone: Python libraries
 #  - env: Odoo Environement
 #  - model: Model of the record on which the action is triggered
@@ -12,9 +12,12 @@ __setup__.server_action_crm_lead_check_3_arrival,check fields,code,ir.actions.se
 fields = ['project_id', 'start_date', 'end_date', 'signature_ids']
 record.check_fields(fields=fields)
 "
-__setup__.server_action_crm_lead_check_4_arrival,check fields,code,ir.actions.server,crm.model_crm_lead,True,"
+__setup__.server_action_crm_lead_check_4_arrival,check fields,code,ir.actions.server,crm.model_crm_lead,True,1,"
 fields = ['survey_id', 'survey_inputs']
 record.check_fields(fields=fields)
 
 record.check_survey_state()
+"
+__setup__.server_action_crm_lead_check_4_arrival2,create task,code,ir.actions.server,crm.model_crm_lead,True,5,"
+record.create_linked_task()
 "

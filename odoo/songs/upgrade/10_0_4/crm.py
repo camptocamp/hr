@@ -55,12 +55,14 @@ def create_base_action_rules(ctx):
             'name': 'cannot go to feasability state',
             'kind': 'on_write',
             'filter_pre_id': ctx.env.ref('__setup__.filter_crm_lead_3').id,
-            'filter_pre_domain': "[('stage_id.name', 'ilike', '4')]",
+            'filter_pre_domain': "[('stage_id.name', 'ilike', '3')]",
             'filter_id': ctx.env.ref('__setup__.filter_crm_lead_4').id,
             'filter_domain': "[('stage_id.name', 'ilike', '4')]",
             'server_action_ids': [
                 (4, ctx.env.ref(
-                    '__setup__.server_action_crm_lead_check_4_arrival').id)],
+                    '__setup__.server_action_crm_lead_check_4_arrival').id),
+                (4, ctx.env.ref(
+                    '__setup__.server_action_crm_lead_check_4_arrival2').id)],
         }
     }
 
