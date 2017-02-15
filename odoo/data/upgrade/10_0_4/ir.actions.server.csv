@@ -1,0 +1,14 @@
+id,name,state,type,model_id/id,condition,code
+__setup__.server_action_crm_lead_check_3_arrival,check fields,code,ir.actions.server,crm.model_crm_lead,True,"# Available variables:
+#  - time, datetime, dateutil, timezone: Python libraries
+#  - env: Odoo Environement
+#  - model: Model of the record on which the action is triggered
+#  - record: Record on which the action is triggered if there is one, otherwise None
+#  - records: Records on which the action is triggered if there is one, otherwise None
+#  - log : log(message), function to log debug information in logging table
+#  - Warning: Warning Exception to use with raise
+# To return an action, assign: action = {...}
+
+fields = ['project_id', 'start_date', 'end_date', 'signature_ids']
+record.check_fields(fields=fields)
+"

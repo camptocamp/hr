@@ -1,0 +1,2 @@
+id,active,model_id/id,sequence,name,kind,filter_pre_id/id,filter_id/id,server_action_ids/id,filter_pre_domain,filter_domain
+__setup__.bar_crm_lead_3_arrival,True,crm.model_crm_lead,1,"cannot go to collect information state",on_write,__setup__.filter_crm_lead_1_2,__setup__.filter_crm_lead_3,"__setup__.server_action_crm_lead_check_3_arrival","['|',('stage_id.name', 'ilike', '1'), ('stage_id.name', 'ilike', '2')]","[('stage_id.name', 'ilike', '3')]"

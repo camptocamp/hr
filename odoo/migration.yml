@@ -73,6 +73,7 @@ migration:
           - anthem songs.install.crm::import_crm_stages
           - anthem songs.install.crm::create_sales_team
           - anthem songs.install.crm::add_stage_to_sale_team
+          - anthem songs.upgrade.10_0_4.crm::main
       addons:
         upgrade:
           - specific_crm

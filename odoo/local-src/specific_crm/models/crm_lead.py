@@ -2,10 +2,12 @@
 # Author: Damien Crier
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 import uuid
 from datetime import datetime, timedelta
 
 from odoo import models, fields, api
+from odoo import exceptions
 
 
 class CrmLead(models.Model):
@@ -90,3 +92,13 @@ class CrmLead(models.Model):
                 # 'target': 'new',
                 'url': url,
                 }
+
+    def check_fields(self, fields=None):
+        msg = []
+        if fields:
+            for f in fields:
+                if not self[f]:
+                    msg.append(('%s not filled.') % f)
+
+        if msg:
+            raise exceptions.Warning('\n'.join(msg))
