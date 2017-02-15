@@ -5,7 +5,7 @@
 {
     "name": "RocTool specific sale module",
     "version": "10.0.1.0.0",
-    "depends": ['specific_crm', 'sale', 'sale_crm'],
+    "depends": ['specific_crm', 'sale', 'sale_crm', 'website_sale_options'],
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "website": "http://www.camptocamp.com",
     "license": "GPL-3 or any later version",
