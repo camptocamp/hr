@@ -18,6 +18,7 @@ ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/external-src/server-tools, \
   /opt/odoo/external-src/odoo-cloud-platform, \
   /opt/odoo/external-src/hr, \
+  /opt/odoo/external-src/sale-workflow, \
   /opt/odoo/external-src/hr-timesheet, \
   /opt/odoo/local-src," \
   LIMIT_TIME_CPU=86400 \
