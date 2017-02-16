@@ -82,3 +82,4 @@ migration:
           - l10n_us
           - l10n_de_skr03
           - website_sale
+          - website_sale_options
