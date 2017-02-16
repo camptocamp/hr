@@ -1,0 +1,23 @@
+id,name,state,type,model_id/id,condition,sequence,code
+__setup__.server_action_crm_lead_check_3_arrival,check fields,code,ir.actions.server,crm.model_crm_lead,True,1,"# Available variables:
+#  - time, datetime, dateutil, timezone: Python libraries
+#  - env: Odoo Environement
+#  - model: Model of the record on which the action is triggered
+#  - record: Record on which the action is triggered if there is one, otherwise None
+#  - records: Records on which the action is triggered if there is one, otherwise None
+#  - log : log(message), function to log debug information in logging table
+#  - Warning: Warning Exception to use with raise
+# To return an action, assign: action = {...}
+
+fields = ['project_id', 'start_date', 'end_date', 'signature_ids']
+record.check_fields(fields=fields)
+"
+__setup__.server_action_crm_lead_check_4_arrival,check fields,code,ir.actions.server,crm.model_crm_lead,True,1,"
+fields = ['survey_id', 'survey_inputs']
+record.check_fields(fields=fields)
+
+record.check_survey_state()
+"
+__setup__.server_action_crm_lead_check_4_arrival2,create task,code,ir.actions.server,crm.model_crm_lead,True,5,"
+record.create_linked_task()
+"
