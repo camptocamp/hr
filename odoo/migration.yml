@@ -64,6 +64,7 @@ migration:
       operations:
         pre:
           - anthem songs.install.multi_company::import_companies
+          - anthem songs.install.sale::configure_sale_app
         post:
           - anthem songs.install.crm::import_project_zone
           - anthem songs.install.crm::import_project_process
