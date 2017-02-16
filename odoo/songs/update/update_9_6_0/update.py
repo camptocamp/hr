@@ -27,5 +27,12 @@ def configure_chart_of_account(ctx):
 
 
 @anthem.log
+def reset_main_company_chart(ctx):
+    ctx.env.ref('base.main_company').reset_chart()
+
+@anthem.log
 def main(ctx):
+    main_coa = ctx.env.ref('base.main_company').chart_template_id
+    if main_coa != ctx.env.ref(bso_vars.coa_dict['base.main_company']):
+        reset_main_company_chart(ctx)
     configure_chart_of_account(ctx)
