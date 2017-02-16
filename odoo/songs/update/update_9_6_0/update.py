@@ -4,6 +4,7 @@
 
 import anthem
 from . import bso_vars
+from anthem.lyrics.records import create_or_update
 
 
 @anthem.log
@@ -32,7 +33,22 @@ def reset_main_company_chart(ctx):
 
 
 @anthem.log
+def create_new_company_SC(ctx):
+    values = {
+        'name': "BSO Network Solutions SC",
+        'street': "",
+        'zip': "",
+        'city': "",
+        'country_id': ctx.env.ref('base.ie').id,
+        'parent_id': ctx.env.ref('base.main_company').id,
+        'currency_id': ctx.env.ref('base.EUR').id,
+    }
+    create_or_update(ctx, 'res.company', 'scen.company_irl_sc', values)
+
+
+@anthem.log
 def main(ctx):
+    create_new_company_SC(ctx)
     main_coa = ctx.env.ref('base.main_company').chart_template_id
     if main_coa != ctx.env.ref(bso_vars.coa_dict['base.main_company']):
         reset_main_company_chart(ctx)

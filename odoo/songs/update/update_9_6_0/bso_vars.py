@@ -5,6 +5,7 @@
 
 coa_dict = {
     'base.main_company': 'l10n_uk.l10n_uk',
+    'scen.company_irl_sc': 'l10n_uk.l10n_uk',
     'scen.company_fr': 'l10n_fr.l10n_fr_pcg_chart_template',
     'scen.company_gb': 'l10n_uk.l10n_uk',
     'scen.company_lu': 'l10n_lu.lu_2011_chart_1',
