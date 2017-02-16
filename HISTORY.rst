@@ -21,14 +21,26 @@ latest (unreleased)
 
 **Features and Improvements**
 
-* Add product options on SO
-* Configure margin on SO
-
 **Bugfixes**
 
 **Build**
 
 **Documentation**
+
+
+10.0.4 (2017-02-16)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* Add product options on SO
+* Configure margin on SO
+* Install ``sale_order_revision``
+* Install modules to manage margins on sale
+* Install COA for Japan (Odoo fixed)
+* Configure Base action rules, filters and server actions to be able to block
+    or trigger actions when changing stage
+* Manage option lines on sale orders
 
 
 10.0.3 (2017-01-24)
