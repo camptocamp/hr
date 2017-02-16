@@ -10,10 +10,12 @@
     "website": "http://www.camptocamp.com",
     "license": "GPL-3 or any later version",
     "category": "CRM",
-    "data": ['data/ir_sequence.xml',
+    "data": ['security/ir.model.access.csv',
+             'data/ir_sequence.xml',
              'views/crm_lead_view.xml',
              'views/survey_templates.xml',
              'views/crm_team.xml',
+             'views/project_task.xml',
              ],
     'installable': True,
 }

@@ -64,6 +64,7 @@ migration:
       operations:
         pre:
           - anthem songs.install.multi_company::import_companies
+          - anthem songs.install.sale::configure_sale_app
         post:
           - anthem songs.install.crm::import_project_zone
           - anthem songs.install.crm::import_project_process
@@ -73,6 +74,7 @@ migration:
           - anthem songs.install.crm::import_crm_stages
           - anthem songs.install.crm::create_sales_team
           - anthem songs.install.crm::add_stage_to_sale_team
+          - anthem songs.upgrade.10_0_4.crm::main
       addons:
         upgrade:
           - specific_crm
@@ -81,3 +83,4 @@ migration:
           - l10n_us
           - l10n_de_skr03
           - website_sale
+          - website_sale_options

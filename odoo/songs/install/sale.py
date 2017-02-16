@@ -21,6 +21,7 @@ def configure_sale_app(ctx):
         'group_product_pricelist': False,
         'group_sale_pricelist': True,
         'group_pricelist_item': True,
+        'module_sale_margin': 1,
         }
     acs = sale_settings.create(vals)
 

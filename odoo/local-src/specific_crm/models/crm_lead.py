@@ -2,10 +2,12 @@
 # Author: Damien Crier
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 import uuid
 from datetime import datetime, timedelta
 
 from odoo import models, fields, api
+from odoo import exceptions, _
 
 
 class CrmLead(models.Model):
@@ -90,3 +92,25 @@ class CrmLead(models.Model):
                 # 'target': 'new',
                 'url': url,
                 }
+
+    def check_fields(self, fields=None):
+        msg = []
+        if fields:
+            for f in fields:
+                if not self[f]:
+                    msg.append(('%s not filled.') % f)
+
+        if msg:
+            raise exceptions.Warning('\n'.join(msg))
+
+    def check_survey_state(self):
+        for s_input in self.survey_inputs:
+            if s_input.state == 'done':
+                return True
+
+        raise exceptions.Warning(_('Survey not completly answered'))
+
+    def create_linked_task(self):
+        self.env['project.task'].create({'project_id': self.project_id.id,
+                                         'lead_id': self.id,
+                                         'name': self.name})

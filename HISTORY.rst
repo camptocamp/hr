@@ -22,6 +22,7 @@ latest (unreleased)
 **Features and Improvements**
 
 * Add product options on SO
+* Configure margin on SO
 
 **Bugfixes**
 
