@@ -21,6 +21,8 @@ latest (unreleased)
 
 **Features and Improvements**
 
+* Activate lots and serial number
+
 **Bugfixes**
 
 **Build**

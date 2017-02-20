@@ -92,3 +92,7 @@ migration:
         upgrade:
           - hr_maintenance
           - maintenance
+    - version: 10.0.6
+      operations:
+        post:
+          - anthem songs.upgrade.10_0_6.update_post::main
