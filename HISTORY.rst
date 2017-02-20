@@ -21,6 +21,15 @@ latest (unreleased)
 
 **Features and Improvements**
 
+* Add new fields in 'hr.employee' & 'hr.contracts'
+* Update submodule hr
+* Install 'hr_employee_phone_extension'
+* Install hr_emergency_contact
+* Install hr_contract_reference
+* Install hr_employee_birth_name
+* Install hr_experience
+* Install hr_seniority
+
 **Bugfixes**
 
 **Build**

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="cadre" model="hr.employee.status">
+    <field name="name">Cadre</field>
+  </record>
+  <record id="agent_de_maitrise" model="hr.employee.status">
+    <field name="name">Agent de Maîtrise</field>
+  </record>
+  <record id="tech" model="hr.employee.status">
+    <field name="name">Technicien</field>
+  </record>
+  <record id="agent_administratif" model="hr.employee.status">
+    <field name="name">Agent Administratif</field>
+  </record>
+
+</odoo>
