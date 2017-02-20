@@ -19,4 +19,11 @@
     </field>
   </record>
 
+  <!-- Top menu item -->
+  <menuitem name="Purchases"
+      id="purchase.menu_purchase_root"
+      groups="group_purchase_employee"
+      web_icon="purchase,static/description/icon.png"
+      sequence="25"/>
+
 </odoo>
