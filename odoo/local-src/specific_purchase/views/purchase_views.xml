@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="view_purchase_order_filter_add" model="ir.ui.view">
+    <field name="name">request.quotation.select</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+    <field name="arch" type="xml">
+      <xpath expr="//filter[@name='to_approve']" position="after">
+        <filter
+          name="my_rfq"
+          string="My RFQ"
+          domain="['&amp;',('create_uid', '=', uid), ('state','in',('draft','sent','bid','cancel', 'confirmed'))]"/>
+        <filter
+          name="my_purchases"
+          string="My Purchases"
+          domain="['&amp;',('create_uid', '=', uid), ('state','in',('purchase','done'))]"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

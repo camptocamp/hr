@@ -10,6 +10,8 @@
     "website": "http://www.camptocamp.com",
     "license": "GPL-3 or any later version",
     "category": "Sale",
-    "data": [],
+    "data": [
+        'views/purchase_views.xml',
+    ],
     'installable': True,
 }
