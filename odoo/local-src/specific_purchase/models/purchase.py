@@ -13,9 +13,7 @@ class PurchaseOrder(models.Model):
     def button_approve(self, force=False):
         for order in self:
             for line in order.order_line:
-                if line.account_analytic_id:
-                    return super(PurchaseOrder, self).button_approve(
-                        force=False)
-                else:
+                if not line.account_analytic_id:
                     raise exceptions.UserError(
                         _('An Analytic Account is required for Validation!'))
+        return super(PurchaseOrder, self).button_approve(force=force)

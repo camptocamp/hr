@@ -21,6 +21,8 @@ latest (unreleased)
 
 **Features and Improvements**
 
+* Add Check analytic account in PO validation
+
 **Bugfixes**
 
 **Build**
