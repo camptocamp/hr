@@ -28,6 +28,21 @@ latest (unreleased)
 **Documentation**
 
 
+10.0.5 (2017-02-21)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* users with correct groups (taken from integration instance)
+* install ``hr_maintenance`` and ``maintenance`` modules
+
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
 10.0.4 (2017-02-16)
 +++++++++++++++++++
 

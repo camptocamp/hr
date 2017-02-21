@@ -84,3 +84,11 @@ migration:
           - l10n_de_skr03
           - website_sale
           - website_sale_options
+    - version: 10.0.5
+      operations:
+        post:
+          - anthem songs.upgrade.10_0_5.users::main
+      addons:
+        upgrade:
+          - hr_maintenance
+          - maintenance

@@ -1,14 +1,17 @@
-id,name,email,login,password
-jfeigenblum,José Feigenblum,jose.feigenblum@roctool.com,jfeigenblum,jfeigenblum
-ngobbo,Nicola Gobbo,nicola.gobbo@roctool.com,ngobbo,ngobbo
-claterrade,Clotilde Laterrade,clotilde.laterrade@roctool.com,claterrade,claterrade
-squilliet,Stéphane Quilliet,stephane.quilliet@roctool.com,squilliet,squilliet
-fperrier,Fabien Perrier,fabien.perrier@roctool.com,fperrier,fperrier
-jfmartinez,Jean-François Martinez,Jean-francois.martinez@roctool.com,jfmartinez,jfmartinez
-ymocellin,Yann Mocellin,yann.mocellin@roctool.com,ymocellin,ymocellin
-lschaal,Lionel Schaal,lionel.schaal@roctool.com,lschaal,lschaal
-vthiebaud,Virginie Thiebaud,virginie.thiebaud@roctool.com,vthiebaud,vthiebaud
-fchevot,Florian Chevot,florian.chevot@roctool.com,fchevot,fchevot
-grigoni,Guillaume Rigoni,guillaume.rigoni@roctool.com,grigoni,grigoni
-crepetti,Christophe Repetti,christophe.repetti@roctool.com,crepetti,crepetti
-bnoailles,Benjamin Noailles,benjamin.noailles@roctool.com,bnoailles,bnoailles
+id,name,login,email,company_id/id
+__setup__.ajanin,Anaïs Janin,ajanin,anais.janin@roctool.com,base.main_company
+__setup__.bnoailles,Benjamin Noailles,bnoailles,benjamin.noailles@roctool.com,base.main_company
+__setup__.crepetti,Christophe Repetti,crepetti,christophe.repetti@roctool.com,base.main_company
+__setup__.claterrade,Clotilde Laterrade,claterrade,clotilde.laterrade@roctool.com,base.main_company
+__setup__.dveber,Denis Veber,dveber,denis.veber@roctool.com,base.main_company
+__setup__.fperrier,Fabien Perrier,fperrier,fabien.perrier@roctool.com,base.main_company
+__setup__.fchevot,Florian Chevot,fchevot,florian.chevot@roctool.com,base.main_company
+__setup__.grigoni,Guillaume Rigoni,grigoni,guillaume.rigoni@roctool.com,base.main_company
+__setup__.jfmartinez,Jean-François Martinez,jfmartinez,Jean-francois.martinez@roctool.com,base.main_company
+__setup__.jfeigenblum,José Feigenblum,jfeigenblum,jose.feigenblum@roctool.com,base.main_company
+__setup__.lschaal,Lionel Schaal,lschaal,lionel.schaal@roctool.com,base.main_company
+__setup__.ngobbo,Nicola Gobbo,ngobbo,nicola.gobbo@roctool.com,base.main_company
+__setup__.squilliet,Stéphane Quilliet,squilliet,stephane.quilliet@roctool.com,base.main_company
+__setup__.vchalmandrier,Valentin Chalmandrier,vchalmandrier,,base.main_company
+__setup__.vthiebaud,Virginie Thiebaud,vthiebaud,virginie.thiebaud@roctool.com,base.main_company
+__setup__.ymocellin,Yann Mocellin,ymocellin,yann.mocellin@roctool.com,base.main_company
