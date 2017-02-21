@@ -16,5 +16,16 @@
         # views
         'views/purchase_views.xml',
     ],
+    "depends": [
+        'purchase',
+        'stock',
+    ],
+    "author": "Camptocamp,Odoo Community Association (OCA)",
+    "website": "http://www.camptocamp.com",
+    "license": "GPL-3 or any later version",
+    "category": "Sale",
+    "data": [
+        'data/sequence.xml',
+    ],
     'installable': True,
 }
