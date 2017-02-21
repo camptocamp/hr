@@ -15,7 +15,6 @@
     "category": "Sale",
     "data": [
         # security
-        'security/purchase_security.xml',
         'security/ir.model.access.csv',
         # views
         'views/purchase_views.xml',
