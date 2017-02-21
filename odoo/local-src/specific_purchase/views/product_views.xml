@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="product_normal_form_view_specific" model="ir.ui.view">
+    <field name="name">product.template.common.form.specific</field>
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="product.product_normal_form_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='purchase_ok']/.." position="after">
+        <div>
+          <field name="is_req_sn_supplier"/>
+          <label for="is_req_sn_supplier"/>
+        </div>
+      </xpath>
+    </field>
+  </record>
+</odoo>

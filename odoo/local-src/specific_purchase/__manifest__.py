@@ -21,6 +21,7 @@
         # views
         'views/purchase_line_views.xml',
         'views/purchase_views.xml',
+        'views/product_views.xml',
     ],
     'installable': True,
 }
