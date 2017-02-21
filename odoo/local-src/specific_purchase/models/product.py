@@ -12,3 +12,12 @@ class ProductProduct(models.Model):
     is_req_sn_supplier = fields.Boolean(
         string='Request SN to Supplier',
     )
+
+
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    is_req_sn_supplier = fields.Boolean(
+        string='Request SN to Supplier',
+        related='product_variant_ids.is_req_sn_supplier'
+    )

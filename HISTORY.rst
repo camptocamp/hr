@@ -26,6 +26,7 @@ latest (unreleased)
 * Add Check analytic account in PO validation
 * Activate lots and serial number
 * Change sequence for 'stock.production.lot'
+* Add SN in PO report
 
 **Bugfixes**
 

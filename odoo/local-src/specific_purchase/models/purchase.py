@@ -12,13 +12,19 @@ class PurchaseOrder(models.Model):
     def write(self, vals):
         if 'state' in vals and vals['state'] in ('to approve', 'purchase'):
             if self.user_has_groups('purchase.group_purchase_user'):
-                for line in self.order_line:
-                    if line.product_id.is_req_sn_supplier:
+                if vals['state'] == 'purchase':
+                    prod_ids = self.order_line.search_read(
+                        [('product_id.is_req_sn_supplier', '=', True),
+                         ('order_id', '=', self.id)], ['product_id'])
+                    for prd in prod_ids:
                         Lot = self.env['stock.production.lot']
                         values = {
-                            'product_id': line.product_id.id,
+                            'product_id': prd['product_id'][0],
                         }
                         lot = Lot.create(values)
+                        line = self.order_line.search(
+                            [('order_id', '=', self.id),
+                             ('product_id', '=', prd['product_id'][0])])
                         line.req_sn_supplier = lot.name
                 super(PurchaseOrder, self).write(vals)
         else:
