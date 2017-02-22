@@ -73,10 +73,13 @@ class SaleOrderLine(models.Model):
                     rec.price_main_route *
                     (100 - rec.backup_discount_percent) / 100
                 )
-                if rec.find_backup and rec.backup_discount_percent == 100:
-                    rec.backup_discount_percent = 50
-                if not rec.find_backup:
-                    rec.backup_discount_percent = 100
+
+    @api.onchange('find_backup')
+    def onchange_find_backup(self):
+        if self.find_backup:
+            self.backup_discount_percent = 50
+        else:
+            self.backup_discount_percent = 100
 
     @api.depends('price_backup_route',
                  'price_backup_route_discounted',
