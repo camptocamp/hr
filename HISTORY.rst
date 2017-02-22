@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* Base COA configuration for companies
+
 **Bugfixes**
 
 **Build**

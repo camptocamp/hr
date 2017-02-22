@@ -3,7 +3,7 @@
 # Copyright 2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields
+from openerp import models, fields, api
 
 
 class NetworkLink(models.Model):
@@ -69,6 +69,25 @@ class NetworkPop(models.Model):
     latitude = fields.Float()
     active = fields.Boolean('Active', default=True)
     bso_id = fields.Integer(required=True)
+
+    @api.model
+    @api.returns('self', lambda value: value.id)
+    def create(self, values):
+        res = super(NetworkPop, self).create(values)
+        vals = {'name': res.name,
+                'code': '%s' % res.name.replace('-', ''),
+                }
+        xml_id = 'wh_pop_%s' % res.id
+        warehouse = self.env['stock.warehouse'].create(vals)
+        vls = {
+            'name': xml_id,
+            'module': '__setup__',
+            'model': 'stock.warehouse',
+            'res_id': warehouse.id
+        }
+        self.env['ir.model.data'].create(vls)
+
+        return res
 
 
 class NetworkCableSystem(models.Model):

@@ -30,3 +30,7 @@
 [submodule "odoo/external-src/connector-jira"]
 	path = odoo/external-src/connector-jira
 	url = git@github.com:camptocamp/connector-jira.git
+[submodule "odoo/external-src/account-financial-tools"]
+	path = odoo/external-src/account-financial-tools
+	url = git@github.com:oca/account-financial-tools.git
+	branch = 10.0

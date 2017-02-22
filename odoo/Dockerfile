@@ -21,6 +21,7 @@ ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/src/addons, \
   /opt/odoo/external-src/server-tools, \
   /opt/odoo/external-src/product-variant, \
+  /opt/odoo/external-src/account-financial-tools, \
   /opt/odoo/external-src/web, \
   /opt/odoo/external-src/connector, \
   /opt/odoo/external-src/hr-timesheet, \

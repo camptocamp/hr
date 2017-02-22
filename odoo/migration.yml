@@ -121,3 +121,16 @@ migration:
           - specific_product
           - website_quote
           - website_contract
+    - version: 9.6.3
+      operations:
+        post:
+          - anthem songs.update.update_9_6_0.update::main
+          - anthem songs.update.update_9_6_0.setup_warehouses::main
+          - anthem songs.update.update_9_6_0.inter_company_rules::main
+      addons:
+        upgrade:
+          - account_reset_chart
+          - l10n_uk
+          - l10n_us
+          - l10n_lu
+          - inter_company_rules
