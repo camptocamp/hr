@@ -123,6 +123,8 @@ migration:
           - website_contract
     - version: 9.6.3
       operations:
+        pre:
+          - anthem songs.update.update_9_6_0.sale::main
         post:
           - anthem songs.update.update_9_6_0.update::main
           - anthem songs.update.update_9_6_0.setup_warehouses::main
@@ -134,3 +136,4 @@ migration:
           - l10n_us
           - l10n_lu
           - inter_company_rules
+          - specific_product

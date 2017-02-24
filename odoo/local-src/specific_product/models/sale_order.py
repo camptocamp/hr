@@ -40,6 +40,13 @@ class SaleOrderLine(models.Model):
                     rec.asked_bandwidth *
                     sum(rec.mapped('network_backup_link_ids.mrc_bd'))
                 )
+                if rec.mapped('network_backup_link_ids.bandwith'):
+                    rec.bandwith_backup = min(rec.mapped(
+                        'network_backup_link_ids.bandwith'))
+                else:
+                    rec.bandwith_backup = 0
+                rec.latency_backup = sum(rec.mapped(
+                    'network_backup_link_ids.latency'))
 
     @api.depends('product_id',
                  'network_link_ids',
@@ -73,10 +80,13 @@ class SaleOrderLine(models.Model):
                     rec.price_main_route *
                     (100 - rec.backup_discount_percent) / 100
                 )
-                if rec.find_backup and rec.backup_discount_percent == 100:
-                    rec.backup_discount_percent = 50
-                if not rec.find_backup:
-                    rec.backup_discount_percent = 100
+
+    @api.onchange('find_backup')
+    def onchange_find_backup(self):
+        if self.find_backup:
+            self.backup_discount_percent = 50
+        else:
+            self.backup_discount_percent = 100
 
     @api.depends('price_backup_route',
                  'price_backup_route_discounted',
@@ -90,6 +100,10 @@ class SaleOrderLine(models.Model):
     latency = fields.Float(compute='get_amounts', store=True)
     bandwith = fields.Float(string='Bandwidth', compute='get_amounts',
                             store=True)
+    latency_backup = fields.Float(compute='get_amounts_backup', store=True)
+    bandwith_backup = fields.Float(string='Bandwidth',
+                                   compute='get_amounts_backup',
+                                   store=True)
     geo_area = fields.Char()
     mrc = fields.Float(compute='get_amounts', store=True)
     mrc_backup = fields.Float(compute='get_amounts_backup', store=True)
