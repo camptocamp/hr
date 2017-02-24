@@ -132,18 +132,7 @@
                     </notebook>
                 </div>
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
-                <field name="asked_bandwidth"/>
-                <field name="latency"/>
-                <field name="bandwith"/>
-                <field name="geo_area"/>
-                <field name="mrc"/>
-                <field name="price_main_route"/>
-                <field name="price_backup_route"/>
-                <field name="backup_discount_percent"/>
-                <field name="price_backup_route_discounted"/>
-                <field name="price_total_duration"/>
-            </xpath>
+
 
             <xpath expr="//field[@name='project_id']" position="after">
                 <field name="duration"/>
