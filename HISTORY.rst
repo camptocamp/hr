@@ -21,13 +21,26 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
-* Base COA configuration for companies
-
 **Bugfixes**
 
 **Build**
 
 **Documentation**
+
+
+9.6.3 (2017-02-24)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Base COA configuration for companies
+* One warehouse by company and by POP
+* better management of backup percent discount
+* configure sale app to manage product variants
+* configure subscription template and sale template
+* show routes characteristics
+* hide backup fields according if backup route is asked or not
+* simplify tree view of sale order
 
 
 9.6.2 (2017-02-14)
