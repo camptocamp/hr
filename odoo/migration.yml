@@ -99,3 +99,5 @@ migration:
       addons:
         upgrade:
           - specific_purchase
+        post:
+          - anthem songs.upgrade.10_0_6.update_post::main

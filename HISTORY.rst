@@ -21,9 +21,13 @@ latest (unreleased)
 
 **Features and Improvements**
 
+<<<<<<< HEAD
 * Activate PO Double validation
 * Add PO double validation view filters & security
 * Add Check analytic account in PO validation
+=======
+* Activate lots and serial number
+>>>>>>> remotes/origin/pull/25/head
 
 **Bugfixes**
 
