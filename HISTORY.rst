@@ -23,6 +23,7 @@ latest (unreleased)
 
 * Activate PO Double validation
 * Add PO double validation view filters & security
+* Add Check analytic account in PO validation
 
 **Bugfixes**
 
