@@ -21,6 +21,9 @@ latest (unreleased)
 
 **Features and Improvements**
 
+* Activate PO Double validation
+* Add PO double validation view filters & security
+
 **Bugfixes**
 
 **Build**
