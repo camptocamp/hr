@@ -96,8 +96,8 @@ migration:
       operations:
         pre:
           - anthem songs.upgrade.10_0_6.update_pre::main
+        post:
+          - anthem songs.upgrade.10_0_6.update_post::main
       addons:
         upgrade:
           - specific_purchase
-        post:
-          - anthem songs.upgrade.10_0_6.update_post::main
