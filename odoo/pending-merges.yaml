@@ -22,4 +22,20 @@
 #     # port of account_statement_base_import
 #     - oca refs/pull/137/head
   target: *default_target
-
+./external-src/hr:
+  remotes:
+    oca: git@github.com:OCA/hr.git
+    camptocamp: git@github.com:camptocamp/hr.git
+  merges:
+    - oca 10.0
+    # hr_contract_reference
+    - oca refs/pull/316/head
+    # hr_employee_birth_name
+    - oca refs/pull/318/head
+    # hr_experience
+    - oca refs/pull/306/head
+    # hr_employee_seniority
+    # - oca refs/pull/319/head
+    # hr_employee_social_media
+    - oca refs/pull/317/head
+  target: *default_target
