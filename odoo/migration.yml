@@ -137,3 +137,10 @@ migration:
           - l10n_lu
           - inter_company_rules
           - specific_product
+    - version: 9.6.4
+      operations:
+        post:
+          - anthem songs.update.update_9_6_4.res_company::main
+      addons:
+        upgrade:
+          - subcontracted_service
