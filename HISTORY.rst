@@ -21,16 +21,22 @@ latest (unreleased)
 
 **Features and Improvements**
 
-* Activate PO Double validation
-* Add PO double validation view filters & security
-* Add Check analytic account in PO validation
-* Activate lots and serial number
-
 **Bugfixes**
 
 **Build**
 
 **Documentation**
+
+
+10.0.6 (2017-03-02)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* Activate PO Double validation
+* Add PO double validation view filters & security
+* Add Check analytic account in PO validation
+* Activate lots and serial number
 
 
 10.0.5 (2017-02-21)
