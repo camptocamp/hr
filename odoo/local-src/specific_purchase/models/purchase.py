@@ -39,6 +39,20 @@ class PurchaseOrder(models.Model):
                         _('An Analytic Account is required for Validation!'))
         return super(PurchaseOrder, self).button_approve(force=force)
 
+    def get_requested_sn(self):
+        Lot = self.env['stock.production.lot']
+        prod_ids = self.order_line.search_read(
+                        [('product_id.is_req_sn_supplier', '=', True),
+                         ('order_id', '=', self.id)], ['product_id'])
+        lot_ids = self.env['stock.production.lot']
+        for prd in prod_ids:
+            line = self.order_line.search(
+                [('order_id', '=', self.id),
+                 ('product_id', '=', prd['product_id'][0])])
+            lot = Lot.search([('name', '=', line.req_sn_supplier)])
+            lot_ids |= lot
+        return lot_ids
+
 
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
@@ -46,3 +60,15 @@ class PurchaseOrderLine(models.Model):
     req_sn_supplier = fields.Char(
         string='Requested SN to supplier',
     )
+
+
+class StocProduction(models.Model):
+    _inherit = 'stock.production.lot'
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        return super(StocProduction, self).name_search(
+            name=name,
+            args=args,
+            operator=operator,
+            limit=limit)

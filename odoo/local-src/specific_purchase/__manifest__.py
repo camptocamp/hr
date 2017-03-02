@@ -23,6 +23,7 @@
         'views/purchase_line_views.xml',
         'views/purchase_views.xml',
         'views/product_views.xml',
+        'wizard/stock_pack_operation_views.xml',
         # reports
         'views/purchase_report.xml',
     ],

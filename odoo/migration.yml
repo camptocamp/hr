@@ -105,3 +105,6 @@ migration:
       operations:
         pre:
           - anthem songs.upgrade.10_0_7::pre
+      addons:
+        upgrade:
+          - specific_purchase
