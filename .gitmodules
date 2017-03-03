@@ -34,3 +34,7 @@
 	path = odoo/external-src/account-financial-tools
 	url = git@github.com:oca/account-financial-tools.git
 	branch = 10.0
+[submodule "odoo/external-src/purchase-workflow"]
+	path = odoo/external-src/purchase-workflow
+	url = git@github.com:oca/purchase-workflow.git
+	branch = 9.0
