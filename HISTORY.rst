@@ -28,6 +28,14 @@ Latest (Unreleased)
 **Documentation**
 
 
+9.6.4 (2017-03-03)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* install ``subcontracted_service`` module to manage procurement of services
+
+
 9.6.3 (2017-02-24)
 ++++++++++++++++++
 
