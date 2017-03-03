@@ -3,6 +3,6 @@ __setup__.crm_stage_intial_demand,True,1- Suspect / Demand,False,0,0
 __setup__.crm_stage_nda_engaged,True,2- NDA / Engaged,False,0,10
 __setup__.crm_stage_trf,True,3- Opportunity / TRF,False,0,20
 __setup__.crm_stage_study,False,4- Feasibility Study,False,10,30
-__setup__.crm_stage_quote,False,5- Proposal / Quote,False,10,40
+__setup__.crm_stage_quote,False,5. Proposal / Quote / JDA,False,10,40
 __setup__.crm_stage_won,True,6- Win / Customer,False,100,50
 __setup__.crm_stage_cancel,True,7- No Go / Cancelled,False,20,60
