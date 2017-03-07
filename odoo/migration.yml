@@ -102,6 +102,13 @@ migration:
         upgrade:
           - specific_purchase
     - version: 10.0.7
+      addons:
+        upgrade:
+          - delivery_fedex
+          - sale_product_set_layout
+          - stock_dropshipping
       operations:
         pre:
           - anthem songs.upgrade.10_0_7::pre
+        post:
+          - anthem songs.upgrade.10_0_7::post
