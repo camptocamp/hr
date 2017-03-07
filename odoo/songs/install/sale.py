@@ -27,8 +27,18 @@ def configure_sale_app(ctx):
 
 
 @anthem.log
+def configure_sale_double_validation(ctx):
+    company = ctx.env.ref('base.main_company')
+    company.write({
+        'so_double_validation': 'two_step',
+        'so_double_validation_amount': 0.0,
+    })
+
+
+@anthem.log
 def main(ctx):
     """ Configuring sales """
     # activate_multicurrency(ctx)
     configure_sale_app(ctx)
+    configure_sale_double_validation(ctx)
     # create_bank_accounts(ctx)
