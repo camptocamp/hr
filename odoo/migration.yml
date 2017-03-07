@@ -144,3 +144,9 @@ migration:
       addons:
         upgrade:
           - subcontracted_service
+    - version: 9.7.0
+      modes:
+        demo:
+          operations:
+            pre:
+              - anthem songs.update.update_9_7_0.email::main
