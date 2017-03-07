@@ -155,11 +155,13 @@ migration:
           - anthem songs.update.update_9_7_0.update::main
       addons:
         upgrade:
-          # Specific
-          - server_environment_files
           ### OCA
           # oca/sale-workflow
           - sale_double_validation
           # oca/server-tools
-          - server_environment
           - mail_environment
+          - server_environment
+          ### Specific
+          - server_environment_files
+          - specific_security
+          - specific_sale

@@ -34,6 +34,7 @@
  'data': ['data/hr_department_no_company.sql',
           'data/ir_rule.xml',
           'data/ir_rule.yml',
+          'security/group.xml',
           ],
  'demo': [
      'demo/currency.sql',
