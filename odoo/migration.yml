@@ -107,12 +107,17 @@ migration:
           - anthem songs.upgrade.10_0_7::pre
       addons:
         upgrade:
-          - hr_employee_phone_extension
-          - hr_emergency_contact
+          - delivery_fedex
           - hr_contract_reference
+          - hr_emergency_contact
           - hr_employee_birth_name
-          - hr_experience
-          - hr_employee_social_media
+          - hr_employee_phone_extension
           - hr_employee_seniority
+          - hr_employee_social_media
+          - hr_experience
+          - sale_product_set_layout
           - specific_hr
           - specific_purchase
+          - stock_dropshipping
+        post:
+          - anthem songs.upgrade.10_0_7::post

@@ -35,6 +35,9 @@ latest (unreleased)
 * Activate lots and serial number
 * Change sequence for 'stock.production.lot'
 * Add SN in PO report
+* Install dropshipping
+* Install FEDEX delivery
+* Install sales layout and product set
 
 **Bugfixes**
 
