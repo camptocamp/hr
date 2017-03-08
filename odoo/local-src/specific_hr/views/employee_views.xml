@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="view_employee_form_specific" model="ir.ui.view">
+    <field name="name">hr.employee.form.specific</field>
+    <field name="model">hr.employee</field>
+    <field name="inherit_id" ref="hr.view_employee_form"/>
+    <field name="arch" type="xml">
+
+      <!-- Passport-->
+      <xpath expr="//field[@name='passport_id']" position="after">
+        <field name='passport_expiration' groups="hr.group_hr_user"/>
+      </xpath>
+      <!-- Mobile -->
+      <xpath expr="//field[@name='mobile_phone']" position="after">
+        <field name='mobile_extension' groups="hr.group_hr_user"/>
+      </xpath>
+      <!-- Periodic tasks -->
+      <xpath expr="//group[@name='active_group']" position="after">
+        <group name="periodic_tasks" string="Periodic Tasks">
+          <field name='last_yearly_meeting'/>
+          <field name='last_professional_assessment'/>
+        </group>
+      </xpath>
+
+    </field>
+  </record>
+  <record id="hr_hr_employee_view_form2_specific" model="ir.ui.view">
+    <field name="name">hr.employee.view.form2specific</field>
+    <field name="model">hr.employee</field>
+    <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+    <field name="arch" type="xml">
+      <!-- Add Current contract Info -->
+      <xpath expr="//field[@name='vehicle_distance']" position="after">
+        <field name='employee_status_id'/>
+        <field name='coefficient'/>
+        <field name='classification'/>
+      </xpath>
+    </field>
+  </record>
+</odoo>
