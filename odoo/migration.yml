@@ -105,6 +105,8 @@ migration:
       operations:
         pre:
           - anthem songs.upgrade.10_0_7::pre
+        post:
+          - anthem songs.upgrade.10_0_7::post
       addons:
         upgrade:
           - delivery_fedex
@@ -119,5 +121,3 @@ migration:
           - specific_hr
           - specific_purchase
           - stock_dropshipping
-        post:
-          - anthem songs.upgrade.10_0_7::post
