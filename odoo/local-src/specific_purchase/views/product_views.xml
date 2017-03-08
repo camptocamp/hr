@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="product_serial_number_form_view_specific" model="ir.ui.view">
+    <field name="name">product.serial.number.specific</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="stock.view_template_property_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='tracking']" position="after">
+        <field name="is_req_sn_supplier"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="product_template_only_form_sn_view" model="ir.ui.view">
+    <field name="name">product.template.only.sn.form</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product.product_template_only_form_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='tracking']" position="after">
+        <field name="is_req_sn_supplier"
+               attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

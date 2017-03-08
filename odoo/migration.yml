@@ -107,7 +107,6 @@ migration:
           - anthem songs.upgrade.10_0_7::pre
       addons:
         upgrade:
-          - specific_hr
           - hr_employee_phone_extension
           - hr_emergency_contact
           - hr_contract_reference
@@ -115,3 +114,5 @@ migration:
           - hr_experience
           - hr_employee_social_media
           - hr_employee_seniority
+          - specific_hr
+          - specific_purchase

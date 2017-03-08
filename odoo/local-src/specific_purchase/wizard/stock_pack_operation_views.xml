@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="view_pack_operation_lot_form_specific" model="ir.ui.view">
+    <field name="name">stock.pack.operation.lots.form</field>
+    <field name="model">stock.pack.operation</field>
+    <field name="inherit_id" ref="stock.view_pack_operation_lot_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='product_id']" position="after">
+        <field name="purchase_lot_ids"/>
+      </xpath>
+      <xpath expr="//field[@name='lot_id']" position="replace">
+        <field
+          name="lot_id"
+          invisible="context.get('only_create', False)"
+          domain="[('product_id','=', parent.product_id),('id', 'in', parent.purchase_lot_ids[0][2])]"
+          context="{'lot_ids': parent.purchase_lot_ids}"
+          />
+      </xpath>
+      <xpath expr="//field[@name='product_id']" position="attributes">
+        <attribute
+          name="readonly"
+          eval="0"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>
