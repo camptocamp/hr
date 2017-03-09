@@ -25,8 +25,8 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     echo "Deploying image to docker hub for master (latest)"
     docker tag roctool_odoo camptocamp/roctool_odoo:latest
     docker push "camptocamp/roctool_odoo:latest"
-    echo "Building test server"
-    deploy $RANCHER_STACK_NAME
+    # echo "Building test server"
+    # deploy $RANCHER_STACK_NAME
   elif [ ! -z "$TRAVIS_TAG" ]; then
     echo "Deploying image to docker hub for tag ${TRAVIS_TAG}"
     docker tag roctool_odoo camptocamp/roctool_odoo:${TRAVIS_TAG}
