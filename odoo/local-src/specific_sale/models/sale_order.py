@@ -131,4 +131,13 @@ class SaleOrder(models.Model):
         return super(SaleOrder, self).copy(default=default)
 
     def action_validate_eng(self):
-        return True
+        user = self.env['res.users']
+        self.engineering_validation_id = user.browse(self.env.context['uid'])
+
+    def action_validate_sys(self):
+        user = self.env['res.users']
+        self.system_validation_id = user.browse(self.env.context['uid'])
+
+    def action_validate_pro(self):
+        user = self.env['res.users']
+        self.process_validation_id = user.browse(self.env.context['uid'])

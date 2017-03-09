@@ -13,6 +13,7 @@
     "data": [
         'views/product_views.xml',
         'views/sale_order_crm.xml',
+        'data/res_groups_data.xml',
     ],
     'installable': True,
 }

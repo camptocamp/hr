@@ -8,14 +8,25 @@
 
       <!-- validation Buttons -->
       <header position="inside">
-        <button
-          name="action_validate_eng"
-          string="Validate Action"
-          class="btn-primary"
-          type="object"
-          />
+        <button name="action_validate_eng"
+                context="{'validator': 'eng'}"
+                string="Engineering Validation"
+                class="btn-primary"
+                groups="specific_sale.rtl_eng_validation"
+                type="object"/>
+
+        <button name="action_validate_sys"
+                string="System Validation"
+                class="btn-primary"
+                groups="specific_sale.rtl_sys_manager"
+                type="object"/>
+
+        <button name="action_validate_pro"
+                string="Process Validation"
+                class="btn-primary"
+                groups="specific_sale.rtl_pro_manager"
+                type="object"/>
       </header>
-      <!-- so conditions -->
 
       <notebook position="inside">
         <page string="RocTool" name="roctool">
@@ -25,6 +36,9 @@
             <field name="project_market_id"/>
             <field name='sales_condition' filename="filename"/>
             <field name='filename' invisible="1"/>
+            <field name='engineering_validation_id'/>
+            <field name='system_validation_id'/>
+            <field name='process_validation_id'/>
           </group>
         </page>
       </notebook>
