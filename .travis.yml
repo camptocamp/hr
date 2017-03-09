@@ -17,8 +17,11 @@ env:
     - ADDONS_DIR=${TRAVIS_BUILD_DIR}/odoo/local-src
     - SONGS_DIR=${TRAVIS_BUILD_DIR}/odoo/songs
     - COMPOSE_PROJECT_NAME=roctool
-    - RANCHER_STACK_NAME=roctool-odoo-test
-    - secure: "lllT3JKO+7FB7ZlmYiXS8x7U5ifzhGkVK62E9gkretPNQSmbqWX7Ivob30dBHlgvrQ91IOBNBVNBvHtqdOrON4gnR0A2DB0ycKwzWwpTwBEBg1w1uISqdengucDLoqh5tNTIYxpSp+8N4gd6jqIqCcE9Qqwm0uCxR6iphrS+c22sBZCY3zNFAOtzpP5V/fFN7bcfxd3hKAPI4pw+EVdV157O461C40zlEX2acyVrnfjsi2HzPd/Gw2nMSjr5HwXGKDm21MD303QNwRlA8PwvXcjoYXI8TbiWCF0ISsvv4kNWSI1oT84iJ7swmTP+nU/PagoZKWZO3wW+U6gvmGP/P0llvIqp4PLL7lAZYCGSBIhdDtCaDsALC+xcb8oA1zGTIeH+KDL5igRsEOAp/xTzI5+jgiQTkNKH6vXddG1uijivK5FQjlCwDDs93mrJjkbN3TdkDkZQu/ESa3r6+MA0QWBd6OszZYtcTWFpvuGXUylCOH8X3895OswcAWpQ/r0D1322xyxo5Q1tgMf2FLAcT6LmWBbwszdaHh97LS63sc8ZnLAx2YpEZdi4pJQ2oxC0/eFKBDbs7ET603R8lCypkcQbDfoV44KxC0VxNzJRL3KUH7VrS3lp0PmKQOSt3KqwDIPyRHeJnmR4G8NGuBm0vXXffnwIxqQFc8+SHEzq+Pk="
+    - GENERATED_IMAGE=${COMPOSE_PROJECT_NAME}_odoo
+    - DOCKER_HUB_REPO=camptocamp/${GENERATED_IMAGE}
+    - RANCHER_MINION_SERVER=https://roctool.odoo-test.camptocamp.ch
+    # rancher minion server token:
+    - secure: "QUc3e1+s9jI8Z/L2GuuOqNIRKDchPbtuiALhJFsiJZt8xTxUOGMrbPTizUsQLZdOYlIbhZvXR2lbDbDu/5q/tPlBp8GLAbeFauBW48qZp4jo6Z/StStYn8OFQDiS8AcUqJDBS2U2rjOefhpjqLweiGv7tPyl2vgTZ0fRNp5kzIXVDRXFPPrXuItY+SX4lb/DwV6g6i4OnKM9dqp/Xrlu6pyza1iHPwRsQ+FoKFQ+7tKGT9UCsXmJugWEPgWTy5JQpaZEanFXqzZTLZlBpiRgrVdoyKwKDPMQuoJRmXI5M8VN+1tmM/ajD72GIPkOrJ36kZEMT88FUGtd4Nj6ablgC4eChHaHEzexNbNmoEaO41QKbkpxQrUw57329ChNdMk4XM6V9u4JRoH8u53mhMYKk0iPMkamAXgTkBszDRSY439qULICjI+HhSq1ao9ZdXwTTn8gVbMsfxttXfuA6Qsgxm1aXZYkX+tx8DTjew0LU1I+AYF6KugiMbdpTDEXas8BJJgSXRFXM11d3edjSGUiOepmNP0sQI4EANgaL15Kk7Ckvbg02hiLxuUGV3tDzi7COR6E0Q3+RDgPH/2LTDxOowjImaRrzzSkpLIJLs9MyuwX226eushVnrpraNRzxqQuVrkH4enHpe/KD4Gn/kxiKXvZMxNi3Ksc5nmwORPdXgM="
 
 before_install:
   - sudo apt-get update
@@ -30,10 +33,10 @@ before_install:
   - git config --global user.name "TravisCI"
   - git config --global user.email "travis@camptocamp.com"
   - if [ "$LINT_CHECK" == "1" ] ; then pip install --user -q flake8 ; fi
-  - if [ "$LINT_CHECK" == "0" ] ; then pip install --user -q gitpython ; fi
+  - if [ "$LINT_CHECK" == "0" ] ; then pip install --user -q gitpython requests ; fi
 
 install:
-  - if [ "$LINT_CHECK" == "0" ] ; then python ./travis/git_submodule_update.py ; fi
+  - if [ "$LINT_CHECK" == "0" ] ; then ./travis/git_submodule_update.py ; fi
     # we always specify '-f docker-compose.yml' so 'docker-compose.override.yml'
     # is not used and so the volumes are not shared with the host
   - if [ "$LINT_CHECK" == "0" ] ; then docker-compose -f docker-compose.yml build --pull ; fi
