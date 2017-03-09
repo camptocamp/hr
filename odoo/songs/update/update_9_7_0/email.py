@@ -14,6 +14,16 @@ def replace_partner_email(ctx):
 
 
 @anthem.log
+def replace_employee_email(ctx):
+    records = ctx.env['hr.employee'].search([])
+
+    records.write({
+        'work_email': 'mailusertest@bsonetwork.com'
+    })
+
+
+@anthem.log
 def main(ctx):
     """ Replacing email addresses """
     replace_partner_email(ctx)
+    replace_employee_email(ctx)
