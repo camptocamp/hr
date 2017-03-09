@@ -3,7 +3,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _, exceptions
 
 
 class SaleOrder(models.Model):
@@ -15,6 +15,29 @@ class SaleOrder(models.Model):
                                          required=True)
     project_market_id = fields.Many2one(comodel_name='project.market',
                                         required=True)
+
+    engineering_validation_id = fields.Many2one(
+        'res.users',
+        string='Engineering Validation',
+    )
+    system_validation_id = fields.Many2one(
+        'res.users',
+        string='System Validation',
+    )
+    process_validation_id = fields.Many2one(
+        'res.users',
+        string='Process Validation',
+    )
+    sales_condition = fields.Binary(
+        string='Sales Condition',
+        required=True,
+        states={'draft': [('required', False)], }
+    )
+    state = fields.Selection(
+        selection_add=[('final_quote', 'Final Quote')],
+        default='final_quote',
+    )
+    filename = fields.Char()
 
     def _generate_acc_name(self, use_existing_one=None):
         """
@@ -79,3 +102,33 @@ class SaleOrder(models.Model):
                         }
                         option_lines.append((0, 0, data))
         self.options = option_lines
+
+    def write(self, vals):
+        if self.state in ('draft') and ('state' in vals and
+           vals['state'] not in ('final_quote')):
+            raise exceptions.UserError(
+                'A Draft Sale Order can only step to "final_quote" ')
+        if ('state' in vals and vals['state'] not in ('draft')):
+            ghost_prd = self.order_line.search_read(
+                [('product_id.is_ghost', '=', True),
+                 ('order_id', '=', self.id)])
+            if ghost_prd:
+                raise exceptions.UserError(_(
+                    'Ghost product is allowed only on draft Sale Orders'))
+            if not self.sales_condition:
+                raise exceptions.UserError(_(
+                    'You need to attach Sales Condition'))
+        return super(SaleOrder, self).write(vals)
+
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        default = dict(default or {}, name=_("%s (Copy)") % self.name)
+        default = {
+            'engineering_validation_id': False,
+            'system_validation_id': False,
+            'process_validation_id': False,
+        }
+        return super(SaleOrder, self).copy(default=default)
+
+    def action_validate_eng(self):
+        return True

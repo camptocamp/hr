@@ -6,16 +6,29 @@
     <field name="inherit_id" ref="sale.view_order_form"/>
     <field name="arch" type="xml">
 
+      <!-- validation Buttons -->
+      <header position="inside">
+        <button
+          name="action_validate_eng"
+          string="Validate Action"
+          class="btn-primary"
+          type="object"
+          />
+      </header>
+      <!-- so conditions -->
+
       <notebook position="inside">
         <page string="RocTool" name="roctool">
           <group name="project_name_computation" string="Project configuration">
             <field name="project_zone_id"/>
             <field name="project_process_id"/>
             <field name="project_market_id"/>
+            <field name='sales_condition' filename="filename"/>
+            <field name='filename' invisible="1"/>
           </group>
-
         </page>
       </notebook>
     </field>
   </record>
+
 </odoo>
