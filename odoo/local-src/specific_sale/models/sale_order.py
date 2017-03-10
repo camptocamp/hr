@@ -20,14 +20,17 @@ class SaleOrder(models.Model):
     engineering_validation_id = fields.Many2one(
         'res.users',
         string='Engineering Validation',
+        track_visibility=True,
     )
     system_validation_id = fields.Many2one(
         'res.users',
         string='System Validation',
+        track_visibility=True
     )
     process_validation_id = fields.Many2one(
         'res.users',
         string='Process Validation',
+        track_visibility=True
     )
     sales_condition = fields.Binary(
         string='Sales Condition',
