@@ -6,8 +6,9 @@
     <field name="inherit_id" ref="sale.view_order_form"/>
     <field name="arch" type="xml">
 
-      <!-- validation Buttons -->
+
       <header position="inside">
+        <!-- validation Buttons -->
         <button name="action_validate_eng"
                 context="{'validator': 'eng'}"
                 string="Engineering Validation"
@@ -27,6 +28,10 @@
                 groups="specific_sale.rtl_pro_manager"
                 type="object"/>
       </header>
+
+      <xpath expr="//field[@widget='statusbar']" position="replace">
+        <field name="state" widget="statusbar" statusbar_visible="draft,final_quote,sent,sale"/>
+      </xpath>
 
       <notebook position="inside">
         <page string="RocTool" name="roctool">

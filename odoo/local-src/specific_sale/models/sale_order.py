@@ -3,7 +3,8 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, api, _, exceptions
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):
@@ -35,7 +36,7 @@ class SaleOrder(models.Model):
     )
     state = fields.Selection(
         selection_add=[('final_quote', 'Final Quote')],
-        default='final_quote',
+        # default='final_quote',
     )
     filename = fields.Char()
 
@@ -104,20 +105,26 @@ class SaleOrder(models.Model):
         self.options = option_lines
 
     def write(self, vals):
+        # from ' draft you can switch only to 'final_quote'
         if self.state in ('draft') and ('state' in vals and
            vals['state'] not in ('final_quote')):
-            raise exceptions.UserError(
+            raise UserError(
                 'A Draft Sale Order can only step to "final_quote" ')
         if ('state' in vals and vals['state'] not in ('draft')):
             ghost_prd = self.order_line.search_read(
                 [('product_id.is_ghost', '=', True),
                  ('order_id', '=', self.id)])
+            # ghost_prd allowed only on draft
             if ghost_prd:
-                raise exceptions.UserError(_(
-                    'Ghost product is allowed only on draft Sale Orders'))
+                raise UserError(_(
+                    'Ghost product is allowed only on draft Sale Orders.'))
             if not self.sales_condition:
-                raise exceptions.UserError(_(
-                    'You need to attach Sales Condition'))
+                raise UserError(_(
+                    'You need to attach Sales Condition.'))
+            if not (self.engineering_validation_id and
+                    self.system_validation_id and
+                    self.process_validation_id):
+                raise UserError(_('The Sale Order needs to be reviewed.'))
         return super(SaleOrder, self).write(vals)
 
     @api.returns('self', lambda value: value.id)
@@ -141,3 +148,11 @@ class SaleOrder(models.Model):
     def action_validate_pro(self):
         user = self.env['res.users']
         self.process_validation_id = user.browse(self.env.context['uid'])
+
+    @api.multi
+    def action_confirm(self):
+        for order in self:
+            if order.state == 'draft':
+                order.state = 'final_quote'
+            else:
+                order.action_confirm()
