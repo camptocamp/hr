@@ -21,6 +21,18 @@ latest (unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.0.7 (2017-03-10)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * Add new fields in 'hr.employee' & 'hr.contracts'
 * Update submodule hr
 * Install 'hr_employee_phone_extension'
