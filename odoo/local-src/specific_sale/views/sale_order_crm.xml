@@ -39,8 +39,8 @@
             <field name="project_zone_id"/>
             <field name="project_process_id"/>
             <field name="project_market_id"/>
-            <field name='sales_condition' filename="filename"/>
-            <field name='filename' invisible="1"/>
+            <field name='sales_condition' filename="sales_condition_filename"/>
+            <field name='sales_condition_filename' invisible="1"/>
             <field name='engineering_validation_id'/>
             <field name='system_validation_id'/>
             <field name='process_validation_id'/>

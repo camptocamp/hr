@@ -12,19 +12,24 @@ class MailComposeMessage(models.TransientModel):
     @api.model
     def default_get(self, fields):
         defaults = super(MailComposeMessage, self).default_get(fields)
+
         if (
                 'attachment_ids' in fields and
-                self.env.context.get('active_model') == 'sale.order' and
-                self.env.context.get('custom_layout') ==
-                "sale.mail_template_data_notification_email_sale_order"
+                self.env.context.get('active_model') == 'sale.order'
         ):
             attachments = self.env['ir.attachment']
             sale_order = self.env['sale.order'].browse(
                 self.env.context.get('active_id')
             )
+            ## ---> Set BreakPoint
+            import pdb;
+            pdb.set_trace()
             attachments = sale_order.mapped(
-                'order_line.product_id.attachment_ids'
+                'attachment_ids'
             )
+            ## ---> Set BreakPoint
+            import pdb;
+            pdb.set_trace()
             defaults['attachment_ids'] = [(6, 0, attachments.ids)]
         return defaults
 

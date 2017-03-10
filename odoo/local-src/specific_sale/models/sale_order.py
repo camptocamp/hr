@@ -41,7 +41,11 @@ class SaleOrder(models.Model):
         selection_add=[('final_quote', 'Final Quote')],
         # default='final_quote',
     )
-    filename = fields.Char()
+    sales_condition_filename = fields.Char()
+    attachment_ids = fields.One2many(
+        'ir.attachment',
+        compute='_get_attachments',
+        string='Pièces jointes')
 
     def _generate_acc_name(self, use_existing_one=None):
         """
@@ -159,3 +163,14 @@ class SaleOrder(models.Model):
                 order.state = 'final_quote'
             else:
                 order.action_confirm()
+
+    def _get_attachments(self):
+        for rec in self:
+            ## ---> Set BreakPoint
+            import pdb;
+            pdb.set_trace()
+            rec.attachment_ids = self.env['ir.attachment'].search(
+                [('res_model', '=', 'sale.order'),
+                 ('res_id', '=', rec.id),
+                 ]
+            )
