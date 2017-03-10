@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
   <data>
+    <!-- show the button approve only to technical manager -->
     <record id="view_order_form_approve_button" model="ir.ui.view">
       <field name="name">sale.order.form.approve.button</field>
       <field name="model">sale.order</field>
@@ -8,21 +9,28 @@
       <field name="arch" type="xml">
         <button name="action_approve" position="attributes">
           <attribute name="groups">specific_security.group_technical_mgmt</attribute>
+          <attribute name="states">to_approve_tech</attribute>
         </button>
       </field>
     </record>
 
+    <!-- hide button Send By Email and display Confirm button as primary -->
     <record id="view_order_form_confirm_buttons" model="ir.ui.view">
       <field name="name">sale.order.form.confirm.buttons</field>
       <field name="model">sale.order</field>
       <field name="inherit_id" ref="sale.view_order_form"/>
       <field name="arch" type="xml">
 
-        <xpath expr="//button[@name='action_confirm' and @states='sent']" position="attributes">
-          <attribute name="groups">base.group_sale_manager</attribute>
+        <xpath expr="//button[@name='action_quotation_send' and @states='draft']" position="attributes">
+          <attribute name="invisible">1</attribute>
         </xpath>
         <xpath expr="//button[@name='action_confirm' and @states='draft']" position="attributes">
-          <attribute name="groups">base.group_sale_manager</attribute>
+          <attribute name="class">btn-primary</attribute>
+        </xpath>
+        <xpath expr="//button[@name='action_confirm' and @states='draft']" position="after">
+          <button name="action_confirm" states="to_approve" string="Approve Order (Technical)" class="btn-primary" type="object" context="{'show_sale': True}"
+            groups="base.group_sale_manager"
+            />
         </xpath>
 
       </field>

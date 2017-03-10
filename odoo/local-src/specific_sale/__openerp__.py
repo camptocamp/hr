@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 {'name': 'Specific sales',
- 'summary': "Double validation workflow",
+ 'summary': "Triple validation workflow",
  'version': '9.0.1.0.0',
  'author': 'Camptocamp,Odoo Community Association (OCA)',
  'maintainer': 'Camptocamp',
