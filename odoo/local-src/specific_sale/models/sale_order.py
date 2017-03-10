@@ -21,16 +21,19 @@ class SaleOrder(models.Model):
         'res.users',
         string='Engineering Validation',
         track_visibility=True,
+        copy=False,
     )
     system_validation_id = fields.Many2one(
         'res.users',
         string='System Validation',
-        track_visibility=True
+        track_visibility=True,
+        copy=False,
     )
     process_validation_id = fields.Many2one(
         'res.users',
         string='Process Validation',
-        track_visibility=True
+        track_visibility=True,
+        copy=False,
     )
     sales_condition = fields.Binary(
         string='Sales Condition',
@@ -133,16 +136,6 @@ class SaleOrder(models.Model):
                     self.process_validation_id):
                 raise UserError(_('The Sale Order needs to be reviewed.'))
         return super(SaleOrder, self).write(vals)
-
-    @api.returns('self', lambda value: value.id)
-    def copy(self, default=None):
-        default = dict(default or {}, name=_("%s (Copy)") % self.name)
-        default = {
-            'engineering_validation_id': False,
-            'system_validation_id': False,
-            'process_validation_id': False,
-        }
-        return super(SaleOrder, self).copy(default=default)
 
     def action_validate_eng(self):
         user = self.env['res.users']
