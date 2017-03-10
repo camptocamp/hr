@@ -35,6 +35,7 @@ class SaleOrder(models.Model):
     sales_condition = fields.Binary(
         string='Sales Condition',
         required=True,
+        attachment=True,
         states={'draft': [('required', False)], }
     )
     state = fields.Selection(
@@ -166,11 +167,22 @@ class SaleOrder(models.Model):
 
     def _get_attachments(self):
         for rec in self:
-            ## ---> Set BreakPoint
-            import pdb;
-            pdb.set_trace()
             rec.attachment_ids = self.env['ir.attachment'].search(
                 [('res_model', '=', 'sale.order'),
                  ('res_id', '=', rec.id),
                  ]
             )
+
+    @api.multi
+    @api.onchange('sales_condition')
+    def attach_doc(self):
+        for rec in self:
+            self.env['ir.attachment'].create(
+                {'res_model': 'sale.order',
+                 'res_id': rec.id,
+                 'name': rec.name,
+                 'datas_fname': rec.sales_condition_filename,
+                 'type': 'binary',
+                 'db_datas': rec.data,
+                 })
+        return True

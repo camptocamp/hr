@@ -3,7 +3,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, api, fields
+from odoo import models, api
 
 
 class MailComposeMessage(models.TransientModel):
@@ -21,15 +21,9 @@ class MailComposeMessage(models.TransientModel):
             sale_order = self.env['sale.order'].browse(
                 self.env.context.get('active_id')
             )
-            ## ---> Set BreakPoint
-            import pdb;
-            pdb.set_trace()
             attachments = sale_order.mapped(
                 'attachment_ids'
             )
-            ## ---> Set BreakPoint
-            import pdb;
-            pdb.set_trace()
             defaults['attachment_ids'] = [(6, 0, attachments.ids)]
         return defaults
 
