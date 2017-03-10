@@ -114,11 +114,10 @@ class SaleOrder(models.Model):
 
     def write(self, vals):
         # from ' draft you can switch only to 'final_quote'
-        if self.state in ('draft') and ('state' in vals and
-           vals['state'] not in ('final_quote')):
+        if self.state == 'draft' and vals.get('state') != 'final_quote':
             raise UserError(
                 'A Draft Sale Order can only step to "final_quote" ')
-        if ('state' in vals and vals['state'] not in ('draft')):
+        if vals.get('state') != ('draft'):
             ghost_prd = self.order_line.search_read(
                 [('product_id.is_ghost', '=', True),
                  ('order_id', '=', self.id)])
