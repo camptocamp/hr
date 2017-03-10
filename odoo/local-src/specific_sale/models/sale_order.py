@@ -46,10 +46,10 @@ class SaleOrder(models.Model):
         # default='final_quote',
     )
     sales_condition_filename = fields.Char()
-    attachment_ids = fields.One2many(
-        'ir.attachment',
-        compute='_get_attachments',
-        string='Pièces jointes')
+    # attachment_ids = fields.One2many(
+    #     'ir.attachment',
+    #     compute='_get_attachments',
+    #     string='Pièces jointes')
 
     def _generate_acc_name(self, use_existing_one=None):
         """
@@ -115,12 +115,9 @@ class SaleOrder(models.Model):
                         option_lines.append((0, 0, data))
         self.options = option_lines
 
-    def write(self, vals):
-        # from ' draft you can switch only to 'final_quote'
-        if self.state == 'draft' and vals.get('state') != 'final_quote':
-            raise UserError(
-                'A Draft Sale Order can only step to "final_quote" ')
-        if vals.get('state') != ('draft'):
+    @api.multi
+    def _check_ghost(self):
+        for so in self:
             ghost_prd = self.order_line.search_read(
                 [('product_id.is_ghost', '=', True),
                  ('order_id', '=', self.id)])
@@ -128,13 +125,31 @@ class SaleOrder(models.Model):
             if ghost_prd:
                 raise UserError(_(
                     'Ghost product is allowed only on draft Sale Orders.'))
+
+    @api.multi
+    def _check_sales_condition(self):
+        for so in self:
             if not self.sales_condition:
                 raise UserError(_(
                     'You need to attach Sales Condition.'))
-            if not (self.engineering_validation_id and
-                    self.system_validation_id and
-                    self.process_validation_id):
-                raise UserError(_('The Sale Order needs to be reviewed.'))
+
+    @api.multi
+    def _check_validators(self):
+        if not (self.engineering_validation_id and
+                self.system_validation_id and
+                self.process_validation_id):
+            raise UserError(_('The Sale Order needs to be reviewed.'))
+
+    def write(self, vals):
+        # from ' draft you can switch only to 'final_quote'
+        if (self.state == 'draft' and
+           vals.get('state', 'final_quote') != 'final_quote'):
+            raise UserError(
+                'A Draft Sale Order can only step to "final_quote" ')
+        if vals.get('state', 'draft') != 'draft':
+            self._check_ghost()
+            self._check_sales_condition()
+            self._check_validators()
         return super(SaleOrder, self).write(vals)
 
     def action_validate_eng(self):
@@ -157,24 +172,24 @@ class SaleOrder(models.Model):
             else:
                 order.action_confirm()
 
-    def _get_attachments(self):
-        for rec in self:
-            rec.attachment_ids = self.env['ir.attachment'].search(
-                [('res_model', '=', 'sale.order'),
-                 ('res_id', '=', rec.id),
-                 ]
-            )
+    # def _get_attachments(self):
+    #     for rec in self:
+    #         rec.attachment_ids = self.env['ir.attachment'].search(
+    #             [('res_model', '=', 'sale.order'),
+    #              ('res_id', '=', rec.id),
+    #              ]
+    #         )
 
-    @api.multi
-    @api.onchange('sales_condition')
-    def attach_doc(self):
-        for rec in self:
-            self.env['ir.attachment'].create(
-                {'res_model': 'sale.order',
-                 'res_id': rec.id,
-                 'name': rec.name,
-                 'datas_fname': rec.sales_condition_filename,
-                 'type': 'binary',
-                 'db_datas': rec.data,
-                 })
-        return True
+    # @api.multi
+    # @api.onchange('sales_condition')
+    # def attach_doc(self):
+    #     for rec in self:
+    #         self.env['ir.attachment'].create(
+    #             {'res_model': 'sale.order',
+    #              'res_id': rec.id,
+    #              'name': rec.name,
+    #              'datas_fname': rec.sales_condition_filename,
+    #              'type': 'binary',
+    #              'db_datas': rec.data,
+    #              })
+    #     return True
