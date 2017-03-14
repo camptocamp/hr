@@ -39,21 +39,18 @@ class SaleOrder(models.Model):
         string='Sales Condition',
         required=True,
         attachment=True,
-        states={'draft': [('required', False)], }
+        states={'draft': [('required', False)]}
     )
     state = fields.Selection(
         selection_add=[('final_quote', 'Final Quote')],
         # default='final_quote',
     )
     sales_condition_filename = fields.Char()
-    # attachment_ids = fields.One2many(
-    #     'ir.attachment',
-    #     compute='_get_attachments',
-    #     string='Pièces jointes')
 
     def _generate_acc_name(self, use_existing_one=None):
-        """
-        generate an analytic account name according to the following structure:
+        """ Generate analytic account name
+
+        According to the following structure:
             123ABCXXYYZZ with
                 123: number autoincrement (use Odoo sequence)
                 ABC: customer.ref field
@@ -143,7 +140,7 @@ class SaleOrder(models.Model):
     def write(self, vals):
         # from ' draft you can switch only to 'final_quote'
         if (self.state == 'draft' and
-           vals.get('state', 'final_quote') != 'final_quote'):
+                vals.get('state', 'final_quote') != 'final_quote'):
             raise UserError(
                 'A Draft Sale Order can only step to "final_quote" ')
         if vals.get('state', 'draft') != 'draft':
@@ -153,16 +150,13 @@ class SaleOrder(models.Model):
         return super(SaleOrder, self).write(vals)
 
     def action_validate_eng(self):
-        user = self.env['res.users']
-        self.engineering_validation_id = user.browse(self.env.context['uid'])
+        self.engineering_validation_id = self.env.context['uid']
 
     def action_validate_sys(self):
-        user = self.env['res.users']
-        self.system_validation_id = user.browse(self.env.context['uid'])
+        self.system_validation_id = self.env.context['uid']
 
     def action_validate_pro(self):
-        user = self.env['res.users']
-        self.process_validation_id = user.browse(self.env.context['uid'])
+        self.process_validation_id = self.env.context['uid']
 
     @api.multi
     def action_confirm(self):
@@ -171,25 +165,3 @@ class SaleOrder(models.Model):
                 order.state = 'final_quote'
             else:
                 order.action_confirm()
-
-    # def _get_attachments(self):
-    #     for rec in self:
-    #         rec.attachment_ids = self.env['ir.attachment'].search(
-    #             [('res_model', '=', 'sale.order'),
-    #              ('res_id', '=', rec.id),
-    #              ]
-    #         )
-
-    # @api.multi
-    # @api.onchange('sales_condition')
-    # def attach_doc(self):
-    #     for rec in self:
-    #         self.env['ir.attachment'].create(
-    #             {'res_model': 'sale.order',
-    #              'res_id': rec.id,
-    #              'name': rec.name,
-    #              'datas_fname': rec.sales_condition_filename,
-    #              'type': 'binary',
-    #              'db_datas': rec.data,
-    #              })
-    #     return True

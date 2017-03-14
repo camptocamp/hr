@@ -9,24 +9,6 @@ from odoo import models, api
 class MailComposeMessage(models.TransientModel):
     _inherit = 'mail.compose.message'
 
-    @api.model
-    def default_get(self, fields):
-        defaults = super(MailComposeMessage, self).default_get(fields)
-
-        if (
-                'attachment_ids' in fields and
-                self.env.context.get('active_model') == 'sale.order'
-        ):
-            attachments = self.env['ir.attachment']
-            sale_order = self.env['sale.order'].browse(
-                self.env.context.get('active_id')
-            )
-            attachments = sale_order.mapped(
-                'attachment_ids'
-            )
-            defaults['attachment_ids'] = [(6, 0, attachments.ids)]
-        return defaults
-
     @api.multi
     def onchange_template_id(self,
                              template_id,
@@ -36,13 +18,59 @@ class MailComposeMessage(models.TransientModel):
         values = super(MailComposeMessage, self).onchange_template_id(
             template_id, composition_mode, model, res_id
         )
+
+        if model != 'sale.order':
+            return values
+
+        order = self.env['sale.order'].browse(res_id)
+        if not order.sales_condition:
+            return values
+
+        # xmlids of email.template in which we join the sales condition
+        # document
+        sale_condition_xmlids = (
+            'sale.email_template_edi_sale',
+        )
+        condition_template_ids = []
+        for xmlid in sale_condition_xmlids:
+            template = self.env.ref(xmlid, raise_if_not_found=False)
+            condition_template_ids.append(template.id)
+
+        # sending a mail quote
+        if template_id not in condition_template_ids:
+            return values
+
+        attachment = self.env['ir.attachment'].search(
+            [('res_model', '=', 'sale.order'),
+             ('res_field', '=', 'sales_condition'),
+             ('res_id', '=', order.id),
+             ],
+            limit=1,
+        )
+        fname = order.sales_condition_filename
+        # Replicate what's done in
+        # addons/mail_template/wizard/mail_compose_message.py
+        # The attachment should be cleaned by odoo later
+        data_attach = {
+            'name': fname,
+            'datas': attachment.datas,
+            'datas_fname': fname,
+            'res_model': 'mail.compose.message',
+            'res_id': 0,
+            'type': 'binary',
+        }
+        new_attachment = self.env['ir.attachment'].create(data_attach)
         value = values['value']
-        existing_attachments = self.attachment_ids.ids
         if 'attachment_ids' in value:
-            # we want to add attachment, not replace existing attachments
-            # so convert (6, 0, ids) to sequences of (4, id, 0)
+            # add the new attachment to the existing command created
+            # by the super onchange
             for cmd in value['attachment_ids']:
                 if cmd[0] == 6:
                     ids = cmd[2]
-                    ids += existing_attachments
+                    ids.append(new_attachment.id)
+                else:
+                    raise Exception('unhandled')
+        else:
+            value['attachment_id'] = [(6, 0, new_attachment.ids)]
+
         return values
