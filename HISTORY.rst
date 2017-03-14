@@ -21,6 +21,8 @@ latest (unreleased)
 
 **Features and Improvements**
 
+* Add a second user on CRM leads
+
 **Bugfixes**
 
 **Build**
