@@ -22,6 +22,8 @@ latest (unreleased)
 **Features and Improvements**
 
 * Add a second user on CRM leads
+* Ghosts products and indicative sales quotes: have placeholder products on
+  sale orders, and have an intermediate state on sales quotations.
 
 **Bugfixes**
 
