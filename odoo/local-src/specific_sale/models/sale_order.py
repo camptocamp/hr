@@ -41,11 +41,17 @@ class SaleOrder(models.Model):
         attachment=True,
         states={'draft': [('required', False)]}
     )
-    state = fields.Selection(
-        selection_add=[('final_quote', 'Final Quote')],
-        # default='final_quote',
-    )
     sales_condition_filename = fields.Char()
+
+    @api.model
+    def _setup_fields(self, partial):
+        super(SaleOrder, self)._setup_fields(partial)
+        new_selection = []
+        for state, name in self._fields['state'].selection:
+            new_selection.append((state, name))
+            if state == 'draft':
+                new_selection.append(('final_quote', _('Final Quote')))
+        self._fields['state'].selection = new_selection
 
     def _generate_acc_name(self, use_existing_one=None):
         """ Generate analytic account name
