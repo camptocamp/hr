@@ -22,18 +22,21 @@ class SaleOrder(models.Model):
         string='Engineering Validation',
         track_visibility=True,
         copy=False,
+        readonly=True,
     )
     system_validation_id = fields.Many2one(
         'res.users',
         string='System Validation',
         track_visibility=True,
         copy=False,
+        readonly=True,
     )
     process_validation_id = fields.Many2one(
         'res.users',
         string='Process Validation',
         track_visibility=True,
         copy=False,
+        readonly=True,
     )
     sales_condition = fields.Binary(
         string='Sales Condition',
