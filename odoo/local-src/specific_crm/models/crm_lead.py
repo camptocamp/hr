@@ -34,6 +34,26 @@ class CrmLead(models.Model):
     project_market_id = fields.Many2one(comodel_name='project.market')
     business_type = fields.Selection(selection=[('injection', 'Injection'),
                                                 ('composite', 'Composite')])
+    program_manager_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Program Manager',
+        index=True,
+        track_visibility='onchange',
+    )
+
+    @api.model
+    def _message_get_auto_subscribe_fields(self, updated_fields,
+                                           auto_follow_fields=None):
+        if auto_follow_fields is None:
+            auto_follow_fields = []
+        auto_follow_fields = (
+            set(auto_follow_fields) | {'user_id', 'program_manager_id'}
+        )
+        _super = super(CrmLead, self)
+        return _super._message_get_auto_subscribe_fields(
+            updated_fields,
+            auto_follow_fields=list(auto_follow_fields),
+        )
 
     @api.onchange('team_id')
     def onchange_team_id(self):

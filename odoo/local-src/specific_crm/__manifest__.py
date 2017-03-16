@@ -11,6 +11,7 @@
     "license": "GPL-3 or any later version",
     "category": "CRM",
     "data": ['security/ir.model.access.csv',
+             'security/crm_security.xml',
              'data/ir_sequence.xml',
              'views/crm_lead_view.xml',
              'views/survey_templates.xml',

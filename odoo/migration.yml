@@ -121,3 +121,7 @@ migration:
           - specific_hr
           - specific_purchase
           - stock_dropshipping
+    - version: 10.0.8
+      addons:
+        upgrade:
+          - specific_crm
