@@ -4,14 +4,14 @@
   <record id="view_template_property_form" model="ir.ui.view">
     <field name="name">product.ghost</field>
     <field name="model">product.template</field>
-    <field name="inherit_id" ref="stock.view_template_property_form"/>
+    <field name="inherit_id" ref="product.product_template_form_view"/>
     <field name="arch" type="xml">
-      <xpath expr="//field[@name='can_be_expensed']/.." position="after">
+      <div name="options" position="inside">
         <div>
           <field name="is_ghost"/>
           <label for="is_ghost"/>
         </div>
-      </xpath>
+      </div>
     </field>
   </record>
 
@@ -20,12 +20,12 @@
     <field name="model">product.template</field>
     <field name="inherit_id" ref="product.product_template_only_form_view"/>
     <field name="arch" type="xml">
-      <xpath expr="//field[@name='can_be_expensed']/.." position="after">
+      <div name="options" position="inside">
         <div>
           <field name="is_ghost"/>
           <label for="is_ghost"/>
         </div>
-      </xpath>
+      </div>
     </field>
   </record>
 
