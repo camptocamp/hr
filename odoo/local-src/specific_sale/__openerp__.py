@@ -13,7 +13,10 @@
      'specific_security',
  ],
  'website': 'www.camptocamp.com',
- 'data': ['views/sale.xml'],
+ 'data': [
+     'wizard/sale_refusal_view.xml',
+     'views/sale.xml',
+ ],
  'test': [],
  'installable': True,
  'auto_install': False,

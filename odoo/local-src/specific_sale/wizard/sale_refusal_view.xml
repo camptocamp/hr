@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record id="sale_refusal_form" model="ir.ui.view">
+      <field name="name">Sale Refusal</field>
+      <field name="model">sale.refusal</field>
+      <field name="arch" type="xml">
+        <form string="Sale Refusal">
+          <p class="oe_grey">
+            You must provide a reason for the refusal.
+            It will be added in the chat log.
+          </p>
+          <group>
+            <field name="order_id" invisible="1"/>
+            <field name="reason"/>
+          </group>
+          <footer>
+            <button name="refuse" string="Refuse" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-default" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_view_sale_refusal" model="ir.actions.act_window">
+      <field name="name">Sale Refusal</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">sale.refusal</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="sale_refusal_form"/>
+      <field name="target">new</field>
+      <field name="groups_id" eval="[(4,ref('base.group_sale_manager'))]"/>
+    </record>
+
+
+  </data>
+</openerp>
+

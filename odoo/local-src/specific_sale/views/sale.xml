@@ -10,6 +10,7 @@
         <button name="action_approve" position="attributes">
           <attribute name="groups">specific_security.group_technical_mgmt</attribute>
           <attribute name="states">to_approve_tech</attribute>
+          <attribute name="string">Approve Order (Technical)</attribute>
         </button>
       </field>
     </record>
@@ -28,11 +29,19 @@
           <attribute name="class">btn-primary</attribute>
         </xpath>
         <xpath expr="//button[@name='action_confirm' and @states='draft']" position="after">
-          <button name="action_confirm" states="to_approve" string="Approve Order (Technical)" class="btn-primary" type="object" context="{'show_sale': True}"
+          <button name="action_confirm" states="to_approve" string="Approve Order" class="btn-primary" type="object" context="{'show_sale': True}"
             groups="base.group_sale_manager"
             />
         </xpath>
-
+        <button name="action_cancel" position="after">
+          <button name="action_draft" states="refused" type="object" string="Set to Quotation"/>
+          <button name="%(specific_sale.action_view_sale_refusal)d" states="to_approve" string="Refuse" type="action"
+            context="{'default_order_id': active_id}"
+            groups="base.group_sale_manager,specific_security.group_technical_mgmt" />
+          <button name="%(specific_sale.action_view_sale_refusal)d" states="to_approve_tech" string="Refuse" type="action"
+            context="{'default_order_id': active_id}"
+            groups="specific_security.group_technical_mgmt" />
+        </button>
       </field>
     </record>
   </data>

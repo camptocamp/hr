@@ -9,8 +9,10 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     state = fields.Selection(
-        selection_add=[('to_approve_tech', 'To Approve (technical)')]
+        selection_add=[('to_approve_tech', 'To Approve (technical)'),
+                       ('refused', 'Refused')]
     )
+    refusal_reason = fields.Text(track_visibility='onchange')
 
     @api.multi
     def is_to_approve(self):
@@ -22,7 +24,6 @@ class SaleOrder(models.Model):
                 self.is_amount_to_approve() and
                 not (self.user_has_groups('base.group_sale_manager') or
                      self.user_has_groups('base.group_technical_mgmt')))
-
 
     @api.multi
     def is_to_approve_technical(self):
@@ -51,3 +52,21 @@ class SaleOrder(models.Model):
         if to_confirm:
             return super(SaleOrder, to_confirm).action_confirm()
         return True
+
+    @api.multi
+    def action_refuse(self):
+        return self.write({'state': 'refused'})
+
+    @api.multi
+    def action_draft(self):
+        """ Allow set to draft from refused state """
+        orders = self.filtered(lambda s: s.state == 'refused')
+        orders.write({
+            'state': 'draft',
+            'procurement_group_id': False,
+        })
+        orders.mapped('order_line').mapped('procurement_ids').write(
+            {'sale_line_id': False})
+
+        todo = self.filtered(lambda s: s.state != 'refused')
+        return super(SaleOrder, todo).action_draft()
