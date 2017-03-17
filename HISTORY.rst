@@ -21,15 +21,22 @@ latest (unreleased)
 
 **Features and Improvements**
 
-* Add a second user on CRM leads
-* Ghosts products and indicative sales quotes: have placeholder products on
-  sale orders, and have an intermediate state on sales quotations.
-
 **Bugfixes**
 
 **Build**
 
 **Documentation**
+
+
+10.0.8 (2017-03-17)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* Add a second user on CRM leads
+* Ghosts products and indicative sales quotes: have placeholder products on
+  sale orders, and have an intermediate state on sales quotations.
+* install sale_order_revision
 
 
 10.0.7 (2017-03-10)
