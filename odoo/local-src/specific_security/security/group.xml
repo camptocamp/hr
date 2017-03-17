@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="group_technical_mgmt" model="res.groups">
+      <field name="name">Technical Management</field>
+      <field name="implied_ids" eval="[(4, ref('base.group_user')), (4, ref('base.group_sale_manager'))]"/>
+    </record>
+  </data>
+</openerp>

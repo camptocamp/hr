@@ -19,16 +19,17 @@ RUN set -x; \
 
 ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/src/addons, \
-  /opt/odoo/external-src/server-tools, \
-  /opt/odoo/external-src/product-variant, \
   /opt/odoo/external-src/account-financial-tools, \
-  /opt/odoo/external-src/web, \
   /opt/odoo/external-src/connector, \
-  /opt/odoo/external-src/hr-timesheet, \
-  /opt/odoo/external-src/purchase-workflow, \
-  /opt/odoo/external-src/partner-contact, \
-  /opt/odoo/external-src/hr, \
   /opt/odoo/external-src/connector-jira, \
+  /opt/odoo/external-src/hr, \
+  /opt/odoo/external-src/hr-timesheet, \
+  /opt/odoo/external-src/partner-contact, \
+  /opt/odoo/external-src/product-variant, \
+  /opt/odoo/external-src/purchase-workflow, \
+  /opt/odoo/external-src/sale-workflow, \
+  /opt/odoo/external-src/server-tools, \
+  /opt/odoo/external-src/web, \
   /opt/odoo/local-src," \
   LIMIT_TIME_CPU=86400 \
   LIMIT_TIME_REAL=86400 \

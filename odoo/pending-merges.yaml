@@ -32,3 +32,12 @@
     - oca 9.0
     - oca refs/pull/351/head
   target: *default_target
+./external-src/sale-workflow:
+  remotes:
+    oca: git@github.com:OCA/sale-workflow.git
+    camptocamp: git@github.com:camptocamp/sale-workflow.git
+  merges:
+    - oca 9.0
+    # [9.0][NEW] sale_double_validation
+    - oca refs/pull/423/head
+  target: *default_target
