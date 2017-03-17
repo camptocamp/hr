@@ -148,11 +148,13 @@ class SaleOrder(models.Model):
 
     def write(self, vals):
         # from ' draft you can switch only to 'final_quote'
+        target_state = vals.get('state', 'final_quote')
         if (self.state == 'draft' and
-                vals.get('state', 'final_quote') != 'final_quote'):
+                target_state not in ('cancel', 'final_quote')):
             raise UserError(
-                'A Draft Sale Order can only step to "final_quote" ')
-        if vals.get('state', 'draft') != 'draft':
+                _('A Draft Sale Order can only step to '
+                  '"final_quote" or "cancel"'))
+        if vals.get('state', 'draft') not in ('cancel', 'draft'):
             self._check_ghost()
             self._check_sales_condition()
             self._check_validators()
