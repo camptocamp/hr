@@ -6,16 +6,48 @@
     <field name="inherit_id" ref="sale.view_order_form"/>
     <field name="arch" type="xml">
 
+
+      <header position="inside">
+        <!-- validation Buttons -->
+        <button name="action_validate_eng"
+                context="{'validator': 'eng'}"
+                string="Engineering Validation"
+                class="btn-primary"
+                groups="specific_sale.rtl_eng_validation"
+                type="object"/>
+
+        <button name="action_validate_sys"
+                string="System Validation"
+                class="btn-primary"
+                groups="specific_sale.rtl_sys_manager"
+                type="object"/>
+
+        <button name="action_validate_pro"
+                string="Process Validation"
+                class="btn-primary"
+                groups="specific_sale.rtl_pro_manager"
+                type="object"/>
+      </header>
+
+      <xpath expr="//field[@widget='statusbar']" position="replace">
+        <field name="state" widget="statusbar" statusbar_visible="draft,final_quote,sent,sale"/>
+      </xpath>
+
       <notebook position="inside">
         <page string="RocTool" name="roctool">
           <group name="project_name_computation" string="Project configuration">
             <field name="project_zone_id"/>
             <field name="project_process_id"/>
             <field name="project_market_id"/>
+            <field name='sales_condition' filename="sales_condition_filename"/>
+            <field name='sales_condition_filename' invisible="1"/>
+            <field name='engineering_validation_id'/>
+            <field name='system_validation_id'/>
+            <field name='process_validation_id'/>
           </group>
-
         </page>
       </notebook>
     </field>
   </record>
+
 </odoo>

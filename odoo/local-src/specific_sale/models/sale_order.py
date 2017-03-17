@@ -3,7 +3,8 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):
@@ -16,9 +17,49 @@ class SaleOrder(models.Model):
     project_market_id = fields.Many2one(comodel_name='project.market',
                                         required=True)
 
+    engineering_validation_id = fields.Many2one(
+        'res.users',
+        string='Engineering Validation',
+        track_visibility=True,
+        copy=False,
+        readonly=True,
+    )
+    system_validation_id = fields.Many2one(
+        'res.users',
+        string='System Validation',
+        track_visibility=True,
+        copy=False,
+        readonly=True,
+    )
+    process_validation_id = fields.Many2one(
+        'res.users',
+        string='Process Validation',
+        track_visibility=True,
+        copy=False,
+        readonly=True,
+    )
+    sales_condition = fields.Binary(
+        string='Sales Condition',
+        required=True,
+        attachment=True,
+        states={'draft': [('required', False)]}
+    )
+    sales_condition_filename = fields.Char()
+
+    @api.model
+    def _setup_fields(self, partial):
+        super(SaleOrder, self)._setup_fields(partial)
+        new_selection = []
+        for state, name in self._fields['state'].selection:
+            new_selection.append((state, name))
+            if state == 'draft':
+                new_selection.append(('final_quote', _('Final Quote')))
+        self._fields['state'].selection = new_selection
+
     def _generate_acc_name(self, use_existing_one=None):
-        """
-        generate an analytic account name according to the following structure:
+        """ Generate analytic account name
+
+        According to the following structure:
             123ABCXXYYZZ with
                 123: number autoincrement (use Odoo sequence)
                 ABC: customer.ref field
@@ -79,3 +120,57 @@ class SaleOrder(models.Model):
                         }
                         option_lines.append((0, 0, data))
         self.options = option_lines
+
+    @api.multi
+    def _check_ghost(self):
+        for so in self:
+            ghost_prd = self.order_line.search_read(
+                [('product_id.is_ghost', '=', True),
+                 ('order_id', '=', self.id)])
+            # ghost_prd allowed only on draft
+            if ghost_prd:
+                raise UserError(_(
+                    'Ghost product is allowed only on draft Sale Orders.'))
+
+    @api.multi
+    def _check_sales_condition(self):
+        for so in self:
+            if not self.sales_condition:
+                raise UserError(_(
+                    'You need to attach Sales Condition.'))
+
+    @api.multi
+    def _check_validators(self):
+        if not (self.engineering_validation_id and
+                self.system_validation_id and
+                self.process_validation_id):
+            raise UserError(_('The Sale Order needs to be reviewed.'))
+
+    def write(self, vals):
+        # from ' draft you can switch only to 'final_quote'
+        if (self.state == 'draft' and
+                vals.get('state', 'final_quote') != 'final_quote'):
+            raise UserError(
+                'A Draft Sale Order can only step to "final_quote" ')
+        if vals.get('state', 'draft') != 'draft':
+            self._check_ghost()
+            self._check_sales_condition()
+            self._check_validators()
+        return super(SaleOrder, self).write(vals)
+
+    def action_validate_eng(self):
+        self.engineering_validation_id = self.env.context['uid']
+
+    def action_validate_sys(self):
+        self.system_validation_id = self.env.context['uid']
+
+    def action_validate_pro(self):
+        self.process_validation_id = self.env.context['uid']
+
+    @api.multi
+    def action_confirm(self):
+        for order in self:
+            if order.state == 'draft':
+                order.state = 'final_quote'
+            else:
+                order.action_confirm()
