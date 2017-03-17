@@ -1,0 +1,121 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* specific_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-17 12:57+0000\n"
+"PO-Revision-Date: 2017-03-17 12:57+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.view_order_form_confirm_buttons
+msgid "Approve Order"
+msgstr "Approuver"
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.view_order_form_approve_button
+msgid "Approve Order (Technical)"
+msgstr "Approuver (Dir. Tech)"
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.sale_refusal_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: specific_sale
+#: model:ir.model,name:specific_sale.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_id
+msgid "ID"
+msgstr "ID"
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_refusal___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_write_uid
+msgid "Last Updated by"
+msgstr "Mis à jour par"
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_write_date
+msgid "Last Updated on"
+msgstr "Mis à jour le"
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_order_id
+msgid "Order id"
+msgstr "Order id"
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_reason
+msgid "Reason"
+msgstr "Raison"
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_order_refusal_reason
+msgid "Refusal reason"
+msgstr "Raison du refus"
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.sale_refusal_form
+#: model:ir.ui.view,arch_db:specific_sale.view_order_form_confirm_buttons
+msgid "Refuse"
+msgstr "Refuser"
+
+#. module: specific_sale
+#: model:ir.actions.act_window,name:specific_sale.action_view_sale_refusal
+#: model:ir.ui.view,arch_db:specific_sale.sale_refusal_form
+msgid "Sale Refusal"
+msgstr "Refus de commande"
+
+#. module: specific_sale
+#: model:ir.model,name:specific_sale.model_sale_order
+msgid "Sales Order"
+msgstr "Commande"
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.view_order_form_confirm_buttons
+msgid "Set to Quotation"
+msgstr "Mettre en Devis"
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.sale_refusal_form
+msgid "You must provide a reason for the refusal.\n"
+"            It will be added in the chat log."
+msgstr "Vous devez fournir une raison pour le refus.\n"
+"            Celle ci sera inscrite dans le log de discussion"
+
+#. module: specific_sale
+#: model:ir.model,name:specific_sale.model_sale_refusal
+msgid "sale.refusal"
+msgstr "sale.refusal"
+
