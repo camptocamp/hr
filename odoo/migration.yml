@@ -126,3 +126,4 @@ migration:
         upgrade:
           - specific_crm
           - specific_sale
+          - sale_order_revision
