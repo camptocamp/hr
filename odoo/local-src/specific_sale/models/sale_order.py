@@ -42,7 +42,9 @@ class SaleOrder(models.Model):
         string='Sales Condition',
         required=True,
         attachment=True,
-        states={'draft': [('required', False)]}
+        copy=True,
+        states={'draft': [('required', False)],
+                'cancel': [('required', False)]}
     )
     sales_condition_filename = fields.Char()
 
