@@ -35,7 +35,7 @@
 	url = git@github.com:camptocamp/account-financial-tools.git
 [submodule "odoo/external-src/purchase-workflow"]
 	path = odoo/external-src/purchase-workflow
-	url = git@github.com:camptocamp/purchase-workflow.git
+	url = git@github.com:oca/purchase-workflow.git
 	branch = 9.0
 [submodule "odoo/external-src/sale-workflow"]
 	path = odoo/external-src/sale-workflow

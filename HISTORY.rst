@@ -28,6 +28,15 @@ Latest (Unreleased)
 **Documentation**
 
 
+9.7.0 (2017-03-21)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* BSIBSO-908 Setup mail interface
+* BSIBSO-935 Add triple validation on sale order
+
+
 9.6.4 (2017-03-03)
 ++++++++++++++++++
 

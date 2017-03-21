@@ -24,14 +24,6 @@
 #     # port of account_statement_base_import
 #     - oca refs/pull/137/head
   target: *default_target
-./external-src/purchase-workflow:
-  remotes:
-    oca: git@github.com:OCA/purchase-workflow.git
-    camptocamp: git@github.com:camptocamp/purchase-workflow.git
-  merges:
-    - oca 9.0
-    - oca refs/pull/351/head
-  target: *default_target
 ./external-src/sale-workflow:
   remotes:
     oca: git@github.com:OCA/sale-workflow.git
