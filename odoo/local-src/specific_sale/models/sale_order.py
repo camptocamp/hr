@@ -177,4 +177,5 @@ class SaleOrder(models.Model):
             if order.state == 'draft':
                 order.state = 'final_quote'
             else:
-                order.action_confirm()
+                super(SaleOrder, order).action_confirm()
+        return True
