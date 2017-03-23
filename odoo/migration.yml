@@ -127,3 +127,7 @@ migration:
           - specific_crm
           - specific_sale
           - sale_order_revision
+    - version: 10.0.9
+      addons:
+        upgrade:
+          - specific_hr

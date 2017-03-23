@@ -19,6 +19,7 @@
         # Views
         'views/employee_views.xml',
         'views/hr_contract_views.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
 }

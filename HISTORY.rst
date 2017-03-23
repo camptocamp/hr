@@ -24,6 +24,7 @@ latest (unreleased)
 **Bugfixes**
 
 * Correct sale validation group names
+* fix missing ACLs for hr.employee.status
 
 **Build**
 
