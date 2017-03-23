@@ -131,3 +131,4 @@ migration:
       addons:
         upgrade:
           - specific_hr
+          - specific_sale

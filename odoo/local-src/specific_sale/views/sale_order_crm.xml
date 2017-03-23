@@ -32,6 +32,10 @@
       <xpath expr="//field[@widget='statusbar']" position="replace">
         <field name="state" widget="statusbar" statusbar_visible="draft,final_quote,sent,sale"/>
       </xpath>
+      <xpath expr="//header/button[@name='action_confirm'][1]"
+             position="attributes">
+        <attribute name="states">sent,final_quote</attribute>
+      </xpath>
 
       <notebook position="inside">
         <page string="RocTool" name="roctool">
