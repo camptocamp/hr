@@ -23,6 +23,8 @@ latest (unreleased)
 
 **Bugfixes**
 
+* Correct sale validation group names
+
 **Build**
 
 **Documentation**
