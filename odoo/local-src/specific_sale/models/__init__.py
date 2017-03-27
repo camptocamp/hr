@@ -6,3 +6,5 @@
 from . import product
 from . import sale_order
 from . import mail_compose_message
+from . import mrp_bom
+from . import project_task
