@@ -16,5 +16,6 @@ class MrpBom(models.Model):
     project_id = fields.Many2one(
         'project.project',
         string='Project',
-        related='project_task_id.project_id'
+        related='project_task_id.project_id',
+        readonly=True,
     )
