@@ -21,6 +21,20 @@ latest (unreleased)
 
 **Features and Improvements**
 
+* Update message subtypes for RFQ
+
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.0.9 (2017-03-23)
++++++++++++++++++++
+
+**Features and Improvements**
+
 **Bugfixes**
 
 * Correct sale validation group names
