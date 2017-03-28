@@ -23,7 +23,7 @@
                         <field name="domain"/>
                         <field name="start_date"/>
                         <field name="end_date"/>
-                        <field name="signature_ids"/>
+                        <field name="signature_ids" domain="['|',('id', '=', partner_id),('user_ids', '!=', False)]"/>
                     </group>
                 </page>
                 <page string="Feasibility Timesheet Project" name="feasibility">
@@ -37,7 +37,8 @@
                     <group>
                         <button type="object" name="answer_selected_survey" string="Answer Survey" class="oe_highlight"/>
                     </group>
-                </page>            </xpath>
+                </page>
+            </xpath>
         </field>
     </record>
 

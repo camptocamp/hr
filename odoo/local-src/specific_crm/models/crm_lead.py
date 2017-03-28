@@ -5,6 +5,7 @@
 
 import uuid
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api
 from odoo import exceptions, _
@@ -147,3 +148,9 @@ class CrmLead(models.Model):
         self.env['project.task'].create({'project_id': self.project_id.id,
                                          'lead_id': self.id,
                                          'name': self.name})
+
+    @api.onchange('start_date')
+    def onchange_date_start(self):
+        if self.start_date:
+            self.end_date = fields.Datetime.from_string(self.start_date) + \
+                relativedelta(years=5)
