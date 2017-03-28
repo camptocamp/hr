@@ -32,8 +32,6 @@ class CrmLead(models.Model):
     project_zone_id = fields.Many2one(comodel_name='project.zone')
     project_process_id = fields.Many2one(comodel_name='project.process')
     project_market_id = fields.Many2one(comodel_name='project.market')
-    business_type = fields.Selection(selection=[('injection', 'Injection'),
-                                                ('composite', 'Composite')])
     program_manager_id = fields.Many2one(
         comodel_name='res.users',
         string='Program Manager',

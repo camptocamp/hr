@@ -20,7 +20,6 @@
             <xpath expr="//notebook" position="inside">
                 <page string="RocTool" name="roctool">
                     <group>
-                        <field name="business_type"/>
                         <field name="domain"/>
                         <field name="start_date"/>
                         <field name="end_date"/>
