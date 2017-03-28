@@ -34,9 +34,6 @@ latest (unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
-- Add link inbetween 'BOM' and 'project.task / project.project'
-- Add fields in views for 'BOM' and 'project.task'
-- Add smartbutton on 'task' view
 
 **Bugfixes**
 

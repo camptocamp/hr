@@ -6,6 +6,8 @@
         <field name="model">project.task</field>
         <field name="inherit_id" ref="project.view_task_form2"/>
         <field eval="2" name="priority"/>
+        <field name='groups_id' eval="[(4,ref('mrp.group_mrp_user')),
+                                       (4,ref('stock.group_stock_user'))]"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Bill Of Materials" name="bom_page">
