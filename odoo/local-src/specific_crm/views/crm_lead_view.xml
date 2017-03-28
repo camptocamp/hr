@@ -18,23 +18,26 @@
                 </group>
             </field>
             <xpath expr="//notebook" position="inside">
-                <page string="RocTool" name="roctool">
+                <page string="NDA" name="nda">
                     <group>
                         <field name="domain"/>
                         <field name="start_date"/>
                         <field name="end_date"/>
                         <field name="signature_ids"/>
+                    </group>
+                </page>
+                <page string="Feasibility Timesheet Project" name="feasibility">
+                    <group>
                         <field name="project_id"/>
                         <field name="survey_id"/>
-                        <field name="survey_input_lines"/>
+                        <field name="survey_input_lines" invisible="True"/>
                         <field name="survey_inputs"/>
                         <field name="survey_input_count"/>
                     </group>
                     <group>
                         <button type="object" name="answer_selected_survey" string="Answer Survey" class="oe_highlight"/>
                     </group>
-                </page>
-            </xpath>
+                </page>            </xpath>
         </field>
     </record>
 
