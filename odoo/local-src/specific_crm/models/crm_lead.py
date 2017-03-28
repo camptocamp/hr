@@ -18,8 +18,14 @@ class CrmLead(models.Model):
     end_date = fields.Date()
     signature_ids = fields.Many2many(comodel_name='res.partner',
                                      string="Signatures")
-    project_id = fields.Many2one(comodel_name='project.project')
-    survey_id = fields.Many2one(comodel_name='survey.survey')
+    project_id = fields.Many2one(
+        comodel_name='project.project',
+        string="Project",
+    )
+    survey_id = fields.Many2one(
+        comodel_name='survey.survey',
+        string="Survey",
+    )
     survey_input_lines = fields.One2many(
         comodel_name='survey.user_input_line', inverse_name='lead_id',
         string='Surveys answers')
@@ -29,9 +35,18 @@ class CrmLead(models.Model):
     survey_input_count = fields.Integer(
         string='Survey number', compute='_count_survey_input',
         store=True)
-    project_zone_id = fields.Many2one(comodel_name='project.zone')
-    project_process_id = fields.Many2one(comodel_name='project.process')
-    project_market_id = fields.Many2one(comodel_name='project.market')
+    project_zone_id = fields.Many2one(
+        comodel_name='project.zone',
+        string="Project Zone",
+    )
+    project_process_id = fields.Many2one(
+        comodel_name='project.process',
+        string='Project Process',
+    )
+    project_market_id = fields.Many2one(
+        comodel_name='project.market',
+        string='Project Market'
+    )
     program_manager_id = fields.Many2one(
         comodel_name='res.users',
         string='Program Manager',
