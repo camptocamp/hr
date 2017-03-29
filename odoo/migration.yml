@@ -136,3 +136,5 @@ migration:
       addons:
         upgrade:
           - specific_sale
+          - intrastat_base
+          - product_harmonized_system
