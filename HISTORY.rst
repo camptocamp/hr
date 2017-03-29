@@ -20,11 +20,12 @@ latest (unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
-- Add link inbetween 'BOM' and 'project.task / project.project'
-- Add fields in views for 'BOM' and 'project.task'
-- Add smartbutton on 'task' view
-- install instrastat modules, product harmonized system
-* Update message subtypes for RFQ
+* Add link inbetween 'BOM' and 'project.task / project.project'
+* Add fields in views for 'BOM' and 'project.task'
+* Add smartbutton on 'task' view
+* install instrastat modules, product harmonized system
+* Update message subtypes for RFQ so that the author receives some additional
+  notification
 
 **Bugfixes**
 
