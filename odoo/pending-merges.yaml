@@ -31,3 +31,13 @@
     # hr_employee_seniority
     # - oca refs/pull/319/head
   target: *default_target
+./external-src/intrastat:
+  remotes:
+    oca: git@github.com:OCA/intrastat.git
+    camptocamp: git@github.com:camptocamp/intrastat.git
+  merges:
+    - oca 10.0
+    # change menu entry for enterprise compatibility. Could be changed in favor
+    # of pull/10
+    - oca refs/pull/11/head
+  target: *default_target
