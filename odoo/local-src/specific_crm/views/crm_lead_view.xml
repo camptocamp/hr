@@ -36,6 +36,7 @@
                     </group>
                     <group>
                         <button type="object" name="answer_selected_survey" string="Answer Survey" class="oe_highlight"/>
+                        <button type="object" name="action_result_selected_survey" string="Print Results" class="oe_highlight"/>
                     </group>
                 </page>
             </xpath>

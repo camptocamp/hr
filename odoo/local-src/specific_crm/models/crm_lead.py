@@ -9,6 +9,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api
 from odoo import exceptions, _
+from odoo.exceptions import UserError
 
 
 class CrmLead(models.Model):
@@ -21,7 +22,7 @@ class CrmLead(models.Model):
                                      string="Signatures")
     project_id = fields.Many2one(
         comodel_name='project.project',
-        string="Project",
+        string="Feasibility Timesheet Project",
     )
     survey_id = fields.Many2one(
         comodel_name='survey.survey',
@@ -126,6 +127,13 @@ class CrmLead(models.Model):
                 # 'target': 'new',
                 'url': url,
                 }
+
+    @api.multi
+    def action_result_selected_survey(self):
+        self.ensure_one()
+        if not self.survey_id:
+            raise UserError(_('There is no selected survey to open.'))
+        return self.survey_id.action_result_survey()
 
     def check_fields(self, fields=None):
         msg = []
