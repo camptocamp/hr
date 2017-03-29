@@ -139,3 +139,6 @@ migration:
           - intrastat_base
           - product_harmonized_system
           - specific_purchase
+      operations:
+        post:
+          - anthem songs.upgrade.10_0_10.crm::main
