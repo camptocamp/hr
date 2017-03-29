@@ -16,7 +16,18 @@
 Release History
 ---------------
 
-latest (unreleased)
+
+**Features and Improvements**
+
+**Bugfixes**
+
+* Fix base.action.rules for crm.lead transition not only for admin
+
+**Build**
+
+**Documentation**
+
+10.0.9 (2017-03-23)
 +++++++++++++++++++
 
 **Features and Improvements**

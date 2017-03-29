@@ -132,3 +132,7 @@ migration:
         upgrade:
           - specific_hr
           - specific_sale
+    - version: 10.0.10
+      operations:
+        post:
+          - anthem songs.upgrade.10_0_10.crm::main
