@@ -24,6 +24,7 @@ latest (unreleased)
 - Add fields in views for 'BOM' and 'project.task'
 - Add smartbutton on 'task' view
 - install instrastat modules, product harmonized system
+* Update message subtypes for RFQ
 
 **Bugfixes**
 
@@ -31,18 +32,6 @@ latest (unreleased)
 
 **Documentation**
 
-10.0.9 (2017-03-23)
-+++++++++++++++++++
-
-**Features and Improvements**
-
-* Install intrastat modules
-
-**Bugfixes**
-
-**Build**
-
-**Documentation**
 
 10.0.9 (2017-03-23)
 +++++++++++++++++++

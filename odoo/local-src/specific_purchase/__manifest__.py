@@ -19,6 +19,7 @@
         'security/ir.model.access.csv',
         # data
         'data/sequence.xml',
+        'data/mail_message_subtypes.xml',
         # views
         'views/purchase_line_views.xml',
         'views/purchase_views.xml',
