@@ -19,6 +19,8 @@
     - oca 10.0
 #     # port account_mass_reconcile
     - oca refs/pull/396/head
+#     # add sale_layout_hidden
+    - oca refs/pull/440/head
 #     # port of account_statement_base_import
 #     - oca refs/pull/137/head
   target: *default_target
