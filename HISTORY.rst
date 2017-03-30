@@ -16,6 +16,8 @@
 Release History
 ---------------
 
+10.0.10 (2017-03-30)
+++++++++++++++++++++
 
 **Features and Improvements**
 
