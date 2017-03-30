@@ -146,3 +146,4 @@ migration:
       addons:
         upgrade:
           - sale_layout_hidden
+          - intrastat_base
