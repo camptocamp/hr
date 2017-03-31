@@ -5,9 +5,11 @@
 
 import uuid
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api
 from odoo import exceptions, _
+from odoo.exceptions import UserError
 
 
 class CrmLead(models.Model):
@@ -18,8 +20,14 @@ class CrmLead(models.Model):
     end_date = fields.Date()
     signature_ids = fields.Many2many(comodel_name='res.partner',
                                      string="Signatures")
-    project_id = fields.Many2one(comodel_name='project.project')
-    survey_id = fields.Many2one(comodel_name='survey.survey')
+    project_id = fields.Many2one(
+        comodel_name='project.project',
+        string="Feasibility Timesheet Project",
+    )
+    survey_id = fields.Many2one(
+        comodel_name='survey.survey',
+        string="Survey",
+    )
     survey_input_lines = fields.One2many(
         comodel_name='survey.user_input_line', inverse_name='lead_id',
         string='Surveys answers')
@@ -29,11 +37,18 @@ class CrmLead(models.Model):
     survey_input_count = fields.Integer(
         string='Survey number', compute='_count_survey_input',
         store=True)
-    project_zone_id = fields.Many2one(comodel_name='project.zone')
-    project_process_id = fields.Many2one(comodel_name='project.process')
-    project_market_id = fields.Many2one(comodel_name='project.market')
-    business_type = fields.Selection(selection=[('injection', 'Injection'),
-                                                ('composite', 'Composite')])
+    project_zone_id = fields.Many2one(
+        comodel_name='project.zone',
+        string="Project Zone",
+    )
+    project_process_id = fields.Many2one(
+        comodel_name='project.process',
+        string='Project Process',
+    )
+    project_market_id = fields.Many2one(
+        comodel_name='project.market',
+        string='Project Market'
+    )
     program_manager_id = fields.Many2one(
         comodel_name='res.users',
         string='Program Manager',
@@ -113,6 +128,13 @@ class CrmLead(models.Model):
                 'url': url,
                 }
 
+    @api.multi
+    def action_result_selected_survey(self):
+        self.ensure_one()
+        if not self.survey_id:
+            raise UserError(_('There is no selected survey to open.'))
+        return self.survey_id.action_result_survey()
+
     def check_fields(self, fields=None):
         msg = []
         if fields:
@@ -134,3 +156,9 @@ class CrmLead(models.Model):
         self.env['project.task'].create({'project_id': self.project_id.id,
                                          'lead_id': self.id,
                                          'name': self.name})
+
+    @api.onchange('start_date')
+    def onchange_date_start(self):
+        if self.start_date:
+            self.end_date = fields.Datetime.from_string(self.start_date) + \
+                relativedelta(years=5)

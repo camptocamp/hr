@@ -10,27 +10,35 @@
             <field name="team_id" position="after">
               <field name="program_manager_id"/>
             </field>
+            <field name='program_manager_id' position="after">
+                <group name="project_name_computation" string="Project configuration">
+                    <field name="project_zone_id"/>
+                    <field name="project_process_id"/>
+                    <field name="project_market_id"/>
+                </group>
+            </field>
             <xpath expr="//notebook" position="inside">
-                <page string="RocTool" name="roctool">
-                    <group name="project_name_computation" string="Project configuration">
-                        <field name="project_zone_id"/>
-                        <field name="project_process_id"/>
-                        <field name="project_market_id"/>
-                    </group>
+                <page string="NDA" name="nda">
                     <group>
-                        <field name="business_type"/>
                         <field name="domain"/>
                         <field name="start_date"/>
                         <field name="end_date"/>
-                        <field name="signature_ids"/>
+                        <field name="signature_ids" domain="['|',('id', '=', partner_id),('user_ids', '!=', False)]"/>
+                    </group>
+                </page>
+                <page string="Feasibility Timesheet Project" name="feasibility">
+                    <group>
                         <field name="project_id"/>
                         <field name="survey_id"/>
-                        <field name="survey_input_lines"/>
+                        <field name="survey_input_lines" invisible="True"/>
                         <field name="survey_inputs"/>
                         <field name="survey_input_count"/>
                     </group>
                     <group>
-                        <button type="object" name="answer_selected_survey" string="Answer Survey" class="oe_highlight"/>
+                        <button type="object" name="answer_selected_survey" string="Answer Survey" class="oe_highlight"
+                                attrs="{'invisible': [('survey_id', '=', False)]}"/>
+                        <button type="object" name="action_result_selected_survey" string="Print Results" class="oe_highlight"
+                                attrs="{'invisible': [('survey_id', '=', False)]}"/>
                     </group>
                 </page>
             </xpath>
