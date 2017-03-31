@@ -51,12 +51,16 @@ class SaleOrder(models.Model):
     @api.model
     def _setup_fields(self, partial):
         super(SaleOrder, self)._setup_fields(partial)
-        new_selection = []
-        for state, name in self._fields['state'].selection:
-            new_selection.append((state, name))
+        selection = self._fields['state'].selection
+        position = 0
+        exists = False
+        for idx, (state, __) in enumerate(selection):
             if state == 'draft':
-                new_selection.append(('final_quote', _('Final Quote')))
-        self._fields['state'].selection = new_selection
+                position = idx
+            elif state == 'final_quote':
+                exists = True
+        if not exists:
+            selection.insert(position + 1, ('final_quote', _('Final Quote')))
 
     def _generate_acc_name(self, use_existing_one=None):
         """ Generate analytic account name
