@@ -148,3 +148,4 @@ migration:
           - sale_layout_hidden
           - intrastat_base
           - specific_crm
+          - base
