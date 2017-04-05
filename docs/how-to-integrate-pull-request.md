@@ -34,7 +34,7 @@ You'll have to edit `odoo/pending-merges.yaml` and add (or complete):
     oca: https://github.com/OCA/sale-workflow.git
     camptocamp: https://github.com/camptocamp/sale-workflow.git
   merges:
-    - oca 9.0
+    - oca 10.0
     - oca refs/pull/42/head
   # you have to replace <project-id> here
   target: camptocamp merge-branch-<project-id>-master

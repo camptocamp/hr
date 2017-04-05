@@ -54,7 +54,7 @@ class HrHolidaysImposed(models.Model):
             days = self._get_number_of_days(date_from, date_to)
 
             if days or date_to == date_from:
-                days = round(math.floor(days))+1
+                days = round(math.floor(days)) + 1
 
             return days + diff_days
         return 0

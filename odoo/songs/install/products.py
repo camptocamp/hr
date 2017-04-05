@@ -9,9 +9,10 @@ import anthem
 def configure_expense_products(ctx):
     """ set sale_ok and purchase_ok to False for expense products"""
     ctx.env['product.template'].search(
-        [('can_be_expensed', '=', 'True')]).write(
-            {'sale_ok': False, 'purchase_ok': False}
-        )
+        [('can_be_expensed', '=', 'True')]
+    ).write(
+        {'sale_ok': False, 'purchase_ok': False}
+    )
 
 
 @anthem.log

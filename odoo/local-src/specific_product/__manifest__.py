@@ -25,5 +25,5 @@
           # 'data/test_product_multi_variant.xml',
           # 'data/test_products.xml',
           ],
- 'installable': True,
+ 'installable': False,
  }

@@ -31,5 +31,5 @@
      'views/hr_imposed_days.xml',
      'views/res_users.xml',
  ],
- 'installable': True,
+ 'installable': False,
  }

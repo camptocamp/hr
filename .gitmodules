@@ -22,11 +22,9 @@
 [submodule "odoo/external-src/hr"]
 	path = odoo/external-src/hr
 	url = git@github.com:camptocamp/hr.git
-	branch = merge-branch-1882-master
 [submodule "odoo/external-src/partner-contact"]
 	path = odoo/external-src/partner-contact
 	url = git@github.com:OCA/partner-contact.git
-	branch = 9.0
 [submodule "odoo/external-src/connector-jira"]
 	path = odoo/external-src/connector-jira
 	url = git@github.com:camptocamp/connector-jira.git
@@ -36,7 +34,12 @@
 [submodule "odoo/external-src/purchase-workflow"]
 	path = odoo/external-src/purchase-workflow
 	url = git@github.com:oca/purchase-workflow.git
-	branch = 9.0
 [submodule "odoo/external-src/sale-workflow"]
 	path = odoo/external-src/sale-workflow
-	url = git@github.com:camptocamp/sale-workflow
+	url = git@github.com:OCA/sale-workflow
+[submodule "odoo/external-src/queue"]
+	path = odoo/external-src/queue
+	url = git@github.com:OCA/queue.git
+[submodule "odoo/external-src/odoo-cloud-platform"]
+	path = odoo/external-src/odoo-cloud-platform
+	url = git@github.com:camptocamp/odoo-cloud-platform.git

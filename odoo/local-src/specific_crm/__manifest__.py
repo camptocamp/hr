@@ -13,5 +13,5 @@
  'website': 'http://www.camptocamp.com',
  'data': ['views/crm.xml'
           ],
- 'installable': True,
+ 'installable': False,
  }

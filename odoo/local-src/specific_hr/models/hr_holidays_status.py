@@ -65,7 +65,7 @@ class HrHolidays(models.Model):
                 yr_nw = int(date_now_yr)
                 mth_nw = int(date_now_mth)
                 nb_days_month = calendar.monthrange(yr_nw, mth_nw)[1]
-                nb_days_worked = nb_days_month-int(date_begin_day) + 1
+                nb_days_worked = nb_days_month - int(date_begin_day) + 1
                 ratio = nb_days_worked / float(nb_days_month)
                 nb_days = ratio * nb_days
             vals = {

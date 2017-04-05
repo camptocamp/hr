@@ -4,6 +4,10 @@
 import anthem
 
 
+# for their test instance (hosted by them),
+# we don't want email to be sent to the real customers.
+# But they want to test this mail functionnality
+
 @anthem.log
 def replace_partner_email(ctx):
     records = ctx.env['res.partner'].search([])
@@ -23,7 +27,13 @@ def replace_employee_email(ctx):
 
 
 @anthem.log
+def create_incoming_mail_server(ctx):
+    ctx.env['fetchmail.server'].create({'name': 'Incoming mail server'})
+
+
+@anthem.log
 def main(ctx):
     """ Replacing email addresses """
     replace_partner_email(ctx)
     replace_employee_email(ctx)
+    create_incoming_mail_server(ctx)

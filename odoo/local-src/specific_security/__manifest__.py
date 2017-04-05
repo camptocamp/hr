@@ -48,5 +48,5 @@
      'demo/department_managers.xml',
  ],
  'test': ['test/account_minimal_test.xml', 'test/test_hr_timesheet_sheet.yml'],
- 'installable': True,
+ 'installable': False,
  }

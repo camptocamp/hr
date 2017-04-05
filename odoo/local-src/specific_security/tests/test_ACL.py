@@ -210,7 +210,7 @@ class TestACL(common.TransactionCase):
                 'employee_id': employee.id,
                 'number_of_days_temp': 25.,
                 'type': 'add',
-                }
+            }
             leave_allocation = self.env['hr.holidays'].sudo(
                 user=self.melanie).create(vals)
             self.assertTrue(leave_allocation)
@@ -231,7 +231,7 @@ class TestACL(common.TransactionCase):
                 'employee_id': employee.id,
                 'number_of_days_temp': 25.,
                 'type': 'add',
-                }
+            }
             leave_allocation = self.env['hr.holidays'].sudo(
                 user=self.melanie).create(vals)
             self.assertTrue(leave_allocation)
@@ -244,7 +244,7 @@ class TestACL(common.TransactionCase):
                 'employee_id': employee.id,
                 'date_from': '2017-05-11 07:00:00',
                 'date_to': '2017-05-12 19:00:00'
-                }
+            }
             leave_request = self.env['hr.holidays'].sudo(
                 user=employee.user_id).create(vals)
             self.assertTrue(leave_request)
@@ -266,7 +266,7 @@ class TestACL(common.TransactionCase):
                 'employee_id': employee.id,
                 'number_of_days_temp': 25.,
                 'type': 'add',
-                }
+            }
             leave_allocation = self.env['hr.holidays'].sudo(
                 user=self.melanie).create(vals)
             self.assertTrue(leave_allocation)
@@ -281,7 +281,7 @@ class TestACL(common.TransactionCase):
                 'employee_id': employee.id,
                 'date_from': '2017-05-11 07:00:00',
                 'date_to': '2017-05-12 19:00:00'
-                }
+            }
             leave_request = self.env['hr.holidays'].sudo(
                 user=employee.user_id).create(vals)
             self.assertTrue(leave_request)
@@ -300,7 +300,7 @@ class TestACL(common.TransactionCase):
                 'employee_id': employee.id,
                 'product_id': product_expense.id,
                 'unit_amount': 123.45,
-                }
+            }
             expense = self.env['hr.expense'].sudo(
                 user=employee.user_id).create(vals)
             self.assertTrue(expense)
@@ -316,7 +316,7 @@ class TestACL(common.TransactionCase):
                 'employee_id': employee.id,
                 'product_id': product_expense.id,
                 'unit_amount': 123.45,
-                }
+            }
             expense = self.env['hr.expense'].sudo(
                 user=employee.user_id).create(vals)
             self.assertTrue(expense)

@@ -1,7 +1,8 @@
 # file used with gitaggregate: https://github.com/acsone/git-aggregator
 # please see docs in docs/how-to-integrate-pull-request.md
 #
-# Examples:
+# TODO v10: upgrade everything to v10.
+# See https://jira.camptocamp.com/browse/BSBSO10-2 + https://jira.camptocamp.com/browse/BSBSO10-6 
 ./external-src/hr:
   remotes:
     oca: git@github.com:OCA/hr.git

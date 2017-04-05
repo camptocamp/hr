@@ -1,46 +1,9 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from pkg_resources import resource_stream
 
 import anthem
-from anthem.lyrics.loaders import load_csv_stream
-from ..common import req
-
-
-@anthem.log
-def setup_company(ctx):
-    """ Setup company """
-    # company = ctx.env.ref('base.main_company')
-    content = resource_stream(req, 'data/install/res.company.csv')
-    load_csv_stream(ctx, 'res.company', content, delimiter=',')
-    # company.name = 'BSO Network Solutions'
-
-    # load logo on company
-#    logo_content = resource_string(req, 'data/images/company_main_logo.png')
-#    b64_logo = b64encode(logo_content)
-#    company.logo = b64_logo
-#
-#    with ctx.log(u'Configuring company'):
-#        values = {
-#            'name': "BSO Network Solutions",
-#            'street': "",
-#            'zip': "",
-#            'city': "",
-#            'country_id': ctx.env.ref('base.ch').id,
-#            'phone': "+41 00 000 00 00",
-#            'fax': "+41 00 000 00 00",
-#            'email': "contact@bso.ch",
-#            'website': "http://www.bso.ch",
-#            'vat': "VAT",
-#            'parent_id': company.id,
-#            'logo': b64_logo,
-#            'currency_id': ctx.env.ref('base.CHF').id,
-#        }
-#        create_or_update(ctx, 'res.company',
-#                         'scenario.bso_ch',
-#                         values)
-#
+# from . import bso_vars
 
 
 @anthem.log

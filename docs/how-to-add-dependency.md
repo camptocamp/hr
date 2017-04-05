@@ -3,7 +3,7 @@
 ## How to add a Python package
 
 The Python dependencies for Odoo are already installed in the base container
-(camptocamp/odoo-project:9.0) used for this project. At times, you might need to add an additional dependency required solely for this project, here are the steps.
+(camptocamp/odoo-project:10.0) used for this project. At times, you might need to add an additional dependency required solely for this project, here are the steps.
 
 If the file `odoo/requirements.txt` exists, skip to number 3.
 

@@ -1,7 +1,7 @@
-FROM camptocamp/odoo-project:9.0-2.0.0
+FROM camptocamp/odoo-project:10.0-2.0.0
 MAINTAINER Camptocamp
 
-COPY ./requirements.txt ./
+COPY ./requirements.txt /opt/odoo
 
 # Install additional debian packages
 RUN set -x; \
@@ -11,11 +11,12 @@ RUN set -x; \
         build-essential \
         libffi-dev \
         libssl-dev \
+        && cd /opt/odoo && pip install -r requirements.txt \
         # Install additional python packages
-        && pip install -r requirements.txt \
         && apt-get remove -y python-dev build-essential libffi-dev libssl-dev \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
+
 
 ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/src/addons, \
@@ -29,7 +30,9 @@ ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/external-src/purchase-workflow, \
   /opt/odoo/external-src/sale-workflow, \
   /opt/odoo/external-src/server-tools, \
+  /opt/odoo/external-src/queue, \
   /opt/odoo/external-src/web, \
+  /opt/odoo/external-src/odoo-cloud-platform, \
   /opt/odoo/local-src," \
   LIMIT_TIME_CPU=86400 \
   LIMIT_TIME_REAL=86400 \

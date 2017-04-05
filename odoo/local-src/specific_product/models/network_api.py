@@ -66,6 +66,6 @@ class NetworkApi(models.Model):
         res2 = self.call('SYD-ASX', 'AMS-TEL2', self.env.user,
                          sort=1, backup=1, details=0)
         print res
-        print "*"*80
+        print "*" * 80
         print res2
         return res

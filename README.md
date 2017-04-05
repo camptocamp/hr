@@ -23,13 +23,14 @@ You'll find a [Docker guide for the development](./docs/docker-dev.md) and on fo
 * [Docker pre-requisite](./docs/prerequisites.md)
 * [Docker developer guide](./docs/docker-dev.md)
 * [Docker tester guide](./docs/docker-test.md)
-* [Deployment](./docs/deployment.md)
 * [Structure](./docs/structure.md)
 * [Releases and versioning](./docs/releases.md)
 * [Pull Requests](./docs/pull-requests.md)
 * [Upgrade scripts](./docs/upgrade-scripts.md)
-* [Automated rancher build](./docs/rancher.md)
+* [Docker Images](./docs/docker-images.md)
 * [Using automated tasks with Invoke](./docs/invoke.md)
+* [Odoo Cloud Platform](./docs/odoo-cloud-platform.md)
+* [Odoo Test Cloud Platform](./docs/odoo-test-cloud-platform.md)
 
 ## How-to
 
