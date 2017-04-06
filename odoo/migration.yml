@@ -159,6 +159,8 @@ migration:
           - sale_contract
           - specific_sale
           - specific_crm
+          - project_stage_state
+          - project_task_default_stage
       operations:
         post:
           - anthem songs.upgrade.10_0_12.crm::main
