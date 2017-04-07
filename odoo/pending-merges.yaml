@@ -34,3 +34,14 @@
     # [9.0][NEW] sale_double_validation
     - oca refs/pull/443/head
   target: *default_target
+./external-src/partner-contact:
+  remotes:
+    oca: git@github.com:OCA/partner-contact.git
+    nl66278: git@github.com:NL66278/partner-contact.git
+    camptocamp: git@github.com:camptocamp/partner-contact.git
+  merges:
+    - oca 10.0
+    # 10.0 partner multi relation
+    - oca refs/pull/363/head
+    - nl66278 refs/pull/3/head
+  target: *default_target
