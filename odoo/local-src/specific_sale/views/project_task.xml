@@ -9,11 +9,6 @@
         <field name='groups_id' eval="[(4,ref('mrp.group_mrp_user')),
                                        (4,ref('stock.group_stock_user'))]"/>
         <field name="arch" type="xml">
-            <xpath expr="//notebook" position="inside">
-                <page string="Bill Of Materials" name="bom_page">
-                    <field name="mrp_bom_ids" readonly="True" />
-                </page>
-            </xpath>
             <xpath expr="//div[@class='oe_button_box']" position="inside">
                 <button class="oe_stat_button" type="object" name="action_view_bom" icon="fa-cog" >
                     <field name="bom_count" string="Bill Of Materials" widget="statinfo" />
