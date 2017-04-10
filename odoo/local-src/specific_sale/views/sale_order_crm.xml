@@ -37,19 +37,21 @@
         <attribute name="states">sent,final_quote</attribute>
       </xpath>
 
+      <xpath expr="//group[@name='sales_person']/.." position="inside">
+        <group name="project_name_computation" string="Project configuration">
+          <field name="project_zone_id"/>
+          <field name="project_process_id"/>
+          <field name="project_market_id"/>
+        </group>
+      </xpath>
+
+      <field name='payment_term_id' position='after'>
+        <field name='sales_condition' filename="sales_condition_filename"/>
+        <field name='sales_condition_filename' invisible="1"/>
+      </field>
+
       <notebook position="inside">
-        <page string="RocTool" name="roctool">
-          <group>
-            <group name="project_name_computation" string="Project configuration">
-              <field name="project_zone_id"/>
-              <field name="project_process_id"/>
-              <field name="project_market_id"/>
-            </group>
-            <group name="sales_condition" string="Sales Conditions">
-              <field name='sales_condition' filename="sales_condition_filename"/>
-              <field name='sales_condition_filename' invisible="1"/>
-            </group>
-          </group>
+        <page string="Internal Validation" name="roctool">
           <group>
             <group name="validation" string="Validation">
               <field name='engineering_validation_id'/>
