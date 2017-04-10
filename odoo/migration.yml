@@ -149,6 +149,7 @@ migration:
           - intrastat_base
           - specific_crm
           - base
+          - specific_sale
       operations:
         post:
           - anthem songs.upgrade.10_0_11.message_type::main

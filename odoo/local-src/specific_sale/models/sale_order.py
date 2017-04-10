@@ -11,10 +11,13 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     project_zone_id = fields.Many2one(comodel_name='project.zone',
+                                      string='Project Zone',
                                       required=True)
     project_process_id = fields.Many2one(comodel_name='project.process',
+                                         string='Project Process',
                                          required=True)
     project_market_id = fields.Many2one(comodel_name='project.market',
+                                        string='Project Market',
                                         required=True)
 
     engineering_validation_id = fields.Many2one(
