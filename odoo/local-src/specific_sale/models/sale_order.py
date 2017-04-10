@@ -157,9 +157,9 @@ class SaleOrder(models.Model):
                 raise UserError(_('The Sale Order needs to be reviewed.'))
 
     @api.multi
-    def _check_state_changes(self, vals):
+    def _check_state_changes(self):
         for so in self:
-            if vals.get('state', 'draft') not in ('cancel', 'draft', 'sent'):
+            if so.state not in ('cancel', 'draft', 'sent'):
                 so._check_ghost()
                 so._check_sales_condition()
                 so._check_validators()
@@ -173,27 +173,25 @@ class SaleOrder(models.Model):
             raise UserError(
                 _('A Draft Sale Order can only step to '
                   '"sent", "final_quote" or "cancel"'))
-        self._check_state_changes(vals)
-        return super(SaleOrder, self).write(vals)
+        result = super(SaleOrder, self).write(vals)
+        self._check_state_changes()
+        return result
 
     def action_validate_eng(self):
         vals = {
             'engineering_validation_id': self.env.context['uid'],
-            'state': self.state,
         }
         self.write(vals)
 
     def action_validate_sys(self):
         vals = {
             'system_validation_id': self.env.context['uid'],
-            'state': self.state,
         }
         self.write(vals)
 
     def action_validate_pro(self):
         vals = {
             'process_validation_id': self.env.context['uid'],
-            'state': self.state,
         }
         self.write(vals)
 

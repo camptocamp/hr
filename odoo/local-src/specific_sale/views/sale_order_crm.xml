@@ -14,19 +14,22 @@
                 string="Engineering Validation"
                 class="btn-primary"
                 groups="specific_sale.rtl_eng_validation"
-                type="object"/>
+                type="object"
+                attrs="{'invisible': [('engineering_validation_id', '!=', False)]}"/>
 
         <button name="action_validate_sys"
                 string="System Validation"
                 class="btn-primary"
                 groups="specific_sale.rtl_sys_manager"
-                type="object"/>
+                type="object"
+                attrs="{'invisible': [('system_validation_id', '!=', False)]}"/>
 
         <button name="action_validate_pro"
                 string="Process Validation"
                 class="btn-primary"
                 groups="specific_sale.rtl_pro_manager"
-                type="object"/>
+                type="object"
+                attrs="{'invisible': [('process_validation_id', '!=', False)]}"/>
       </header>
 
       <xpath expr="//field[@widget='statusbar']" position="replace">
