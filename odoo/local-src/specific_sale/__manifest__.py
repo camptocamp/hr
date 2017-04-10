@@ -9,6 +9,7 @@
         'specific_crm',
         'sale',
         'sale_crm',
+        'sales_team',
         'website_sale_options',
         'mrp',
     ],
@@ -22,6 +23,7 @@
         'views/project_task.xml',
         'views/mrp_bom.xml',
         'data/res_groups_data.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
 }
