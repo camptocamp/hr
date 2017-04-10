@@ -26,6 +26,7 @@ Latest (unreleased)
 * In SO: rename/move fields and tabs
 
 **Bugfixes**
+* Set 'final_quote' after 'sent' & update checks & print to it
 
 **Build**
 

@@ -58,7 +58,7 @@ class SaleOrder(models.Model):
         position = 0
         exists = False
         for idx, (state, __) in enumerate(selection):
-            if state == 'draft':
+            if state == 'sent':
                 position = idx
             elif state == 'final_quote':
                 exists = True
@@ -159,29 +159,41 @@ class SaleOrder(models.Model):
         # from ' draft you can switch only to 'final_quote'
         target_state = vals.get('state', 'final_quote')
         if (self.state == 'draft' and
-                target_state not in ('cancel', 'final_quote')):
+                target_state not in ('cancel', 'final_quote', 'sent')):
             raise UserError(
                 _('A Draft Sale Order can only step to '
-                  '"final_quote" or "cancel"'))
-        if vals.get('state', 'draft') not in ('cancel', 'draft'):
+                  '"sent", "final_quote" or "cancel"'))
+        if vals.get('state') not in ('cancel', 'draft', 'sent'):
             self._check_ghost()
             self._check_sales_condition()
             self._check_validators()
         return super(SaleOrder, self).write(vals)
 
     def action_validate_eng(self):
-        self.engineering_validation_id = self.env.context['uid']
+        vals = {
+            'engineering_validation_id': self.env.context['uid'],
+            'state': self.state,
+        }
+        self.write(vals)
 
     def action_validate_sys(self):
-        self.system_validation_id = self.env.context['uid']
+        vals = {
+            'system_validation_id': self.env.context['uid'],
+            'state': self.state,
+        }
+        self.write(vals)
 
     def action_validate_pro(self):
-        self.process_validation_id = self.env.context['uid']
+        vals = {
+            'process_validation_id': self.env.context['uid'],
+            'state': self.state,
+        }
+        self.write(vals)
 
     @api.multi
     def action_confirm(self):
         for order in self:
-            if order.state == 'draft':
+            if order.state in ('draft', 'sent'):
                 order.state = 'final_quote'
             else:
                 super(SaleOrder, order).action_confirm()

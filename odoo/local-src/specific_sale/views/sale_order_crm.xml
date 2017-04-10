@@ -37,6 +37,10 @@
         <attribute name="states">sent,final_quote</attribute>
       </xpath>
 
+      <xpath expr="//button[@name='print_quotation'][2]" position="attributes">
+        <attribute name="states">sent,final_quote,sale</attribute>
+      </xpath>
+
       <xpath expr="//group[@name='sales_person']/.." position="inside">
         <group name="project_name_computation" string="Project configuration">
           <field name="project_zone_id"/>
