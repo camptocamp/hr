@@ -150,6 +150,7 @@ migration:
           - specific_crm
           - base
           - specific_sale
+          - specific_hr
       operations:
         post:
           - anthem songs.upgrade.10_0_11.message_type::main
