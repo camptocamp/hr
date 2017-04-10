@@ -133,9 +133,9 @@ class SaleOrder(models.Model):
     @api.multi
     def _check_ghost(self):
         for so in self:
-            ghost_prd = self.order_line.search_read(
+            ghost_prd = so.order_line.search_read(
                 [('product_id.is_ghost', '=', True),
-                 ('order_id', '=', self.id)])
+                 ('order_id', '=', so.id)])
             # ghost_prd allowed only on draft
             if ghost_prd:
                 raise UserError(_(
@@ -144,16 +144,17 @@ class SaleOrder(models.Model):
     @api.multi
     def _check_sales_condition(self):
         for so in self:
-            if not self.sales_condition:
+            if not so.sales_condition:
                 raise UserError(_(
                     'You need to attach Sales Condition.'))
 
     @api.multi
     def _check_validators(self):
-        if not (self.engineering_validation_id and
-                self.system_validation_id and
-                self.process_validation_id):
-            raise UserError(_('The Sale Order needs to be reviewed.'))
+        for so in self:
+            if not (so.engineering_validation_id and
+                    so.system_validation_id and
+                    so.process_validation_id):
+                raise UserError(_('The Sale Order needs to be reviewed.'))
 
     def write(self, vals):
         # from ' draft you can switch only to 'final_quote'
@@ -163,7 +164,7 @@ class SaleOrder(models.Model):
             raise UserError(
                 _('A Draft Sale Order can only step to '
                   '"sent", "final_quote" or "cancel"'))
-        if vals.get('state') not in ('cancel', 'draft', 'sent'):
+        if vals.get('state', 'draft') not in ('cancel', 'draft', 'sent'):
             self._check_ghost()
             self._check_sales_condition()
             self._check_validators()
