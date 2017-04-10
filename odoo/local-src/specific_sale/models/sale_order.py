@@ -156,18 +156,24 @@ class SaleOrder(models.Model):
                     so.process_validation_id):
                 raise UserError(_('The Sale Order needs to be reviewed.'))
 
+    @api.multi
+    def _check_state_changes(self, vals):
+        for so in self:
+            if vals.get('state', 'draft') not in ('cancel', 'draft', 'sent'):
+                so._check_ghost()
+                so._check_sales_condition()
+                so._check_validators()
+
     def write(self, vals):
-        # from ' draft you can switch only to 'final_quote'
+        # from 'quotation' you can go to 'sent' of 'final_quote'
+        # from 'sent' you can go only to 'final_quote'.
         target_state = vals.get('state', 'final_quote')
         if (self.state == 'draft' and
                 target_state not in ('cancel', 'final_quote', 'sent')):
             raise UserError(
                 _('A Draft Sale Order can only step to '
                   '"sent", "final_quote" or "cancel"'))
-        if vals.get('state', 'draft') not in ('cancel', 'draft', 'sent'):
-            self._check_ghost()
-            self._check_sales_condition()
-            self._check_validators()
+        self._check_state_changes(vals)
         return super(SaleOrder, self).write(vals)
 
     def action_validate_eng(self):
