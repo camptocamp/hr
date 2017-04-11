@@ -130,6 +130,15 @@ class SaleOrder(models.Model):
                         option_lines.append((0, 0, data))
         self.options = option_lines
 
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        if self.partner_id and not self.partner_id.ref:
+            warning = {
+                'title': _('Customer ref'),
+                'message': _('The Custommer is missing a reference')
+            }
+            return {'warning': warning}
+
     @api.multi
     def _check_ghost(self):
         for so in self:
