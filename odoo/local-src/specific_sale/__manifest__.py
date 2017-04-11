@@ -10,6 +10,7 @@
         'sale',
         'sale_crm',
         'sales_team',
+        'sale_timesheet',
         'website_sale_options',
         'mrp',
     ],
