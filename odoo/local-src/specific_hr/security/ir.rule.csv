@@ -1,0 +1,3 @@
+id,active,perm_create,perm_unlink,perm_read,perm_write,domain_force,groups/id,name,model_id/id
+specific_employe_manager_contract_rule,True,True,True,True,True,,hr.group_hr_manager,Employee manager specific,hr_contract.model_hr_contract
+specific_hr_user_contract_rule,True,False,False,True,False,"[('employee_id.user_id', '=', [user.id])]",base.group_user,Employee user specific,hr_contract.model_hr_contract

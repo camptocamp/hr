@@ -25,6 +25,7 @@ Latest (unreleased)
 * Update Lead, change place of fields and add buttons
 * In SO: rename/move fields and tabs
 * New permissions on project and tasks for salesman
+* An employee can see only his contract
 
 **Bugfixes**
 
