@@ -28,6 +28,7 @@ Latest (unreleased)
 * An employee can see only his contract
 
 **Bugfixes**
+* Set 'final_quote' after 'sent' & update checks & print to it
 
 **Build**
 

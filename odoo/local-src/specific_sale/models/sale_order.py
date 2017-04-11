@@ -58,7 +58,7 @@ class SaleOrder(models.Model):
         position = 0
         exists = False
         for idx, (state, __) in enumerate(selection):
-            if state == 'draft':
+            if state == 'sent':
                 position = idx
             elif state == 'final_quote':
                 exists = True
@@ -133,9 +133,9 @@ class SaleOrder(models.Model):
     @api.multi
     def _check_ghost(self):
         for so in self:
-            ghost_prd = self.order_line.search_read(
+            ghost_prd = so.order_line.search_read(
                 [('product_id.is_ghost', '=', True),
-                 ('order_id', '=', self.id)])
+                 ('order_id', '=', so.id)])
             # ghost_prd allowed only on draft
             if ghost_prd:
                 raise UserError(_(
@@ -144,44 +144,61 @@ class SaleOrder(models.Model):
     @api.multi
     def _check_sales_condition(self):
         for so in self:
-            if not self.sales_condition:
+            if not so.sales_condition:
                 raise UserError(_(
                     'You need to attach Sales Condition.'))
 
     @api.multi
     def _check_validators(self):
-        if not (self.engineering_validation_id and
-                self.system_validation_id and
-                self.process_validation_id):
-            raise UserError(_('The Sale Order needs to be reviewed.'))
+        for so in self:
+            if not (so.engineering_validation_id and
+                    so.system_validation_id and
+                    so.process_validation_id):
+                raise UserError(_('The Sale Order needs to be reviewed.'))
+
+    @api.multi
+    def _check_state_changes(self):
+        for so in self:
+            if so.state not in ('cancel', 'draft', 'sent'):
+                so._check_ghost()
+                so._check_sales_condition()
+                so._check_validators()
 
     def write(self, vals):
-        # from ' draft you can switch only to 'final_quote'
+        # from 'quotation' you can go to 'sent' of 'final_quote'
+        # from 'sent' you can go only to 'final_quote'.
         target_state = vals.get('state', 'final_quote')
         if (self.state == 'draft' and
-                target_state not in ('cancel', 'final_quote')):
+                target_state not in ('cancel', 'final_quote', 'sent')):
             raise UserError(
                 _('A Draft Sale Order can only step to '
-                  '"final_quote" or "cancel"'))
-        if vals.get('state', 'draft') not in ('cancel', 'draft'):
-            self._check_ghost()
-            self._check_sales_condition()
-            self._check_validators()
-        return super(SaleOrder, self).write(vals)
+                  '"sent", "final_quote" or "cancel"'))
+        result = super(SaleOrder, self).write(vals)
+        self._check_state_changes()
+        return result
 
     def action_validate_eng(self):
-        self.engineering_validation_id = self.env.context['uid']
+        vals = {
+            'engineering_validation_id': self.env.context['uid'],
+        }
+        self.write(vals)
 
     def action_validate_sys(self):
-        self.system_validation_id = self.env.context['uid']
+        vals = {
+            'system_validation_id': self.env.context['uid'],
+        }
+        self.write(vals)
 
     def action_validate_pro(self):
-        self.process_validation_id = self.env.context['uid']
+        vals = {
+            'process_validation_id': self.env.context['uid'],
+        }
+        self.write(vals)
 
     @api.multi
     def action_confirm(self):
         for order in self:
-            if order.state == 'draft':
+            if order.state in ('draft', 'sent'):
                 order.state = 'final_quote'
             else:
                 super(SaleOrder, order).action_confirm()
