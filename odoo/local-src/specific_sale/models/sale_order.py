@@ -81,7 +81,7 @@ class SaleOrder(models.Model):
 
         seq = self.env['ir.sequence'].next_by_code('project')
         return ''.join([seq,
-                        self.partner_id.ref or "ABC",
+                        self.partner_id.ref,
                         self.project_zone_id.code,
                         self.project_process_id.code,
                         self.project_market_id.code,
@@ -134,7 +134,7 @@ class SaleOrder(models.Model):
     def onchange_partner_id(self):
         super(SaleOrder, self).onchange_partner_id()
         if self.partner_id and (not self.partner_id.ref or
-                                len(self.partner_id.ref != 3)):
+                                len(self.partner_id.ref) != 3):
             warning = {
                 'title': _('Customer configuration issue'),
                 'message': _('The reference field of the customer must be set'
@@ -172,7 +172,7 @@ class SaleOrder(models.Model):
     @api.multi
     def _check_client_ref(self):
         for so in self:
-            if not self.partner_id.ref or len(self.partner_id.ref != 3):
+            if not so.partner_id.ref or len(so.partner_id.ref) != 3:
                 raise UserError(
                     _('The reference field of the customer must be set'
                       ' to the 3 letter code of the customer')
