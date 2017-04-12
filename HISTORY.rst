@@ -22,6 +22,18 @@ Latest (unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.0.11 (2017-04-12)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * Update Lead, change place of fields and add buttons
 * In SO: rename/move fields and tabs
 * New permissions on project and tasks for salesman
