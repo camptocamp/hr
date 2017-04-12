@@ -3,7 +3,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class ProjectTask(models.Model):
@@ -30,3 +30,14 @@ class ProjectTask(models.Model):
         for task in self:
             task.bom_count = BOM.search_count([
                 ('project_task_id', '=', task.id)])
+
+    @api.model
+    def create(self, vals):
+        if self.env.context.get('_from_create_service_task'):
+            vals = vals.copy()
+            project_id = vals.get('project_id')
+            product_id = self.env.context['_from_product_id']
+            project = self.env['project.project'].browse(project_id)
+            product = self.env['product.product'].browse(product_id)
+            vals['name'] = '%s:%s' % (project.name, product.name)
+        return super(ProjectTask, self).create(vals)

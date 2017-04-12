@@ -179,19 +179,19 @@ class SaleOrder(models.Model):
 
     def action_validate_eng(self):
         vals = {
-            'engineering_validation_id': self.env.context['uid'],
+            'engineering_validation_id': self.env.uid,
         }
         self.write(vals)
 
     def action_validate_sys(self):
         vals = {
-            'system_validation_id': self.env.context['uid'],
+            'system_validation_id': self.env.uid,
         }
         self.write(vals)
 
     def action_validate_pro(self):
         vals = {
-            'process_validation_id': self.env.context['uid'],
+            'process_validation_id': self.env.uid,
         }
         self.write(vals)
 

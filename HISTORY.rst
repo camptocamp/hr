@@ -26,8 +26,10 @@ Latest (unreleased)
 * In SO: rename/move fields and tabs
 * New permissions on project and tasks for salesman
 * An employee can see only his contract
+* Tasks are now named after project name and not the sales order name
 
 **Bugfixes**
+
 * Set 'final_quote' after 'sent' & update checks & print to it
 
 **Build**
