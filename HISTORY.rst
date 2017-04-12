@@ -47,6 +47,8 @@ Latest (unreleased)
 
 **Build**
 
+* Updated odoo/src & removed 'update base'
+
 **Documentation**
 
 
