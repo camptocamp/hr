@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<openerp>
-    <data>
+<odoo>
 
         <record id="frs1" model="res.partner">
             <field name="name">Fourn. 1</field>
@@ -65,5 +64,4 @@
             <field name="nrc">12</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

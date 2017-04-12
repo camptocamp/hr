@@ -5,8 +5,8 @@
 
 import requests
 
-from openerp import api, fields, models
-from openerp import exceptions
+from odoo import api, fields, models
+from odoo import exceptions
 
 
 class NetworkApi(models.Model):

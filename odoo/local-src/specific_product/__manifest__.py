@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {'name': 'Specific Product',
  'summary': "Specific fields for BSO",
- 'version': '1.0',
+ 'version': '10.0.1.0.0',
  'author': 'Camptocamp',
  'license': 'AGPL-3',
  'category': 'Others',
@@ -13,6 +13,7 @@
              'sale',
              'account',
              'stock',
+             'sales_team',
              ],
  'website': 'http://www.camptocamp.com',
  'data': ['security/groups.xml',
@@ -22,8 +23,8 @@
           'views/account_invoice.xml',
           'views/network.xml',
           'views/res_company.xml',
-          # 'data/test_product_multi_variant.xml',
-          # 'data/test_products.xml',
+          # 'data/test_product_multi_variant.xml', TODO Already commented
+          # 'data/test_products.xml', TODO Already commented
           ],
- 'installable': False,
+ 'installable': True,
  }

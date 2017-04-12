@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+    <!-- TODO Code already commented -->
+
     <!-- <record id="product_specific_bso_view_form" model="ir.ui.view">
         <field name="name">product_specific_bso_view_form</field>
         <field name="model">product.product</field>
@@ -49,6 +51,7 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
+            <!-- TODO Code already commented -->
             <!-- <xpath expr="//notebook" position="inside">
                 <page name="pops" string="POPs">
                     <group name="pop_info">

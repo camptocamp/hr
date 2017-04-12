@@ -2,7 +2,7 @@
 
 <odoo>
 
-    <menuitem id="menu_base_network_config" parent="base.menu_sale_config" name="BSO Network configuration" string="BSO Network configuration"/>
+    <menuitem id="menu_base_network_config" parent="sales_team.menu_sale_config" name="BSO Network configuration" string="BSO Network configuration"/>
 
     <record id="bso_network_pop_form_view" model="ir.ui.view">
         <field name="name">bso_network_pop_form_view</field>
@@ -328,4 +328,5 @@
         <field name="search_view_id" ref="bso_network_api_search_view"/>
     </record>
     <menuitem id="menu_base_network_api" action="action_bso_network_api" parent="menu_base_network_config" string="Network API"/>
+
 </odoo>
