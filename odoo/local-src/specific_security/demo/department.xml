@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
         <record model="hr.department" id="dept_test_01">
             <field name="name">TEST Top Management</field>
         </record>
@@ -19,5 +18,4 @@
             <field name="name">TEST Global Network Services</field>
             <field name="parent_id" ref="dept_test_03"/>
         </record>
-    </data>
-</openerp>
+</odoo>

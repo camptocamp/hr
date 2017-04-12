@@ -5,7 +5,7 @@
 
 {'name': 'Specific security',
  'summary': "Specific security for BSO",
- 'version': '1.0',
+ 'version': '10.0.1.0.0',
  'author': 'Camptocamp',
  'license': 'AGPL-3',
  'category': 'Others',
@@ -18,7 +18,7 @@
              'sale',
              'stock',
              'purchase',
-             'sale',
+             'sales_team',
              'account',
              'analytic',
              'project',
@@ -28,7 +28,7 @@
              'connector',
              'sale_contract',
              'base_technical_features',
-             'marketing',
+             'marketing_campaign',
              ],
  'website': 'http://www.camptocamp.com',
  'data': ['data/hr_department_no_company.sql',
@@ -48,5 +48,5 @@
      'demo/department_managers.xml',
  ],
  'test': ['test/account_minimal_test.xml', 'test/test_hr_timesheet_sheet.yml'],
- 'installable': False,
+ 'installable': True,
  }

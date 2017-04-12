@@ -3,8 +3,8 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.exceptions import AccessError
-from openerp.tests import common
+from odoo.exceptions import AccessError
+from odoo.tests import common
 
 
 class TestACL(common.TransactionCase):

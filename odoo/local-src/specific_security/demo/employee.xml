@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<openerp>
-  <data>
+<odoo>
 
     <record model="hr.employee" id="emp_epelle">
       <field name="address_home_id" ref="add_h_epelle"/>
@@ -78,6 +77,5 @@
       <field name="work_location">BSO Network Solutions SAS</field>
       <field name="work_phone">+33177361131</field>
     </record>
-  </data>
-</openerp>
 
+</odoo>
