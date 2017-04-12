@@ -55,7 +55,7 @@ class TestSaleTasks(TestSale):
         self.assertEqual(so.state, 'sale')
 
         analytic_account = so.project_id
-        expected_code = str(next_sequence_number).zfill(3) + 'ABCABC'
+        expected_code = str(next_sequence_number).zfill(3) + 'XYZABC'
         self.assertEqual(expected_code, analytic_account.name)
 
         task = analytic_account.project_ids.task_ids
