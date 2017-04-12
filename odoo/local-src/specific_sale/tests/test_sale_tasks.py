@@ -23,11 +23,11 @@ class TestSaleTasks(TestSale):
             'type': 'service',
             'track_service': 'task',
         })
-        zone = self.env['project.zone'].create({'code': 'A', 'name': 'A'})
+        zone = self.env['project.zone'].create({'code': 'F', 'name': 'A'})
         process = self.env['project.process'].create(
-            {'code': 'B', 'name': 'B'}
+            {'code': 'G', 'name': 'B'}
         )
-        market = self.env['project.market'].create({'code': 'C', 'name': 'C'})
+        market = self.env['project.market'].create({'code': 'H', 'name': 'C'})
         so_vals = {
             'partner_id': self.partner.id,
             'partner_invoice_id': self.partner.id,
@@ -55,7 +55,7 @@ class TestSaleTasks(TestSale):
         self.assertEqual(so.state, 'sale')
 
         analytic_account = so.project_id
-        expected_code = str(next_sequence_number).zfill(3) + 'XYZABC'
+        expected_code = str(next_sequence_number).zfill(3) + 'XYZFGH'
         self.assertEqual(expected_code, analytic_account.name)
 
         task = analytic_account.project_ids.task_ids

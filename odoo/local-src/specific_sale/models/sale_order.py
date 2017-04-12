@@ -81,7 +81,7 @@ class SaleOrder(models.Model):
 
         seq = self.env['ir.sequence'].next_by_code('project')
         return ''.join([seq,
-                        self.partner_id.ref or "ABC",
+                        self.partner_id.ref,
                         self.project_zone_id.code,
                         self.project_process_id.code,
                         self.project_market_id.code,
