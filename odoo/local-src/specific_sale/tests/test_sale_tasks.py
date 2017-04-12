@@ -10,6 +10,10 @@ MINIMAL_B64 = 'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA='
 
 class TestSaleTasks(TestSale):
 
+    def setUp(self):
+        super(TestSaleTasks, self).setUp()
+        self.partner.ref = 'XYZ'
+
     def test_sale_service(self):
         sequence = self.env['ir.sequence'].search([('code', '=', 'project')])
         next_sequence_number = sequence.number_next_actual
