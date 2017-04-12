@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data noupdate="1">
 
         <record model="ir.cron" id="cron_leaves_allocation_update">
@@ -15,4 +15,4 @@
             <field name="active" eval="False"/>
         </record>
     </data>
-</openerp>
+</odoo>

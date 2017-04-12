@@ -3,8 +3,8 @@
 import datetime
 import calendar
 
-from openerp import fields, models, api, _
-from openerp import tools
+from odoo import fields, models, api, _
+from odoo import tools
 
 
 class HolidaysType(models.Model):
@@ -78,8 +78,9 @@ class HrHolidays(models.Model):
 
             created |= self.create(vals)
 
-        created.signal_workflow('validate')
+        created.signal_workflow('validate')  # TODO Change
 
+    # TODO Check
     def _compute_number_of_days(self, employee_id, date_to, date_from):
         diff_days = 0
         DATETIME_FORMAT = tools.DEFAULT_SERVER_DATETIME_FORMAT

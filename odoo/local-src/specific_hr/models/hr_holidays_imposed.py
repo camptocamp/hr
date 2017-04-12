@@ -6,13 +6,14 @@
 import datetime
 import math
 
-from openerp import models, api, fields
-from openerp import tools
+from odoo import models, api, fields
+from odoo import tools
 
 
 class HrHolidaysImposed(models.Model):
     _inherit = 'hr.holidays.imposed'
 
+    # TODO could be removed ? => ask damdam
     @api.onchange('date_from', 'date_to')
     def onchange_dates(self):
         """

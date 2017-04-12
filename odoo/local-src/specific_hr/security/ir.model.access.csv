@@ -1,7 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_hr_contract_category_user,hr.contract.category.user,model_hr_contract_category,base.group_hr_user,1,0,0,0
-access_hr_contract_category_manager,hr.contract.category.manager,model_hr_contract_category,base.group_hr_manager,1,1,1,1
-access_hr_syntec_position_user,hr.syntec.position.user,model_hr_syntec_position,base.group_hr_user,1,0,0,0
-access_hr_syntec_position_manager,hr.syntec.position.manager,model_hr_syntec_position,base.group_hr_manager,1,1,1,1
-access_hr_employee_family_user,hr.employee.family.user,model_hr_employee_family,base.group_hr_user,1,0,0,0
-access_hr_employee_family_manager,hr.employee.family.manager,model_hr_employee_family,base.group_hr_manager,1,1,1,1
+access_hr_contract_category_user,hr.contract.category.user,model_hr_contract_category,hr.group_hr_user,1,0,0,0
+access_hr_contract_category_manager,hr.contract.category.manager,model_hr_contract_category,hr.group_hr_manager,1,1,1,1
+access_hr_syntec_position_user,hr.syntec.position.user,model_hr_syntec_position,hr.group_hr_user,1,0,0,0
+access_hr_syntec_position_manager,hr.syntec.position.manager,model_hr_syntec_position,hr.group_hr_manager,1,1,1,1
+access_hr_employee_family_user,hr.employee.family.user,model_hr_employee_family,hr.group_hr_user,1,0,0,0
+access_hr_employee_family_manager,hr.employee.family.manager,model_hr_employee_family,hr.group_hr_manager,1,1,1,1

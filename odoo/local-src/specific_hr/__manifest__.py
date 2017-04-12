@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {'name': 'Specific HR',
  'summary': 'Specific HR rules for BSO',
- 'version': '9.0.1.0.0',
+ 'version': '10.0.1.0.0',
  'category': 'HR',
  'author': 'Camptocamp',
  'license': 'AGPL-3',
@@ -31,5 +31,5 @@
      'views/hr_imposed_days.xml',
      'views/res_users.xml',
  ],
- 'installable': False,
+ 'installable': True,
  }
