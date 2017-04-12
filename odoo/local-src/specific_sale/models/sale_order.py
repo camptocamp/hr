@@ -134,7 +134,7 @@ class SaleOrder(models.Model):
     def onchange_partner_id(self):
         super(SaleOrder, self).onchange_partner_id()
         if self.partner_id and (not self.partner_id.ref or
-                                len(self.partner_id.ref != 3)):
+                                len(self.partner_id.ref) != 3):
             warning = {
                 'title': _('Customer configuration issue'),
                 'message': _('The reference field of the customer must be set'
@@ -172,7 +172,7 @@ class SaleOrder(models.Model):
     @api.multi
     def _check_client_ref(self):
         for so in self:
-            if not self.partner_id.ref or len(self.partner_id.ref != 3):
+            if not so.partner_id.ref or len(so.partner_id.ref) != 3:
                 raise UserError(
                     _('The reference field of the customer must be set'
                       ' to the 3 letter code of the customer')
