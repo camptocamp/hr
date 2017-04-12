@@ -130,6 +130,19 @@ class SaleOrder(models.Model):
                         option_lines.append((0, 0, data))
         self.options = option_lines
 
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        super(SaleOrder, self).onchange_partner_id()
+        if self.partner_id and (not self.partner_id.ref or
+                                len(self.partner_id.ref != 3)):
+            warning = {
+                'title': _('Customer configuration issue'),
+                'message': _('The reference field of the customer must be set'
+                             ' to the 3 letter code of the customer')
+            }
+
+            return {'warning': warning}
+
     @api.multi
     def _check_ghost(self):
         for so in self:
@@ -157,12 +170,22 @@ class SaleOrder(models.Model):
                 raise UserError(_('The Sale Order needs to be reviewed.'))
 
     @api.multi
+    def _check_client_ref(self):
+        for so in self:
+            if not self.partner_id.ref or len(self.partner_id.ref != 3):
+                raise UserError(
+                    _('The reference field of the customer must be set'
+                      ' to the 3 letter code of the customer')
+                )
+
+    @api.multi
     def _check_state_changes(self):
         for so in self:
             if so.state not in ('cancel', 'draft', 'sent'):
                 so._check_ghost()
                 so._check_sales_condition()
                 so._check_validators()
+                so._check_client_ref()
 
     def write(self, vals):
         # from 'quotation' you can go to 'sent' of 'final_quote'

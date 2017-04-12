@@ -27,6 +27,7 @@ Latest (unreleased)
 * New permissions on project and tasks for salesman
 * An employee can see only his contract
 * Tasks are now named after project name and not the sales order name
+* Ensure that the partner of a sale.order has a proper "reference" field
 
 **Bugfixes**
 
