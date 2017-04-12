@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-  <data>
+<odoo>
+
     <!-- show the button approve only to technical manager -->
     <record id="view_order_form_approve_button" model="ir.ui.view">
       <field name="name">sale.order.form.approve.button</field>
@@ -44,6 +44,5 @@
         </button>
       </field>
     </record>
-  </data>
-</openerp>
 
+</odoo>

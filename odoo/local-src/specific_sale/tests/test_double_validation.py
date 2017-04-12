@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from openerp.addons.sale.tests import test_sale_common
+from odoo.addons.sale.tests import test_sale_common
 
 
 class TestSaleTripleValidation(test_sale_common.TestSale):

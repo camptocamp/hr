@@ -2,12 +2,13 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from openerp import fields, models
+from odoo import fields, models
 
 
 class Company(models.Model):
     _inherit = 'res.company'
 
+    # TODO Check if step in right place
     so_double_validation = fields.Selection(
         selection_add=[
             ('bso_three_step',

@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
@@ -34,6 +34,7 @@ class SaleOrder(models.Model):
                 not self.user_has_groups(
                     'specific_security.group_technical_mgmt'))
 
+    # TODO Check
     @api.multi
     def action_confirm(self):
         to_approve = self.env['sale.order']
