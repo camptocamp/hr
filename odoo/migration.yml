@@ -76,13 +76,12 @@ migration:
           - partner_firstname
           # sale-workflow
           - sale_double_validation
-          #### Specific
-          # - sever_environment_files
-          # - specific_crm
-          # - specific_fct
-          # - specific_hr
-          # - specific_product
-          # - specific_sale
-          # - specific_security
+          - server_environment_files
+          - specific_fct
+          - specific_security
+          - specific_crm
+          - specific_hr
+          - specific_product
+          - specific_sale
 
 # Todo, debug and reactivate the songs with 'TODO' flag
