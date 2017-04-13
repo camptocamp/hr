@@ -51,6 +51,7 @@ migration:
           - l10n_lu
           - l10n_uk
           - l10n_us
+          - marketing_campain
           - purchase
           - sale_contract
           - sale_timesheet
@@ -66,6 +67,7 @@ migration:
           - connector
           # hr
           - hr_family
+          - hr_timesheet_attendance
           - hr_holidays_compute_days
           - hr_holidays_imposed_days
           - hr_holidays_legal_leave

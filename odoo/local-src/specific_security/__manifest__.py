@@ -13,6 +13,7 @@
              'hr_holidays',
              'hr_expense',
              'hr_timesheet_sheet',
+             'hr_timesheet_attendance',
              'project',
              'analytic',
              'sale',
