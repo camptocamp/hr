@@ -29,7 +29,7 @@
       <field name="view_mode">form</field>
       <field name="view_id" ref="sale_refusal_form"/>
       <field name="target">new</field>
-      <field name="groups_id" eval="[(4,ref('base.group_sale_manager'))]"/>
+      <field name="groups_id" eval="[(4,ref('sales_team.group_sale_manager'))]"/>
     </record>
 
 </odoo>

@@ -22,7 +22,7 @@ class SaleOrder(models.Model):
         validation_types = ('two_step', 'bso_three_step')
         return (self.company_id.so_double_validation in validation_types and
                 self.is_amount_to_approve() and
-                not (self.user_has_groups('base.group_sale_manager') or
+                not (self.user_has_groups('sales_team.group_sale_manager') or
                      self.user_has_groups('base.group_technical_mgmt')))
 
     @api.multi
