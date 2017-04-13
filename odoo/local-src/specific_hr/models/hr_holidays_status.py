@@ -78,38 +78,36 @@ class HrHolidays(models.Model):
 
             created |= self.create(vals)
 
-        created.signal_workflow('validate')  # TODO Change
+        created.action_validate()
 
     # TODO Check
-    def _compute_number_of_days(self, employee_id, date_to, date_from):
-        diff_days = 0
-        DATETIME_FORMAT = tools.DEFAULT_SERVER_DATETIME_FORMAT
-        from_dt = datetime.datetime.strptime(date_from, DATETIME_FORMAT)
-        to_dt = datetime.datetime.strptime(date_to, DATETIME_FORMAT)
+    @api.multi
+    @api.depends('number_of_days_temp', 'type')
+    def _compute_number_of_days(self):
+        for holiday in self:
+            diff_days = 0
+            DATETIME_FORMAT = tools.DEFAULT_SERVER_DATETIME_FORMAT
+            from_dt = datetime.datetime.strptime(
+                holiday.date_from, DATETIME_FORMAT)
+            to_dt = datetime.datetime.strptime(
+                holiday.date_to, DATETIME_FORMAT)
 
-        from_dt_h = fields.Datetime.context_timestamp(self, from_dt)
-        from_dt_h1330 = fields.Datetime.context_timestamp(
-            self, from_dt).replace(hour=13, minute=30)
+            from_dt_h = fields.Datetime.context_timestamp(self, from_dt)
+            from_dt_h1330 = fields.Datetime.context_timestamp(
+                self, from_dt).replace(hour=13, minute=30)
 
-        to_dt_h = fields.Datetime.context_timestamp(self, to_dt)
-        to_dt_h1330 = fields.Datetime.context_timestamp(
-            self, to_dt).replace(hour=13, minute=30)
-        if from_dt_h > from_dt_h1330:
-            diff_days -= .5
-        if to_dt_h < to_dt_h1330:
-            diff_days += .5
-        else:
-            diff_days += 1
+            to_dt_h = fields.Datetime.context_timestamp(self, to_dt)
+            to_dt_h1330 = fields.Datetime.context_timestamp(
+                self, to_dt).replace(hour=13, minute=30)
+            if from_dt_h > from_dt_h1330:
+                diff_days -= .5
+            if to_dt_h < to_dt_h1330:
+                diff_days += .5
+            else:
+                diff_days += 1
 
-        date_from2 = fields.Datetime.from_string(date_from)
-        date_to2 = fields.Datetime.from_string(date_to)
-
-        date_from2 = date_from2.replace(hour=8, minute=0, second=0)
-        date_to2 = date_to2.replace(hour=7, minute=59, second=59)
-
-        days = super(HrHolidays, self)._compute_number_of_days(
-            employee_id,
-            date_to2.strftime(DATETIME_FORMAT),
-            date_from2.strftime(DATETIME_FORMAT))
-
-        return days + diff_days
+            date_from2 = fields.Datetime.from_string(holiday.date_from)
+            date_to2 = fields.Datetime.from_string(holiday.date_to)
+            holiday.date_from = date_from2.replace(hour=8, minute=0, second=0)
+            holiday.date_to = date_to2.replace(hour=7, minute=59, second=59)
+            super(HrHolidays, self)._compute_number_of_days()

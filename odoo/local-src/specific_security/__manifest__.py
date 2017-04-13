@@ -29,6 +29,8 @@
              'sale_contract',
              'base_technical_features',
              'marketing_campaign',
+             'website',
+             'product',
              ],
  'website': 'http://www.camptocamp.com',
  'data': ['data/hr_department_no_company.sql',

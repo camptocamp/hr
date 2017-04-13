@@ -13,7 +13,6 @@ from odoo import tools
 class HrHolidaysImposed(models.Model):
     _inherit = 'hr.holidays.imposed'
 
-    # TODO could be removed ? => ask damdam
     @api.onchange('date_from', 'date_to')
     def onchange_dates(self):
         """

@@ -1,72 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- TODO Code already commented -->
-
-    <!-- <record id="product_specific_bso_view_form" model="ir.ui.view">
-        <field name="name">product_specific_bso_view_form</field>
-        <field name="model">product.product</field>
-        <field name="inherit_id" ref="product.product_normal_form_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="//div[@name='options']" position="before">
-                <div name="bso_variant">
-                    <h2><field name="display_name" readonly="1"/></h2>
-                </div>
-            </xpath>
-            <field name="name" position="after">
-                <field name="variant_name"/>
-            </field>
-            <xpath expr="//notebook" position="inside">
-                <page name="bso_spec" string="BSO">
-                    <group name="info">
-                        <field name="supplier_id"/>
-                        <field name="link_type"/>
-                        <field name="rts"/>
-                        <field name="sla"/>
-                        <field name="mrc"/>
-                        <field name="nrc"/>
-                    </group>
-                </page>
-            </xpath>
-        </field>
-    </record> -->
-
-    <!-- <record id="product_specific_bso_view_tree" model="ir.ui.view">
-        <field name="name">product_specific_bso_view_tree</field>
-        <field name="model">product.product</field>
-        <field name="inherit_id" ref="product.product_product_tree_view"/>
-        <field name="arch" type="xml">
-            <field name="name" position="after">
-                <field name="display_name"/>
-            </field>
-            <field name="name" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
-        </field>
-    </record> -->
-
-
     <record id="product_template_specific_bso_view_form" model="ir.ui.view">
         <field name="name">product_template_specific_bso_view_form</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
-            <!-- TODO Code already commented -->
-            <!-- <xpath expr="//notebook" position="inside">
-                <page name="pops" string="POPs">
-                    <group name="pop_info">
-                        <field name="pop_src"/>
-                        <field name="pop_dst"/>
-                    </group>
-                </page>
-            </xpath> -->
             <xpath expr="//notebook" position="inside">
                 <page name="bso_spec" string="BSO">
                     <group name="info">
-                        <!-- <field name="supplier_id"/>
-                        <field name="link_type"/>
-                        <field name="rts"/>
-                        <field name="sla"/> -->
                         <field name="mrc"/>
                         <field name="is_epl"/>
                     </group>
