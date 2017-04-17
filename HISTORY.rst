@@ -22,6 +22,8 @@ Latest (unreleased)
 
 **Features and Improvements**
 
+* Install sale_contract
+
 **Bugfixes**
 
 **Build**

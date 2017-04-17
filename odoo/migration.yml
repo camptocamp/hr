@@ -153,3 +153,7 @@ migration:
       operations:
         post:
           - anthem songs.upgrade.10_0_11.message_type::main
+    - version: 10.0.12
+      addons:
+        upgrade:
+          - sale_contract
