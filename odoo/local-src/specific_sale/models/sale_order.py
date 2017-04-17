@@ -42,7 +42,7 @@ class SaleOrder(models.Model):
         readonly=True,
     )
     sales_condition = fields.Binary(
-        string='Sales Condition',
+        string='Sales Conditions',
         required=True,
         attachment=True,
         copy=True,

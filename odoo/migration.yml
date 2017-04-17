@@ -157,3 +157,4 @@ migration:
       addons:
         upgrade:
           - sale_contract
+          - specific_sale

@@ -26,6 +26,8 @@ Latest (unreleased)
 
 **Bugfixes**
 
+* Update label 'Sales Conditions'
+
 **Build**
 
 **Documentation**
