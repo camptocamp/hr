@@ -9,6 +9,7 @@
         'specific_crm',
         'sale',
         'sale_crm',
+        'sale_margin',
         'sales_team',
         'sale_timesheet',
         'website_sale_options',
