@@ -22,7 +22,11 @@ Latest (unreleased)
 
 **Features and Improvements**
 
+* Install sale_contract
+
 **Bugfixes**
+
+* Update label 'Sales Conditions'
 
 **Build**
 
