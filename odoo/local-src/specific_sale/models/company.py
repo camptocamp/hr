@@ -8,7 +8,6 @@ from odoo import fields, models
 class Company(models.Model):
     _inherit = 'res.company'
 
-    # TODO Check if step in right place
     so_double_validation = fields.Selection(
         selection_add=[
             ('bso_three_step',

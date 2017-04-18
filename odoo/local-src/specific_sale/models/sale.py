@@ -34,12 +34,11 @@ class SaleOrder(models.Model):
                 not self.user_has_groups(
                     'specific_security.group_technical_mgmt'))
 
-    # TODO Check
     @api.multi
     def action_confirm(self):
-        to_approve = self.env['sale.order']
-        to_approve_technical = self.env['sale.order']
-        to_confirm = self.env['sale.order']
+        to_approve = self.env['sale.order'].browse()
+        to_approve_technical = self.env['sale.order'].browse()
+        to_confirm = self.env['sale.order'].browse()
         for order in self:
             if order.is_to_approve():
                 to_approve |= order
