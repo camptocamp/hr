@@ -63,7 +63,7 @@ class TestACL(common.TransactionCase):
         leave_allocation = self.env['hr.holidays'].sudo(
             user=self.melanie).create(vals)
         self.assertTrue(leave_allocation)
-        leave_allocation.sudo(user=self.melanie).signal_workflow('validate')
+        leave_allocation.sudo(user=self.melanie).action_validate()
         self.assertEquals(leave_allocation.state, 'validate')
 
     def test_rh_005_create_leave_type_and_allocation_other_company(self):
@@ -79,7 +79,7 @@ class TestACL(common.TransactionCase):
         leave_allocation = self.env['hr.holidays'].sudo(
             user=self.melanie).create(vals)
         self.assertTrue(leave_allocation)
-        leave_allocation.sudo(user=self.melanie).signal_workflow('validate')
+        leave_allocation.sudo(user=self.melanie).action_validate()
         self.assertEquals(leave_allocation.state, 'validate')
 
     def test_rh_006_create_leave_type_and_allocation_other_company(self):
@@ -95,7 +95,7 @@ class TestACL(common.TransactionCase):
         leave_allocation = self.env['hr.holidays'].sudo(
             user=self.melanie).create(vals)
         self.assertTrue(leave_allocation)
-        leave_allocation.sudo(user=self.melanie).signal_workflow('validate')
+        leave_allocation.sudo(user=self.melanie).action_validate()
         self.assertEquals(leave_allocation.state, 'validate')
 
     def test_rh_007_create_leave_type_same_company_and_other_empl_take(self):
@@ -111,7 +111,7 @@ class TestACL(common.TransactionCase):
         leave_allocation = self.env['hr.holidays'].sudo(
             user=self.melanie).create(vals)
         self.assertTrue(leave_allocation)
-        leave_allocation.sudo(user=self.melanie).signal_workflow('validate')
+        leave_allocation.sudo(user=self.melanie).action_validate()
         self.assertEquals(leave_allocation.state, 'validate')
         vals = {'holiday_status_id': leave_type.id,
                 'employee_id': self.andre.id,
@@ -135,7 +135,7 @@ class TestACL(common.TransactionCase):
         leave_allocation = self.env['hr.holidays'].sudo(
             user=self.melanie).create(vals)
         self.assertTrue(leave_allocation)
-        leave_allocation.sudo(user=self.melanie).signal_workflow('validate')
+        leave_allocation.sudo(user=self.melanie).action_validate()
         self.assertEquals(leave_allocation.state, 'validate')
         vals = {'holiday_status_id': leave_type.id,
                 'employee_id': self.emmanuel.id,
@@ -164,7 +164,7 @@ class TestACL(common.TransactionCase):
             user=self.melanie).create(vals)
         self.assertTrue(leave_allocation)
 
-        leave_allocation.sudo(user=self.melanie).signal_workflow('validate')
+        leave_allocation.sudo(user=self.melanie).action_validate()
         self.assertEquals(leave_allocation.state, 'validate')
         vals = {'holiday_status_id': leave_type.id,
                 'employee_id': self.emmanuel.id,
@@ -178,7 +178,7 @@ class TestACL(common.TransactionCase):
         # leave_request = self.env['hr.holidays'].sudo(
         #     user=self.melanie).create(vals)
         self.assertTrue(leave_request)
-        leave_request.sudo(user=self.melanie).signal_workflow('validate')
+        leave_request.sudo(user=self.melanie).action_validate()
         self.assertEquals(leave_request.state, 'validate')
 
     def test_create_leave_type(self):
@@ -236,7 +236,7 @@ class TestACL(common.TransactionCase):
                 user=self.melanie).create(vals)
             self.assertTrue(leave_allocation)
             leave_allocation.sudo(
-                user=self.melanie).signal_workflow('validate')
+                user=self.melanie).action_validate()
 
         for employee in emp_obj.search([('user_id', '!=', False)]):
             vals = {
@@ -271,7 +271,7 @@ class TestACL(common.TransactionCase):
                 user=self.melanie).create(vals)
             self.assertTrue(leave_allocation)
             leave_allocation.sudo(
-                user=self.melanie).signal_workflow('validate')
+                user=self.melanie).action_validate()
 
         leaves_requests = []
         for employee in emp_obj.search([('user_id', 'in',
@@ -288,7 +288,7 @@ class TestACL(common.TransactionCase):
             leaves_requests.append(leave_request)
 
         for leave in leaves_requests:
-            leave.sudo(user=self.emmanuel).signal_workflow('validate')
+            leave.sudo(user=self.emmanuel).action_validate()
 
     def test_create_expense(self):
         emp_obj = self.env['hr.employee']
@@ -324,4 +324,4 @@ class TestACL(common.TransactionCase):
             user = self.melanie
             if employee.parent_id:
                 user = employee.parent_id.user_id.id
-            expense.sudo(user=user).approve_expenses()
+            expense.sheet_id.sudo(user=user).approve_expense_sheets()
