@@ -32,6 +32,9 @@
                 attrs="{'invisible': [('process_validation_id', '!=', False)]}"/>
       </header>
 
+      <field name="validity_date" position="after">
+        <field name="expected_order_date"/>
+      </field>
       <xpath expr="//field[@widget='statusbar']" position="replace">
         <field name="state" widget="statusbar" statusbar_visible="draft,final_quote,sent,sale"/>
       </xpath>
