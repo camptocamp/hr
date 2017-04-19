@@ -60,7 +60,6 @@ class TestHrTimesheetSheet(TransactionCase):
             'amount': -90.00,
             'product_id': self.browse_ref('product.product_product_1').id,
         })]})
-
         # I confirm Gilles' timesheet with over 1 hour difference
         # in attendance and actual worked hours
         try:
