@@ -2,17 +2,30 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    state = fields.Selection(
-        selection_add=[('to_approve_tech', 'To Approve (technical)'),
-                       ('refused', 'Refused')]
-    )
     refusal_reason = fields.Text(track_visibility='onchange')
+
+    @api.model
+    def _setup_fields(self, partial):
+        super(SaleOrder, self)._setup_fields(partial)
+        selection = self._fields['state'].selection
+        position = 0
+        exists = False
+        for idx, (state, __) in enumerate(selection):
+            if state == 'draft':
+                position = idx
+            elif state == 'to_approve':
+                exists = True
+        if not exists:
+            selection.insert(position + 1, (
+                'to_approve_tech', _('To Approve (technical)')
+            ))
+            selection.insert(position + 2, ('refused', _('Refused')))
 
     @api.multi
     def is_to_approve(self):
