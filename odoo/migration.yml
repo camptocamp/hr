@@ -7,7 +7,7 @@ migration:
         pre:
           - anthem songs.install.pre::main
         post:
-          - anthem openerp.addons.cloud_platform.songs::install_exoscale
+          - anthem odoo.addons.cloud_platform.songs::install_exoscale
           - anthem songs.install.company::main
       modes:
         full:
@@ -24,7 +24,10 @@ migration:
           - analytic
           - auth_ldap
           - base_technical_features
+          - queue_job
           - connector
+          - connector_jira
+          - server_env_connector_jira
           - crm
           - document
           - hr
@@ -37,6 +40,5 @@ migration:
           - website_contract
           # cloud
           - cloud_platform
-          - attachment_s3
 
 # TODO v10: replace this file w/ `migration.todo.yml`
