@@ -24,6 +24,7 @@ Latest (unreleased)
 
 * Install sale_contract
 * Remove signatures on leads
+* update transitions checks in crm
 
 **Bugfixes**
 
