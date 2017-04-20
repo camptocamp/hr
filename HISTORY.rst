@@ -23,6 +23,7 @@ Latest (unreleased)
 **Features and Improvements**
 
 * Install sale_contract
+* Remove signatures on leads
 
 **Bugfixes**
 

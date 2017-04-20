@@ -18,8 +18,6 @@ class CrmLead(models.Model):
     domain = fields.Text()
     start_date = fields.Date()
     end_date = fields.Date()
-    signature_ids = fields.Many2many(comodel_name='res.partner',
-                                     string="Signatures")
     project_id = fields.Many2one(
         comodel_name='project.project',
         string="Feasibility Timesheet Project",
