@@ -24,6 +24,7 @@
         'views/sale_order_crm.xml',
         'views/project_task.xml',
         'views/mrp_bom.xml',
+        'views/so_mail_template.xml',
         'data/res_groups_data.xml',
         'security/ir.model.access.csv',
     ],

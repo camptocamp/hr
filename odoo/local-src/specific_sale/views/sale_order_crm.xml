@@ -54,6 +54,15 @@
         <attribute name="states">sent,final_quote,sale</attribute>
       </xpath>
 
+      <!-- Add Button Cancel in final_quote-->
+      <xpath expr="//button[@name='action_cancel']" position="attributes">
+        <attribute name="states">draft,sent,final_quote,sale</attribute>
+      </xpath>
+
+      <xpath expr="//button[@name='action_quotation_send'][2]" position="attributes">
+        <attribute name="states">sent,final_quote,sale</attribute>
+      </xpath>
+
       <xpath expr="//group[@name='sales_person']/.." position="inside">
         <group name="project_name_computation" string="Project configuration">
           <field name="project_zone_id"/>
