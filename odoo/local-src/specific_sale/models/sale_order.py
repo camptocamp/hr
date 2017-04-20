@@ -10,6 +10,10 @@ from odoo.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    expected_order_date = fields.Date(
+        help="date at which the salesman expects "
+        "the customer to sign the offer"
+    )
     project_zone_id = fields.Many2one(comodel_name='project.zone',
                                       string='Project Zone',
                                       required=True)
