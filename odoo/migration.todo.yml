@@ -8,7 +8,7 @@ migration:
           - anthem songs.install.pre::main
           - anthem songs.install.email::main
         post:
-          - anthem openerp.addons.cloud_platform.songs::install_exoscale
+          - anthem odoo.addons.cloud_platform.songs::install_exoscale
           - anthem songs.install.company::main
           - anthem songs.install.accounting::main
           - anthem songs.install.crm::main
@@ -38,6 +38,7 @@ migration:
           - base_technical_features
           - connector
           - connector_jira
+          - server_env_connector_jira
           - crm
           - document
           - hr
@@ -81,4 +82,3 @@ migration:
           - specific_security
           # cloud
           - cloud_platform
-          - attachment_s3
