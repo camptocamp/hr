@@ -53,6 +53,12 @@ class CrmLead(models.Model):
         index=True,
         track_visibility='onchange',
     )
+    cust_nda_id = fields.Many2one(
+        'res.partner',
+        string='NDA Customer',
+        related='partner_id',
+        readonly=True,
+    )
 
     @api.model
     def _message_get_auto_subscribe_fields(self, updated_fields,

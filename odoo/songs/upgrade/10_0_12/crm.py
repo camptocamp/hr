@@ -12,7 +12,8 @@ from ...common import req
 
 @anthem.log
 def update_server_actions(ctx):
-    content = resource_stream(req, 'data/upgrade/10_0_12/ir.actions.server.csv')
+    content = resource_stream(req,
+                              'data/upgrade/10_0_12/ir.actions.server.csv')
     load_csv_stream(ctx, 'ir.actions.server', content, delimiter=',')
 
 
