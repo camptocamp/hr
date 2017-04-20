@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+  <record id="partner_license_tree" model="ir.ui.view">
+    <field name="name">partner.license.tree</field>
+    <field name="model">res.partner.license</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name='partner_id'/>
+        <field name='license_type'/>
+        <field name="start_date"/>
+        <field name="end_date"/>
+        <field name='area'/>
+        <field name='domain'/>
+        <field name='license_comment'/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="partner_license_search" model="ir.ui.view">
+    <field name="name">partner.license.search</field>
+    <field name="model">res.partner.license</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name='partner_id'/>
+        <field name='license_type'/>
+        <field name="start_date"/>
+        <field name="end_date"/>
+        <field name='area'/>
+        <field name='domain'/>
+      </search>
+    </field>
+  </record>
+
+</odoo>
