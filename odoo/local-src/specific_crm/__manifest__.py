@@ -17,6 +17,7 @@
              'views/survey_templates.xml',
              'views/crm_team.xml',
              'views/project_task.xml',
+             'views/partner.xml',
              ],
     'installable': True,
 }
