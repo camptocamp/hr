@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, _
+from odoo import models, fields
 
 
 class ResPartner(models.Model):
@@ -40,12 +40,13 @@ class ResPartnerLicense(models.Model):
         'res.partner',
         string='Customer',
         required=True,
+        index=True,
     )
     license_type = fields.Selection(
-        [('dev', _('Dev')),
-         ('production', _('Production')),
-         ('test_demo', _('Test / Demo')),
-         ('dev_prod_opt', _('Dev + Production Option'))],
+        [('dev', 'Dev'),
+         ('production', 'Production'),
+         ('test_demo', 'Test / Demo'),
+         ('dev_prod_opt', 'Dev + Production Option')],
         required=True,
     )
     start_date = fields.Date(
