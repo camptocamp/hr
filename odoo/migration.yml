@@ -12,7 +12,7 @@ migration:
           - anthem songs.install.accounting::main
           - anthem songs.install.crm::main
           - anthem songs.install.email::main
-          # - anthem songs.install.hr::main  TODO
+          - anthem songs.install.hr::main
           # - anthem songs.install.jira::main TODO
           - anthem songs.install.ldap::main
           - anthem songs.install.products::main

@@ -29,7 +29,8 @@ def import_hr_employee_family(ctx):
 @anthem.log
 def import_hr_employee1(ctx):
     content = resource_stream(req, 'data/install/hr_employee3.csv')
-    load_csv_stream(ctx, 'hr.employee', content, delimiter=',')
+    load_csv_stream(ctx, 'hr.employee', content,
+                    delimiter=',', encoding='utf-8')
 
 
 @anthem.log
@@ -37,7 +38,8 @@ def import_partner_employee_home_address(ctx):
     content = resource_stream(
         req,
         'data/install/res_partner_employee_home_address.csv')
-    load_csv_stream(ctx, 'res.partner', content, delimiter=',')
+    load_csv_stream(ctx, 'res.partner', content,
+                    delimiter=',', encoding='utf-8')
 
 
 @anthem.log
@@ -128,8 +130,7 @@ def main(ctx):
     create_expense_journal(ctx)
     import_hr_job(ctx)
     import_hr_department1(ctx)
-    # removed because it's missing multi partner address
-    # import_partner_employee_home_address(ctx)
+    import_partner_employee_home_address(ctx)
     import_hr_employee_family(ctx)
     import_hr_employee1(ctx)
     import_hr_department2(ctx)
