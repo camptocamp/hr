@@ -16,7 +16,7 @@ migration:
           # - anthem songs.install.jira::main TODO
           - anthem songs.install.ldap::main
           - anthem songs.install.products::main
-          # - anthem songs.install.sale::main TODO
+          - anthem songs.install.sale::main
           # - anthem songs.install.logistics::main TODO
           #- anthem songs.install.data_all::main
           # Specific case for cloud platform: on our platform, AWS_ACCESS_KEY_ID will be defined
