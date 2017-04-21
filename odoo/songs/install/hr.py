@@ -128,7 +128,8 @@ def main(ctx):
     create_expense_journal(ctx)
     import_hr_job(ctx)
     import_hr_department1(ctx)
-    import_partner_employee_home_address(ctx)
+    # removed because it's missing multi partner address
+    # import_partner_employee_home_address(ctx)
     import_hr_employee_family(ctx)
     import_hr_employee1(ctx)
     import_hr_department2(ctx)

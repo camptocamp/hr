@@ -24,7 +24,7 @@
 	url = git@github.com:camptocamp/hr.git
 [submodule "odoo/external-src/partner-contact"]
 	path = odoo/external-src/partner-contact
-	url = git@github.com:OCA/partner-contact.git
+	url = git@github.com:camptocamp/partner-contact.git
 [submodule "odoo/external-src/connector-jira"]
 	path = odoo/external-src/connector-jira
 	url = git@github.com:camptocamp/connector-jira.git
@@ -36,7 +36,7 @@
 	url = git@github.com:oca/purchase-workflow.git
 [submodule "odoo/external-src/sale-workflow"]
 	path = odoo/external-src/sale-workflow
-	url = git@github.com:OCA/sale-workflow
+	url = git@github.com:camptocamp/sale-workflow
 [submodule "odoo/external-src/queue"]
 	path = odoo/external-src/queue
 	url = git@github.com:OCA/queue.git

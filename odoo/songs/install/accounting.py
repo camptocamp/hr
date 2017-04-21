@@ -47,7 +47,7 @@ def base_conf(ctx):
     """ Configuring analytic for purchase/sale """
     account_settings = ctx.env['account.config.settings']
 
-    for company_xml_id, coa in bso_vars.coa_dict.iteritems():
+    for company_xml_id, coa in bso_vars.coa_dict2.iteritems():
         company = ctx.env.ref(company_xml_id)
         with ctx.log("Import basic CoA for %s:" % company.name):
             vals = {'group_analytic_account_for_purchases': True,
@@ -63,15 +63,8 @@ def base_conf(ctx):
 
 
 @anthem.log
-def reset_main_company_chart(ctx):
-    for company_xml_id, coa in bso_vars.coa_dict.iteritems():
-        ctx.env.ref(company_xml_id).reset_chart()
-
-
-@anthem.log
 def main(ctx):
     """ Configuring accounting """
     activate_multicurrency(ctx)
     # create_bank_accounts(ctx)
-    reset_main_company_chart(ctx)
     base_conf(ctx)
