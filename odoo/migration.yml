@@ -64,9 +64,6 @@ migration:
           - users_ldap_populate
           # connector
           - connector
-          # cloud
-          - cloud_platform
-          - attachment_s3
           # hr
           - hr_family
           - hr_holidays_compute_days
