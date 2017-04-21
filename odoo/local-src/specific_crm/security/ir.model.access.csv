@@ -5,3 +5,5 @@ access_project_process_user,access_project_process_user,specific_crm.model_proje
 access_project_process_sales_mgr,access_project_process_user,specific_crm.model_project_process,sales_team.group_sale_manager,1,1,1,0
 access_project_zone_user,access_project_zone_user,specific_crm.model_project_zone,base.group_user,1,0,0,0
 access_project_zone_sales_mgr,access_project_zone_user,specific_crm.model_project_zone,sales_team.group_sale_manager,1,1,1,0
+access_license_user,access_license_user,specific_crm.model_res_partner_license,base.group_user,1,0,0,0
+access_license_salesman,access_license_salesman,specific_crm.model_res_partner_license,sales_team.group_sale_salesman,1,1,1,0

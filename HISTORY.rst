@@ -27,6 +27,7 @@ Latest (unreleased)
 * update transitions checks in crm
 * Add NDA Leads in customer's form
 * Email temaplate & Button for 'final_quote'
+* Add Customer's Licenses models & views
 
 **Bugfixes**
 

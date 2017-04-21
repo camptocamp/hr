@@ -16,6 +16,11 @@ class ResPartner(models.Model):
         compute='_compute_opp_nda',
         readonly=True,
     )
+    customer_license_ids = fields.One2many(
+        'res.partner.license',
+        'partner_id',
+        string='Licenses',
+    )
 
     def _compute_opp_nda(self):
         for cust in self:
@@ -26,3 +31,37 @@ class ResPartner(models.Model):
             nda_ids = self.env['crm.lead'].search(domain)
             for nda_id in nda_ids:
                 cust.opp_nda_ids |= nda_id
+
+
+class ResPartnerLicense(models.Model):
+    _name = 'res.partner.license'
+
+    partner_id = fields.Many2one(
+        'res.partner',
+        string='Customer',
+        required=True,
+        index=True,
+    )
+    license_type = fields.Selection(
+        [('dev', 'Dev'),
+         ('production', 'Production'),
+         ('test_demo', 'Test / Demo'),
+         ('dev_prod_opt', 'Dev + Production Option')],
+        required=True,
+    )
+    start_date = fields.Date(
+        string='Start Date',
+        required=True,
+    )
+    end_date = fields.Date(
+        string='End Date',
+    )
+    area = fields.Char(
+        string='Area',
+    )
+    domain = fields.Char(
+        string='Domain',
+    )
+    license_comment = fields.Text(
+        string='Comments',
+    )

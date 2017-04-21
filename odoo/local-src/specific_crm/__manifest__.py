@@ -18,6 +18,7 @@
              'views/crm_team.xml',
              'views/project_task.xml',
              'views/partner.xml',
+             'views/partner_license.xml',
              ],
     'installable': True,
 }
