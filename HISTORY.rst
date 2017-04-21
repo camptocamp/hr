@@ -26,9 +26,11 @@ Latest (unreleased)
 * Remove signatures on leads
 * update transitions checks in crm
 * Add NDA Leads in customer's form
+* Email temaplate & Button for 'final_quote'
 
 **Bugfixes**
 
+* String in button to step to 'Final Quote'
 * Update label 'Sales Conditions'
 
 **Build**

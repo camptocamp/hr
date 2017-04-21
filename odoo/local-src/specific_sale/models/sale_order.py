@@ -230,3 +230,36 @@ class SaleOrder(models.Model):
             else:
                 super(SaleOrder, order).action_confirm()
         return True
+
+    @api.multi
+    def action_quotation_send(self):
+        '''
+        This function opens a window to compose an email, with the edi sale
+        template message loaded by default
+        '''
+        self.ensure_one()
+        res = super(SaleOrder, self).action_quotation_send()
+        if self.state != 'final_quote':
+            return res
+
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference(
+                'specific_sale',
+                'email_template_edi_fin_quot')[1]
+        except ValueError:
+            template_id = res['context']['default_template_id'] or False
+
+        ctx = dict()
+        cust_layout = ('sale.mail_template_data_notification_email_sale_order')
+        ctx.update({
+            'default_model': 'sale.order',
+            'default_res_id': self.ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'mark_so_as_sent': True,
+            'custom_layout': cust_layout,
+        })
+        res['context'] = ctx
+        return res

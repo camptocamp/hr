@@ -38,12 +38,28 @@
       <xpath expr="//field[@widget='statusbar']" position="replace">
         <field name="state" widget="statusbar" statusbar_visible="draft,final_quote,sent,sale"/>
       </xpath>
+
       <xpath expr="//header/button[@name='action_confirm'][1]"
              position="attributes">
-        <attribute name="states">sent,final_quote</attribute>
+        <attribute name="states">final_quote</attribute>
+      </xpath>
+
+      <xpath expr="//header/button[(@name='action_confirm' and @states='draft')]"
+             position="attributes">
+        <attribute name="string">Final Quote</attribute>
+        <attribute name="states">draft,sent</attribute>
       </xpath>
 
       <xpath expr="//button[@name='print_quotation'][2]" position="attributes">
+        <attribute name="states">sent,final_quote,sale</attribute>
+      </xpath>
+
+      <!-- Add Button Cancel in final_quote-->
+      <xpath expr="//button[@name='action_cancel']" position="attributes">
+        <attribute name="states">draft,sent,final_quote,sale</attribute>
+      </xpath>
+
+      <xpath expr="//button[@name='action_quotation_send'][2]" position="attributes">
         <attribute name="states">sent,final_quote,sale</attribute>
       </xpath>
 
