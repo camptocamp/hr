@@ -39,15 +39,18 @@ class ResPartnerLicense(models.Model):
     partner_id = fields.Many2one(
         'res.partner',
         string='Customer',
+        required=True,
     )
-    license_type = fields.Selection([
-        ('dev', _('Dev')),
-        ('production', _('Production')),
-        ('test_demo', _('Test / Demo')),
-        ('dev_prod_opt', _('Dev + Production Option')),
-    ])
+    license_type = fields.Selection(
+        [('dev', _('Dev')),
+         ('production', _('Production')),
+         ('test_demo', _('Test / Demo')),
+         ('dev_prod_opt', _('Dev + Production Option'))],
+        required=True,
+    )
     start_date = fields.Date(
         string='Start Date',
+        required=True,
     )
     end_date = fields.Date(
         string='End Date',
