@@ -8,11 +8,9 @@ from odoo import models, fields
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    opp_nda_ids = fields.One2many(
+    opp_nda_ids = fields.Many2many(
         'crm.lead',
-        'cust_nda_id',
-        string='Opportunities',
-        domain=[('type', '=', 'opportunity')],
+        string='NDAs',
         compute='_compute_opp_nda',
         readonly=True,
     )
@@ -24,7 +22,8 @@ class ResPartner(models.Model):
 
     def _compute_opp_nda(self):
         for cust in self:
-            domain = [('cust_nda_id', '=', cust.id),
+            domain = [('partner_id', '=', cust.id),
+                      ('type', '=', 'opportunity'),
                       ('domain', '!=', False),
                       ('start_date', '!=', False),
                       ('end_date', '!=', False)]
