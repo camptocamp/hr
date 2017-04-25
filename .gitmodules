@@ -25,3 +25,6 @@
 	path = odoo/external-src/intrastat
 	url = https://github.com/oca/intrastat.git
 	branch = 10.0
+[submodule "odoo/external-src/project"]
+	path = odoo/external-src/project
+	url = git@github.com:OCA/project
