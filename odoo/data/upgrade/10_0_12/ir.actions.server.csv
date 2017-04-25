@@ -9,6 +9,12 @@ __setup__.server_action_crm_lead_check_3_arrival,check fields,code,ir.actions.se
 #  - Warning: Warning Exception to use with raise
 # To return an action, assign: action = {...}
 
-fields = ['project_id', 'start_date', 'end_date']
+fields = ['start_date', 'end_date']
 record.check_fields(fields=fields)
+"
+__setup__.server_action_crm_lead_check_4_arrival,check fields,code,ir.actions.server,crm.model_crm_lead,True,1,"
+fields = ['project_id', 'survey_id', 'survey_inputs']
+record.check_fields(fields=fields)
+
+record.check_survey_state()
 "

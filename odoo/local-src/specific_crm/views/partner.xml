@@ -10,7 +10,7 @@
         <xpath expr="//notebook" position="inside">
           <page string="NDA" name="nda">
             <group>
-              <field name="opp_nda_ids" nobel="1">
+              <field name="opp_nda_ids" nolabel="1">
                 <tree>
                   <field name="name"/>
                   <field name="domain"/>
