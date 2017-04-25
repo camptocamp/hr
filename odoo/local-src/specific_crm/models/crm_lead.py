@@ -15,9 +15,9 @@ from odoo.exceptions import UserError
 class CrmLead(models.Model):
     _inherit = 'crm.lead'
 
-    domain = fields.Text()
-    start_date = fields.Date()
-    end_date = fields.Date()
+    domain = fields.Text('NDA Domain')
+    start_date = fields.Date(string='NDA start')
+    end_date = fields.Date(string='NDA end')
     project_id = fields.Many2one(
         comodel_name='project.project',
         string="Feasibility Timesheet Project",
@@ -28,10 +28,10 @@ class CrmLead(models.Model):
     )
     survey_input_lines = fields.One2many(
         comodel_name='survey.user_input_line', inverse_name='lead_id',
-        string='Surveys answers')
+        string='Surveys question answers')
     survey_inputs = fields.One2many(
         comodel_name='survey.user_input', inverse_name='lead_id',
-        string='Surveys')
+        string='Survey answer')
     survey_input_count = fields.Integer(
         string='Survey number', compute='_count_survey_input',
         store=True)
@@ -144,7 +144,8 @@ class CrmLead(models.Model):
         if fields:
             for f in fields:
                 if not self[f]:
-                    msg.append(('%s not filled.') % f)
+                    Field = self._fields[f]
+                    msg.append(('%s not filled.') % Field.string)
 
         if msg:
             raise exceptions.Warning('\n'.join(msg))
