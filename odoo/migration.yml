@@ -18,7 +18,7 @@ migration:
           - anthem songs.install.products::main
           - anthem songs.install.sale::main
           - anthem songs.install.logistics::main
-          #- anthem songs.install.data_all::main
+          # - anthem songs.install.data_all::main
           # Specific case for cloud platform: on our platform, AWS_ACCESS_KEY_ID will be defined
           # so we know we have to install and configure the platform addons.
           # Won't be done on the image delivered to BSO.
