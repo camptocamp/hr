@@ -29,6 +29,7 @@ Latest (unreleased)
 * Email temaplate & Button for 'final_quote'
 * Add Customer's Licenses models & views
 * Set intercompany rules
+* Update filters & rules for NDA & stage3
 
 **Bugfixes**
 

@@ -1,0 +1,5 @@
+id,active,domain,name,model_id,user_id
+__setup__.filter_crm_lead_1_2,True,"[('stage_id.name', 'ilike', '2')]",Demand |NDA,crm.lead,
+__setup__.filter_crm_lead_3,True,"['|','|','|',('stage_id.name', 'ilike', '3'),('stage_id.name', 'ilike', '4'),('stage_id.name', 'ilike', '5'),('stage_id.name', 'ilike', '6')]",Demand |NDAAfter,crm.lead,
+__setup__.filter_crm_lead_3_only,True,"[('stage_id.name', 'ilike', '3')]",Lead TR,crm.lead,
+__setup__.filter_crm_lead_3_after,True,"['|','|',('stage_id.name', 'ilike', '4'),('stage_id.name', 'ilike', '5'),('stage_id.name', 'ilike', '6')]",Lead TRF After,crm.lead,
