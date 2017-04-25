@@ -28,6 +28,7 @@ Latest (unreleased)
 * Add NDA Leads in customer's form
 * Email temaplate & Button for 'final_quote'
 * Add Customer's Licenses models & views
+* Set intercompany rules
 
 **Bugfixes**
 
