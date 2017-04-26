@@ -13,7 +13,7 @@ migration:
           - anthem songs.install.crm::main
           - anthem songs.install.email::main
           - anthem songs.install.hr::main
-          # - anthem songs.install.jira::main TODO
+          - anthem songs.install.jira::main
           - anthem songs.install.ldap::main
           - anthem songs.install.products::main
           - anthem songs.install.sale::main
@@ -63,8 +63,10 @@ migration:
           - base_technical_features
           - mail_environment
           - users_ldap_populate
-          # connector
           - connector
+          - connector_jira
+          - queue_job
+          - server_env_connector_jira
           # hr
           - hr_family
           - hr_timesheet_attendance
