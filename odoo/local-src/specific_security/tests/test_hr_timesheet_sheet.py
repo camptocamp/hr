@@ -84,6 +84,10 @@ class TestHrTimesheetSheet(TransactionCase):
 
         # I confirm Gilles' timesheet with less than 1 hour difference
         # in attendance and actual worked hours
+        print self.test_timesheet_sheet.total_attendance
+        print self.test_timesheet_sheet.total_timesheet
+        print self.test_timesheet_sheet.total_difference
+        # import pdb; pdb.set_trace()
         self.test_timesheet_sheet.action_timesheet_confirm()
 
         # I check the state is confirmed
