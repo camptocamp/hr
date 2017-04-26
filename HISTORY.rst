@@ -22,6 +22,18 @@ Latest (unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.0.12 (2017-04-26)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * Install sale_contract
 * Remove signatures on leads
 * update transitions checks in crm
