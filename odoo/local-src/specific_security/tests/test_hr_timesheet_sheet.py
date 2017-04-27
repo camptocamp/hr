@@ -31,12 +31,11 @@ class TestHrTimesheetSheet(TransactionCase):
         test_users |= self.andre
         self.test_users = test_users
 
-    def test_hr_timesheet_sheet(self):
-
+    def _prepare_timesheet(self, start, end, checkin, checkout):
         # I create a timesheet for employee "Gilles Gravie".
-        self.test_timesheet_sheet = self.timesheet_sheet.create({
-            'date_from': time.strftime('%Y-%m-11'),
-            'date_to': time.strftime('%Y-%m-17'),
+        test_timesheet_sheet = self.timesheet_sheet.create({
+            'date_from': time.strftime(start),
+            'date_to': time.strftime(end),
             'name': 'Gilles Gravie',
             'state': 'new',
             'user_id': self.andre.id,
@@ -46,55 +45,70 @@ class TestHrTimesheetSheet(TransactionCase):
         # I check Gilles in at around 9:00 and out at 17:30
         self.attendance.create({
             'employee_id': self.test_employee.id,
-            'check_in': time.strftime('%Y-%m-11 09:12:37'),
-            'check_out': time.strftime('%Y-%m-11 17:30:00'),
+            'check_in': time.strftime(checkin),
+            'check_out': time.strftime(checkout),
         })
+        return test_timesheet_sheet
+
+    def _log_time(self, project, date, duration, message):
+        line = self.env['account.analytic.line'].create(
+            {'project_id': project.id,
+             'date': time.strftime(date),
+             'name': message,
+             'user_id': self.test_employee.user_id.id,
+             'unit_amount': duration,
+             'amount': -90.00,
+             'product_id': self.browse_ref('product.product_product_1').id,
+             }
+        )
+        return line
+
+    def test_hr_timesheet_sheet_short_day(self):
+        test_timesheet_sheet = self._prepare_timesheet(
+            '%Y-%m-11', '%Y-%m-17', '%Y-%m-11 09:12:37', '%Y-%m-11 17:30:00'
+        )
 
         # I add 6 hours of work to Gilles' timesheet
-        self.test_timesheet_sheet.write({'timesheet_ids': [(0, 0, {
-            'project_id': self.browse_ref('project.project_project_2').id,
-            'date': time.strftime('%Y-%m-11'),
-            'name': 'Develop yaml for hr module(1)',
-            'user_id': self.andre.id,
-            'unit_amount': 6.00,
-            'amount': -90.00,
-            'product_id': self.browse_ref('product.product_product_1').id,
-        })]})
+        line = self._log_time(
+            self.browse_ref('project.project_project_2'),
+            '%Y-%m-11', 6, 'work1'
+        )
+        self.assertEqual(line.sheet_id, test_timesheet_sheet)
+
         # I confirm Gilles' timesheet with over 1 hour difference
         # in attendance and actual worked hours
         try:
-            self.test_timesheet_sheet.action_timesheet_confirm()
+            test_timesheet_sheet.action_timesheet_confirm()
         except Exception:
             pass
 
-        # I add another 2 hours of work to Gilles' timesheet
-        self.test_timesheet_sheet.write({'timesheet_ids': [(0, 0, {
-            'project_id': self.browse_ref('project.project_project_2').id,
-            'date': time.strftime('%Y-%m-11'),
-            'name': 'Develop yaml for hr module(2)',
-            'user_id': self.andre.id,
-            'unit_amount': 2.00,
-            'amount': -90.00,
-            'product_id': self.browse_ref('product.product_product_1').id,
-        })]})
-        # I invalidate the cache, otherwise total_timesheet and total_
-        # difference doesn't get updated... /this is a disgrace/
-        self.test_timesheet_sheet.invalidate_cache(
-            ['total_attendance', 'total_timesheet', 'total_difference'])
+    def test_hr_timesheet_sheet_normal_day(self):
 
-        # I confirm Gilles' timesheet with less than 1 hour difference
-        # in attendance and actual worked hours
-        print self.test_timesheet_sheet.total_attendance
-        print self.test_timesheet_sheet.total_timesheet
-        print self.test_timesheet_sheet.total_difference
-        # import pdb; pdb.set_trace()
-        self.test_timesheet_sheet.action_timesheet_confirm()
+        test_timesheet_sheet = self._prepare_timesheet(
+            '%Y-%m-11', '%Y-%m-17', '%Y-%m-11 09:12:37', '%Y-%m-11 17:30:00'
+        )
+
+        # I add 6 hours of work to Gilles' timesheet
+        line = self._log_time(
+            self.browse_ref('project.project_project_2'),
+            '%Y-%m-11', 6, 'work1'
+        )
+
+        # I add 2 hours of work to Gilles' timesheet
+        line2 = self._log_time(
+            self.browse_ref('project.project_project_2'),
+            '%Y-%m-11', 2, 'work2'
+        )
+
+        self.assertEqual(line.sheet_id, test_timesheet_sheet)
+        self.assertEqual(line2.sheet_id, test_timesheet_sheet)
+        test_timesheet_sheet.action_timesheet_confirm()
 
         # I check the state is confirmed
-        assert self.test_timesheet_sheet.state == 'confirm'
+        self.assertEqual(test_timesheet_sheet.state, 'confirm')
 
         # the manager accepts the timesheet
-        self.test_timesheet_sheet.write({'state': 'done'})
+        test_timesheet_sheet.write({'state': 'done'})
 
         # I check the state is indeed done
-        assert self.test_timesheet_sheet.state == 'done'
+        self.assertEqual(test_timesheet_sheet.state, 'done')
