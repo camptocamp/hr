@@ -38,6 +38,7 @@
           'data/ir_rule.xml',
           'data/ir_rule.yml',
           'security/group.xml',
+          'views/project_project.xml',
           ],
  'demo': [
      'demo/currency.sql',
