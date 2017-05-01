@@ -23,7 +23,6 @@
           <page string="Licenses" name="licenses">
               <field name="customer_license_ids">
                 <tree>
-                  <field name="partner_id" invisible="True"/>
                   <field name="license_type"/>
                   <field name="start_date"/>
                   <field name="end_date"/>
@@ -31,6 +30,16 @@
                   <field name="domain"/>
                   <field name="license_comment"/>
                 </tree>
+                <form>
+                  <group>
+                    <field name="license_type"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="area"/>
+                    <field name="domain"/>
+                    <field name="license_comment"/>
+                  </group>
+                </form>
               </field>
           </page>
         </xpath>
