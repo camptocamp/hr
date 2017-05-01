@@ -24,7 +24,9 @@ class HolidaysType(models.Model):
         for rec in self:
             emps = self.env['hr.employee'].search(
                 [('company_id', '=', rec.company_id.id),
-                 ('active', '=', True)])
+                 ('active', '=', True),
+                 ('crt_date_start', '!=', False),
+                 ])
             self.env['hr.holidays'].create_allocation(emps, rec)
 
     @api.model
@@ -52,6 +54,9 @@ class HrHolidays(models.Model):
                 nb_days = employee.per_month_legal_allocation
             else:
                 nb_days = employee.per_month_rtt_allocation
+
+            if not employee.crt_date_start:
+                continue
             date_begin = employee.crt_date_start
             date_now = fields.Date.today()
             date_begin_yr = fields.Date.from_string(date_begin).strftime('%Y')
