@@ -5,14 +5,13 @@
     <field name="name">partner.license.tree</field>
     <field name="model">res.partner.license</field>
     <field name="arch" type="xml">
-      <tree>
+      <tree string="Licenses">
         <field name="partner_id"/>
         <field name="license_type"/>
         <field name="start_date"/>
         <field name="end_date"/>
         <field name="area"/>
         <field name="domain"/>
-        <field name="license_comment"/>
       </tree>
     </field>
   </record>
@@ -21,16 +20,18 @@
     <field name="name">partner.license.form</field>
     <field name="model">res.partner.license</field>
     <field name="arch" type="xml">
-      <form>
-        <group>
-          <field name="partner_id"/>
-          <field name="license_type"/>
-          <field name="start_date"/>
-          <field name="end_date"/>
-          <field name="area"/>
-          <field name="domain"/>
-          <field name="license_comment"/>
-        </group>
+      <form string="License">
+        <sheet>
+          <group>
+            <field name="partner_id"/>
+            <field name="license_type"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="area"/>
+            <field name="domain"/>
+            <field name="license_comment"/>
+          </group>
+        </sheet>
       </form>
     </field>
   </record>
@@ -49,5 +50,16 @@
       </search>
     </field>
   </record>
+
+  <record id="action_partner_license_form" model="ir.actions.act_window">
+    <field name="name">Licenses</field>
+    <field name="res_model">res.partner.license</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem id="menu_partner_license" name="Licenses"
+    action="action_partner_license_form"
+    parent="sales_team.menu_sales" sequence="20"/>
 
 </odoo>
