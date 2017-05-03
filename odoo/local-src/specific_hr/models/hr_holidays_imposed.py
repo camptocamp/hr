@@ -21,16 +21,15 @@ class HrHolidaysImposed(models.Model):
         Also update the number_of_days.
         """
         super(HrHolidaysImposed, self).onchange_dates()
-        days = self._compute_number_of_days(self.date_to, self.date_from)
+        days = self._recompute_number_of_days(self.date_to, self.date_from)
         self.number_of_days = days
 
-    def _compute_number_of_days(self, date_to, date_from):
+    def _recompute_number_of_days(self, date_to, date_from):
         diff_days = 0
         DATETIME_FORMAT = tools.DEFAULT_SERVER_DATETIME_FORMAT
         if date_from and date_to:
             from_dt = datetime.datetime.strptime(date_from, DATETIME_FORMAT)
             to_dt = datetime.datetime.strptime(date_to, DATETIME_FORMAT)
-
             from_dt_h = fields.Datetime.context_timestamp(self, from_dt)
             from_dt_h1330 = fields.Datetime.context_timestamp(
                 self, from_dt).replace(hour=13, minute=30)
@@ -51,11 +50,13 @@ class HrHolidaysImposed(models.Model):
 
             if not date_from or not date_to:
                 return 0
+            # days = self._get_number_of_days(
+            #     fields.Datetime.to_string(date_from2),
+            #     fields.Datetime.to_string(date_to2)
+            # )
             days = self._get_number_of_days(date_from, date_to)
-
             if days or date_to == date_from:
                 days = round(math.floor(days)) + 1
-
             return days + diff_days
         return 0
 

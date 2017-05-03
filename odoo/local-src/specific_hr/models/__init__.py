@@ -6,5 +6,6 @@
 from . import res_users
 from . import hr_employee
 from . import hr_contract
+from . import hr_holidays
 from . import hr_holidays_status
 from . import hr_holidays_imposed

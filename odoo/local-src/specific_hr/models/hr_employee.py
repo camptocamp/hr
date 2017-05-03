@@ -2,6 +2,7 @@
 # Author: Damien Crier
 # Copyright 2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import datetime
 
 from odoo import models, fields, api
 
@@ -56,7 +57,31 @@ class HrEmployee(models.Model):
 
     remaining_leaves = fields.Integer(readonly=True, )
 
-    crt_date_start = fields.Date("Contract start date")
+    crt_date_start = fields.Date("Contract start date",
+                                 compute="_get_contract_start_date",
+                                 store=True)
+
+    @api.depends('contract_ids')
+    def _get_contract_start_date(self):
+        for rec in self:
+            contracts = rec.contract_ids.sorted('date_start')
+            start = None
+            if contracts:
+                start = fields.Date.from_string(contracts[0].date_start)
+                end = contracts[0].date_end
+                if end is None:
+                    end = datetime.date.today()
+                else:
+                    end = fields.Date.from_string(end)
+            for contract in contracts[1:]:
+                c_start = fields.Date.from_string(contract.date_start)
+                if (c_start - end).days > 1:
+                    start = c_start
+                if contract.date_end is None:
+                    end = datetime.date.today()
+                else:
+                    end = fields.Date.from_string(contract.date_end)
+            rec.crt_date_start = start
 
 
 class HrEmployeeFamily(models.Model):
