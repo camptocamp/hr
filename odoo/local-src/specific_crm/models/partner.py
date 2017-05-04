@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class ResPartner(models.Model):
@@ -64,3 +64,21 @@ class ResPartnerLicense(models.Model):
     license_comment = fields.Text(
         string='Comments',
     )
+
+    @api.multi
+    def name_get(self):
+        result = []
+        type_field = self._fields['license_type']
+        selection = type_field._description_selection(self.env)
+
+        def _get_type_label(value):
+            try:
+                return [label for val, label in selection if val == value][0]
+            except IndexError:
+                return ''
+        for license in self:
+            result.append(
+                (license.id, "%s (%s)" %
+                    (license.partner_id.display_name,
+                     _get_type_label(license.license_type))))
+        return result
