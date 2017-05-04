@@ -20,14 +20,11 @@ Release History
 Latest (unreleased)
 +++++++++++++++++++
 
-**Features and Improvements**
-
 **Bugfixes**
 
-**Build**
-
-**Documentation**
-
+* fix view of crm.lead
+* improve view of customer license
+* add website_contract to get subscriptions working
 
 10.0.12 (2017-04-26)
 ++++++++++++++++++++

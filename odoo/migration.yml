@@ -169,3 +169,4 @@ migration:
       addons:
         upgrade:
           - specific_crm
+          - website_contract
