@@ -89,3 +89,4 @@ migration:
           - specific_sale
 
 # Todo, debug and reactivate the songs with 'TODO' flag
+    - version: 10.1.0
