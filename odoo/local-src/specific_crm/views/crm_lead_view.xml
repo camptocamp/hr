@@ -10,13 +10,13 @@
             <field name="team_id" position="after">
               <field name="program_manager_id"/>
             </field>
-            <field name='program_manager_id' position="after">
-                <group name="project_name_computation" string="Project configuration">
+            <xpath expr="//group[field[@name='priority']]" position="after">
+                <group name="project_name_computation" >
                     <field name="project_zone_id"/>
                     <field name="project_process_id"/>
                     <field name="project_market_id"/>
                 </group>
-            </field>
+            </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="NDA" name="nda">
                     <group>
