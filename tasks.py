@@ -35,6 +35,7 @@ PROJECT_ID = '1900'
 VERSION_FILE = build_path('odoo/VERSION')
 VERSION_RANCHER_FILES = (
     build_path('rancher/integration/docker-compose.yml'),
+    build_path('rancher/prod/docker-compose.yml'),
 )
 HISTORY_FILE = build_path('HISTORY.rst')
 DOCKER_IMAGE = 'camptocamp/roctool_odoo'
@@ -76,7 +77,7 @@ def _check_git_diff(ctx):
 
 
 @task
-def push_branches(ctx):
+def push_branches(ctx, force=False):
     """ Push the local branches to the camptocamp remote
 
     The branch name will be composed of the id of the project and the current
@@ -88,13 +89,18 @@ def push_branches(ctx):
     version = _current_version()
     branch_name = 'merge-branch-{}-{}'.format(PROJECT_ID, version)
     response = raw_input(
-        'push local branches to {}? (y/N) '.format(branch_name)
+        'Push local branches to {}? (Y/n) '.format(branch_name)
     )
-    if response not in ('y', 'Y', 'yes'):
+    if response in ('n', 'N', 'no'):
         exit_msg('Aborted')
-    _check_git_diff(ctx)
+    if not force:
+        _check_git_diff(ctx)
+    print('Pushing pending-merge branches...')
     with open(PENDING_MERGES, 'ru') as f:
         merges = yaml.load(f.read())
+        if not merges:
+            print('Nothing to push')
+            return
         for path, setup in merges.iteritems():
             print('pushing {}'.format(path))
             with cd(build_path(path, from_file=PENDING_MERGES)):
@@ -114,7 +120,7 @@ def push_branches(ctx):
                 )
 
 
-@task(post=[push_branches])
+@task
 def bump(ctx, feature=False, patch=False):
     """ Increase the version number where needed """
     if not (feature or patch):
@@ -139,6 +145,10 @@ def bump(ctx, feature=False, patch=False):
                    version.version[1],
                    version.version[2] + 1)
     version = '.'.join([str(v) for v in version])
+
+    print('Increasing version number from {} '
+          'to {}...'.format(old_version, version))
+    print()
 
     try:
         ctx.run(r'grep --quiet --regexp "- version:.*{}" {}'.format(
@@ -186,10 +196,22 @@ def bump(ctx, feature=False, patch=False):
 
         print(line, end='')
 
-    print('version changed to {}'.format(version))
-    print('you should probably clean {}'
-          '(remove empty sections, whitespaces, ...)'.format(HISTORY_FILE))
-    print('and commit + tag the changes')
+    push_branches(ctx, force=True)
+
+    print()
+    print('** Version changed to {} **'.format(version))
+    print()
+    print('Please continue with the release by:')
+    print()
+    print(' * Cleaning HISTORY.rst. Remove the empty sections, empty lines...')
+    print(' * Check the diff then run:')
+    print('      git add ... # pick the files ')
+    print('      git commit -m"Release {}"'.format(version))
+    print('      git tag -a {}  '
+          '# optionally -s to sign the tag'.format(version))
+    print('      # copy-paste the content of the release from HISTORY.rst'
+          ' in the annotation of the tag')
+    print('      git push --tags && git push')
 
 
 release.add_task(bump, 'bump')
@@ -205,11 +227,12 @@ def translate_generate(ctx, addon_path, update_po=True):
         $ invoke translate.generate odoo/local-src/my_module
     """
     dbname = 'tmp_generate_pot'
-    addon = addon_path.split('/')[-1]
+    addon = addon_path.strip('/').split('/')[-1]
     assert os.path.exists(build_path(addon_path)), "%s not found" % addon_path
     container_path = os.path.join('/opt', addon_path, 'i18n')
-    if not os.path.exists(container_path):
-        os.mkdir(os.path.join(build_path(addon_path), 'i18n'))
+    i18n_dir = os.path.join(build_path(addon_path), 'i18n')
+    if not os.path.exists(i18n_dir):
+        os.mkdir(i18n_dir)
     container_po_path = os.path.join(container_path, '%s.po' % addon)
     user_id = ctx.run(['id --user'], hide='both').stdout.strip()
     cmd = ('docker-compose run --rm  -e LOCAL_USER_ID=%(user)s '
@@ -225,7 +248,6 @@ def translate_generate(ctx, addon_path, update_po=True):
             'dropdb %s -U odoo -h db' % dbname)
 
     # mv .po to .pot
-    i18n_dir = build_path(os.path.join(addon_path, 'i18n'))
     source = os.path.join(i18n_dir, '%s.po' % addon)
     pot_file = source + 't'
     ctx.run('mv %s %s' % (source, pot_file))
