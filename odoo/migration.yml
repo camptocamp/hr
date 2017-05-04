@@ -165,3 +165,7 @@ migration:
         post:
           - anthem songs.upgrade.10_0_12.crm::main
           - anthem songs.upgrade.10_0_12.intercompany::main
+    - version: 10.0.13
+      addons:
+        upgrade:
+          - specific_crm
