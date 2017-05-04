@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
     project_market_id = fields.Many2one(comodel_name='project.market',
                                         string='Project Market',
                                         required=True)
-
+    forced_project_name = fields.Char()
     engineering_validation_id = fields.Many2one(
         'res.users',
         string='Engineering Validation',
@@ -69,7 +69,7 @@ class SaleOrder(models.Model):
         if not exists:
             selection.insert(position + 1, ('final_quote', _('Final Quote')))
 
-    def _generate_acc_name(self, use_existing_one=None):
+    def _generate_acc_name(self):
         """ Generate analytic account name
 
         According to the following structure:
@@ -80,8 +80,8 @@ class SaleOrder(models.Model):
                 YY: Code of the project process
                 ZZ: Code of the project market
         """
-        if use_existing_one:
-            return use_existing_one
+        if self.forced_project_name:
+            return self.forced_project_name
 
         seq = self.env['ir.sequence'].next_by_code('project')
         return ''.join([seq,
@@ -97,6 +97,12 @@ class SaleOrder(models.Model):
         for order in self:
             name = order._generate_acc_name()
             order.project_id.name = name
+            # propagage the information on the project
+            order.project_id.write(
+                {'project_zone_id': order.project_zone_id.id,
+                 'project_process_id': order.project_process_id.id,
+                 'project_market_id': order.project_market_id.id}
+            )
 
     @api.onchange('opportunity_id')
     def onchange_opportunity_id(self):

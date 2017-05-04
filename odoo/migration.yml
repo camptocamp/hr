@@ -170,3 +170,8 @@ migration:
         upgrade:
           - specific_crm
           - website_contract
+    - version: 10.0.14
+      addons:
+        upgrade:
+          - specific_sale
+          - specific_inter_company
