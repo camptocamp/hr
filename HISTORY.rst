@@ -20,6 +20,18 @@ Release History
 Latest (unreleased)
 +++++++++++++++++++
 
+**Features and Improvements**
+
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.0.13 (2017-05-04)
+++++++++++++++++++++
+
 **Bugfixes**
 
 * fix view of crm.lead
