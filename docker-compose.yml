@@ -9,7 +9,7 @@ services:
   odoo:
     build: ./odoo/
     # Enable if you use oca/connector:
-    command: "odoo.py --load=web,queue_job"
+    command: "odoo --load=web,queue_job"
     depends_on:
       - db
     volumes:
@@ -35,7 +35,7 @@ services:
       - "data-db:/var/lib/postgresql/data"
 
   nginx:
-    image: camptocamp/odoo-nginx:9.0
+    image: camptocamp/odoo-nginx:10.0
     depends_on:
       - odoo
 
