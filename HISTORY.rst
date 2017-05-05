@@ -28,18 +28,20 @@ Latest (Unreleased)
 **Documentation**
 
 
-10.1.1 (2017-05-05)
+10.1.2 (2017-05-05)
 +++++++++++++++++++
 
-**Features and Improvements**
+**Bugfixes**
+
+* fix the docker configuration again
+
+
+10.1.1 (2017-05-05)
++++++++++++++++++++
 
 **Bugfixes**
 
 * fix the docker configuration
-
-**Build**
-
-**Documentation**
 
 
 10.1.0 (2017-05-04)
