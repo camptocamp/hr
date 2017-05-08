@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Build**
 
+* update Docker image to camptocamp/odoo-project:10.0-2.1.1
+
 **Documentation**
 
 
