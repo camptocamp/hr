@@ -175,3 +175,6 @@ migration:
         upgrade:
           - specific_sale
           - specific_inter_company
+      operations:
+        post:
+          - anthem songs.upgrade.10_0_14.intercompany::main
