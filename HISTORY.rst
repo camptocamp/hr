@@ -24,6 +24,8 @@ Latest (unreleased)
 
 **Bugfixes**
 
+* fix bug preventing saving a purchase order
+
 **Build**
 
 **Documentation**

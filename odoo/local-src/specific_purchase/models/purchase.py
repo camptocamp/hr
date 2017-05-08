@@ -9,6 +9,7 @@ from odoo import models, fields, api, exceptions, _
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
+    @api.multi
     def write(self, vals):
         if 'state' in vals and vals['state'] in ('to approve', 'purchase'):
             if self.user_has_groups('purchase.group_purchase_user'):
@@ -26,9 +27,9 @@ class PurchaseOrder(models.Model):
                             [('order_id', '=', self.id),
                              ('product_id', '=', prd['product_id'][0])])
                         line.req_sn_supplier = lot.name
-                super(PurchaseOrder, self).write(vals)
+                return super(PurchaseOrder, self).write(vals)
         else:
-            super(PurchaseOrder, self).write(vals)
+            return super(PurchaseOrder, self).write(vals)
 
     @api.multi
     def button_approve(self, force=False):
