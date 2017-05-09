@@ -24,13 +24,22 @@ Latest (unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.0.14 (2017-05-09)
+++++++++++++++++++++
+
+**Bugfixes**
+
 * fix bug preventing saving a purchase order
+* fix problem in intercompany set up
 
 **Build**
 
 * update Docker image to camptocamp/odoo-project:10.0-2.1.1
-
-**Documentation**
 
 
 10.0.13 (2017-05-04)
