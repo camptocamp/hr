@@ -36,4 +36,51 @@
         </field>
     </record>
 
+
+    <record model="ir.ui.view" id="crm_case_tree_view_oppor_bso">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="planned_revenue" position="before">
+                <field name="planned_duration"/>
+                <field name="planned_revenue_nrc"/>
+                <field name="planned_revenue_mrc"/>
+            </field>
+        </field>
+    </record>
+
+
+     <record model="ir.ui.view" id="crm_case_kanban_view_oppor_bso">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <field name="company_currency" position="after">
+                <field name="planned_duration"/>
+                <field name="planned_revenue_nrc"/>
+                <field name="planned_revenue_mrc"/>
+            </field>
+            <xpath expr="//div[@class='o_kanban_footer']" position="before">
+                <div class="text-muted">
+                    <t t-if="record.planned_duration.raw_value">
+                        <field name="planned_duration"/>
+                        <span> month(s)</span>
+                    </t>
+                </div>
+                <div class="text-muted">
+                   <t t-if="record.planned_revenue_nrc.raw_value">
+                       <field name="planned_revenue_nrc" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                       <span t-if="record.planned_revenue_nrc.value"> NRC</span>
+                   </t>
+                </div>
+                <div class="text-muted">
+                   <t t-if="record.planned_revenue_mrc.raw_value">
+                       <field name="planned_revenue_mrc" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                       <span t-if="record.planned_revenue_mrc.value"> MRC</span>
+                   </t>
+                </div>
+            </xpath>
+        </field>
+     </record>
+
+
 </odoo>

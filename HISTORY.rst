@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* add mrc, nrc and duration in opportunity tree and kanban view
+
 **Bugfixes**
 
 **Build**

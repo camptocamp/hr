@@ -93,3 +93,6 @@ migration:
     - version: 10.1.1
     - version: 10.1.2
     - version: 10.1.3
+      addons:
+        upgrade:
+          - specific_crm
