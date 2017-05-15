@@ -178,3 +178,7 @@ migration:
       operations:
         post:
           - anthem songs.upgrade.10_0_14.intercompany::main
+    - version: 10.0.15
+      addons:
+        upgrade:
+          - specific_sale

@@ -54,6 +54,21 @@ class SaleOrder(models.Model):
                 'cancel': [('required', False)]}
     )
     sales_condition_filename = fields.Char()
+    engineering_validation_required = fields.Boolean(
+        string='Engineering Validation Required',
+        compute="_compute_validation_required",
+        readonly=True,
+    )
+    system_validation_required = fields.Boolean(
+        string='System Validation Required',
+        compute='_compute_validation_required',
+        readonly=True,
+    )
+    process_validation_required = fields.Boolean(
+        string='Process Validation Required',
+        compute='_compute_validation_required',
+        readonly=True,
+    )
 
     @api.model
     def _setup_fields(self, partial):
@@ -103,6 +118,25 @@ class SaleOrder(models.Model):
                  'project_process_id': order.project_process_id.id,
                  'project_market_id': order.project_market_id.id}
             )
+
+    @api.multi
+    @api.depends('order_line.product_id.categ_id')
+    def _compute_validation_required(self):
+        for so in self:
+            for line in so.order_line:
+                cat = line.product_id.categ_id
+                # compute engineering_validation
+                if cat.engineering_validation_required and \
+                   not so.engineering_validation_id:
+                    so.engineering_validation_required = True
+                # compute system_validation_required
+                if cat.system_validation_required and \
+                   not so.system_validation_id:
+                    so.system_validation_required = True
+                # compute process_validation_required
+                if cat.process_validation_required and \
+                   not so.process_validation_id:
+                    so.process_validation_required = True
 
     @api.onchange('opportunity_id')
     def onchange_opportunity_id(self):

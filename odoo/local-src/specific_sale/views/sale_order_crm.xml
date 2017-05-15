@@ -15,21 +15,21 @@
                 class="btn-primary"
                 groups="specific_sale.rtl_eng_validation"
                 type="object"
-                attrs="{'invisible': [('engineering_validation_id', '!=', False)]}"/>
+                attrs="{'invisible': [('engineering_validation_required', '=', False)]}"/>
 
         <button name="action_validate_sys"
                 string="System Validation"
                 class="btn-primary"
                 groups="specific_sale.rtl_sys_manager"
                 type="object"
-                attrs="{'invisible': [('system_validation_id', '!=', False)]}"/>
+                attrs="{'invisible': [('system_validation_required', '=', False)]}"/>
 
         <button name="action_validate_pro"
                 string="Process Validation"
                 class="btn-primary"
                 groups="specific_sale.rtl_pro_manager"
                 type="object"
-                attrs="{'invisible': [('process_validation_id', '!=', False)]}"/>
+                attrs="{'invisible': [('process_validation_required', '=', False)]}"/>
       </header>
 
       <field name="validity_date" position="after">
@@ -80,6 +80,9 @@
         <page string="Internal Validation" name="roctool">
           <group>
             <group name="validation" string="Validation">
+              <field name='engineering_validation_required' invisible="True"/>
+              <field name='system_validation_required' invisible="True"/>
+              <field name='process_validation_required' invisible="True"/>
               <field name='engineering_validation_id'/>
               <field name='system_validation_id'/>
               <field name='process_validation_id'/>

@@ -15,4 +15,17 @@
     </field>
   </record>
 
+  <record id="product_category_validation_form_view" model="ir.ui.view">
+    <field name="name">product.category.form.validation</field>
+    <field name="model">product.category</field>
+    <field name="inherit_id" ref="product.product_category_form_view"/>
+    <field name="arch" type="xml">
+      <field name='type' position="after">
+        <field name='engineering_validation_required'/>
+        <field name='system_validation_required'/>
+        <field name='process_validation_required'/>
+      </field>
+    </field>
+  </record>
+
 </odoo>

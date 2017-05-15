@@ -22,6 +22,8 @@ Latest (unreleased)
 
 **Features and Improvements**
 
+* SO change validation button visibility/process given product_category
+
 **Bugfixes**
 
 **Build**
