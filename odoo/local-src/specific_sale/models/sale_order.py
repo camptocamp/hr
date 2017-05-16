@@ -54,6 +54,20 @@ class SaleOrder(models.Model):
                 'cancel': [('required', False)]}
     )
     sales_condition_filename = fields.Char()
+    holding_currency_id = fields.Many2one(
+        'res.currency',
+        string='Holding Currency',
+        required=True,
+        default=lambda self: self.env.ref['base.EUR'],
+        readonly=True,
+    )
+    holding_currency_amount = fields.Monetary(
+        string='Holding Currency Amount',
+        compute='_compute_holding_currency_amount',
+        readonly=True,
+        store=True,
+        currency_field='holding_currency_id'
+    )
 
     @api.model
     def _setup_fields(self, partial):
@@ -103,6 +117,24 @@ class SaleOrder(models.Model):
                  'project_process_id': order.project_process_id.id,
                  'project_market_id': order.project_market_id.id}
             )
+
+    @api.multi
+    @api.depends('amount_total', 'pricelist_id.currency_id',
+                 'holding_currency_id')
+    def _compute_holding_currency_amount(self):
+        for so in self:
+            print so.holding_currency_id.name
+            if so.state in ('sale', 'done'):
+                so_date = so.confirmation_date
+            else:
+                so_date = so.date_order
+            so.holding_currency_amount = so.currency_id.with_context(
+                date=so_date).compute(
+                so.amount_total, so.holding_currency_id)
+            ## ---> Set BreakPoint
+            import pdb;
+            pdb.set_trace()
+            print so.holding_currency_amount
 
     @api.onchange('opportunity_id')
     def onchange_opportunity_id(self):
