@@ -58,7 +58,7 @@ class SaleOrder(models.Model):
         'res.currency',
         string='Holding Currency',
         required=True,
-        default=lambda self: self.env.ref['base.EUR'],
+        default=lambda self: self.env.ref('base.EUR'),
         readonly=True,
     )
     holding_currency_amount = fields.Monetary(
@@ -131,10 +131,6 @@ class SaleOrder(models.Model):
             so.holding_currency_amount = so.currency_id.with_context(
                 date=so_date).compute(
                 so.amount_total, so.holding_currency_id)
-            ## ---> Set BreakPoint
-            import pdb;
-            pdb.set_trace()
-            print so.holding_currency_amount
 
     @api.onchange('opportunity_id')
     def onchange_opportunity_id(self):
