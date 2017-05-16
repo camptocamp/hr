@@ -120,22 +120,24 @@ class SaleOrder(models.Model):
             )
 
     @api.multi
-    @api.depends('order_line.product_id.categ_id')
+    @api.depends(
+        'order_line.product_id.categ_id', 'engineering_validation_id',
+        'system_validation_id', 'process_validation_id')
     def _compute_validation_required(self):
         for so in self:
             for line in so.order_line:
                 cat = line.product_id.categ_id
                 # compute engineering_validation
-                if cat.engineering_validation_required and \
-                   not so.engineering_validation_id:
+                if (cat.engineering_validation_required and
+                        not so.engineering_validation_id):
                     so.engineering_validation_required = True
                 # compute system_validation_required
-                if cat.system_validation_required and \
-                   not so.system_validation_id:
+                if (cat.system_validation_required and
+                        not so.system_validation_id):
                     so.system_validation_required = True
                 # compute process_validation_required
-                if cat.process_validation_required and \
-                   not so.process_validation_id:
+                if (cat.process_validation_required and
+                        not so.process_validation_id):
                     so.process_validation_required = True
 
     @api.onchange('opportunity_id')
@@ -208,9 +210,9 @@ class SaleOrder(models.Model):
     @api.multi
     def _check_validators(self):
         for so in self:
-            if not (so.engineering_validation_id and
-                    so.system_validation_id and
-                    so.process_validation_id):
+            if (so.engineering_validation_required and
+                    so.system_validation_required and
+                    so.process_validation_required):
                 raise UserError(_('The Sale Order needs to be reviewed.'))
 
     @api.multi

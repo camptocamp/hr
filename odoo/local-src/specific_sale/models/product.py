@@ -14,7 +14,7 @@ class ProductTemplate(models.Model):
     )
 
 
-class ProuctCategory(models.Model):
+class ProductCategory(models.Model):
     _inherit = 'product.category'
 
     engineering_validation_required = fields.Boolean(
