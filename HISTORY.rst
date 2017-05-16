@@ -22,6 +22,9 @@ Latest (unreleased)
 
 **Features and Improvements**
 
+* SO & crm.lead holding_amount_currency in tree view. Can be used as measure
+* Add module 'sale_company_currency'
+
 **Bugfixes**
 
 **Build**

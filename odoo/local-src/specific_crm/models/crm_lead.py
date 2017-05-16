@@ -53,6 +53,20 @@ class CrmLead(models.Model):
         index=True,
         track_visibility='onchange',
     )
+    holding_currency_id = fields.Many2one(
+        'res.currency',
+        string='Holding Currency',
+        required=True,
+        default=lambda self: self.env.ref('base.EUR'),
+        readonly=True,
+    )
+    holding_currency_amount = fields.Monetary(
+        string='Holding Currency Amount',
+        compute='_compute_holding_currency_amount',
+        readonly=True,
+        currency_field='holding_currency_id',
+        store=True,
+    )
 
     @api.model
     def _message_get_auto_subscribe_fields(self, updated_fields,
@@ -67,6 +81,14 @@ class CrmLead(models.Model):
             updated_fields,
             auto_follow_fields=list(auto_follow_fields),
         )
+
+    @api.multi
+    @api.depends('planned_revenue', 'holding_currency_id')
+    def _compute_holding_currency_amount(self):
+        for lead in self:
+            lead.holding_currency_amount = lead.company_currency.with_context(
+                date=lead.date_action_last).compute(
+                lead.planned_revenue, lead.holding_currency_id)
 
     @api.onchange('team_id')
     def onchange_team_id(self):

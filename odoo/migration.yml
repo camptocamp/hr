@@ -182,3 +182,5 @@ migration:
       addons:
         upgrade:
           - sale_company_currency
+          - specific_sale
+          - specific_crm

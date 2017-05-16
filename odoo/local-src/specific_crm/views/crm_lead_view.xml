@@ -55,4 +55,18 @@
 
         </field>
     </record>
+
+    <record id="crm_case_tree_view_oppor_roctool" model="ir.ui.view">
+        <field name="name">crm.lead.tree.opportunity.holding</field>
+        <field name="model">crm.lead</field>
+        <field name="priority">20</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='planned_revenue']" position="after">
+                <field name="holding_currency_id" invisible="True"/>
+                <field name="holding_currency_amount" widget="monetary" sum="Total"/>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
