@@ -65,8 +65,8 @@ class SaleOrder(models.Model):
         string='Holding Currency Amount',
         compute='_compute_holding_currency_amount',
         readonly=True,
+        currency_field='holding_currency_id',
         store=True,
-        currency_field='holding_currency_id'
     )
 
     @api.model
@@ -119,11 +119,9 @@ class SaleOrder(models.Model):
             )
 
     @api.multi
-    @api.depends('amount_total', 'pricelist_id.currency_id',
-                 'holding_currency_id')
+    @api.depends('amount_total', 'holding_currency_id')
     def _compute_holding_currency_amount(self):
         for so in self:
-            print so.holding_currency_id.name
             if so.state in ('sale', 'done'):
                 so_date = so.confirmation_date
             else:

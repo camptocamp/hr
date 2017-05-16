@@ -90,6 +90,30 @@
     </field>
   </record>
 
+  <record model="ir.ui.view" id="view_quotation_tree_holding">
+    <field name="name">sale.order.tree.holding</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_quotation_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='amount_total']" position="after">
+        <field name="holding_currency_id" invisible="True"/>
+        <field name="holding_currency_amount" widget="monetary" sum="Total"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="view_order_tree_holding">
+    <field name="name">sale.order.tree.holding</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='amount_total']" position="after">
+        <field name="holding_currency_id" invisible="True"/>
+        <field name="holding_currency_amount" widget="monetary" sum="Total"/>
+      </xpath>
+    </field>
+  </record>
+
     <record model="ir.ui.view" id="sale_margin_sale_order_line">
         <field name="name">sale.order.line hide cost</field>
         <field name="model">sale.order</field>
