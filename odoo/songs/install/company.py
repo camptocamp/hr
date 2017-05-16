@@ -14,7 +14,9 @@ def base_setup(ctx):
     """ Configure multicompany """
     general_settings = ctx.env['base.config.settings']
     vals = {'group_light_multi_company': True,
-            'module_inter_company_rules': True}
+            'module_inter_company_rules': True,
+            'partner_names_order': 'first_last',
+            }
     general_settings.create(vals).execute()
 
 
