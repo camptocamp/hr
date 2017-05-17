@@ -18,10 +18,10 @@ class Employee(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals['address_home_id']:
+        if vals.get('address_home_id'):
             return super(Employee, self).create(vals)
-        country_id = None
-        if not vals['country_id']:
+        country_id = vals.get('country_id')
+        if not country_id:
             Company = self.env['res.company']
             country_id = Company.browse(vals['company_id']).country_id.id
         Partner = self.env['res.partner']
@@ -30,7 +30,7 @@ class Employee(models.Model):
             'name': vals.get('name'),
             'supplier': True,
             'customer': False,
-            'country_id': country_id if country_id else vals.get('country_id'),
+            'country_id': country_id,
             'category_id': [(4, category_id)],
         }
         partner = Partner.create(vals_address)

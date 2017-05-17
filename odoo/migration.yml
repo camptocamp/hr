@@ -184,3 +184,4 @@ migration:
           - sale_company_currency
           - specific_crm
           - specific_sale
+          - specific_expense
