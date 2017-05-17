@@ -153,6 +153,7 @@ class SaleOrder(models.Model):
                 if (cat.process_validation_required and
                         not so.process_validation_id):
                     so.process_validation_required = True
+
     @api.multi
     @api.depends('amount_total', 'holding_currency_id')
     def _compute_holding_currency_amount(self):
