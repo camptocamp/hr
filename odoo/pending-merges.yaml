@@ -23,6 +23,8 @@
     - oca refs/pull/440/head
 #     # port of account_statement_base_import
 #     - oca refs/pull/137/head
+      # new module sale_company_currency
+    - oca refs/pull/425/head
   target: *default_target
 ./external-src/hr:
   remotes:

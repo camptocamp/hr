@@ -23,6 +23,8 @@ Latest (unreleased)
 **Features and Improvements**
 
 * SO change validation button visibility/process given product_category
+* SO & crm.lead holding_amount_currency in tree view. Can be used as measure
+* Add module 'sale_company_currency'
 
 **Bugfixes**
 
