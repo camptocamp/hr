@@ -12,3 +12,17 @@ class ProductTemplate(models.Model):
     is_ghost = fields.Boolean(
         string='Ghost Product',
     )
+
+
+class ProductCategory(models.Model):
+    _inherit = 'product.category'
+
+    engineering_validation_required = fields.Boolean(
+        string='Engineering Validation Required',
+    )
+    system_validation_required = fields.Boolean(
+        string='System Validation Required',
+    )
+    process_validation_required = fields.Boolean(
+        string='Process Validation Required',
+    )
