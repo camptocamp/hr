@@ -10,6 +10,15 @@ from ..common import req
 
 
 @anthem.log
+def disable_sales_teams(ctx):
+    teams = ['sales_team.team_sales_department',
+             'sales_team.salesteam_website_sales',
+             ]
+    for team in teams:
+        ctx.env.ref(team).active = False
+
+
+@anthem.log
 def create_sales_team(ctx):
     companies = ['base.main_company',
                  'scen.company_fr',
@@ -46,6 +55,7 @@ def add_stage_to_sale_team(ctx):
 @anthem.log
 def main(ctx):
     """ Main: creating demo data """
+    disable_sales_teams(ctx)
     create_sales_team(ctx)
     import_crm_stages(ctx)
     add_stage_to_sale_team(ctx)
