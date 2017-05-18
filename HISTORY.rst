@@ -22,6 +22,18 @@ Latest (unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.0.15 (2017-05-18)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * SO change validation button visibility/process given product_category
 * SO & crm.lead holding_amount_currency in tree view. Can be used as measure
 * Add module 'sale_company_currency'
