@@ -24,6 +24,8 @@ Latest (unreleased)
 
 **Bugfixes**
 
+* Project name for inter company sales's project
+
 **Build**
 
 **Documentation**
