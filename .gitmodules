@@ -47,3 +47,7 @@
 	path = odoo/external-src/project
 	url = git@github.com:camptocamp/project.git
 	branch = 10.0
+[submodule "odoo/external-src/margin-analysis"]
+	path = odoo/external-src/margin-analysis
+	url = git@github.com:camptocamp/margin-analysis.git
+	branch = 10.0

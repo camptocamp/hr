@@ -236,7 +236,7 @@ def translate_generate(ctx, addon_path, update_po=True):
     container_po_path = os.path.join(container_path, '%s.po' % addon)
     user_id = ctx.run(['id --user'], hide='both').stdout.strip()
     cmd = ('docker-compose run --rm  -e LOCAL_USER_ID=%(user)s '
-           '-e DEMO=False -e MIGRATE=False odoo odoo.py '
+           '-e DEMO=False -e MIGRATE=False odoo odoo '
            '--log-level=warn --workers=0 '
            '--database %(dbname)s --i18n-export=%(path)s '
            '--modules=%(addon)s --stop-after-init --without-demo=all '
