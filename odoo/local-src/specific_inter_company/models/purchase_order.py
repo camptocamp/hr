@@ -47,7 +47,7 @@ class PurchaseOrder(models.Model):
             'engineering_validation_id': 1,
             'process_validation_id': 1,
             'system_validation_id': 1,
-            'force_project_name': analytic.name,
+            'forced_project_name': analytic.name,
             }
         )
         return values
