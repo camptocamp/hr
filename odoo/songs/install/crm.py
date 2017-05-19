@@ -64,6 +64,20 @@ def import_project_market(ctx):
 
 
 @anthem.log
+def create_channel_project_process(ctx):
+    processes = ctx.env['project.process'].search([])
+    for company in ctx.env['res.company'].search([]):
+        for process in processes:
+            xml_id = '__setup__.mail_chan_%d_%s' % (company.id, process.code)
+            vals = {
+                'name': company.name + ' - ' + process.name,
+                'public': 'private',
+                'email_send': False,
+            }
+            create_or_update(ctx, 'mail.channel', xml_id, vals)
+
+
+@anthem.log
 def main(ctx):
     """ Main: creating demo data """
     import_crm_stages(ctx)
@@ -72,4 +86,5 @@ def main(ctx):
     import_crm_activities(ctx)
     import_project_zone(ctx)
     import_project_process(ctx)
+    create_channel_project_process(ctx)
     import_project_market(ctx)

@@ -22,6 +22,8 @@ Latest (unreleased)
 
 **Features and Improvements**
 
+* Add mail.channels for process in companies
+
 **Bugfixes**
 
 * Project name for inter company sales's project

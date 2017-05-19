@@ -185,3 +185,7 @@ migration:
           - specific_crm
           - specific_sale
           - specific_expense
+    - version: 10.0.16
+      operations:
+        post:
+          - anthem songs.install.crm::create_channel_project_process
