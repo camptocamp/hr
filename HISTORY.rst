@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* Correct firstname-lastname order before importing employees
+
 **Build**
 
 * update Docker image to camptocamp/odoo-project:10.0-2.2.0
