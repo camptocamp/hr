@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 import anthem
+from songs.install.crm import disable_sales_teams
 
 
 @anthem.log
@@ -33,3 +34,4 @@ def correct_names(ctx):
 def main(ctx):
     """ Upgrade 10.1.4 """
     correct_names(ctx)
+    disable_sales_teams(ctx)
