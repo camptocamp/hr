@@ -1,4 +1,4 @@
-FROM camptocamp/odoo-project:10.0-2.1.1
+FROM camptocamp/odoo-project:10.0-2.2.0
 MAINTAINER Camptocamp
 
 COPY ./requirements.txt /opt/odoo
