@@ -100,3 +100,7 @@ migration:
       operations:
         post:
           - anthem songs.upgrade.upgrade_10_1_4::main
+    - version: 10.1.5
+      addons:
+        upgrade:
+          - project_timesheet_currency

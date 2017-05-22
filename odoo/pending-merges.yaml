@@ -21,3 +21,12 @@
     # 10.0 partner multi relation
     - oca refs/pull/363/head
   target: *default_target
+./external-src/project:
+  remotes:
+    oca: git@github.com:OCA/project.git
+    camptocamp: git@github.com:camptocamp/project.git
+  merges:
+    - oca 10.0
+    # 10.0 partner multi relation
+    - oca refs/pull/275/head
+  target: *default_target

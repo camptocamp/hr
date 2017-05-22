@@ -43,3 +43,7 @@
 [submodule "odoo/external-src/odoo-cloud-platform"]
 	path = odoo/external-src/odoo-cloud-platform
 	url = git@github.com:camptocamp/odoo-cloud-platform.git
+[submodule "odoo/external-src/project"]
+	path = odoo/external-src/project
+	url = git@github.com:camptocamp/project.git
+	branch = 10.0
