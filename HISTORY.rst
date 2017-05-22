@@ -30,6 +30,8 @@ Latest (unreleased)
 
 **Build**
 
+* upgrade Docker base image to camptocam/odoo-project:10.0-2.2.0
+
 **Documentation**
 
 
