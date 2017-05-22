@@ -28,6 +28,7 @@ Latest (Unreleased)
 **Build**
 
 * update Docker image to camptocamp/odoo-project:10.0-2.2.0
+* Update odoo-cloud-platform to have Redis Sentinel support
 
 **Documentation**
 
