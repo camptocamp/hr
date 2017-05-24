@@ -31,6 +31,7 @@ ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/external-src/sale-workflow, \
   /opt/odoo/external-src/server-tools, \
   /opt/odoo/external-src/queue, \
+  /opt/odoo/external-src/project, \
   /opt/odoo/external-src/web, \
   /opt/odoo/external-src/odoo-cloud-platform, \
   /opt/odoo/local-src," \

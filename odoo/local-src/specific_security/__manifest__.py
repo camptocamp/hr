@@ -32,6 +32,7 @@
              'marketing_campaign',
              'website',
              'product',
+             'project_timesheet_currency',
              ],
  'website': 'http://www.camptocamp.com',
  'data': ['data/hr_department_no_company.sql',
