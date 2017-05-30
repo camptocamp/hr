@@ -23,6 +23,7 @@ Latest (unreleased)
 **Features and Improvements**
 
 * Add mail.channels for process in companies
+* Add specific_subscription for sale.order required fields in subscriptions
 
 **Bugfixes**
 

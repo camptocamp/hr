@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="sale_subscription_view_form_specific" model="ir.ui.view">
+    <field name="name">sale.subscription.form.view</field>
+    <field name="model">sale.subscription</field>
+    <field name="inherit_id" ref="sale_contract.sale_subscription_view_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='date']" position="after">
+        <field name='sales_condition' filename="sales_condition_filename"/>
+        <field name='sales_condition_filename' invisible="1"/>
+      </xpath>
+      <xpath expr="//notebook" position="inside">
+        <page name="project_info" string="Other Informations">
+          <group>
+              <field name='project_zone_id'/>
+              <field name='project_process_id'/>
+              <field name='project_market_id'/>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+</odoo>
