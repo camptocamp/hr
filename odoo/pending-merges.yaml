@@ -30,12 +30,3 @@
     # 10.0 project timesheet currency
     - oca refs/pull/275/head
   target: *default_target
-./external-src/margin-analysis:
-  remotes:
-    oca: git@github.com:OCA/margin-analysis.git
-    camptocamp: git@github.com:camptocamp/margin-analysis.git
-  merges:
-    - oca 10.0
-    # 10.0 add sale_line_cost_control
-    - oca refs/pull/33/head
-  target: *default_target
