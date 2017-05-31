@@ -25,6 +25,7 @@ ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/external-src/connector-jira, \
   /opt/odoo/external-src/hr, \
   /opt/odoo/external-src/hr-timesheet, \
+  /opt/odoo/external-src/margin-analysis, \
   /opt/odoo/external-src/partner-contact, \
   /opt/odoo/external-src/product-variant, \
   /opt/odoo/external-src/purchase-workflow, \
