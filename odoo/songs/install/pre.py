@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 import anthem
+import os
 # from . import bso_vars
 
 
@@ -15,6 +16,22 @@ def setup_language(ctx):
         'grouping': [3, 0],
         'date_format': '%d/%m/%Y',
     })
+
+
+@anthem.log
+def admin_user_password(ctx):
+    """ Changing admin password """
+    # To get an encrypted password:
+    # $ docker-compose run --rm odoo python -c \
+    # "from passlib.context import CryptContext; \
+    #  print CryptContext(['pbkdf2_sha512']).encrypt('my_password')"
+    if os.environ.get('RUNNING_ENV') == 'dev':
+        ctx.log_line('Not changing password for dev RUNNING_ENV')
+        return
+    ctx.env.user.password_crypt = (
+        '$pbkdf2-sha512$19000$31sLgfAeY6x1bs05h1DKWQ$Tn.gegOevPX/I77Wnj9k.'
+        'AP3DPltwESJKpRiw.iP00jKtISAhw2JyJSn4IbIGeR5UfQTryPFxmhFw9ezACCF9w'
+    )
 
 
 @anthem.log
@@ -31,3 +48,4 @@ def main(ctx):
     # setup_company(ctx)
     setup_language(ctx)
     set_web_base_url(ctx)
+    admin_user_password(ctx)
