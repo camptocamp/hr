@@ -189,3 +189,6 @@ migration:
       operations:
         post:
           - anthem songs.install.crm::create_channel_project_process
+      addons:
+        upgrade:
+          - specific_subscription
