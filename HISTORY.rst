@@ -24,6 +24,7 @@ Latest (unreleased)
 
 * Add mail.channels for process in companies
 * Add specific_subscription for sale.order required fields in subscriptions
+* Add sale_project_fixed_price_task_completed_invoicing BSRTL-208
 
 **Bugfixes**
 
