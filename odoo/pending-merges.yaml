@@ -20,6 +20,7 @@
     - oca 10.0
     # 10.0 partner multi relation
     - oca refs/pull/363/head
+    - oca refs/pull/435/head
   target: *default_target
 ./external-src/project:
   remotes:
