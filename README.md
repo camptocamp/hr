@@ -4,6 +4,11 @@
 
 **Our internal id for this project is: 1882.**
 
+**Project is installed On-Permises and will not be updated via the
+standard procedure on cloud platform**
+Once you have a new image built on hub.docker.com, you can send an email
+to BSO in order to let them download it and install it.
+
 This project uses Docker.
 Travis builds a new image for each change on the branches and for each new tag.
 

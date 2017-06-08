@@ -21,9 +21,21 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.1.3 (2017-05-08)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * add mrc, nrc and duration in opportunity tree and kanban view
 * add new addon adding cost indicator and button to set cost on sale lines
-* install 'sale_line_cost_control'
+* install 'sale_line_cost_control'**Bugfixes**
 
 **Bugfixes**
 
@@ -34,15 +46,6 @@ Latest (Unreleased)
 * update Docker image to camptocamp/odoo-project:10.0-2.2.0
 * Update odoo-cloud-platform to have Redis Sentinel support
 * add margin-analysis OCA repository
-
-**Documentation**
-
-
-10.1.3 (2017-05-08)
-+++++++++++++++++++
-
-**Bugfixes**
-
 * Upgrade base image
   Fixes security vulnerability CVE-2017-8291
 
