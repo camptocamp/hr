@@ -104,3 +104,4 @@ migration:
       addons:
         upgrade:
           - project_timesheet_currency
+          - sale_line_cost_control

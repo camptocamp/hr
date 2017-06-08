@@ -23,6 +23,7 @@ Latest (Unreleased)
 
 * add mrc, nrc and duration in opportunity tree and kanban view
 * add new addon adding cost indicator and button to set cost on sale lines
+* install 'sale_line_cost_control'
 
 **Bugfixes**
 
