@@ -96,12 +96,8 @@ migration:
       addons:
         upgrade:
           - specific_crm
-    - version: 10.1.4
+          - project_timesheet_currency
+          - sale_line_cost_control
       operations:
         post:
           - anthem songs.upgrade.upgrade_10_1_4::main
-    - version: 10.1.5
-      addons:
-        upgrade:
-          - project_timesheet_currency
-          - sale_line_cost_control
