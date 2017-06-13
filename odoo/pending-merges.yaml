@@ -18,9 +18,6 @@
     camptocamp: git@github.com:camptocamp/partner-contact.git
   merges:
     - oca 10.0
-    # 10.0 partner multi relation
-    - oca refs/pull/363/head
-    - oca refs/pull/435/head
   target: *default_target
 ./external-src/project:
   remotes:
@@ -29,5 +26,5 @@
   merges:
     - oca 10.0
     # 10.0 project timesheet currency
-    - oca refs/pull/275/head
+    - oca refs/pull/289/head
   target: *default_target
