@@ -1,26 +1,35 @@
+<!--
+This file has been generated with 'invoke project.sync'.
+Do not modify. Any manual change will be lost.
+-->
 # Releases
 
 ## Release process
 
-In the following order, at the end of a sprint, the release manager will do:
+In the following order, at the end of a sprint, the release manager will:
 
-* merge all pending pull requests when possible
-* ensure that migration scripts are complete and working
-* increase the version number (see [invoke.md](invoke.md#releasebump) for more information)
+* Merge all pending pull requests when possible, and for each corresponding card in Jira set the "Fix Version" field accordingly as well as change the status to "Waiting deploy"
+
+* Ensure that the migration scripts are complete and working (see [upgrade-scripts.md](upgrade-scripts.md#run-a-version-upgrade-again) on how to execute a specific version scripts)
+
+* Increase the version number (see [invoke.md](invoke.md#releasebump) for more information)
 
   ```bash
   invoke release.bump --feature  # increment y number in x.y.z
   # or --patch to increment z number in x.y.z
   ```
 
-* the "bump" command also pushes the pending-merge branches to a new branch named after the tag (`pending-merge-<project-id>-<version>`), if needed, this push can be manually called again with
+* The "bump" command also pushes the pending-merge branches to a new branch named after the tag (`pending-merge-<project-id>-<version>`), if needed, this push can be manually called again with
 
   ```bash
   invoke release.push-branches
   ```
 
-* do the verifications: migration scripts, [changelog](../HISTORY.rst) (remove empty sections, ...)
-* Add a tag with the new version:
+* Do the verifications: migration scripts, [changelog](../HISTORY.rst) (remove empty sections, ...)
+
+* Commit the changes to [changelog](../HISTORY.rst), VERSION, ... on master with message 'Release x.y.z'
+
+* Add a tag with the new version number, copying the changelog information in the tag description
 
   ```
   git tag -a x.y.z  # here, copy the changelog in the annotated tag
@@ -29,6 +38,8 @@ In the following order, at the end of a sprint, the release manager will do:
 
 When the tag is pushed on GitHub, Travis will build a new Docker image (as
 long as the build is green!) and push it on the registry as `camptocamp/bso_odoo:x.y.z`
+
+If everything went well it is worth informing the project manager that a new release is ready to be tested on the Minions.
 
 ## Versioning pattern
 

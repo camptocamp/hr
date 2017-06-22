@@ -1,3 +1,7 @@
+<!--
+This file has been generated with 'invoke project.sync'.
+Do not modify. Any manual change will be lost.
+-->
 # How to connect to psql in Docker
 
 We'll describe 3 ways to connect to `psql` in the Docker container.

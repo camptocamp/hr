@@ -1,3 +1,7 @@
+<!--
+This file has been generated with 'invoke project.sync'.
+Do not modify. Any manual change will be lost.
+-->
 # How to set Odoo configuration values
 
 The template for the configuration (`openerp.cfg`) is in [the base Docker project image]

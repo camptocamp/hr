@@ -1,3 +1,7 @@
+<!--
+This file has been generated with 'invoke project.sync'.
+Do not modify. Any manual change will be lost.
+-->
 # How to run a test server, the short way
 
 This method is mostly for project managers or functional testers because it uses the pre-generated Docker images. Developers will prefer to use [Docker in development mode](docker-dev.md).
@@ -10,7 +14,7 @@ Be sure to [install Docker and docker-compose](prerequisite.md) before going any
 
 1. Clone the project
 
-        git clone git@github.com:camptocamp/bso_odoo.git bso_odoo
+        git clone git@github.com:camptocamp/bso_odoo.git bso
 
 2. Login to Docker Hub (create an account on https://hub.docker.com/ if you
    don't have one yet and ask to be added to the Camptocamp team because this
@@ -21,7 +25,7 @@ Be sure to [install Docker and docker-compose](prerequisite.md) before going any
 
 3. Start the composition
 
-        cd bso_odoo
+        cd bso
         docker-compose -f docker-compose.yml -f test.yml pull
         docker-compose -f docker-compose.yml -f test.yml up
 
@@ -33,4 +37,4 @@ Be sure to [install Docker and docker-compose](prerequisite.md) before going any
 
 5. If you want to drop your database, run:
 
-        docker-compose -f docker-compose.yml -f test.yml rm -v
+        docker-compose -f docker-compose.yml -f test.yml odoo dropdb odoodb
