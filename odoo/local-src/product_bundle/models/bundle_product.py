@@ -15,11 +15,11 @@ class BundleProduct(models.Model):
                                related='product_id.display_name',
                                readonly=True)
 
-    product_price = fields.Float(string='Price per Unit',
+    product_price = fields.Float(string='Price',
                                  related='product_id.lst_price',
                                  readonly=True)
 
-    product_cost = fields.Float(string='Cost per Unit',
+    product_cost = fields.Float(string='Cost',
                                 related='product_id.standard_price',
                                 readonly=True)
 
@@ -27,15 +27,22 @@ class BundleProduct(models.Model):
                                   related='product_id.uom_id',
                                   readonly=True)
 
-    # PRODUCT TOTALS FROM PRICE, COST & QUANTITY
-    @api.one
+    product_total_price = fields.Float(string='Total',
+                                       compute='_product_total_price')
+
+    product_total_cost = fields.Float(string='Total Cost',
+                                      compute='_product_total_cost')
+
+    # PRODUCT TOTAL PRICE FROM PRICE & QUANTITY
+    @api.multi
     @api.depends('product_price', 'product_quantity')
-    def _product_totals(self):
-        self.product_total_price = self.product_price * self.product_quantity
-        self.product_total_cost = self.product_cost * self.product_quantity
+    def _product_total_price(self):
+        for rec in self:
+            rec.product_total_price = rec.product_price * rec.product_quantity
 
-    product_total_price = fields.Float(string='Price',
-                                       compute='_product_totals')
-
-    product_total_cost = fields.Float(string='Cost',
-                                      compute='_product_totals')
+    # PRODUCT TOTAL COST FROM COST & QUANTITY
+    @api.multi
+    @api.depends('product_cost', 'product_quantity')
+    def _product_total_cost(self):
+        for rec in self:
+            rec.product_total_cost = rec.product_cost * rec.product_quantity
