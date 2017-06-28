@@ -35,7 +35,7 @@ class BundleProduct(models.Model):
         self.product_total_cost = self.product_cost * self.product_quantity
 
     product_total_price = fields.Float(string='Price',
-                                       compute='_product_totals')  # Workaround to store readonly
+                                       compute='_product_totals')
 
     product_total_cost = fields.Float(string='Cost',
-                                      compute='_product_totals')  # Workaround to store readonly
+                                      compute='_product_totals')

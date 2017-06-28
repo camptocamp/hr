@@ -60,7 +60,7 @@ class BundleWizard(models.Model):
 
     # BUNDLE PRICE
     bundle_price = fields.Float(string="Price",
-                                compute='_bundle_price')  # Workaround to store readonly
+                                compute='_bundle_price')
 
     # BUNDLE PRICE FROM BUNDLE PRODUCTS
     @api.onchange('bundle_products')
@@ -70,7 +70,7 @@ class BundleWizard(models.Model):
 
     # BUNDLE COST
     bundle_cost = fields.Float(string="Cost",
-                               compute='_bundle_cost')  # Workaround to store readonly
+                               compute='_bundle_cost')
 
     # BUNDLE COST FROM BUNDLE PRODUCTS
     @api.onchange('bundle_products')
@@ -84,7 +84,7 @@ class BundleWizard(models.Model):
 
     # BUNDLE TOTAL PRICE
     bundle_total_price = fields.Float(string="Total Price",
-                                      compute='_bundle_total_price')  # Workaround to store readonly
+                                      compute='_bundle_total_price')
 
     # BUNDLE TOTAL PRICE FROM PRICE & QUANTITY
     @api.onchange('bundle_price', 'bundle_quantity')
@@ -93,7 +93,7 @@ class BundleWizard(models.Model):
 
     # BUNDLE TOTAL COST
     bundle_total_cost = fields.Float(string="Total Cost",
-                                     compute='_bundle_total_cost')  # Workaround to store readonly
+                                     compute='_bundle_total_cost')
 
     # BUNDLE TOTAL COST FROM COST & QUANTITY
     @api.onchange('bundle_cost', 'bundle_quantity')
