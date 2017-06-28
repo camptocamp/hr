@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bundle_wizard_view" model="ir.ui.view">
+        <field name="name">bundle.wizard.form</field>
+        <field name="model">bundle.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Product Bundle">
+                <!--SETUP VARIABLE-->
+                <field name="bundle_name" attrs="{'invisible': 1}"/>
+                <!--BUNDLE LAYOUT-->
+                <field name="bundle_show" attrs="{'invisible': 1}"/>
+                <div attrs="{'invisible': [('bundle_show', '=', False)]}">
+                    <field name="bundle_id" attrs="{'invisible': 1}"/>
+                    <div attrs="{'invisible': [('bundle_id', '=', False)]}">
+                        <group>
+                            <field name="bundle_products" widget="one2many"
+                                   attrs="{'required': [('bundle_show', '=', True)]}">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="product_quantity"/>
+                                    <field name="product_uom"/>
+                                    <field name="product_total_price"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="bundle_description"
+                                   attrs="{'required': [('bundle_show', '=', True)]}"/>
+                        </group>
+                        <group>
+                            <field name="bundle_price"
+                                   attrs="{'invisible': 1}"/>
+                            <field name="bundle_cost"
+                                   attrs="{'invisible': 1}"/>
+                            <field name="bundle_quantity"
+                                   attrs="{'required': [('bundle_show', '=', True)]}"/>
+                        </group>
+                        <group>
+                            <field name="bundle_total_price"/>
+                            <field name="bundle_total_cost"/>
+                        </group>
+                    </div>
+                </div>
+                <!--FOOTER LAYOUT-->
+                <footer>
+                    <button name="button_add_bundle"
+                            string="Add Bundle" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('bundle_show', '=', False)]}"/>
+                    <button name="button_cancel" string="Cancel"
+                            class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="bundle_wizard_action" model="ir.actions.act_window">
+        <field name="name">Add Bundle</field>
+        <field name="res_model">bundle.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="bundle_wizard_view"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
