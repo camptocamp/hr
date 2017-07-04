@@ -23,6 +23,18 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.1.4 (2017-07-04)
++++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
 * change port used for smtp 587 --> 25
 * reset all email addresses
 * add logging on ``update_leaves_allocation`` method
