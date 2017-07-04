@@ -23,6 +23,10 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* change port used for smtp 587 --> 25
+* reset all email addresses
+* add logging on ``update_leaves_allocation`` method
+
 **Build**
 
 **Documentation**
