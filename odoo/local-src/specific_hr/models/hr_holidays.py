@@ -31,8 +31,8 @@ class HrHolidays(models.Model):
             date_now_mth = fields.Date.from_string(date_now).strftime('%m')
             date_begin_day = fields.Date.from_string(date_now).strftime('%d')
 
-            if date_begin_yr == date_now_yr and \
-               date_begin_mth == date_now_mth:
+            if (date_begin_yr == date_now_yr and
+                    date_begin_mth == date_now_mth):
                 yr_nw = int(date_now_yr)
                 mth_nw = int(date_now_mth)
                 nb_days_month = calendar.monthrange(yr_nw, mth_nw)[1]
@@ -47,9 +47,11 @@ class HrHolidays(models.Model):
                 'holiday_status_id': leave_type.id,
             }
 
-            created |= self.create(vals)
+            # disabling mail sending
+            created |= self.with_context(tracking_disable=True).create(vals)
 
-        created.action_validate()
+        # disabling mail sending
+        created.with_context(tracking_disable=True).action_validate()
 
     def _get_number_of_days(self, date_from, date_to, employee_id):
         diff_days = 0
