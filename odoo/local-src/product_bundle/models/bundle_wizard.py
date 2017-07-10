@@ -41,7 +41,8 @@ class BundleWizard(models.Model):
     bundle_total_cost = fields.Float(string="Total Cost",
                                      compute='_bundle_total_cost')
 
-    # GENERIC BUNDLE ID FROM NAME
+    # GENERIC GET BUNDLE ID FROM NAME
+    @api.model
     def get_bundle_id(self, bundle_name):
         return self.env['product.product'].search(
             [('name', '=ilike', bundle_name), ('is_bundle', '=', True)])
@@ -61,16 +62,6 @@ class BundleWizard(models.Model):
             rec.bundle_products = [(0, 0, {'product_id': p.id,
                                            'product_quantity': 0})
                                    for p in rec.bundle_id.default_products]
-
-    # BUNDLE PRODUCTS MUST HAVE POSITIVE QUANTITIES
-    @api.multi
-    @api.constrains('bundle_products')
-    def _bundle_products_constraints(self):
-        for rec in self:
-            if rec.bundle_show:  # Constraints apply
-                if any(p.product_quantity < 0 for p in rec.bundle_products):
-                    raise exceptions.ValidationError(
-                        'Bundle products cannot contain negative quantities')
 
     # BUNDLE DESCRIPTION FROM BUNDLE PRODUCTS
     @api.multi
@@ -115,6 +106,27 @@ class BundleWizard(models.Model):
     def _bundle_total_cost(self):
         for rec in self:
             rec.bundle_total_cost = rec.bundle_cost * rec.bundle_quantity
+
+    # BUNDLE PRODUCTS MUST HAVE POSITIVE QUANTITIES
+    @api.multi
+    @api.constrains('bundle_products')
+    def _bundle_products_constraints(self):
+        for rec in self:
+            if rec.bundle_show:  # Constraints apply
+                if any(p.product_quantity < 0 for p in
+                       rec.bundle_products):
+                    raise exceptions.ValidationError(
+                        "Bundle products cannot contain negative quantities")
+
+    # BUNDLE QUANTITY MUST BE POSITIVE
+    @api.multi
+    @api.constrains('bundle_quantity')
+    def _bundle_quantity_constraints(self):
+        for rec in self:
+            if rec.bundle_show:  # Constraints apply
+                if rec.bundle_quantity <= 0:
+                    raise exceptions.ValidationError(
+                        "Bundle quantity must be a positive integer")
 
     # ADD BUNDLE TO SALE ORDER
     @api.multi
