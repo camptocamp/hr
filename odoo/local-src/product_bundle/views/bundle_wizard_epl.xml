@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bundle_wizard_epl_view" model="ir.ui.view">
+        <field name="name">bundle.wizard.epl.form</field>
+        <field name="model">bundle.wizard</field>
+        <field name="inherit_id" ref="product_bundle.bundle_wizard_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/footer" position="before">
+                <!--EPL LAYOUT-->
+                <field name="epl_show" invisible="1"/>
+                <div attrs="{'invisible': [('epl_show', '=', False)]}">
+                    <group>
+                        <field name="epl_a_pop"/>
+                        <field name="epl_z_pop"/>
+                        <field name="epl_sort"/>
+                    </group>
+                    <group>
+                        <field name="epl_protected"/>
+                    </group>
+                    <notebook>
+                        <page string="ROUTE">
+                            <group>
+                                <field name="epl_route_latency"/>
+                                <field name="epl_route_last_device"
+                                       invisible="1"/>
+                                <field name="epl_route" widget="one2many"
+                                       context="{'default_is_backup': False, 'default_a_device_id': epl_route_last_device}"
+                                       attrs="{'required': [('epl_show', '=', True)]}">
+                                    <tree>
+                                        <field name="link_id" invisible="1"/>
+                                        <field name="a_device_id"/>
+                                        <field name="z_device_id"/>
+                                        <field name="latency"/>
+                                        <field name="is_backup" invisible="1"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="id" invisible="1"/>
+                                            <field name="a_device_id"
+                                                   attrs="{'readonly': [('id', '!=', False)]}"/>
+                                            <field name="z_device_id"
+                                                   attrs="{'readonly': ['|', ('id', '!=', False), ('a_device_id', '=', False)]}"/>
+                                            <field name="link_id"
+                                                   attrs="{'readonly': ['|', '|', ('id', '!=', False), ('a_device_id', '=', False), ('z_device_id', '=', False)]}"/>
+                                            <field name="latency"/>
+                                        </group>
+                                    </form>
+                                </field>
+                                <field name="epl_route_price_per_mb"
+                                       invisible="1"/>
+                                <field name="epl_route_cost_per_mb"
+                                       invisible="1"/>
+                            </group>
+                        </page>
+                        <page string="BACKUP"
+                              attrs="{'invisible': [('epl_protected', '=', False)]}">
+                            <group>
+                                <field name="epl_backup_latency"/>
+                                <field name="epl_backup_last_device"
+                                       invisible="1"/>
+                                <field name="epl_backup" widget="one2many"
+                                       context="{'default_is_backup': True, 'default_a_device_id': epl_backup_last_device}}"
+                                       attrs="{'required': [('epl_protected', '=', True)]}">
+                                    <tree>
+                                        <field name="link_id" invisible="1"/>
+                                        <field name="a_device_id"/>
+                                        <field name="z_device_id"/>
+                                        <field name="latency"/>
+                                        <field name="is_backup" invisible="1"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="id" invisible="1"/>
+                                            <field name="a_device_id"
+                                                   attrs="{'readonly': [('id', '!=', False)]}"/>
+                                            <field name="z_device_id"
+                                                   attrs="{'readonly': ['|', ('id', '!=', False), ('a_device_id', '=', False)]}"/>
+                                            <field name="link_id"
+                                                   attrs="{'readonly': ['|', '|', ('id', '!=', False), ('a_device_id', '=', False), ('z_device_id', '=', False)]}"/>
+                                            <field name="latency"/>
+                                        </group>
+                                    </form>
+                                </field>
+                                <field name="epl_backup_price_per_mb"
+                                       invisible="1"/>
+                                <field name="epl_backup_cost_per_mb"
+                                       invisible="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group>
+                        <field name="epl_description"
+                               attrs="{'required': [('epl_show', '=', True)]}"/>
+                    </group>
+                    <group>
+                        <field name="epl_bandwidth"
+                               attrs="{'required': [('epl_show', '=', True)]}"/>
+                        <field name="epl_price_per_mb" invisible="1"/>
+                        <field name="epl_cost_per_mb" invisible="1"/>
+                        <field name="epl_price"/>
+                        <field name="epl_cost" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="epl_bundle_products" widget="one2many">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="product_quantity"/>
+                                <field name="product_uom"/>
+                                <field name="product_price"/>
+                                <!--<field name="product_total_price"/>-->
+                            </tree>
+                        </field>
+                        <field name="epl_bundle_price"/>
+                        <field name="epl_bundle_price_per_mb" invisible="1"/>
+                        <field name="epl_bundle_cost" invisible="1"/>
+                        <field name="epl_bundle_cost_per_mb" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="epl_total_price_per_mb" invisible="1"/>
+                        <field name="epl_total_cost_per_mb" invisible="1"/>
+                        <field name="epl_total_price"/>
+                        <field name="epl_total_cost" invisible="1"/>
+                    </group>
+                </div>
+            </xpath>
+            <xpath expr="//form/footer/button[@name='button_cancel']"
+                   position="before">
+                <button name="button_add_epl"
+                        string="Add EPL" type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('epl_show', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

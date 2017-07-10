@@ -39,6 +39,9 @@
                         string="Add Cloud" type="action"
                         context="{'default_bundle_name': 'Cloud'}"/>
                 <button name="product_bundle.bundle_wizard_action"
+                        string="Add EPL" type="action"
+                        context="{'default_bundle_name': 'EPL'}"/>
+                <button name="product_bundle.bundle_wizard_action"
                         string="Add Network" type="action"
                         context="{'default_bundle_name': 'Network'}"/>
                 <button name="product_bundle.bundle_wizard_action"

@@ -11,6 +11,7 @@
         'security/ir.model.access.csv',
         'views/bundle.xml',
         'views/bundle_wizard.xml',
+        'views/bundle_wizard_epl.xml',
     ],
     'installable': True,
     'auto_install': False,
