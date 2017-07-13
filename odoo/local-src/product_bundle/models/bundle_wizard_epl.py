@@ -415,6 +415,46 @@ class BundleWizardEPL(models.Model):
                 rec.epl_total_cost = rec.epl_total_cost_per_mb \
                                      * rec.epl_bandwidth
 
+    # EPL ROUTE LINKS MUST BE SUCCESSIVE
+    @api.multi
+    @api.constrains('epl_route')
+    def _epl_route_constraints(self):
+        for rec in self:
+            if not self.is_valid_path(rec.epl_route):
+                raise exceptions.ValidationError("EPL route path invalid")
+
+    # EPL BACKUP LINKS MUST BE SUCCESSIVE & MATCH MAIN ROUTE
+    @api.multi
+    @api.constrains('epl_backup')
+    def _epl_backup_constraints(self):
+        for rec in self:
+            if rec.epl_protected:
+                if not self.is_valid_path(rec.epl_backup):
+                    raise exceptions.ValidationError("EPL backup path invalid")
+
+                backup_first_device = rec.epl_backup[0].a_device_id
+                backup_last_device = rec.epl_backup[-1].z_device_id
+
+                route_first_device = rec.epl_route[0].a_device_id
+                route_last_device = rec.epl_route[-1].z_device_id
+
+                if backup_first_device != route_first_device \
+                        or backup_last_device != route_last_device:
+                    raise exceptions.ValidationError(
+                        "EPL route & backup paths do not match")
+
+    # GENERIC VALID PATH CHECKER
+    @api.model
+    def is_valid_path(self, path):
+        path_length = len(path)
+        if not path_length:
+            return False
+        for i in xrange(1, path_length):
+            if path[i].a_device_id != path[i - 1].z_device_id:
+                return False
+        return True
+
+    # EPL BANDWIDTH MUST BE POSITIVE
     @api.multi
     @api.constrains('epl_bandwidth')
     def _epl_bandwidth_constraints(self):
