@@ -217,7 +217,7 @@ class BundleWizardEPL(models.Model):
     @api.depends('epl_route')
     def _epl_route_cost_per_mb(self):
         for rec in self:
-            rec.epl_route_cost_per_mb = 0
+            rec.epl_route_cost_per_mb = 0  # TODO
 
     # EPL ROUTE LATENCY FROM SUM OF LINKS
     @api.multi
@@ -232,10 +232,8 @@ class BundleWizardEPL(models.Model):
     @api.depends('epl_route')
     def _epl_route_last_device(self):
         for rec in self:
-            if rec.epl_route:
-                rec.epl_route_last_device = rec.epl_route[-1].z_device_id
-            else:
-                rec.epl_route_last_device = False
+            rec.epl_route_last_device = rec.epl_route[-1].z_device_id \
+                if rec.epl_route else False
 
     # EPL BACKUP PRICE PER MBPs
     @api.multi
@@ -250,7 +248,7 @@ class BundleWizardEPL(models.Model):
     @api.depends('epl_backup')
     def _epl_backup_cost_per_mb(self):
         for rec in self:
-            rec.epl_backup_cost_per_mb = 0
+            rec.epl_backup_cost_per_mb = 0  # TODO
 
     # EPL BACKUP LATENCY FROM SUM OF LINKS
     @api.multi
@@ -260,14 +258,13 @@ class BundleWizardEPL(models.Model):
             rec.epl_backup_latency = "%.3f ms" % sum(
                 link.latency for link in rec.epl_backup)
 
-    # EPL ROUTE LAST DEVICE
+    # EPL BACKUP LAST DEVICE
     @api.multi
     @api.depends('epl_backup')
     def _epl_backup_last_device(self):
         for rec in self:
-            rec.epl_backup_last_device = False
-            if rec.epl_backup:
-                rec.epl_backup_last_device = rec.epl_backup[-1].z_device_id
+            rec.epl_backup_last_device = rec.epl_backup[-1].z_device_id \
+                if rec.epl_backup else False
 
     # EPL PRICE PER Mbps FROM ROUTE & BACKUP
     @api.multi
@@ -283,7 +280,7 @@ class BundleWizardEPL(models.Model):
     @api.depends('epl_route_cost_per_mb', 'epl_backup_cost_per_mb')
     def _epl_cost_per_mb(self):
         for rec in self:
-            rec.epl_cost_per_mb = 0
+            rec.epl_cost_per_mb = 0  # TODO
 
     # EPL PRICE FROM PRICE PER MBps & BANDWIDTH
     @api.multi
@@ -446,10 +443,9 @@ class BundleWizardEPL(models.Model):
     # GENERIC VALID PATH CHECKER
     @api.model
     def is_valid_path(self, path):
-        path_length = len(path)
-        if not path_length:
+        if not path:
             return False
-        for i in xrange(1, path_length):
+        for i in xrange(1, len(path)):
             if path[i].a_device_id != path[i - 1].z_device_id:
                 return False
         return True

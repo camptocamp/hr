@@ -50,7 +50,7 @@ class BundleWizardEPLLink(models.Model):
 
     @api.multi
     @api.onchange('a_device_id')
-    def set_z_device_domain(self):
+    def set_domain_z_device_id(self):
         for rec in self:
             rec.z_device_id = False
             if rec.a_device_id:
@@ -64,7 +64,7 @@ class BundleWizardEPLLink(models.Model):
 
     @api.multi
     @api.onchange('a_device_id', 'z_device_id')
-    def set_link_id_domain(self):
+    def set_domain_link_id(self):
         for rec in self:
             rec.link_id = False
             if rec.a_device_id and rec.z_device_id:
