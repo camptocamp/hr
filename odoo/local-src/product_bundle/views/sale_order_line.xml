@@ -10,7 +10,7 @@
         <field name="name">sale.order.form</field>
         <field name="model">sale.order</field>
         <field name="inherit_id"
-               ref="sale_margin.sale_margin_sale_order_line_form"/>
+               ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']"
                    position="after">
