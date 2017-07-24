@@ -43,8 +43,8 @@
                 </div>
                 <!--FOOTER LAYOUT-->
                 <footer>
-                    <button name="button_add_bundle"
-                            string="Add Bundle" type="object"
+                    <button name="button_bundle_save"
+                            string="Save Bundle" type="object"
                             class="oe_highlight"
                             attrs="{'invisible': [('bundle_show', '=', False)]}"/>
                     <button name="button_cancel" string="Cancel"

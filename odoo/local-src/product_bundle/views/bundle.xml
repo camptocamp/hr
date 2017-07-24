@@ -37,19 +37,19 @@
                    position="before">
                 <button name="product_bundle.bundle_wizard_action"
                         string="Add Cloud" type="action"
-                        context="{'default_bundle_name': 'Cloud'}"/>
+                        context="{'default_sale_order_id': id, 'default_bundle_name': 'Cloud'}"/>
                 <button name="product_bundle.bundle_wizard_action"
                         string="Add EPL" type="action"
-                        context="{'default_bundle_name': 'EPL'}"/>
+                        context="{'default_sale_order_id': id, 'default_bundle_name': 'EPL'}"/>
                 <button name="product_bundle.bundle_wizard_action"
                         string="Add Network" type="action"
-                        context="{'default_bundle_name': 'Network'}"/>
+                        context="{'default_sale_order_id': id, 'default_bundle_name': 'Network'}"/>
                 <button name="product_bundle.bundle_wizard_action"
                         string="Add Hosting" type="action"
-                        context="{'default_bundle_name': 'Hosting'}"/>
+                        context="{'default_sale_order_id': id, 'default_bundle_name': 'Hosting'}"/>
                 <button name="product_bundle.bundle_wizard_action"
                         string="Add Service Desk" type="action"
-                        context="{'default_bundle_name': 'Service Desk'}"/>
+                        context="{'default_sale_order_id': id, 'default_bundle_name': 'Service Desk'}"/>
             </xpath>
         </field>
     </record>

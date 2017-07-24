@@ -417,36 +417,47 @@ class BundleWizardEPL(models.Model):
     @api.constrains('epl_route')
     def _epl_route_constraints(self):
         for rec in self:
-            if not self.is_valid_path(rec.epl_route):
-                raise exceptions.ValidationError("EPL route path invalid")
+            if rec.epl_show:  # Constraints apply
+                if not rec.epl_route:
+                    raise exceptions.ValidationError(
+                        "EPL route required")
+                if not self.is_valid_route(rec.epl_route):
+                    raise exceptions.ValidationError(
+                        "EPL route links are not successive")
 
     # EPL BACKUP LINKS MUST BE SUCCESSIVE & MATCH MAIN ROUTE
     @api.multi
     @api.constrains('epl_backup')
     def _epl_backup_constraints(self):
         for rec in self:
-            if rec.epl_protected:
-                if not self.is_valid_path(rec.epl_backup):
-                    raise exceptions.ValidationError("EPL backup path invalid")
+            if rec.epl_show:  # Constraints apply
+                if rec.epl_protected and rec.epl_route:
+                    if not rec.epl_backup:
+                        raise exceptions.ValidationError(
+                            "EPL backup required if protection selected")
+                    if not self.is_valid_route(rec.epl_backup):
+                        raise exceptions.ValidationError(
+                            "EPL backup links are not successive")
 
-                backup_first_device = rec.epl_backup[0].a_device_id
-                backup_last_device = rec.epl_backup[-1].z_device_id
+                    backup_first_device = rec.epl_backup[0].a_device_id
+                    backup_last_device = rec.epl_backup[-1].z_device_id
 
-                route_first_device = rec.epl_route[0].a_device_id
-                route_last_device = rec.epl_route[-1].z_device_id
+                    route_first_device = rec.epl_route[0].a_device_id
+                    route_last_device = rec.epl_route[-1].z_device_id
 
-                if backup_first_device != route_first_device \
-                        or backup_last_device != route_last_device:
-                    raise exceptions.ValidationError(
-                        "EPL route & backup paths do not match")
+                    if backup_first_device != route_first_device:
+                        raise exceptions.ValidationError(
+                            "EPL route & backup do not start from same device")
+                    if backup_last_device != route_last_device:
+                        raise exceptions.ValidationError(
+                            "EPL route & backup do not end on same device")
 
-    # GENERIC VALID PATH CHECKER
     @api.model
-    def is_valid_path(self, path):
-        if not path:
-            return False
-        for i in xrange(1, len(path)):
-            if path[i].a_device_id != path[i - 1].z_device_id:
+    def is_valid_route(self, route):
+        for i in xrange(1, len(route)):
+            start_device_id = route[i].a_device_id.id
+            prev_device_id = route[i - 1].z_device_id.id
+            if start_device_id != prev_device_id:
                 return False
         return True
 
@@ -473,12 +484,11 @@ class BundleWizardEPL(models.Model):
 
     # ADD EPL TO SALE ORDER
     @api.multi
-    def button_add_epl(self):
-        self.env['sale.order.line'].create(
-            {'order_id': self.env.context['active_id'],
-             'product_id': self.get_bundle_id("network").id,
-             'name': self.epl_description,
-             'price_unit': self.epl_total_price_per_mb,
-             'product_uom': self.get_epl_product().uom_id.id,
-             'product_uom_qty': self.epl_bandwidth})
-        return True
+    def button_epl_save(self):
+        return self.sale_order_line_save(
+            product=self.get_bundle_id("network"),
+            description=self.epl_description,
+            quantity=self.epl_bandwidth,
+            unit_measure=self.get_epl_product().uom_id,
+            unit_price=self.epl_total_price_per_mb
+        )

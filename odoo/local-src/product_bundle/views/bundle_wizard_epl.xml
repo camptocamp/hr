@@ -42,6 +42,8 @@
                                             <field name="link_id"
                                                    attrs="{'readonly': ['|', ('a_device_id', '=', False), ('z_device_id', '=', False)]}"/>
                                             <field name="latency"/>
+                                            <field name="is_backup"
+                                                   invisible="1"/>
                                         </group>
                                     </form>
                                 </field>
@@ -75,6 +77,8 @@
                                             <field name="link_id"
                                                    attrs="{'readonly': ['|', ('a_device_id', '=', False), ('z_device_id', '=', False)]}"/>
                                             <field name="latency"/>
+                                            <field name="is_backup"
+                                                   invisible="1"/>
                                         </group>
                                     </form>
                                 </field>
@@ -122,8 +126,8 @@
             </xpath>
             <xpath expr="//form/footer/button[@name='button_cancel']"
                    position="before">
-                <button name="button_add_epl"
-                        string="Add EPL" type="object"
+                <button name="button_epl_save"
+                        string="Save EPL" type="object"
                         class="oe_highlight"
                         attrs="{'invisible': [('epl_show', '=', False)]}"/>
             </xpath>

@@ -12,6 +12,7 @@
         'views/bundle.xml',
         'views/bundle_wizard.xml',
         'views/bundle_wizard_epl.xml',
+        'views/sale_order_line.xml'
     ],
     'installable': True,
     'auto_install': False,

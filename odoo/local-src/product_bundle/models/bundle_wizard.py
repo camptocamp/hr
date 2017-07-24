@@ -4,11 +4,22 @@ from openerp import api, fields, models, exceptions
 class BundleWizard(models.Model):
     _name = 'bundle.wizard'
 
-    # BUNDLE VISIBILITY
-    bundle_show = fields.Boolean(default=True)
+    # SALE ORDER FROM bundle.xml BUTTON CONTEXT (default_sale_order_id)
+    sale_order_id = fields.Many2one(string='Sale Order',
+                                    comodel_name='sale.order',
+                                    required=True)
+
+    # SALE ORDER LINE SET AFTER SAVING BUNDLE
+    sale_order_line_id = fields.Many2one(string="Sale Order Line",
+                                         comodel_name='sale.order.line',
+                                         ondelete='cascade',
+                                         required=True)
 
     # BUNDLE NAME FROM bundle.xml BUTTON CONTEXT (default_bundle_name)
     bundle_name = fields.Char(string="Bundle Name")
+
+    # BUNDLE VISIBILITY
+    bundle_show = fields.Boolean(default=True)
 
     # BUNDLE ID
     bundle_id = fields.Many2one(string='Bundle',
@@ -31,7 +42,7 @@ class BundleWizard(models.Model):
 
     # BUNDLE QUANTITY
     bundle_quantity = fields.Integer(string="Quantity",
-                                     default=1)
+                                     default=0)
 
     # BUNDLE TOTAL PRICE
     bundle_total_price = fields.Float(string="Total Price",
@@ -130,12 +141,45 @@ class BundleWizard(models.Model):
 
     # ADD BUNDLE TO SALE ORDER
     @api.multi
-    def button_add_bundle(self):
-        self.env['sale.order.line'].create(
-            {'order_id': self.env.context['active_id'],
-             'product_id': self.bundle_id.id,
-             'name': self.bundle_description,
-             'price_unit': self.bundle_price,
-             'product_uom': self.bundle_id.uom_id.id,
-             'product_uom_qty': self.bundle_quantity})
+    def button_bundle_save(self):
+        return self.sale_order_line_save(
+            product=self.bundle_id,
+            description=self.bundle_description,
+            quantity=self.bundle_quantity,
+            unit_measure=self.bundle_id.uom_id,
+            unit_price=self.bundle_price
+        )
+
+    @api.model
+    def sale_order_line_save(self, product, description, quantity,
+                             unit_measure, unit_price):
+        if self.sale_order_line_id:  # EDIT MODE
+            return self._sale_order_line_update(description, quantity,
+                                                unit_price)
+        else:  # CREATE MODE
+            return self._sale_order_line_create(product, description, quantity,
+                                                unit_measure, unit_price)
+
+    @api.model
+    def _sale_order_line_create(self, product, description, quantity,
+                                unit_measure, unit_price):
+        sale_order_line_id = self.env['sale.order.line'].create(
+            {'order_id': self.sale_order_id.id,
+             'bundle_wizard_id': self.id,
+             'product_id': product.id,
+             'name': description,
+             'product_uom_qty': quantity,
+             'product_uom': unit_measure.id,
+             'price_unit': unit_price
+             })
+        self.sale_order_line_id = sale_order_line_id
+        return True
+
+    @api.model
+    def _sale_order_line_update(self, description, quantity, unit_price):
+        self.sale_order_line_id.update(
+            {'name': description,
+             'product_uom_qty': quantity,
+             'price_unit': unit_price
+             })
         return True
