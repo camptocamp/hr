@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-999 Edit record rules
+
 **Bugfixes**
 
 **Build**
