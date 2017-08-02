@@ -53,3 +53,6 @@
 -
   !python {model: ir.rule, id: base.res_users_rule} : |
     self.perm_read = False
+-
+  !python {model: ir.rule, id: specific_security.hr_employee_rule_bso} : |
+    self.perm_read = False

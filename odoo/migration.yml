@@ -102,6 +102,9 @@ migration:
         post:
           - anthem songs.upgrade.upgrade_10_1_4::main
     - version: 10.1.4
+      addons:
+        upgrade:
+          - specific_security
       operations:
         post:
           - anthem songs.install.email::replace_partner_email
