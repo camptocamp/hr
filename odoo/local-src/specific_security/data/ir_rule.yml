@@ -51,5 +51,5 @@
   !python {model: ir.rule, id: hr.hr_dept_comp_rule} : |
     self.perm_read = False
 -
-  !python {model: ir.rule, id: base.res_user_rule} : |
+  !python {model: ir.rule, id: base.res_users_rule} : |
     self.perm_read = False
