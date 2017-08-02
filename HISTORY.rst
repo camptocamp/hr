@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-998 Outgoing email configuration
+
 **Bugfixes**
 
 **Build**
