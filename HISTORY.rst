@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * BSIBSO-998 Outgoing email configuration
+* BSIBSO-999 Edit record rules
 
 **Bugfixes**
 
