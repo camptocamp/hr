@@ -47,3 +47,12 @@
 -
   !python {model: ir.rule, id: hr_expense.hr_expense_report_comp_rule} : |
     self.domain_force = "['|', '|',('company_id','=',False),('company_id','in',user.company_ids.ids),('employee_id', 'child_of', user.employee_ids.ids)]"
+-
+  !python {model: ir.rule, id: hr.hr_dept_comp_rule} : |
+    self.perm_read = False
+-
+  !python {model: ir.rule, id: base.res_users_rule} : |
+    self.perm_read = False
+-
+  !python {model: ir.rule, id: specific_security.hr_employee_rule_bso} : |
+    self.perm_read = False
