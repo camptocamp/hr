@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.1.5 (2017-08-04)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-998 Outgoing email configuration
 * BSIBSO-999 Edit record rules
 
@@ -30,6 +42,7 @@ Latest (Unreleased)
 
 * Upgrade Docker image to 10.0-2.3.0
 * Update odoo/src to latest commit
+* update project from odoo-template
 
 **Documentation**
 

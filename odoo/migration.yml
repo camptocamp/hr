@@ -109,3 +109,7 @@ migration:
         post:
           - anthem songs.install.email::replace_partner_email
           - anthem songs.install.email::replace_employee_email
+    - version: 10.1.5
+      addons:
+        upgrade:
+          - specific_security
