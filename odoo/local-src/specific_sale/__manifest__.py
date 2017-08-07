@@ -13,6 +13,7 @@
      'sale_double_validation',
      'specific_security',
      'website_contract',
+     'sale_contract',
  ],
  'website': 'www.camptocamp.com',
  'demo': [
@@ -23,6 +24,7 @@
      'wizard/mrp_invoicing_view.xml',
      'views/sale.xml',
      'views/sale_order_line.xml',
+     'views/sale_subscription_views.xml',
  ],
  'test': [],
  'installable': True,

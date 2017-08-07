@@ -24,6 +24,11 @@ Latest (Unreleased)
 * Update with last changes from odoo-template
 * Remove pending-merges in partner-contact partially removed in f71bb19
 * Update PO `subscr_date_start` if there is none while processing stock.picking BSIBSO-1009
+* BSIBSO-1003 Invoicing process for MRP products
+* BSIBSO-1012 Logic creation subscription
+* Automatic Invoicing of PO BSIBSO-1010
+* Overload mrc compute_qty_received BSIBSO-1010
+* update subscription invoicing BSIBSO-1004
 
 **Bugfixes**
 
