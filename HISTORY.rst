@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * Add DJ & Ribbon
+* BSIBSO-1003 Invoicing process for MRP products
 
 **Bugfixes**
 

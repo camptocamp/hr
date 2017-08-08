@@ -23,6 +23,8 @@
           'views/account_invoice.xml',
           'views/network.xml',
           'views/res_company.xml',
+          'views/product_uom_categ.xml',
+          'views/product_uom.xml'
           ],
  'installable': True,
  }

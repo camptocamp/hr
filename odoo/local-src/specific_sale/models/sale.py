@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import api, fields, models, _
+from datetime import datetime
 
 
 class SaleOrder(models.Model):
@@ -83,3 +84,59 @@ class SaleOrder(models.Model):
 
         todo = self.filtered(lambda s: s.state != 'refused')
         return super(SaleOrder, todo).action_draft()
+
+    @api.multi
+    def has_mrc_product(self):
+        for sol in self.order_line:
+            if sol.product_uom.recurring:
+                return True
+        return False
+
+
+    @api.multi
+    def action_invoicing(self):
+        if self.has_mrc_product():
+            print 'Call wizard mrc product invoicing'
+            wiz_form = self.env.ref('specific_sale.mrp_invoicing_form')
+            v = self.env['mrp.invoicing']
+            first_day_month = datetime.now().replace(day=1)
+            new = v.create({'ref_date': fields.Datetime.to_string(first_day_month)})
+            return {
+                'name': 'tdu',
+                'type': 'ir.actions.act_window',
+                'res_model': 'mrp.invoicing',
+                'res_id': new.id,
+                'view_id': wiz_form.id,
+                'view_type': 'form',
+                'view_mode': 'form',
+                'target': 'new'
+            }
+        else:
+            print 'Call normal invoicing'
+            action = self.env.ref('sale.action_view_sale_advance_payment_inv')
+            v = self.env[action.res_model]
+            new = v.create({})
+            return {
+                'name': action.name,
+                'type': action.type,
+                'res_model': action.res_model,
+                'res_id': new.id,
+                #'view_id': wiz_form.id,
+                'view_type': 'form',
+                'view_mode': 'form',
+                'target': 'new'
+            }
+
+
+    def all_mrc_delivered(self):
+        """ Are all MRC product delivered in the sale order"""
+        for sol in self.order_line:
+            if sol.product_uom.recurring:
+                if sol.product_uom_qty > sol.qty_delivered:
+                    return False
+        return True
+
+    def create_contract(self):
+        """ Create the contract only when all mrc products are delivered """
+        if self.all_mrc_delivered():
+            super(SaleOrder, self).create_contract()

@@ -17,4 +17,15 @@
         </field>
     </record>
 
+    <record id="product_template_recurring_from" model="ir.ui.view">
+      <field name="name">product_template_recurring_form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='uom_id']" position="attributes">
+          <attribute name='domain'>[('recurring', '=', recurring_invoice)]</attribute>
+        </xpath>
+      </field>
+    </record>
+
 </odoo>

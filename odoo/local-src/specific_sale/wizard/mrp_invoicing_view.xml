@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mrp_invoicing_form" model="ir.ui.view">
+      <field name="name">MRP product invoicing form</field>
+      <field name="model">mrp.invoicing</field>
+      <field name="arch" type="xml">
+        <form string="MRP invoicing date">
+          <p class="oe_grey">
+            Set a base date to generate the invoices
+          </p>
+          <group>
+            <field name="ref_date"/>
+          </group>
+          <footer>
+            <button name="ok" string="Ok" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-default" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <!-- <record id="action_view_mrp_invoicing" model="ir.actions.act_window"> -->
+    <!--   <field name="name">MRP product invoicing</field> -->
+    <!--   <field name="type">ir.actions.act_window</field> -->
+    <!--   <field name="res_model">mrp.invoicing</field> -->
+    <!--   <field name="view_mode">form</field> -->
+    <!--   <field name="view_id" ref="mrp_invoicing_from"/> -->
+    <!--   <field name="target">new</field> -->
+    <!-- </record> -->
+
+</odoo>

@@ -15,6 +15,7 @@
  'website': 'www.camptocamp.com',
  'data': [
      'wizard/sale_refusal_view.xml',
+     'wizard/mrp_invoicing_view.xml',
      'views/sale.xml',
  ],
  'test': [],
