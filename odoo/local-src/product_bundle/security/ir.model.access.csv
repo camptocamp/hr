@@ -1,4 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_bundle_product,access_bundle_product,model_bundle_product,,1,0,0,0
-access_bundle_wizard,access_bundle_wizard,model_bundle_wizard,,1,0,0,0
-access_bundle_wizard_epl_link,access_bundle_wizard_epl_link,model_bundle_wizard_epl_link,,1,0,0,0
+access_bundle_details,access_bundle_details,model_bundle_details,,1,0,0,0
+access_bundle_details_epl_link,access_bundle_details_epl_link,model_bundle_details_epl_link,,1,0,0,0
+access_bundle_details_product,access_bundle_details_product,model_bundle_details_product,,1,0,0,0

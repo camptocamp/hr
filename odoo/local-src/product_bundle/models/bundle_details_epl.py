@@ -1,17 +1,20 @@
-from openerp import api, fields, models, exceptions
+from openerp import api, fields, models, exceptions, _
 import math
 
 
-class BundleWizardEPL(models.Model):
-    _inherit = 'bundle.wizard'
+class BundleDetailsEPL(models.Model):
+    _inherit = 'bundle.details'
 
     # EPL VISIBILITY
-    epl_show = fields.Boolean(compute='_epl_show',
-                              default=False)
+    epl_show = fields.Boolean(compute='_epl_show')
 
     # EPL BUNDLE_ID
     epl_bundle_id = fields.Many2one(string='Bundle',
                                     comodel_name='product.product')
+
+    # EPL BUNDLE CATEGORY
+    epl_bundle_categ_id = fields.Many2one(string='Bundle Category',
+                                          related='epl_bundle_id.categ_id')
 
     # POP A
     epl_a_pop = fields.Many2one(string='POP A',
@@ -31,9 +34,9 @@ class BundleWizardEPL(models.Model):
     epl_protected = fields.Boolean(string='Protected')
 
     # EPL ROUTE
-    epl_route = fields.Many2many(string="EPL",
-                                 comodel_name='bundle.wizard.epl.link',
-                                 domain=[('is_backup', '=', False)])
+    epl_route = fields.One2many(string="EPL",
+                                comodel_name='bundle.details.epl.link',
+                                inverse_name='bundle_details_epl_id_route')
 
     # EPL ROUTE PRICE PER MBps
     epl_route_price_per_mb = fields.Float(string="Route price per Mbps",
@@ -53,9 +56,9 @@ class BundleWizardEPL(models.Model):
                                             compute='_epl_route_last_device')
 
     # EPL BACKUP ROUTE
-    epl_backup = fields.Many2many(string="Backup",
-                                  comodel_name='bundle.wizard.epl.link',
-                                  domain=[('is_backup', '=', True)])
+    epl_backup = fields.One2many(string="Backup",
+                                 comodel_name='bundle.details.epl.link',
+                                 inverse_name='bundle_details_epl_id_backup')
 
     # EPL BACKUP PRICE PER MBps
     epl_backup_price_per_mb = fields.Float(string="Backup price per Mbps",
@@ -75,8 +78,9 @@ class BundleWizardEPL(models.Model):
                                              compute='_epl_backup_last_device')
 
     # EPL PRODUCTS
-    epl_bundle_products = fields.Many2many(string="Bundle Products",
-                                           comodel_name='bundle.product')
+    epl_bundle_products = fields.One2many(string="Bundle Products",
+                                          comodel_name='bundle.details.product',
+                                          inverse_name='bundle_details_epl_id')
 
     # EPL DESCRIPTION
     epl_description = fields.Char(string="Name",
@@ -140,7 +144,6 @@ class BundleWizardEPL(models.Model):
             [('name', '=ilike', "EPL"), ('is_epl', '=', True)])
 
     # EPL VISIBILITY FROM NAME
-    @api.multi
     @api.onchange('bundle_name')
     def _epl_show(self):
         """ hide classic bundle view if EPL """
@@ -149,7 +152,6 @@ class BundleWizardEPL(models.Model):
             rec.bundle_show = not rec.epl_show
 
     # EPL BUNDLE ID FROM VISIBILITY
-    @api.multi
     @api.onchange('epl_show')
     def _epl_bundle_id(self):
         for rec in self:
@@ -157,40 +159,40 @@ class BundleWizardEPL(models.Model):
                 rec.epl_bundle_id = self.get_bundle_id("network")
 
     # EPL ROUTE/BACKUP FROM CONFIG
-    @api.multi
     @api.onchange('epl_a_pop', 'epl_z_pop', 'epl_sort', 'epl_protected')
     def _epl_paths(self):
         for rec in self:
-            if all((rec.epl_a_pop, rec.epl_z_pop, rec.epl_sort)):  # Config OK
-                """ Fetching from API Latency """
-                epl = self.env.user.company_id.network_api_id.call(
-                    rec.epl_a_pop.name,
-                    rec.epl_z_pop.name,
-                    self.env.user,
-                    backup=int(bool(rec.epl_protected)),
-                    details=1,
-                    sort=rec.epl_sort)
-                rec.epl_route = self.get_epl_path_ids(epl.get('route'),
-                                                      is_backup=False)
-                rec.epl_backup = self.get_epl_path_ids(epl.get('backup'),
-                                                       is_backup=True)
+            if not all((rec.epl_a_pop, rec.epl_z_pop, rec.epl_sort)):
+                continue
+            """ Fetching from API Latency """
+            epl = self.env.user.company_id.network_api_id.call(
+                rec.epl_a_pop.name,
+                rec.epl_z_pop.name,
+                self.env.user,
+                backup=int(bool(rec.epl_protected)),
+                details=1,
+                sort=rec.epl_sort)
+            rec.epl_route = self.get_epl_path_ids(epl.get('route'))
+            rec.epl_backup = self.get_epl_path_ids(epl.get('backup'))
 
     @api.model
-    def get_epl_path_ids(self, route, is_backup):
+    def get_epl_path_ids(self, route):
         """ Odoo ids from API response """
         route_vals = []
         if route:
+            sequence = 0
             details = route.get('details', [])
             for detail in details:
+                sequence += 10
                 link_bso_id = detail['cost']['bso_backbone_id']
                 a_device_id = self.get_epl_device(detail['equip_start'])
                 z_device_id = self.get_epl_device(detail['equip_end'])
                 link = self.get_epl_link(link_bso_id)
                 if link:
-                    route_vals.append((0, 0, {'link_id': link.id,
+                    route_vals.append((0, 0, {'sequence': sequence,
+                                              'link_id': link.id,
                                               'a_device_id': a_device_id,
-                                              'z_device_id': z_device_id,
-                                              'is_backup': is_backup}))
+                                              'z_device_id': z_device_id}))
         return route_vals
 
     @api.model
@@ -205,7 +207,6 @@ class BundleWizardEPL(models.Model):
         return self.env['bso.network.link'].search([('bso_id', '=', bso_id)])
 
     # EPL ROUTE PRICE PER MBPs
-    @api.multi
     @api.depends('epl_route')
     def _epl_route_price_per_mb(self):
         for rec in self:
@@ -213,14 +214,12 @@ class BundleWizardEPL(models.Model):
                 link.mrc_bd for link in rec.epl_route)
 
     # EPL ROUTE COST PER MBPs
-    @api.multi
     @api.depends('epl_route')
     def _epl_route_cost_per_mb(self):
         for rec in self:
             rec.epl_route_cost_per_mb = 0  # TODO
 
     # EPL ROUTE LATENCY FROM SUM OF LINKS
-    @api.multi
     @api.depends('epl_route')
     def _epl_route_latency(self):
         for rec in self:
@@ -228,7 +227,6 @@ class BundleWizardEPL(models.Model):
                 link.latency for link in rec.epl_route)
 
     # EPL ROUTE LAST DEVICE
-    @api.multi
     @api.depends('epl_route')
     def _epl_route_last_device(self):
         for rec in self:
@@ -236,7 +234,6 @@ class BundleWizardEPL(models.Model):
                 if rec.epl_route else False
 
     # EPL BACKUP PRICE PER MBPs
-    @api.multi
     @api.depends('epl_backup')
     def _epl_backup_price_per_mb(self):
         for rec in self:
@@ -244,22 +241,19 @@ class BundleWizardEPL(models.Model):
                 link.mrc_bd for link in rec.epl_backup)
 
     # EPL BACKUP COST PER MBPs
-    @api.multi
     @api.depends('epl_backup')
     def _epl_backup_cost_per_mb(self):
         for rec in self:
             rec.epl_backup_cost_per_mb = 0  # TODO
 
     # EPL BACKUP LATENCY FROM SUM OF LINKS
-    @api.multi
     @api.depends('epl_backup')
     def _epl_backup_latency(self):
         for rec in self:
-            rec.epl_backup_latency = "%.3f ms" % sum(
+            rec.epl_backup_latency = "%.2f ms" % sum(
                 link.latency for link in rec.epl_backup)
 
     # EPL BACKUP LAST DEVICE
-    @api.multi
     @api.depends('epl_backup')
     def _epl_backup_last_device(self):
         for rec in self:
@@ -267,7 +261,6 @@ class BundleWizardEPL(models.Model):
                 if rec.epl_backup else False
 
     # EPL PRICE PER Mbps FROM ROUTE & BACKUP
-    @api.multi
     @api.depends('epl_route_price_per_mb', 'epl_backup_price_per_mb')
     def _epl_price_per_mb(self):
         for rec in self:
@@ -276,14 +269,12 @@ class BundleWizardEPL(models.Model):
             rec.epl_price_per_mb = self.round_upper_decimal(epl_price_per_mb)
 
     # EPL COST PER Mbps FROM ROUTE & BACKUP
-    @api.multi
     @api.depends('epl_route_cost_per_mb', 'epl_backup_cost_per_mb')
     def _epl_cost_per_mb(self):
         for rec in self:
             rec.epl_cost_per_mb = 0  # TODO
 
     # EPL PRICE FROM PRICE PER MBps & BANDWIDTH
-    @api.multi
     @api.depends('epl_price_per_mb', 'epl_bandwidth')
     def _epl_price(self):
         for rec in self:
@@ -291,7 +282,6 @@ class BundleWizardEPL(models.Model):
                 rec.epl_price = rec.epl_price_per_mb * rec.epl_bandwidth
 
     # EPL COST FROM COST PER MBps & BANDWIDTH
-    @api.multi
     @api.depends('epl_route_cost_per_mb', 'epl_backup_cost_per_mb')
     def _epl_cost(self):
         for rec in self:
@@ -299,7 +289,6 @@ class BundleWizardEPL(models.Model):
                 rec.epl_cost = rec.epl_cost_per_mb * rec.epl_bandwidth
 
     # EPL DESCRIPTION FROM EPL ROUTE
-    @api.multi
     @api.onchange('epl_route', 'epl_protected')
     def _epl__description(self):
         for rec in self:
@@ -321,18 +310,17 @@ class BundleWizardEPL(models.Model):
             rec.epl_description = epl_desc
 
     # EPL PRODUCTS FROM NETWORK BUNDLE PRODUCTS
-    @api.multi
     @api.onchange('epl_show')
     def _epl_bundle_products(self):
         for rec in self:
-            if rec.epl_show:  # Display products
-                rec.epl_bundle_products = [(0, 0, {'product_id': p.id,
-                                                   'product_quantity': 0})
-                                           for p in
-                                           rec.epl_bundle_id.default_products]
+            if not rec.epl_show:  # Do not display products
+                continue
+            rec.epl_bundle_products = [(0, 0, {'product_id': p.product_id,
+                                               'product_quantity': p.quantity})
+                                       for p in
+                                       rec.epl_bundle_id.products]
 
     # EPL BUNDLE TOTAL PRICE FROM EPL BUNDLE PRODUCTS
-    @api.multi
     @api.depends('epl_bundle_products')
     def _epl_bundle_price(self):
         for rec in self:
@@ -340,7 +328,6 @@ class BundleWizardEPL(models.Model):
                 p.product_total_price for p in rec.epl_bundle_products)
 
     # EPL BUNDLE PRICE PER MBps FROM EPL BUNDLE TOTAL PRICE & BANDWIDTH
-    @api.multi
     @api.depends('epl_bundle_price', 'epl_bandwidth')
     def _epl_bundle_price_per_mb(self):
         for rec in self:
@@ -349,7 +336,6 @@ class BundleWizardEPL(models.Model):
                     rec.epl_bundle_price / rec.epl_bandwidth)
 
     # EPL BUNDLE TOTAL COST FROM EPL BUNDLE PRODUCTS
-    @api.multi
     @api.depends('epl_bundle_products')
     def _epl_bundle_cost(self):
         for rec in self:
@@ -357,7 +343,6 @@ class BundleWizardEPL(models.Model):
                 p.product_total_cost for p in rec.epl_bundle_products)
 
     # EPL BUNDLE COST PER MBps FROM EPL BUNDLE TOTAL COST & BANDWIDTH
-    @api.multi
     @api.depends('epl_bundle_cost', 'epl_bandwidth')
     def _epl_bundle_cost_per_mb(self):
         for rec in self:
@@ -366,7 +351,6 @@ class BundleWizardEPL(models.Model):
                     rec.epl_bundle_cost / rec.epl_bandwidth)
 
     # EPL PRICE PER MBps INCLUDING EPL BUNDLE PRICE PER MBps
-    @api.multi
     @api.depends('epl_price_per_mb', 'epl_bundle_price_per_mb')
     def _epl_total_price_per_mb(self):
         for rec in self:
@@ -374,7 +358,6 @@ class BundleWizardEPL(models.Model):
                                          + self.epl_bundle_price_per_mb
 
     # EPL PRICE PER MBps INCLUDING EPL BUNDLE PRICE PER MBps
-    @api.multi
     @api.depends('epl_cost_per_mb', 'epl_bundle_cost_per_mb')
     def _epl_total_cost_per_mb(self):
         for rec in self:
@@ -385,7 +368,7 @@ class BundleWizardEPL(models.Model):
     @api.model
     def round_upper_decimal(self, x):
         precision = self.get_decimal_precision()
-        factor = int("1" + "0" * precision)
+        factor = 10 ** precision
         return math.ceil(x * factor) / factor
 
     # GET DECIMAL PRECISION SETTINGS FOR PRODUCTS
@@ -395,7 +378,6 @@ class BundleWizardEPL(models.Model):
             [('name', '=', 'Product Price')]).digits
 
     # EPL TOTAL PRICE FROM PRICE PER MBps & BANDWIDTH
-    @api.multi
     @api.depends('epl_total_price_per_mb', 'epl_bandwidth')
     def _epl_total_price(self):
         for rec in self:
@@ -404,7 +386,6 @@ class BundleWizardEPL(models.Model):
                                       * rec.epl_bandwidth
 
     # EPL TOTAL COST FROM COST PER MBps & BANDWIDTH
-    @api.multi
     @api.depends('epl_total_cost_per_mb', 'epl_bandwidth')
     def _epl_total_cost(self):
         for rec in self:
@@ -413,44 +394,45 @@ class BundleWizardEPL(models.Model):
                                      * rec.epl_bandwidth
 
     # EPL ROUTE LINKS MUST BE SUCCESSIVE
-    @api.multi
-    @api.constrains('epl_route')
+    @api.constrains('epl_show', 'epl_route')
     def _epl_route_constraints(self):
         for rec in self:
-            if rec.epl_show:  # Constraints apply
-                if not rec.epl_route:
-                    raise exceptions.ValidationError(
-                        "EPL route required")
-                if not self.is_valid_route(rec.epl_route):
-                    raise exceptions.ValidationError(
-                        "EPL route links are not successive")
+            if not rec.epl_show:  # Constraints do not apply
+                continue
+            if not rec.epl_route:
+                raise exceptions.ValidationError(
+                    _("EPL route required"))
+            if not self.is_valid_route(rec.epl_route):
+                raise exceptions.ValidationError(
+                    _("EPL route links are not successive"))
 
     # EPL BACKUP LINKS MUST BE SUCCESSIVE & MATCH MAIN ROUTE
-    @api.multi
-    @api.constrains('epl_backup')
+    @api.constrains('epl_show', 'epl_protected', 'epl_route', 'epl_backup')
     def _epl_backup_constraints(self):
         for rec in self:
-            if rec.epl_show:  # Constraints apply
-                if rec.epl_protected and rec.epl_route:
-                    if not rec.epl_backup:
-                        raise exceptions.ValidationError(
-                            "EPL backup required if protection selected")
-                    if not self.is_valid_route(rec.epl_backup):
-                        raise exceptions.ValidationError(
-                            "EPL backup links are not successive")
+            if not rec.epl_show:  # Constraints do not apply
+                continue
+            if not rec.epl_protected or not rec.epl_route:
+                continue
+            if not rec.epl_backup:
+                raise exceptions.ValidationError(
+                    _("EPL backup required if protection is selected"))
+            if not self.is_valid_route(rec.epl_backup):
+                raise exceptions.ValidationError(
+                    _("EPL backup links are not successive"))
 
-                    backup_first_device = rec.epl_backup[0].a_device_id
-                    backup_last_device = rec.epl_backup[-1].z_device_id
+            backup_first_device = rec.epl_backup[0].a_device_id
+            backup_last_device = rec.epl_backup[-1].z_device_id
 
-                    route_first_device = rec.epl_route[0].a_device_id
-                    route_last_device = rec.epl_route[-1].z_device_id
+            route_first_device = rec.epl_route[0].a_device_id
+            route_last_device = rec.epl_route[-1].z_device_id
 
-                    if backup_first_device != route_first_device:
-                        raise exceptions.ValidationError(
-                            "EPL route & backup do not start from same device")
-                    if backup_last_device != route_last_device:
-                        raise exceptions.ValidationError(
-                            "EPL route & backup do not end on same device")
+            if backup_first_device != route_first_device:
+                raise exceptions.ValidationError(
+                    _("EPL route & backup do not start from same device"))
+            if backup_last_device != route_last_device:
+                raise exceptions.ValidationError(
+                    _("EPL route & backup do not end on same device"))
 
     @api.model
     def is_valid_route(self, route):
@@ -462,25 +444,25 @@ class BundleWizardEPL(models.Model):
         return True
 
     # EPL BANDWIDTH MUST BE POSITIVE
-    @api.multi
-    @api.constrains('epl_bandwidth')
+    @api.constrains('epl_show', 'epl_bandwidth')
     def _epl_bandwidth_constraints(self):
         for rec in self:
-            if rec.epl_show:  # Constraints apply
-                if rec.epl_bandwidth <= 0:
-                    raise exceptions.ValidationError(
-                        "EPL bandwidth must be a positive integer")
+            if not rec.epl_show:  # Constraints do not apply
+                continue
+            if rec.epl_bandwidth <= 0:
+                raise exceptions.ValidationError(
+                    _("EPL bandwidth must be a positive integer"))
 
     # BUNDLE PRODUCTS MUST HAVE POSITIVE QUANTITIES
-    @api.multi
-    @api.constrains('epl_bundle_products')
+    @api.constrains('epl_show', 'epl_bundle_products')
     def _epl_bundle_products_constraints(self):
         for rec in self:
-            if rec.epl_show:  # Constraints apply
-                if any(p.product_quantity < 0 for p in
-                       rec.epl_bundle_products):
-                    raise exceptions.ValidationError(
-                        "Bundle products cannot contain negative quantities")
+            if not rec.epl_show:  # Constraints do not apply
+                continue
+            if any(p.product_quantity < 0 for p in
+                   rec.epl_bundle_products):
+                raise exceptions.ValidationError(
+                    _("Bundle products cannot contain negative quantities"))
 
     # ADD EPL TO SALE ORDER
     @api.multi

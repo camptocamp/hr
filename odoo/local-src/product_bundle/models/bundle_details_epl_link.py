@@ -1,8 +1,18 @@
 from openerp import api, fields, models
 
 
-class BundleWizardEPLLink(models.Model):
-    _name = 'bundle.wizard.epl.link'
+class BundleDetailsEPLLink(models.Model):
+    _name = 'bundle.details.epl.link'
+
+    sequence = fields.Integer(default=10)
+
+    bundle_details_epl_id_route = fields.Many2one(
+        string='Bundle Details EPL Route',
+        comodel_name='bundle.details')
+
+    bundle_details_epl_id_backup = fields.Many2one(
+        string='Bundle Details EPL Backup',
+        comodel_name='bundle.details')
 
     a_device_id = fields.Many2one(string="A Device",
                                   comodel_name='bso.network.device',
@@ -46,34 +56,32 @@ class BundleWizardEPLLink(models.Model):
     mrc_bd = fields.Float(string="Price per MBps",
                           compute='_mrc_bd')
 
-    is_backup = fields.Boolean(required=True)
-
-    @api.multi
     @api.onchange('a_device_id')
     def set_domain_z_device_id(self):
         for rec in self:
             rec.z_device_id = False
-            if rec.a_device_id:
-                links = self.get_link_ids(rec.a_device_id.id)
-                device_keys = ('pop1_device_id', 'pop2_device_id')
-                device_all_ids = [l[d].id for l in links for d in device_keys]
-                device_ids = list(set(device_all_ids) - {rec.a_device_id.id})
-                if len(device_ids) == 1:
-                    rec.z_device_id = device_ids[0]
-                return {'domain': {'z_device_id': [('id', 'in', device_ids)]}}
+            if not rec.a_device_id:
+                continue
+            links = self.get_link_ids(rec.a_device_id.id)
+            device_keys = ('pop1_device_id', 'pop2_device_id')
+            device_all_ids = [l[d].id for l in links for d in device_keys]
+            device_ids = list(set(device_all_ids) - {rec.a_device_id.id})
+            if len(device_ids) == 1:
+                rec.z_device_id = device_ids[0]
+            return {'domain': {'z_device_id': [('id', 'in', device_ids)]}}
 
-    @api.multi
     @api.onchange('a_device_id', 'z_device_id')
     def set_domain_link_id(self):
         for rec in self:
             rec.link_id = False
-            if rec.a_device_id and rec.z_device_id:
-                links = self.get_link_ids(rec.a_device_id.id,
-                                          rec.z_device_id.id)
-                link_ids = [link.id for link in links]
-                if len(link_ids) == 1:
-                    rec.link_id = link_ids[0]
-                return {'domain': {'link_id': [('id', 'in', link_ids)]}}
+            if not rec.a_device_id or not rec.z_device_id:
+                continue
+            links = self.get_link_ids(rec.a_device_id.id,
+                                      rec.z_device_id.id)
+            link_ids = [link.id for link in links]
+            if len(link_ids) == 1:
+                rec.link_id = link_ids[0]
+            return {'domain': {'link_id': [('id', 'in', link_ids)]}}
 
     @api.model
     def get_link_ids(self, a_device_id, z_device_id=0):
@@ -86,7 +94,6 @@ class BundleWizardEPLLink(models.Model):
                        ('pop2_device_id', '=', z_device_id)]
         return self.env['bso.network.link'].search(domain)
 
-    @api.multi
     @api.depends('link_id')
     def _mrc_bd(self):
         for rec in self:

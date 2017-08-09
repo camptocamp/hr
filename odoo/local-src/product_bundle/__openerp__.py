@@ -9,10 +9,11 @@
     'depends': ['base', 'sale', 'purchase', 'product'],
     'data': [
         'security/ir.model.access.csv',
-        'views/bundle.xml',
-        'views/bundle_wizard.xml',
-        'views/bundle_wizard_epl.xml',
-        'views/sale_order_line.xml'
+        'views/bundle_details.xml',
+        'views/bundle_details_epl.xml',
+        'views/product_template.xml',
+        'views/sale_order.xml',
+        'views/sale_order_line.xml',
     ],
     'installable': True,
     'auto_install': False,

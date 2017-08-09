@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="bundle_wizard_edit" model="ir.actions.server">
+    <record id="bundle_details_edit" model="ir.actions.server">
         <field name="name">Bundle Wizard Edit</field>
         <field name="model_id" ref="model_sale_order_line"/>
-        <field name="code">action = object.bundle_wizard_edit()</field>
+        <field name="code">action = object.bundle_details_edit()</field>
     </record>
 
     <record id="sale_margin_sale_order_line_tree" model="ir.ui.view">
@@ -15,7 +15,7 @@
             <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']"
                    position="after">
                 <button string="Edit"
-                        name="%(product_bundle.bundle_wizard_edit)d"
+                        name="%(product_bundle.bundle_details_edit)d"
                         type="action"
                         class="btn-link"/>
             </xpath>
