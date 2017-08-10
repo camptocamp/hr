@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 
 class MrpInvoicing(models.TransientModel):
-    _name = 'mrp.invoicing'
+    _name = 'wizard.mrp.invoicing'
     _description = 'Date for invoicing mrp product'
 
     ref_date = fields.Datetime(

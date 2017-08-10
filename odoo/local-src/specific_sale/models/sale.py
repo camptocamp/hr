@@ -87,6 +87,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def has_mrc_product(self):
+        self.ensure_one()
         for sol in self.order_line:
             if sol.product_uom.recurring:
                 return True
@@ -98,12 +99,12 @@ class SaleOrder(models.Model):
         if self.has_mrc_product():
             wizard_form = self.env.ref('specific_sale.mrp_invoicing_form')
             first_day_month = datetime.now().replace(day=1)
-            model = self.env['mrp.invoicing'].create(
+            model = self.env['wizard.mrp.invoicing'].create(
                     {'ref_date': fields.Datetime.to_string(first_day_month)})
             return {
                 'name': 'Select a reference date for invoicing',
                 'type': 'ir.actions.act_window',
-                'res_model': 'mrp.invoicing',
+                'res_model': 'wizard.mrp.invoicing',
                 'res_id': model.id,
                 'view_id': wizard_form.id,
                 'view_type': 'form',

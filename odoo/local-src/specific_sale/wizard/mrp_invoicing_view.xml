@@ -3,7 +3,7 @@
 
     <record id="mrp_invoicing_form" model="ir.ui.view">
       <field name="name">MRP product invoicing form</field>
-      <field name="model">mrp.invoicing</field>
+      <field name="model">wizard.mrp.invoicing</field>
       <field name="arch" type="xml">
         <form string="MRP invoicing date">
           <p class="oe_grey">

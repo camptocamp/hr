@@ -11,14 +11,15 @@ class ProductTemplate(models.Model):
 
     def _compute_default_uomid(self):
         if self.recurring_invoice:
-            return self.ref('__setup__.product_unit_month')
+            return self.env.ref('__setup__.product_unit_month',
+                                raise_if_not_found=False)
 
     uom_id = fields.Many2one(
         default=_compute_default_uomid
     )
 
     @api.onchange('recurring_invoice')
-    def setInvoicingPolicy(self):
+    def set_invoicing_policy(self):
         if self.recurring_invoice:
             self.invoice_policy = 'delivery'
         else:
