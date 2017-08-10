@@ -51,9 +51,6 @@
       <field name="model">sale.order</field>
       <field name="inherit_id" ref="sale.view_order_form"/>
       <field name="arch" type="xml">
-        <xpath expr="//button[@name='action_done']" position="after">
-          <button name="action_invoicing" string="Go invoicing" class="btn-primary" type="object"/>
-        </xpath>
         <!-- Yes twice the same expression, because there is two create invoice button to change -->
         <xpath expr="(//button[@name='%(sale.action_view_sale_advance_payment_inv)d' and @type='action'])" position="attributes">
           <attribute name="name">action_invoicing</attribute>

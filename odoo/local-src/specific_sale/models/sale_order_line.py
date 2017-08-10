@@ -36,9 +36,8 @@ class SaleOrderLine(models.Model):
         """ Change the delivered_qty calculation method for MRC product"""
         self.ensure_one()
         qty = 0
-        ref_date = self.env.context.get('ref_date_mrc_delivery')
-        if not ref_date:
-            ref_date = fields.datetime.now()
+        ref_date = (self.env.context.get('ref_date_mrc_delivery')
+                    or fields.datetime.now())
         if self.product_uom.recurring:
             stock_move = self.env['stock.move'].search([
                 ('state', '=', 'done'),

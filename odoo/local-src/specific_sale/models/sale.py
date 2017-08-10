@@ -92,41 +92,40 @@ class SaleOrder(models.Model):
                 return True
         return False
 
-
     @api.multi
     def action_invoicing(self):
+        """ Select the wizard to call depending of the products in the order"""
         if self.has_mrc_product():
-            print 'Call wizard mrc product invoicing'
-            wiz_form = self.env.ref('specific_sale.mrp_invoicing_form')
-            v = self.env['mrp.invoicing']
+            wizard_form = self.env.ref('specific_sale.mrp_invoicing_form')
             first_day_month = datetime.now().replace(day=1)
-            new = v.create({'ref_date': fields.Datetime.to_string(first_day_month)})
+            model = self.env['mrp.invoicing'].create(
+                    {'ref_date': fields.Datetime.to_string(first_day_month)})
             return {
-                'name': 'tdu',
+                'name': 'Select a reference date for invoicing',
                 'type': 'ir.actions.act_window',
                 'res_model': 'mrp.invoicing',
-                'res_id': new.id,
-                'view_id': wiz_form.id,
+                'res_id': model.id,
+                'view_id': wizard_form.id,
                 'view_type': 'form',
                 'view_mode': 'form',
                 'target': 'new'
             }
         else:
-            print 'Call normal invoicing'
-            action = self.env.ref('sale.action_view_sale_advance_payment_inv')
-            v = self.env[action.res_model]
-            new = v.create({})
-            return {
-                'name': action.name,
-                'type': action.type,
-                'res_model': action.res_model,
-                'res_id': new.id,
-                #'view_id': wiz_form.id,
-                'view_type': 'form',
-                'view_mode': 'form',
-                'target': 'new'
-            }
+            return self.get_create_invoice_action()
 
+    def get_create_invoice_action(self):
+        """ Return the response to the wizard to create invoices"""
+        action = self.env.ref('sale.action_view_sale_advance_payment_inv')
+        model = self.env[action.res_model].create({})
+        return {
+            'name': action.name,
+            'type': action.type,
+            'res_model': action.res_model,
+            'res_id': model.id,
+            'view_type': 'form',
+            'view_mode': 'form',
+            'target': 'new'
+        }
 
     def all_mrc_delivered(self):
         """ Are all MRC product delivered in the sale order"""

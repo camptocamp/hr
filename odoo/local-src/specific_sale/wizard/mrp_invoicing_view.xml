@@ -7,7 +7,7 @@
       <field name="arch" type="xml">
         <form string="MRP invoicing date">
           <p class="oe_grey">
-            Set a base date to generate the invoices
+            Select a reference date to generate the invoice
           </p>
           <group>
             <field name="ref_date"/>
