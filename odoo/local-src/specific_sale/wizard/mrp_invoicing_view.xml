@@ -13,7 +13,7 @@
             <field name="ref_date"/>
           </group>
           <footer>
-            <button name="ok" string="Ok" type="object" class="btn-primary"/>
+            <button name="button_ok" string="Ok" type="object" class="btn-primary"/>
             <button string="Cancel" class="btn-default" special="cancel"/>
           </footer>
         </form>
