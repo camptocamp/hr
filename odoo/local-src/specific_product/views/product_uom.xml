@@ -12,4 +12,15 @@
         </field>
     </record>
 
+    <record id="product_uom__specific_tree_view" model="ir.ui.view">
+        <field name="name">product_uom__specific_tree_view</field>
+        <field name="model">product.uom</field>
+        <field name="inherit_id" ref="product.product_uom_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='uom_type']" position="after">
+                <field name="recurring" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

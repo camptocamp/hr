@@ -36,7 +36,7 @@ class SaleOrderLine(models.Model):
                 has_subscription_contract = bool(line.order_id.subscription_id)
                 if line.qty_delivered > 0 and not has_subscription_contract:
                     line.invoice_status = 'to invoice'
-                elif self.is_delivered_and_invoiced():
+                elif line.is_delivered_and_invoiced():
                     line.invoice_status = 'invoiced'
 
     @api.multi
