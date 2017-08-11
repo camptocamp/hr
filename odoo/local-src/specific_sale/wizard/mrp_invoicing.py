@@ -18,6 +18,8 @@ class MrpInvoicing(models.TransientModel):
         for wizard in self:
             sale_order_id = self.env.context.get('active_ids')[0]
             sale_order = self.env['sale.order'].browse(sale_order_id)
+            for line in sale_order.order_line:
+                line.qty_delivered = line.with_context(ref_date_mrc_delivery=self.ref_date)._get_delivered_qty()
             res = sale_order.get_create_invoice_action()
             # The next wizard need the sale order id in the context
             res['context'] = {

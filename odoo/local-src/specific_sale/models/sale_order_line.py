@@ -2,8 +2,10 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models, fields
+from __future__ import division
+from calendar import monthrange
 from dateutil import relativedelta
+from odoo import api, models, fields
 
 
 class SaleOrderLine(models.Model):
@@ -42,8 +44,11 @@ class SaleOrderLine(models.Model):
         """ Change the delivered_qty calculation method for MRC product"""
         self.ensure_one()
         qty = 0
-        ref_date = (self.env.context.get('ref_date_mrc_delivery')
-                    or fields.datetime.now())
+        ref_date = self.env.context.get('ref_date_mrc_delivery')
+        if ref_date:
+            ref_date = fields.Datetime.from_string(ref_date)
+        else:
+            ref_date = fields.datetime.now()
         if self.product_uom.recurring:
             stock_moves = self.env['stock.move'].search([
                 ('state', '=', 'done'),
@@ -61,10 +66,8 @@ class SaleOrderLine(models.Model):
     @staticmethod
     def get_month_delta_for_mrc(ref_date, delivery_date):
         """ Return the timedelta in month between ref_date and delivery_date"""
-        days_since_delivery = relativedelta.relativedelta(
-                ref_date, delivery_date).days
-        days_since_start_month_delivery = (days_since_delivery +
-                                           delivery_date.day - 1)
-        if days_since_start_month_delivery > 0:
-            return days_since_delivery / days_since_start_month_delivery
-        return 0
+        delta = relativedelta.relativedelta(ref_date, delivery_date)
+        months = delta.months
+        if delta.days > 0:
+            months += delta.days / monthrange(ref_date.year, ref_date.month)[1]
+        return months
