@@ -114,3 +114,9 @@ migration:
         upgrade:
           - specific_security
     - version: 10.1.6
+      addons:
+        upgrade:
+          - dj_compilation_account
+          - dj_compilation_stock
+          - web_environment_ribbon
+          - server_environment_ir_config_parameter

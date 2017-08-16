@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* Add DJ & Ribbon
+
 **Bugfixes**
 
 **Build**
