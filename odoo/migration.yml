@@ -113,3 +113,4 @@ migration:
       addons:
         upgrade:
           - specific_security
+    - version: 10.1.6

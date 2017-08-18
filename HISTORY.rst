@@ -28,6 +28,14 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.1.6 (2017-08-18)
++++++++++++++++++++
+
+**Bugfixes**
+
+* Fix email configuration
+
+
 10.1.5 (2017-08-04)
 +++++++++++++++++++
 
