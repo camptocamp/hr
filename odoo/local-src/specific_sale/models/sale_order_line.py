@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from __future__ import division
+from datetime import datetime
 from calendar import monthrange
 from dateutil import relativedelta
 from odoo import api, models, fields
@@ -14,9 +15,10 @@ class SaleOrderLine(models.Model):
     @api.multi
     def write(self, values):
         res = super(SaleOrderLine, self).write(values)
-        for record in self:
-            if record.order_id.all_mrc_delivered():
-                record.order_id.create_contract()
+        self.mapped('order_id').create_contract()
+        # for record in self:
+        #     if record.order_id.all_mrc_delivered():
+        #         record.order_id.create_contract()
         return res
 
     @api.multi
@@ -48,7 +50,7 @@ class SaleOrderLine(models.Model):
         if ref_date:
             ref_date = fields.Datetime.from_string(ref_date)
         else:
-            ref_date = fields.datetime.now()
+            ref_date = datetime.now()
         if self.product_uom.recurring:
             stock_moves = self.env['stock.move'].search([
                 ('state', '=', 'done'),

@@ -9,12 +9,5 @@ class ProductUom(models.Model):
     _inherit = 'product.uom'
 
     recurring = fields.Boolean(
-        string='Recurring',
-        compute='_compute_recurring',
-        store=True
+        related='category_id.recurring',
     )
-
-    @api.depends('category_id.recurring')
-    def _compute_recurring(self):
-        for record in self:
-            record.recurring = record.category_id.recurring

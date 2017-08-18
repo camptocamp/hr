@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models, fields
+from odoo import api, models, fields, _
 from odoo.exceptions import ValidationError
 
 
@@ -15,7 +15,7 @@ class ProductTemplate(models.Model):
                                 raise_if_not_found=False)
 
     uom_id = fields.Many2one(
-        default=_compute_default_uomid
+            default=lambda self: self._compute_default_uomid()
     )
 
     @api.onchange('recurring_invoice')
@@ -28,5 +28,5 @@ class ProductTemplate(models.Model):
     @api.constrains('uom_id', 'recurring_invoice')
     def _check_categ_id(self):
         if not (self.recurring_invoice == self.uom_id.recurring):
-            raise ValidationError('The unit of measure is not compatible with'
-                                  'the subscription type')
+            raise ValidationError(_('The unit of measure is not compatible '
+                                    'with the subscription type'))

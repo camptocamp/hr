@@ -9,7 +9,17 @@ from datetime import datetime
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    @api.depends('order_line.product_uom.recurring')
+    def _compute_has_mrc_product(self):
+        for record in self:
+            record.has_mrc_product = False
+            for sol in record.order_line:
+                if sol.product_uom.recurring:
+                    record.has_mrc_product = True
+                    break
+
     refusal_reason = fields.Text(track_visibility='onchange')
+    has_mrc_product = fields.Boolean(compute='_compute_has_mrc_product')
 
     @api.model
     def _setup_fields(self, partial):
@@ -86,17 +96,10 @@ class SaleOrder(models.Model):
         return super(SaleOrder, todo).action_draft()
 
     @api.multi
-    def has_mrc_product(self):
-        self.ensure_one()
-        for sol in self.order_line:
-            if sol.product_uom.recurring:
-                return True
-        return False
-
-    @api.multi
     def action_invoicing(self):
         """ Select the wizard to call depending of the products in the order"""
-        if self.has_mrc_product():
+        self.ensure_one()
+        if self.has_mrc_product:
             wizard_form = self.env.ref('specific_sale.mrp_invoicing_form')
             first_day_month = datetime.now().replace(day=1)
             model = self.env['wizard.mrp.invoicing'].create(
@@ -138,5 +141,6 @@ class SaleOrder(models.Model):
 
     def create_contract(self):
         """ Create the contract only when all mrc products are delivered """
+        self.ensure_one()
         if self.all_mrc_delivered():
             super(SaleOrder, self).create_contract()
