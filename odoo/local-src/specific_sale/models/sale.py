@@ -135,7 +135,7 @@ class SaleOrder(models.Model):
         """ Are all MRC product delivered in the sale order"""
         for sol in self.order_line:
             if sol.product_uom.recurring:
-                if sol.product_uom_qty > sol.qty_delivered:
+                if not sol.mrc_fully_delivered():
                     return False
         return True
 
@@ -143,4 +143,4 @@ class SaleOrder(models.Model):
         """ Create the contract only when all mrc products are delivered """
         self.ensure_one()
         if self.all_mrc_delivered():
-            super(SaleOrder, self).create_contract()
+            self.subscription_id = super(SaleOrder, self).create_contract()

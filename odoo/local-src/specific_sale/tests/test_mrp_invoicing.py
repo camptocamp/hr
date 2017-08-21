@@ -2,6 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
+from __future__ import division
 from odoo.addons.sale.tests import test_sale_common
 
 
@@ -110,15 +111,16 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
                           'There should be no qty_deliverd for MRC')
         self.assertEquals(self.sol_2.qty_delivered, 1,
                           'There should be a qty_delivered of one for NRC')
-        # Test get_delivered_qty
+        # Check the qty_delivered on 1st of July
+        # 21 days out of 30 for that month
         self.env.context = {
                 'ref_date_mrc_delivery': '2017-07-01 12:00:00'
             }
-        self.assertEquals(
-                '{:.2f}'.format(self.sol_1._get_delivered_qty()),
-                '0.68',
-                'The delivered quantity for the rent is not correct')
-        # Generate invoice using action for another date
+        delivered_qty = (30 - (10 - 1)) / 30
+        self.assertAlmostEquals(
+                self.sol_1._get_delivered_qty(), delivered_qty, 3,
+                'Delivered quantity on 1st July for the MRC is not correct')
+        # Generate invoice using action for another date 1st July
         # First wizard, to select the reference date for MRC products
         wiz_act = self.so.action_invoicing()
         wiz = self.env[wiz_act['res_model']].browse(wiz_act['res_id'])
@@ -135,9 +137,9 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
         self.assertEquals(len(self.so.invoice_ids), 1,
                           'Only one invoice should have been created')
         invoice_line = self.so.invoice_ids[0].invoice_line_ids
-        self.assertEquals(invoice_line[0].quantity, 0.677,
-                          'The invoiced quantity for the subscription'
-                          'is not 0.677')
+        self.assertAlmostEquals(invoice_line[0].quantity, delivered_qty, 3,
+                                'The invoiced quantity in June for the '
+                                'subscription is incorrect')
         self.assertEquals(invoice_line[1].quantity, 3,
                           'The invoiced quantity for the server is not 3')
 
@@ -160,11 +162,12 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
                 'ref_date_mrc_delivery': '2017-08-01 12:00:00'
             }
         # Checking the delivered qty for the MRC product
-        self.assertEquals(
-                '{:.2f}'.format(self.sol_1._get_delivered_qty()),
-                '2.48',     # I get 2.48, Alex get 2.38 ??
-                'The delivered quantity for the rent is not correct')
-
+        delivered_qty += 1
+        delivered_qty += (12 / 31) * 2
+        self.assertAlmostEquals(
+                self.sol_1._get_delivered_qty(),
+                delivered_qty, 3,
+                'The delivered quantity for MRC on 1st August is not correct')
         # Generate the 2nd invoice
         wiz_act = self.so.action_invoicing()
         wiz = self.env[wiz_act['res_model']].browse(wiz_act['res_id'])
@@ -181,22 +184,9 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
         self.assertEquals(len(self.so.invoice_ids), 2,
                           'There should be two invoices created')
         invoice_line = self.so.invoice_ids[0].invoice_line_ids
-        self.assertEquals(invoice_line[0].quantity, 1.804,
-                          'The invoiced quantity for the subscription'
-                          'is not 1.804')
+        invoiced_qty = 1 + 2 * (12/31)
+        self.assertAlmostEquals(invoice_line[0].quantity, invoiced_qty, 3,
+                                'The invoiced quantity for the subscription'
+                                'on 1st August is incorrect')
         self.assertEquals(len(invoice_line), 1,
                           'The 2nd invoice should have only one line')
-
-        # for invoice in self.so.invoice_ids:
-        #     print '|--- Invoice line generated for invoice --->'
-        #     for il in invoice.invoice_line_ids:
-        #         print '  {} | {} * {}'.format(
-        #           il.name, il.quantity, il.price_unit)
-        #     print '  Total {}'.format(invoice.amount_total)
-        #     print '<---|'
-
-        # print '|||---->'
-        # for sol in self.so.order_line:
-        #     print '{} : {} : {}'.format(
-        #           sol.name, sol.qty_delivered, sol.qty_to_invoice)
-        # print '<----|||'

@@ -14,6 +14,7 @@
              'account',
              'stock',
              'sales_team',
+             'website_contract',
              ],
  'website': 'http://www.camptocamp.com',
  'data': ['security/groups.xml',

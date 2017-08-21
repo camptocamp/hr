@@ -12,13 +12,25 @@ from odoo import api, models, fields
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
+    @api.depends('product_uom.recurring')
+    def _compute_qty_delivered_calculated(self):
+        """ Used in the view, and to update the qty_delivered regularly """
+        for record in self:
+            if record.product_uom.recurring:
+                qty = record._get_delivered_qty()
+                record.qty_delivered_calculated = qty
+                record.write({'qty_delivered': qty})
+            else:
+                record.qty_delivered_calculated = record.qty_delivered
+
+    qty_delivered_calculated = fields.Float(
+        string='Delivered',
+        compute='_compute_qty_delivered_calculated')
+
     @api.multi
     def write(self, values):
         res = super(SaleOrderLine, self).write(values)
         self.mapped('order_id').create_contract()
-        # for record in self:
-        #     if record.order_id.all_mrc_delivered():
-        #         record.order_id.create_contract()
         return res
 
     @api.multi
@@ -54,6 +66,7 @@ class SaleOrderLine(models.Model):
         if self.product_uom.recurring:
             stock_moves = self.env['stock.move'].search([
                 ('state', '=', 'done'),
+                ('scrapped', '=', False),
                 ('procurement_id', 'in', self.procurement_ids.ids),
             ])
             for move in stock_moves:
@@ -65,11 +78,45 @@ class SaleOrderLine(models.Model):
             qty = super(SaleOrderLine, self)._get_delivered_qty()
         return qty
 
+    def mrc_fully_delivered(self):
+        """ For MRC product verify with stock.move if the order line
+            is completely delivered
+        """
+        self.ensure_one()
+        if not self.product_uom.recurring:
+            return True
+        qty = 0.0
+        for move in self.procurement_ids.mapped('move_ids').filtered(
+                lambda r: r.state == 'done' and not r.scrapped):
+            if move.location_dest_id.usage == "customer":
+                if not move.origin_returned_move_id:
+                    qty += move.product_uom._compute_quantity(
+                            move.product_uom_qty, self.product_uom)
+            elif (move.location_dest_id.usage == "internal"
+                  and move.to_refund_so):
+                qty -= move.product_uom._compute_quantity(
+                        move.product_uom_qty, self.product_uom)
+        return qty == self.product_uom_qty
+
     @staticmethod
     def get_month_delta_for_mrc(ref_date, delivery_date):
         """ Return the timedelta in month between ref_date and delivery_date"""
-        delta = relativedelta.relativedelta(ref_date, delivery_date)
-        months = delta.months
-        if delta.days > 0:
-            months += delta.days / monthrange(ref_date.year, ref_date.month)[1]
+        months = 0
+        start_date = delivery_date
+        while True:
+            # Calculating each month in the given period separately
+            if (ref_date.month == start_date.month and
+               ref_date.year == start_date.year):
+                end_date = ref_date
+            else:
+                end_date = start_date + relativedelta.relativedelta(
+                        months=+1, day=1)
+            delta = relativedelta.relativedelta(end_date, start_date)
+            months += delta.months
+            if delta.days > 0:
+                months += delta.days / monthrange(
+                        start_date.year, start_date.month)[1]
+            if (end_date == ref_date):
+                break
+            start_date = end_date
         return months

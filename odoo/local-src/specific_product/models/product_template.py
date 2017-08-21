@@ -15,7 +15,7 @@ class ProductTemplate(models.Model):
                                 raise_if_not_found=False)
 
     uom_id = fields.Many2one(
-            default=lambda self: self._compute_default_uomid()
+        default=lambda self: self._compute_default_uomid()
     )
 
     @api.onchange('recurring_invoice')
