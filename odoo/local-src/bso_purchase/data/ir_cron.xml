@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo> <!-- Add noupdate -->
+
+    <!-- Automatic Invoice of PO -->
+    <record model='ir.cron' id="cron_po_auto_invoice">
+      <field name="name">Purchase Order Auto Invoice</field>
+      <field name="interval_number" eval="1"/>
+      <field name="active" eval="False" /> <!-- To activate later -->
+      <field name="interval_type">weeks</field>
+      <field name="model">account.invoice</field>
+      <field name="function">po_auto_invoice</field>
+      <field name="args"></field>
+      <field name="numbercall">-1</field>
+    </record>
+
+</odoo>

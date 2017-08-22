@@ -126,3 +126,5 @@ migration:
         upgrade:
           - specific_product
           - specific_sale
+          - bso_base
+          - bso_purchase
