@@ -12,6 +12,15 @@ class ResUsers(models.Model):
     expensify_id = fields.Char(string='Expensify ID')
     expensify_secret = fields.Char(string='Expensify secret')
 
+    def __init__(self, pool, cr):
+        super(ResUsers, self).__init__(pool, cr)
+        self.SELF_READABLE_FIELDS += [
+            'expensify_id', 'expensify_secret', 'alias_id',
+        ]
+        self.SELF_WRITEABLE_FIELDS += [
+            'expensify_id', 'expensify_secret'
+        ]
+
     @api.model
     @api.returns('self', lambda value: value.id)
     def create(self, values):

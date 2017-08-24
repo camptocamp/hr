@@ -8,8 +8,8 @@
         <field name="arch" type="xml">
             <xpath expr="//group[field[@name='email']]" position="before">
                 <group name="expensify" string="Expensify">
-                    <field name="expensify_id"/>
-                    <field name="expensify_secret" password="True"/>
+                    <field name="expensify_id" readonly="0"/>
+                    <field name="expensify_secret" password="True" readonly="0"/>
                 </group>
             </xpath>
         </field>
@@ -23,8 +23,8 @@
             <xpath expr="//notebook" position="inside">
                 <page name="expensify" string="Expensify">
                     <group>
-                        <field name="expensify_id"/>
-                        <field name="expensify_secret" password="True"/>
+                        <field name="expensify_id" readonly="0"/>
+                        <field name="expensify_secret" password="True" readonly="0"/>
                     </group>
                 </page>
             </xpath>
