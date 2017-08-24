@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<odoo>
+
+  <record model="ir.ui.view" id="wiz_sale_order_source_form">
+    <field name="model">wiz.sale.order.source</field>
+    <field name="arch" type="xml">
+      <form>
+        <field name="order_id" invisible="1" />
+        <field name="line_ids" invisible="1" />
+        <div class="row">
+          <div class="col-xs-6">
+            <label string="Lines to source" /><br />
+            <field name="to_source_line_ids" nolabel="1" />
+          </div>
+          <div class="col-xs-6">
+            <label string="Sourced lines" /><br />
+            <field name="sourced_line_ids" nolabel="1" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="pull-right">
+              <label for="supplier_id" />
+              <field name="supplier_id" nolabel="1" options="{'no_create': 1, 'no_open': 1}" />
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <!-- mimic a button :) -->
+            <label for="source_it" class="pull-left btn btn-success"
+                   attrs="{'invisible':[('supplier_id','=',False)]}" />
+            <field name="source_it" invisible="1" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <label string="Sourcing lines" /><br />
+            <field name="sourcing_line_ids" nolabel="1" options="{'no_create': 1, 'no_open': 1}"/>
+          </div>
+        </div>
+        <footer>
+          <button string="Ok" name="action_ok" type="object" class="btn-primary" />
+          <button string="Cancel" class="btn-default"
+              special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+
+  <record model="ir.ui.view" id="wiz_sale_order_line_tosource_tree">
+    <field name="model">sale.order.line.tosource</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="so_line_id" invisible="1" />
+        <field name="product_id" />
+        <field name="uom_id" />
+        <field name="qty" />
+        <field name="supplier_id" />
+      </tree>
+    </field>
+  </record>
+
+
+  <record model="ir.ui.view" id="wiz_sale_order_line_sourcing_tree">
+    <field name="model">sale.order.line.sourcing</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="so_line_id" invisible="1" />
+        <field name="source_line_id" invisible="1" />
+        <field name="product_id" />
+        <field name="uom_id" />
+        <field name="qty" />
+        <field name="supplier_id" />
+        <field name="price" />
+      </tree>
+    </field>
+  </record>
+
+
+  <record id="act_wiz_sale_order_source" model="ir.actions.act_window">
+      <field name="name">Source sale order</field>
+      <field name="res_model">wiz.sale.order.source</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="wiz_sale_order_source_form" />
+      <field name="target">new</field>
+  </record>
+
+</odoo>
