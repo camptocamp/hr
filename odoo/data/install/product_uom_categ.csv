@@ -1,4 +1,0 @@
-id,name,recurring
-__setup__.unit_category_time,Unit/time,True
-__setup__.unit_category_bandwidth,Bandwidth,False
-__setup__.unit_category_bandwidth_time,Bandwidth/time,True

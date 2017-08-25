@@ -11,7 +11,7 @@ class ProductTemplate(models.Model):
 
     def _compute_default_uomid(self):
         if self.recurring_invoice:
-            return self.env.ref('__setup__.product_unit_month',
+            return self.env.ref('specific_product.product_unit_month',
                                 raise_if_not_found=False)
 
     uom_id = fields.Many2one(

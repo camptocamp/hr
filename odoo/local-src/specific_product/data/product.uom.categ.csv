@@ -1,0 +1,4 @@
+id,name,recurring
+specific_product.unit_category_time,Unit/time,True
+specific_product.unit_category_bandwidth,Bandwidth,False
+specific_product.unit_category_bandwidth_time,Bandwidth/time,True

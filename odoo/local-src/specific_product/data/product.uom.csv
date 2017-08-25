@@ -1,0 +1,4 @@
+id,name,category_id/id
+specific_product.product_unit_month,Unit/month,specific_product.unit_category_time
+specific_product.product_unit_mbps,Mbps,specific_product.unit_category_bandwidth
+specific_product.proudct_unit_mpbs_month,Mpbs/month,specific_product.unit_category_bandwidth_time

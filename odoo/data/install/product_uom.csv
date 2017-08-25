@@ -1,4 +1,0 @@
-id,name,category_id/id
-__setup__.product_unit_month,Unit/month,__setup__.unit_category_time
-__setup__.product_unit_mbps,Mbps,__setup__.unit_category_bandwidth
-__setup__.proudct_unit_mpbs_month,Mpbs/month,__setup__.unit_category_bandwidth_time
