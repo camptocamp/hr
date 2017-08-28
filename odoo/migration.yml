@@ -126,6 +126,3 @@ migration:
         upgrade:
           - specific_product
           - specific_sale
-      operations:
-        post:
-          - anthem songs.upgrade.upgrade_10_2_0::main
