@@ -42,6 +42,24 @@
             context="{'default_order_id': active_id}"
             groups="specific_security.group_technical_mgmt" />
         </button>
+
+      </field>
+    </record>
+
+    <record id="view_order_form_mrp_invoicing" model="ir.ui.view">
+      <field name="name">sale.order.form.mrp_invoicing</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <!-- Yes twice the same expression, because there is two create invoice button to change -->
+        <xpath expr="(//button[@name='%(sale.action_view_sale_advance_payment_inv)d' and @type='action'])" position="attributes">
+          <attribute name="name">action_invoicing</attribute>
+          <attribute name="type">object</attribute>
+        </xpath>
+        <xpath expr="(//button[@name='%(sale.action_view_sale_advance_payment_inv)d' and @type='action'])" position="attributes">
+          <attribute name="name">action_invoicing</attribute>
+          <attribute name="type">object</attribute>
+        </xpath>
       </field>
     </record>
 

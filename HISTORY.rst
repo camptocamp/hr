@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1003 Invoicing process for MRP products
+
 **Bugfixes**
 
 **Build**

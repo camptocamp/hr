@@ -11,11 +11,17 @@
  'depends': [
      'sale_double_validation',
      'specific_security',
+     'website_contract',
  ],
  'website': 'www.camptocamp.com',
+ 'demo': [
+     'data/prep_exising_data.yml',
+ ],
  'data': [
      'wizard/sale_refusal_view.xml',
+     'wizard/mrp_invoicing_view.xml',
      'views/sale.xml',
+     'views/sale_order_line.xml',
  ],
  'test': [],
  'installable': True,

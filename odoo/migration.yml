@@ -121,3 +121,11 @@ migration:
           - web_environment_ribbon
           - server_environment_ir_config_parameter
     - version: 10.1.7
+    - version: 10.2.0
+      addons:
+        upgrade:
+          - specific_product
+          - specific_sale
+      operations:
+        post:
+          - anthem songs.upgrade.upgrade_10_2_0::main

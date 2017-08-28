@@ -3,12 +3,23 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import api, fields, models, _
+from datetime import datetime
 
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    @api.depends('order_line.product_uom.recurring')
+    def _compute_has_mrc_product(self):
+        for record in self:
+            record.has_mrc_product = False
+            for sol in record.order_line:
+                if sol.product_uom.recurring:
+                    record.has_mrc_product = True
+                    break
+
     refusal_reason = fields.Text(track_visibility='onchange')
+    has_mrc_product = fields.Boolean(compute='_compute_has_mrc_product')
 
     @api.model
     def _setup_fields(self, partial):
@@ -83,3 +94,53 @@ class SaleOrder(models.Model):
 
         todo = self.filtered(lambda s: s.state != 'refused')
         return super(SaleOrder, todo).action_draft()
+
+    @api.multi
+    def action_invoicing(self):
+        """ Select the wizard to call depending of the products in the order"""
+        self.ensure_one()
+        if self.has_mrc_product:
+            wizard_form = self.env.ref('specific_sale.mrp_invoicing_form')
+            first_day_month = datetime.now().replace(day=1)
+            model = self.env['wizard.mrp.invoicing'].create(
+                    {'ref_date': fields.Datetime.to_string(first_day_month)})
+            return {
+                'name': 'Select a reference date for invoicing',
+                'type': 'ir.actions.act_window',
+                'res_model': 'wizard.mrp.invoicing',
+                'res_id': model.id,
+                'view_id': wizard_form.id,
+                'view_type': 'form',
+                'view_mode': 'form',
+                'target': 'new'
+            }
+        else:
+            return self.get_create_invoice_action()
+
+    def get_create_invoice_action(self):
+        """ Return the response to the wizard to create invoices"""
+        action = self.env.ref('sale.action_view_sale_advance_payment_inv')
+        model = self.env[action.res_model].create({})
+        return {
+            'name': action.name,
+            'type': action.type,
+            'res_model': action.res_model,
+            'res_id': model.id,
+            'view_type': 'form',
+            'view_mode': 'form',
+            'target': 'new'
+        }
+
+    def all_mrc_delivered(self):
+        """ Are all MRC product delivered in the sale order"""
+        for sol in self.order_line:
+            if sol.product_uom.recurring:
+                if not sol.mrc_fully_delivered():
+                    return False
+        return True
+
+    def create_contract(self):
+        """ Create the contract only when all mrc products are delivered """
+        self.ensure_one()
+        if self.all_mrc_delivered():
+            self.subscription_id = super(SaleOrder, self).create_contract()

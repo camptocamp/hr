@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_uom_categ_specific_form_view" model="ir.ui.view">
+        <field name="name">product_uom_categ_specific_form_view</field>
+        <field name="model">product.uom.categ</field>
+        <field name="inherit_id" ref="product.product_uom_categ_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                    <field name="recurring"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+

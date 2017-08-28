@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mrp_invoicing_form" model="ir.ui.view">
+      <field name="name">MRP product invoicing form</field>
+      <field name="model">wizard.mrp.invoicing</field>
+      <field name="arch" type="xml">
+        <form string="MRP invoicing date">
+          <p class="oe_grey">
+            Select a reference date to generate the invoice
+          </p>
+          <group>
+            <field name="ref_date"/>
+          </group>
+          <footer>
+            <button name="button_ok" string="Ok" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-default" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+</odoo>

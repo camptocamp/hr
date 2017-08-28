@@ -1,0 +1,6 @@
+-
+  !python {model: product.product, id: False}: |
+    # Modify demo data from websit_contract, so it does not blow up on constrains
+    # recurring_invoice == uom_id.recurring
+    categ_time = self.env['product.uom.categ'].browse(ref('website_contract.uom_categ_time'))
+    categ_time.recurring = True
