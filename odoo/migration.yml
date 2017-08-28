@@ -120,3 +120,4 @@ migration:
           - dj_compilation_stock
           - web_environment_ribbon
           - server_environment_ir_config_parameter
+    - version: 10.1.7

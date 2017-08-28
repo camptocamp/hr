@@ -21,14 +21,19 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
-* Add DJ & Ribbon
-
 **Bugfixes**
 
 **Build**
 
 **Documentation**
 
+
+10.1.7 (2017-08-28)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* Add DJ & Ribbon
 
 10.1.6 (2017-08-18)
 +++++++++++++++++++
