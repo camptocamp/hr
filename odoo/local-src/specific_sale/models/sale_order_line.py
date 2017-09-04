@@ -28,12 +28,6 @@ class SaleOrderLine(models.Model):
         compute='_compute_qty_delivered_calculated')
 
     @api.multi
-    def write(self, values):
-        res = super(SaleOrderLine, self).write(values)
-        self.mapped('order_id').create_contract()
-        return res
-
-    @api.multi
     def is_delivered_and_invoiced(self):
         self.ensure_one()
         return (bool(self.order_id.subscription_id) and
