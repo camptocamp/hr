@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="expensify_wizard" model="ir.ui.view">
+        <field name="name">Expensify Wizard</field>
+        <field name="model">expensify.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Expenses">
+                <field name="employee_id" invisible="1"/>
+                <field name="expenses">
+                    <tree editable="bottom">
+                        <field name="expensify_id" invisible="1"/>
+                        <field name="date"/>
+                        <field name="name"/>
+                        <field name="product_id"/>
+                        <field name="amount"/>
+                        <field name="currency_id"/>
+                        <field name="company_id"/>
+                        <field name="tax_ids" widget="many2many_tags"
+                               domain="[('company_id', '=', company_id)]"/>
+                        <field name="payment_mode"/>
+                        <field name="description" invisible="1"/>
+                        <field name="receipt"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="button_import"
+                            string="Import" type="object"
+                            class="oe_highlight"/>
+                    <button name="button_cancel" string="Cancel"
+                            class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

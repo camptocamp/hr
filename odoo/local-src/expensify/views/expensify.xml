@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="expensify_form" model="ir.ui.view">
+        <field name="name">Expensify</field>
+        <field name="model">expensify</field>
+        <field name="arch" type="xml">
+            <form string="Expensify">
+                <field name="employee_id" invisible="1"/>
+                <group string="API">
+                    <field name="expensify_api_id" autocomplete="off"/>
+                    <field name="expensify_api_secret" password="True"
+                           autocomplete="off"/>
+                </group>
+                <group string="Settings">
+                    <field name="since_date"/>
+                </group>
+                <group>
+                    <button string="Fetch" type="object" name="button_fetch"
+                            class="oe_highlight"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="expensify_action" model="ir.actions.act_window">
+        <field name="name">Expensify</field>
+        <field name="res_model">expensify</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+
+    <menuitem
+            id="expensify_menu"
+            name="Expensify"
+            action="expensify_action"
+            parent="hr_expense.menu_hr_expense_root"
+            sequence="99"/>
+
+</odoo>
