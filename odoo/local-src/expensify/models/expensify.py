@@ -249,8 +249,7 @@ class Expensify(models.TransientModel):
     @api.model
     def fetch_reports(self, start_date, report_name=""):
         """Requests all reports whose name contains `reportname` and
-        where the report was created or updated after `start_timestamp`,
-        which is optional and defaults to 30 days ago.
+        where the report was created or updated after `start_date`.
         Returns a dict of reports, keyed on the report ID."""
 
         report_filename = self._generate_report(start_date, report_name)
@@ -260,7 +259,7 @@ class Expensify(models.TransientModel):
     @api.model
     def _generate_report(self, start_date, report_name):
         """Requests all reports whose name contains `reportname` and
-        where the report was created or updated after `start_timestamp`,
+        where the report was created or updated after `start_date`,
         Returns a filename which should be fed to _fetch_file."""
 
         params = {
