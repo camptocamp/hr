@@ -9,23 +9,16 @@ class ExpensifyWizard(models.TransientModel):
         comodel_name='hr.employee',
         required=True
     )
-    expenses = fields.One2many(
-        comodel_name='expensify.wizard.expense',
+    expensify_expenses = fields.One2many(
+        string='Expenses',
+        comodel_name='expensify.expense',
         inverse_name='expensify_wizard_id',
         required=True
     )
 
-    @api.onchange('employee_id')
-    def load_expenses(self):
-        for rec in self:
-            if not rec.employee_id:
-                continue
-            rec.expenses = [(0, 0, expense) for expense in
-                            self.env.context.get('expensify_expenses', [])]
-
     @api.multi
     def button_import(self):
-        for expense in self.expenses:
+        for expense in self.expensify_expenses:
             expense_data = {
                 'expensify_id': expense.expensify_id,
                 'date': expense.date,
@@ -33,24 +26,30 @@ class ExpensifyWizard(models.TransientModel):
                 'product_id': expense.product_id.id,
                 'quantity': 1,
                 'unit_amount': expense.amount,
-                'tax_ids': [
-                    [6, False, [tax_id.id for tax_id in expense.tax_ids]]],
+                'tax_ids': [[6, False, [tax.id for tax in expense.tax_ids]]],
                 'currency_id': expense.currency_id.id,
+                'analytic_account_id': expense.analytic_account_id.id,
                 'payment_mode': expense.payment_mode,
                 'description': expense.description,
                 'company_id': expense.company_id.id,
                 'employee_id': self.employee_id.id
             }
-            imported = self.env['hr.expense'].create(expense_data)
+            expense_created = self.env['hr.expense'].create(expense_data)
 
             if expense.receipt:
                 attachment_data = {
-                    'res_id': imported.id,
+                    'res_id': expense_created.id,
                     'res_model': 'hr.expense',
                     'company_id': expense.company_id.id,
                     'name': 'Receipt',
                     'type': 'binary',
-                    'datas_fname': 'receipt_%s.jpg' % imported.id,
+                    'datas_fname': 'receipt_%s.jpg' % expense_created.id,
                     'datas': expense.receipt
                 }
-                attached = self.env['ir.attachment'].create(attachment_data)
+                self.env['ir.attachment'].create(attachment_data)
+
+        # Show unsubmitted expenses
+        return self.env['ir.actions.act_window'].for_xml_id(
+            module='hr_expense',
+            xml_id='hr_expense_actions_my_unsubmitted'
+        )

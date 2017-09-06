@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <form string="Import Expenses">
                 <field name="employee_id" invisible="1"/>
-                <field name="expenses">
+                <field name="expensify_expenses" nolabel="1">
                     <tree editable="bottom">
                         <field name="expensify_id" invisible="1"/>
                         <field name="date"/>
@@ -15,12 +15,15 @@
                         <field name="product_id"/>
                         <field name="amount"/>
                         <field name="currency_id"/>
-                        <field name="company_id"/>
+                        <field name="company_id"
+                               groups="base.group_multi_company"/>
                         <field name="tax_ids" widget="many2many_tags"
-                               domain="[('company_id', '=', company_id)]"/>
+                               domain="[('company_id', '=', company_id), ('type_tax_use', '=', 'purchase')]"/>
+                        <field name="analytic_account_id"
+                               groups="analytic.group_analytic_accounting"/>
                         <field name="payment_mode"/>
                         <field name="description" invisible="1"/>
-                        <field name="receipt"/>
+                        <field name="receipt" widget="image"/>
                     </tree>
                 </field>
                 <footer>

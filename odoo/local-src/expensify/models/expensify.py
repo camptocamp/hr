@@ -11,7 +11,7 @@ class Expensify(models.TransientModel):
     _name = 'expensify'
 
     credentials_url = fields.Char(
-        string='Url',
+        string='Credentials',
         default='https://www.expensify.com/tools/integrations/',
         readonly=True
     )
@@ -23,14 +23,10 @@ class Expensify(models.TransientModel):
     )
     expensify_api_id = fields.Char(
         string='partnerUserID',
-        related='employee_id.expensify_api_id',
-        store=True,
         required=True
     )
     expensify_api_secret = fields.Char(
         string='partnerUserSecret',
-        related='employee_id.expensify_api_secret',
-        store=True,
         required=True
     )
     since_date = fields.Date(
@@ -48,8 +44,28 @@ class Expensify(models.TransientModel):
     def get_since_date(self):
         return datetime.date.today() - datetime.timedelta(days=30)
 
+    @api.onchange('employee_id')
+    def set_expensify_credentials(self):
+        for rec in self:
+            if not rec.employee_id:
+                continue
+            rec.expensify_api_id = rec.employee_id.expensify_api_id
+            rec.expensify_api_secret = rec.employee_id.expensify_api_secret
+
+    @api.model
+    def store_expensify_credentials(self, employee_id, api_id, api_secret):
+        employee_id = employee_id.sudo()
+        if api_id != employee_id.expensify_api_id:
+            employee_id.expensify_api_id = api_id
+        if api_secret != employee_id.expensify_api_secret:
+            employee_id.expensify_api_secret = api_secret
+
     @api.multi
     def button_fetch(self):
+        self.store_expensify_credentials(self.employee_id,
+                                         self.expensify_api_id,
+                                         self.expensify_api_secret)
+
         reports = self.fetch_reports(self.since_date)
         if not reports:
             raise exceptions.ValidationError(_("No Expensify reports found"))
@@ -78,8 +94,7 @@ class Expensify(models.TransientModel):
 
             # Extract category and get related Odoo product
             category = expense.get('category')
-            product_name = self.get_product_name(category)
-            product_id = self.get_product_id(product_name)
+            product_id = self.get_product_id(category)
 
             # Extract Expense transaction
             merchant = expense['merchant']
@@ -98,7 +113,7 @@ class Expensify(models.TransientModel):
             reimbursable = expense['reimbursable']
             payment_mode = "own_account" if reimbursable else "company_account"
 
-            # Extract expense taxes
+            # Extract expense taxes (Never returned by Expensify atm)
             # tax_amount = expense.get('taxAmount')
             # tax_name = expense.get('taxName')
             # tax_rate = expense.get('taxRate')
@@ -144,15 +159,21 @@ class Expensify(models.TransientModel):
         if not expensify_expenses:
             raise exceptions.ValidationError(_("No new expenses found"))
 
+        # Create and populate Expensify wizard
+        expensify_wizard_id = self.env['expensify.wizard'].create({
+            'employee_id': self.employee_id.id,
+            'expensify_expenses': [(0, 0, exp) for exp in expensify_expenses]
+        })
+
+        # Show Expensify wizard
         return {
             "name": "Import Expenses",
             "type": "ir.actions.act_window",
             "res_model": "expensify.wizard",
+            "res_id": expensify_wizard_id.id,
             "view_type": "form",
             "view_mode": "form",
             "target": "new",
-            "context": {'default_employee_id': self.employee_id.id,
-                        'expensify_expenses': expensify_expenses}
         }
 
     @api.model
@@ -162,14 +183,11 @@ class Expensify(models.TransientModel):
         return expense.id
 
     @api.model
-    def get_product_name(self, category):
-        """TODO: Match Odoo product from Expensify category"""
-        return "Expenses"
-
-    @api.model
-    def get_product_id(self, product_name):
+    def get_product_id(self, category):
+        default_code = "EXP"  # TODO: default_code given Expensify category
         product = self.env['product.product'].search(
-            [('can_be_expensed', '=', True), ('name', '=', product_name)],
+            [('can_be_expensed', '=', True),
+             ('default_code', '=', default_code)],
             limit=1)
         return product.id
 
