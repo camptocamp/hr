@@ -143,4 +143,6 @@ class SaleOrder(models.Model):
         """ Create the contract only when all mrc products are delivered """
         self.ensure_one()
         if self.all_mrc_delivered():
-            self.subscription_id = super(SaleOrder, self).create_contract()
+            return super(SaleOrder, self).create_contract()
+        else:
+            return False

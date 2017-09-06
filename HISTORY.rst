@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * BSIBSO-1003 Invoicing process for MRP products
+* BSIBSO-1012 Logic creation subscription
 
 **Bugfixes**
 

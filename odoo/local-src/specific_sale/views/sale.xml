@@ -55,10 +55,16 @@
         <xpath expr="(//button[@name='%(sale.action_view_sale_advance_payment_inv)d' and @type='action'])" position="attributes">
           <attribute name="name">action_invoicing</attribute>
           <attribute name="type">object</attribute>
+          <attribute name="attrs">{ 'invisible':['|', ('invoice_status', '!=', 'to invoice'),
+                                                 ('subscription_id', '!=', False)]}
+          </attribute>
         </xpath>
         <xpath expr="(//button[@name='%(sale.action_view_sale_advance_payment_inv)d' and @type='action'])" position="attributes">
           <attribute name="name">action_invoicing</attribute>
           <attribute name="type">object</attribute>
+          <attribute name="attrs">{ 'invisible':['|', ('subscription_id', '!=', False), ('invoice_status','!=','no'),
+                                                 ('state','!=','sale') ]}
+          </attribute>
         </xpath>
       </field>
     </record>

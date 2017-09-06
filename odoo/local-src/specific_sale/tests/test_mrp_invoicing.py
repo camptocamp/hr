@@ -52,11 +52,16 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
         self.prod_setup_server = self.env['product.product'].create({
             'product_tmpl_id': self.prod_tmpl_setup_server.id,
         })
+        # ubscription template
+        self.sbscription_tmpl = self.env['sale.subscription.template'].create({
+            'name': 'Special subscription'
+            })
         # Create a sale order with the two previous products
         self.so = self.env['sale.order'].create({
             'partner_id': self.partner.id,
             'partner_invoice_id': self.partner.id,
             'partner_shipping_id': self.partner.id,
+            'contract_template': self.sbscription_tmpl.id,
             'order_line': [
             ]
         })
@@ -190,3 +195,12 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
                                 'on 1st August is incorrect')
         self.assertEquals(len(invoice_line), 1,
                           'The 2nd invoice should have only one line')
+        self.assertIsNot(len(self.so.subscription_id), 0,
+                         'The subscription should be created when the '
+                         'sale order is completely invoiced')
+        date_invoice = self.so.invoice_ids[0].create_date.split(' ')[0]
+        self.assertEquals(date_invoice,
+                          self.so.subscription_id.date_start,
+                          'The start date of the subscription should '
+                          'be equal to the creation date of the last'
+                          'invoice generated')
