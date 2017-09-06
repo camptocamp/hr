@@ -6,8 +6,11 @@
         <field name="model">expensify</field>
         <field name="arch" type="xml">
             <form string="Expensify">
-                <field name="employee_id" invisible="1"/>
+                <group string="Credentials">
+                    <field name="credentials_url" widget="url" nolabel="1"/>
+                </group>
                 <group string="API">
+                    <field name="employee_id" invisible="1"/>
                     <field name="expensify_api_id" autocomplete="off"/>
                     <field name="expensify_api_secret" password="True"
                            autocomplete="off"/>
