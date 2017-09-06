@@ -10,6 +10,11 @@ from openerp import models, fields, api, exceptions, _
 class Expensify(models.TransientModel):
     _name = 'expensify'
 
+    credentials_url = fields.Char(
+        string='Url',
+        default='https://www.expensify.com/tools/integrations/',
+        readonly=True
+    )
     employee_id = fields.Many2one(
         string='Employee',
         comodel_name='hr.employee',
@@ -94,11 +99,11 @@ class Expensify(models.TransientModel):
             payment_mode = "own_account" if reimbursable else "company_account"
 
             # Extract expense taxes
-            tax_amount = expense.get('taxAmount')
-            tax_name = expense.get('taxName')
-            tax_rate = expense.get('taxRate')
-            tax_rate_name = expense.get('taxRateName')
-            tax_code = expense.get('taxCode')
+            # tax_amount = expense.get('taxAmount')
+            # tax_name = expense.get('taxName')
+            # tax_rate = expense.get('taxRate')
+            # tax_rate_name = expense.get('taxRateName')
+            # tax_code = expense.get('taxCode')
 
             # Extract Expense details
             comment = expense.get('comment')
@@ -181,12 +186,12 @@ class Expensify(models.TransientModel):
         except:
             return None
 
-    ### EXPENSIFY API
+    # EXPENSIFY API
 
     @api.model
     def _get_api_url(self):
-        return "https://integrations.expensify.com" \
-               "/Integration-Server/ExpensifyIntegrations"
+        return "https://integrations.expensify.com/" \
+               "Integration-Server/ExpensifyIntegrations"
 
     @api.model
     def _get_report_template(self, report_name):
