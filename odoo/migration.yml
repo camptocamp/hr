@@ -126,3 +126,4 @@ migration:
         upgrade:
           - specific_product
           - specific_sale
+          - expensify
