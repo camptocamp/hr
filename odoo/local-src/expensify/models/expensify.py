@@ -4,7 +4,7 @@ import datetime
 
 import requests
 import yaml
-from openerp import models, fields, api, exceptions, _
+from odoo import models, fields, api, exceptions, _
 
 
 class Expensify(models.TransientModel):
