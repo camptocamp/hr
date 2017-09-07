@@ -12,7 +12,8 @@
                         <field name="expensify_id" invisible="1"/>
                         <field name="date"/>
                         <field name="name"/>
-                        <field name="product_id"/>
+                        <field name="product_id"
+                               domain="[('can_be_expensed', '=', True)]"/>
                         <field name="amount"/>
                         <field name="currency_id"/>
                         <field name="company_id"
