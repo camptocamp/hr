@@ -10,6 +10,10 @@ from odoo import models, fields, api, exceptions, _
 class Expensify(models.TransientModel):
     _name = 'expensify'
 
+    name = fields.Char(
+        default='Expensify',
+        readonly=True
+    )
     credentials_url = fields.Char(
         string='Credentials',
         default='https://www.expensify.com/tools/integrations/',

@@ -6,6 +6,7 @@
         <field name="model">expensify</field>
         <field name="arch" type="xml">
             <form string="Expensify">
+                <field name="name" invisible="1"/>
                 <group string="Credentials">
                     <field name="credentials_url" widget="url" nolabel="1"/>
                 </group>
