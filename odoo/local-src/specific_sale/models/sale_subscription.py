@@ -8,8 +8,8 @@ from odoo import models, fields, api
 class SaleSubscription(models.Model):
     _inherit = "sale.subscription"
 
-    recurring_total = fields.Float(string='Monthly Total')
-    period_total = fields.Float(
+    recurring_total = fields.Monetary(string='Monthly Total')
+    period_total = fields.Monetary(
         string='Period Total',
         compute='_compute_period_total',
         readonly=True,
@@ -25,5 +25,4 @@ class SaleSubscription(models.Model):
             line=line, fiscal_position=fiscal_position)
         if self.recurring_interval:
             res['quantity'] = self.recurring_interval * res['quantity']
-        # import pdb;pdb.set_trace()
         return res
