@@ -2,6 +2,8 @@ import base64
 import json
 import datetime
 
+import sys
+
 import requests
 import yaml
 from odoo import models, fields, api, exceptions, _
@@ -41,8 +43,9 @@ class Expensify(models.TransientModel):
 
     @api.model
     def get_employee(self):
-        return self.env['hr.employee'].search([('user_id', '=', self.env.uid)],
-                                              limit=1)
+        return self.env['hr.employee'].search([
+            ('user_id', '=', self.env.uid)
+        ], limit=1)
 
     @api.model
     def get_since_date(self):
@@ -98,12 +101,13 @@ class Expensify(models.TransientModel):
 
             # Extract category and get related Odoo product
             category = expense.get('category')
-            product_id = self.get_product_id(category)
+            product_default_code = self.get_product_default_code(category)
+            product_id = self.get_product_id(product_default_code)
 
             # Extract Expense transaction
             merchant = expense['merchant']
             amount = expense['amount'] / 100.0
-            currency = expense['currency']
+            currency = "sfkjsdkfnsd"  # expense['currency']
             currency_id = self.get_currency_id(currency)
 
             if not currency_id:  # Currency not in Odoo, using converted amount
@@ -182,23 +186,41 @@ class Expensify(models.TransientModel):
 
     @api.model
     def get_expense_id(self, expensify_id):
-        expense = self.env['hr.expense'].search(
-            [('expensify_id', '=', expensify_id)], limit=1)
+        expense = self.env['hr.expense'].search([
+            ('expensify_id', '=', expensify_id)
+        ], limit=1)
+        if not expense:
+            return None
         return expense.id
 
     @api.model
-    def get_product_id(self, category):
-        default_code = "EXP"  # TODO: default_code given Expensify category
-        product = self.env['product.product'].search(
-            [('can_be_expensed', '=', True),
-             ('default_code', '=', default_code)],
-            limit=1)
+    def get_product_default_code(self, category):
+        return "EXP"  # TODO: default_code given Expensify category
+
+    @api.model
+    def get_product_id(self, product_default_code):
+        product = self.env['product.product'].search([
+            ('can_be_expensed', '=', True),
+            ('default_code', '=', product_default_code)
+        ], limit=1)
+        if not product:
+            return self.get_product_id("EXP")
         return product.id
 
     @api.model
     def get_currency_id(self, currency_name):
-        currency = self.env['res.currency'].search(
-            [('name', '=', '%s' % currency_name)], limit=1)
+        currency = self.env['res.currency'].search([
+            ('name', '=ilike', currency_name),  # Case insensitive
+            '|',
+            ('active', '=', True),
+            ('active', '=', False)
+        ], limit=1)
+        if not currency:
+            return None
+        if not currency.active:
+            currency.sudo().write({
+                'active': True
+            })
         return currency.id
 
     @api.model
