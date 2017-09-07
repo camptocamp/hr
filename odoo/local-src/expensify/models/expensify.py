@@ -2,8 +2,6 @@ import base64
 import json
 import datetime
 
-import sys
-
 import requests
 import yaml
 from odoo import models, fields, api, exceptions, _
@@ -107,7 +105,7 @@ class Expensify(models.TransientModel):
             # Extract Expense transaction
             merchant = expense['merchant']
             amount = expense['amount'] / 100.0
-            currency = "sfkjsdkfnsd"  # expense['currency']
+            currency = expense['currency']
             currency_id = self.get_currency_id(currency)
 
             if not currency_id:  # Currency not in Odoo, using converted amount
