@@ -21,7 +21,9 @@ class AccountInvoice(models.Model):
         for vendor in vendors:
             if vendor.group_supplier_invoice:
                 # Group all PO in one invoice
-                inv = self.create({'partner_id': vendor.id})
+                inv = self.with_context(
+                    journal_type='purchase', type='in_invoice').create(
+                        {'partner_id': vendor.id, 'type': 'in_invoice'})
                 for po in purchase_ids.filtered(
                         lambda r: r.partner_id == vendor):
                     inv.write({'purchase_id': po.id})
@@ -32,7 +34,9 @@ class AccountInvoice(models.Model):
                 # Create one INV per PO
                 for po in purchase_ids.filtered(
                         lambda r: r.partner_id == vendor):
-                    inv = self.create({'partner_id': vendor.id})
+                    inv = self.with_context(
+                        journal_type='purchase', type='in_invoice').create(
+                            {'partner_id': vendor.id, 'type': 'in_invoice'})
                     inv.write({'purchase_id': po.id})
                     # Force the onchange trigger
                     inv.purchase_order_change()

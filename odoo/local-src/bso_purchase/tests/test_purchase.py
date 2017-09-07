@@ -12,13 +12,7 @@ class TestPurchase(common.TestBsoPurchaseCommon):
         self.assertEqual(self.po.state, 'purchase')
         picking = self.po.picking_ids[0]
         picking.do_transfer()
-        # As we don't provide reference_date, move_date = ref_date =date.today
-        # and qty = 0.0
         self.assertEqual(10.0, picking.move_lines.product_uom_qty)
-
-        # self.po.
-        # We should have a stock move with delivered qty = 10.0
-        # self.assertEqual(10.0, self.po.order_line.qty_received)
 
     def test_auto_invoicing_group(self):
         self.partner_id.write({
