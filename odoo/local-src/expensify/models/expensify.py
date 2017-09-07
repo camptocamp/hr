@@ -99,8 +99,7 @@ class Expensify(models.TransientModel):
 
             # Extract category and get related Odoo product
             category = expense.get('category')
-            product_default_code = self.get_product_default_code(category)
-            product_id = self.get_product_id(product_default_code)
+            product_id = self.get_product_id(category)
 
             # Extract Expense transaction
             merchant = expense['merchant']
@@ -192,17 +191,23 @@ class Expensify(models.TransientModel):
         return expense.id
 
     @api.model
-    def get_product_default_code(self, category):
-        return "EXP"  # TODO: default_code given Expensify category
-
-    @api.model
-    def get_product_id(self, product_default_code):
+    def get_product_id(self, category):
+        default_codes = {  # TODO: replace when available
+            'Entertainment': "EXP",  # Publicite / Evenements
+            'Fuel/Mileage': "EXP",  # Indemnites kilometriques
+            'Lodging': "EXP",  # Mission / Hebergement
+            'Meals': "EXP",  # Restauration / Supermarche
+            'Other': "EXP",  # Divers
+            'Phone': "EXP",  # Telephonie
+            'Transportation': "EXP",  # Voyages / Deplacements
+        }
+        default_code = default_codes.get(category, "EXP")
         product = self.env['product.product'].search([
             ('can_be_expensed', '=', True),
-            ('default_code', '=', product_default_code)
+            ('default_code', '=', default_code)
         ], limit=1)
         if not product:
-            return self.get_product_id("EXP")
+            return None  # User must select a product on the Wizard
         return product.id
 
     @api.model
