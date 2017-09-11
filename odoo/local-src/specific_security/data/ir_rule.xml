@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
+
     <data noupdate="1">
 
         <record model="ir.rule" id="hr_employee_rule_bso">
@@ -44,6 +45,39 @@
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="calendar_event_rule_employee_create_read" model="ir.rule">
+            <field ref="calendar.model_calendar_event" name="model_id"/>
+            <field name="name">Calendar Event for employees only create/read</field>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field eval="[(4,ref('base.group_user'))]" name="groups"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="calendar_event_rule_employee_own" model="ir.rule">
+            <field ref="calendar.model_calendar_event" name="model_id"/>
+            <field name="name">Own Calendar Event for employees</field>
+            <field name="domain_force">['|', ('user_id', '=', user.id), ('user_id', '=', False)]</field>
+            <field eval="[(4,ref('base.group_user'))]" name="groups"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="calendar_event_rule_employee_officer" model="ir.rule">
+            <field ref="calendar.model_calendar_event" name="model_id"/>
+            <field name="name">All Calendar Event for Officers</field>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field eval="[(4,ref('hr_holidays.group_hr_holidays_user'))]" name="groups"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
         </record>
 
     </data>
