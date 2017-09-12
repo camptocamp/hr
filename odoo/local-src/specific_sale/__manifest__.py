@@ -9,6 +9,7 @@
  'maintainer': 'Camptocamp',
  'license': 'AGPL-3',
  'depends': [
+     'bso_base',
      'sale_double_validation',
      'specific_security',
      'website_contract',
