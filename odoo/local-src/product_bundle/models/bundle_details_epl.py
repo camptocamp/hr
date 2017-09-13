@@ -1,5 +1,7 @@
-from openerp import api, fields, models, exceptions, _
+from odoo import api, fields, models, exceptions, _
 import math
+from heapq import heappop, heappush
+from collections import defaultdict
 
 
 class BundleDetailsEPL(models.Model):
@@ -9,26 +11,27 @@ class BundleDetailsEPL(models.Model):
     epl_show = fields.Boolean(compute='_epl_show')
 
     # EPL BUNDLE_ID
-    epl_bundle_id = fields.Many2one(string='Bundle',
+    epl_bundle_id = fields.Many2one(string='EPL Bundle',
                                     comodel_name='product.product')
 
     # EPL BUNDLE CATEGORY
     epl_bundle_categ_id = fields.Many2one(string='Bundle Category',
-                                          related='epl_bundle_id.categ_id')
+                                          related='epl_bundle_id.categ_id',
+                                          readonly=True)
 
     # POP A
     epl_a_pop = fields.Many2one(string='POP A',
-                                comodel_name='bso.network.pop')
+                                comodel_name='epl.pop')
 
     # POP Z
     epl_z_pop = fields.Many2one(string='POP Z',
-                                comodel_name='bso.network.pop')
+                                comodel_name='epl.pop')
 
     # OPTIMIZE FOR
-    epl_sort = fields.Selection(string="Optimize",
-                                selection=[(1, 'Latency'),
-                                           (2, 'Price')],
-                                default=1)
+    epl_optimize = fields.Selection(string="Optimize",
+                                    selection=[('latency', 'Latency'),
+                                               ('mrc_mb', 'Price')],
+                                    default='latency')
 
     # FIND PROTECTION
     epl_protected = fields.Boolean(string='Protected')
@@ -78,9 +81,10 @@ class BundleDetailsEPL(models.Model):
                                              compute='_epl_backup_last_device')
 
     # EPL PRODUCTS
-    epl_bundle_products = fields.One2many(string="Bundle Products",
-                                          comodel_name='bundle.details.product',
-                                          inverse_name='bundle_details_epl_id')
+    epl_bundle_products = fields.One2many(
+        string="Bundle Products",
+        comodel_name='bundle.details.product',
+        inverse_name='bundle_details_epl_id')
 
     # EPL DESCRIPTION
     epl_description = fields.Char(string="Name",
@@ -137,12 +141,6 @@ class BundleDetailsEPL(models.Model):
     epl_total_cost = fields.Float(string="Total Cost",
                                   compute='_epl_total_cost')
 
-    # GENERIC GET EPL PRODUCT
-    @api.model
-    def get_epl_product(self):
-        return self.env['product.product'].search(
-            [('name', '=ilike', "EPL"), ('is_epl', '=', True)])
-
     # EPL VISIBILITY FROM NAME
     @api.onchange('bundle_name')
     def _epl_show(self):
@@ -159,21 +157,17 @@ class BundleDetailsEPL(models.Model):
                 rec.epl_bundle_id = self.get_bundle_id("network")
 
     # EPL ROUTE/BACKUP FROM CONFIG
-    @api.onchange('epl_a_pop', 'epl_z_pop', 'epl_sort', 'epl_protected')
+    @api.onchange('epl_a_pop', 'epl_z_pop', 'epl_optimize', 'epl_protected')
     def _epl_paths(self):
         for rec in self:
-            if not all((rec.epl_a_pop, rec.epl_z_pop, rec.epl_sort)):
+            if not all((rec.epl_a_pop, rec.epl_z_pop, rec.epl_optimize)):
                 continue
-            """ Fetching from API Latency """
-            epl = self.env.user.company_id.network_api_id.call(
-                rec.epl_a_pop.name,
-                rec.epl_z_pop.name,
-                self.env.user,
-                backup=int(bool(rec.epl_protected)),
-                details=1,
-                sort=rec.epl_sort)
-            rec.epl_route = self.get_epl_path_ids(epl.get('route'))
-            rec.epl_backup = self.get_epl_path_ids(epl.get('backup'))
+            optimal_path = self.get_optimal_path(rec.epl_a_pop,
+                                                 rec.epl_z_pop,
+                                                 rec.epl_optimize,
+                                                 rec.epl_protected)
+            if optimal_path['warning']:
+                return {'warning': {'message': optimal_path['warning']}}
 
     @api.model
     def get_epl_path_ids(self, route):
@@ -394,7 +388,7 @@ class BundleDetailsEPL(models.Model):
                                      * rec.epl_bandwidth
 
     # EPL ROUTE LINKS MUST BE SUCCESSIVE
-    @api.constrains('epl_show', 'epl_route')
+    @api.constrains('epl_route')
     def _epl_route_constraints(self):
         for rec in self:
             if not rec.epl_show:  # Constraints do not apply
@@ -407,7 +401,7 @@ class BundleDetailsEPL(models.Model):
                     _("EPL route links are not successive"))
 
     # EPL BACKUP LINKS MUST BE SUCCESSIVE & MATCH MAIN ROUTE
-    @api.constrains('epl_show', 'epl_protected', 'epl_route', 'epl_backup')
+    @api.constrains('epl_protected', 'epl_route', 'epl_backup')
     def _epl_backup_constraints(self):
         for rec in self:
             if not rec.epl_show:  # Constraints do not apply
@@ -444,7 +438,7 @@ class BundleDetailsEPL(models.Model):
         return True
 
     # EPL BANDWIDTH MUST BE POSITIVE
-    @api.constrains('epl_show', 'epl_bandwidth')
+    @api.constrains('epl_bandwidth')
     def _epl_bandwidth_constraints(self):
         for rec in self:
             if not rec.epl_show:  # Constraints do not apply
@@ -454,7 +448,7 @@ class BundleDetailsEPL(models.Model):
                     _("EPL bandwidth must be a positive integer"))
 
     # BUNDLE PRODUCTS MUST HAVE POSITIVE QUANTITIES
-    @api.constrains('epl_show', 'epl_bundle_products')
+    @api.constrains('epl_bundle_products')
     def _epl_bundle_products_constraints(self):
         for rec in self:
             if not rec.epl_show:  # Constraints do not apply
@@ -468,9 +462,142 @@ class BundleDetailsEPL(models.Model):
     @api.multi
     def button_epl_save(self):
         return self.sale_order_line_save(
-            product=self.get_bundle_id("network"),
+            product=self.epl_bundle_id,
             description=self.epl_description,
             quantity=self.epl_bandwidth,
-            unit_measure=self.get_epl_product().uom_id,
+            unit_measure=self.bundle_id.uom_id,
             unit_price=self.epl_total_price_per_mb
         )
+
+    # OPTIMAL PATH
+
+    @api.model
+    def get_optimal_path(self, a_pop_id, z_pop_id, optimize, protected):
+        """Return the optimal path between 2 POPs for the optimized variable.
+        Return backup path if exists and protection requested
+        Return warnings to be notified to the user if applicable"""
+
+        # Warning to be displayed to the user if populated
+        warnings = ["At least one"]
+
+        a_devices = self._get_devices(a_pop_id)  # Possible starting devices
+        z_devices = self._get_devices(z_pop_id)  # Possible ending devices
+
+        # Graph of all device_ids with their connected links
+        graph = self._get_graph()
+
+        # Find optimal path (loop trough starting devices to ensure fastest)
+        optimal = {}
+        for a_device in a_devices:
+            potential = self._get_optimal_path(graph,
+                                               a_device,
+                                               z_devices,
+                                               optimize)
+            if not potential:
+                continue
+            if not optimal or potential['cost'] < optimal['cost']:
+                optimal = potential
+
+        # Raise error if no path found
+        if not optimal:
+            raise exceptions.ValidationError(
+                _("No path available between '%s' & '%s'" % (a_pop_id.name,
+                                                             z_pop_id.name)))
+
+        # Find backup path if protection requested
+        backup = {}
+        if protected:
+            # Exclude links used in optimal path except protected ones
+            exclude_link_ids = list(link.id for link in optimal['path']
+                                    if not link.is_protected)
+            backup = self._get_optimal_path(graph,
+                                            optimal['start_device'],
+                                            [optimal['end_device']],
+                                            optimize,
+                                            exclude_link_ids)
+            # Build Backup warnings to be displayed to user
+            if backup:
+                # Look for duplicates
+                duplicates = set(optimal['path']) & set(backup['path'])
+                for duplicate in duplicates:
+                    # Duplicates found: notify it to user
+                    warning = "Backup uses duplicate link %s" % duplicate.name
+                    if duplicate.is_protected:
+                        warning += " (Protected)"
+                    warnings.append(warning)
+            else:  # No backup found: notify it to user
+                warnings.append("No valid backup found for path: %s <-> %s" %
+                                (optimal['start_device'],
+                                 optimal['end_device']))
+
+        return {'path': optimal,
+                'backup': backup,
+                'warning': "\n".join(warnings)}
+
+    @api.model
+    def _get_devices(self, pop_id):
+        """Get all POP's devices"""
+        devices = self.env['epl.device'].search([
+            ('pop_id', '=', pop_id.id)
+        ])
+        return list(devices)
+
+    @api.model
+    def _get_graph(self):
+        """Dict of all links with their a & z side device_id as keys"""
+        graph = defaultdict(lambda: [])
+        links = self.env['epl.link'].search([])
+        for link in links:
+            graph[link.a_device_id.id].append(link)
+            graph[link.z_device_id.id].append(link)
+        return graph
+
+    @api.model
+    def _get_optimal_path(self, graph, start_device, end_devices, optimize,
+                          exclude_link_ids=None):
+        """Find the optimal path between a starting device and any devices"""
+        # Start device cannot be in end devices
+        if start_device in end_devices:
+            end_devices.remove(start_device)
+        if not end_devices:
+            return {}
+
+        exclude_link_ids = exclude_link_ids or []
+
+        init_cost = 0
+        init_path = ()
+
+        route = [(init_cost, init_path, start_device)]
+        while route:
+            (cur_cost, cur_path, cur_order, cur_device) = heappop(route)
+
+            if cur_device in end_devices:
+                return {'cost': cur_cost,
+                        'path': cur_path,
+                        'start_device': start_device,
+                        'end_device': cur_device}
+
+            if cur_path:
+                # Get current link: discard if in exclude, add otherwise
+                cur_link_id = cur_path[-1].id
+                if cur_link_id in exclude_link_ids:
+                    continue
+                exclude_link_ids.append(cur_link_id)
+
+            for next_link in graph[cur_device.id]:
+                if next_link.id in exclude_link_ids:
+                    continue
+                next_device = self._get_end_device(next_link, cur_device)
+                next_cost = getattr(next_link, optimize)
+                new_cost = cur_cost + next_cost
+                new_path = cur_path + (next_link,)
+
+                heappush(route, (new_cost, new_path, next_device))
+        return {}
+
+    @api.model
+    def _get_end_device(self, link, start_device):
+        """Return link's other side device"""
+        if link.a_device_id == start_device:
+            return link.z_device_id
+        return link.a_device_id

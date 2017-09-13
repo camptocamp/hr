@@ -1,8 +1,12 @@
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class BundleDetailsEPLLink(models.Model):
     _name = 'bundle.details.epl.link'
+    _order = 'bundle_details_epl_id_route ASC,' \
+             'bundle_details_epl_id_backup ASC,' \
+             'sequence ASC,' \
+             'id ASC'
 
     sequence = fields.Integer(default=10)
 

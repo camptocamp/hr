@@ -1,10 +1,10 @@
-from openerp import api, fields, models, exceptions, _
+from odoo import api, fields, models, exceptions, _
 
 
 class BundleDetails(models.Model):
     _name = 'bundle.details'
 
-    # SALE ORDER FROM product_template.xml BUTTON CONTEXT (default_sale_order_id)
+    # ORDER FROM product_template.xml BUTTON CONTEXT (default_sale_order_id)
     sale_order_id = fields.Many2one(string='Sale Order',
                                     comodel_name='sale.order',
                                     required=True)
@@ -14,7 +14,7 @@ class BundleDetails(models.Model):
                                          comodel_name='sale.order.line',
                                          ondelete='cascade')
 
-    # BUNDLE NAME FROM product_template.xml BUTTON CONTEXT (default_bundle_name)
+    # NAME FROM product_template.xml BUTTON CONTEXT (default_bundle_name)
     bundle_name = fields.Char(string="Bundle Name")
 
     # BUNDLE VISIBILITY
@@ -26,7 +26,8 @@ class BundleDetails(models.Model):
 
     # BUNDLE CATEGORY
     bundle_categ_id = fields.Many2one(string='Bundle Category',
-                                      related='bundle_id.categ_id')
+                                      related='bundle_id.categ_id',
+                                      readonly=True)
 
     # BUNDLE PRODUCTS
     bundle_products = fields.One2many(string="Products",

@@ -10,10 +10,11 @@
                 <!--EPL LAYOUT-->
                 <field name="epl_show" invisible="1"/>
                 <div attrs="{'invisible': [('epl_show', '=', False)]}">
+                    <field name="epl_bundle_id" invisible="1"/>
                     <group>
                         <field name="epl_a_pop"/>
                         <field name="epl_z_pop"/>
-                        <field name="epl_sort"/>
+                        <field name="epl_optimize"/>
                     </group>
                     <group>
                         <field name="epl_protected"/>

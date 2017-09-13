@@ -17,7 +17,7 @@
                 <button string="Edit"
                         name="%(product_bundle.bundle_details_edit)d"
                         type="action"
-                        class="btn-link"/>
+                        class="btn-link oe_edit_only"/>
             </xpath>
         </field>
     </record>

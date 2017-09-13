@@ -1,12 +1,11 @@
-from openerp import fields, models, api
+from odoo import fields, models, api
 
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     bundle_details_id = fields.Many2one(string='Bundle Details',
-                                        comodel_name='bundle.details',
-                                        required=True)
+                                        comodel_name='bundle.details')
 
     @api.model
     def bundle_details_edit(self):
