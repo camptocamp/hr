@@ -478,7 +478,7 @@ class BundleDetailsEPL(models.Model):
         Return warnings to be notified to the user if applicable"""
 
         # Warning to be displayed to the user if populated
-        warnings = ["At least one"]
+        warnings = []
 
         a_devices = self._get_devices(a_pop_id)  # Possible starting devices
         z_devices = self._get_devices(z_pop_id)  # Possible ending devices
@@ -569,7 +569,7 @@ class BundleDetailsEPL(models.Model):
 
         route = [(init_cost, init_path, start_device)]
         while route:
-            (cur_cost, cur_path, cur_order, cur_device) = heappop(route)
+            (cur_cost, cur_path, cur_device) = heappop(route)
 
             if cur_device in end_devices:
                 return {'cost': cur_cost,
