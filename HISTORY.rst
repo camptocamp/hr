@@ -25,6 +25,7 @@ Latest (Unreleased)
 * BSIBSO-1012 Logic creation subscription
 * Automatic Invoicing of PO BSIBSO-1010
 * Overload mrc compute_qty_received BSIBSO-1010
+* BSIBSO-962 Invoice timesheet report
 
 **Bugfixes**
 
