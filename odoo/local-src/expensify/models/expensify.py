@@ -187,19 +187,19 @@ class Expensify(models.TransientModel):
             ('expensify_id', '=', expensify_id)
         ], limit=1)
         if not expense:
-            return None
+            return False
         return expense.id
 
     @api.model
     def get_product_id(self, category):
         default_codes = {  # TODO: replace when available
-            'Entertainment': "EXP",  # Publicite / Evenements
-            'Fuel/Mileage': "EXP",  # Indemnites kilometriques
-            'Lodging': "EXP",  # Mission / Hebergement
-            'Meals': "EXP",  # Restauration / Supermarche
-            'Other': "EXP",  # Divers
-            'Phone': "EXP",  # Telephonie
-            'Transportation': "EXP",  # Voyages / Deplacements
+            'Entertainment': "EXP_PROMOTION",
+            'Fuel/Mileage': "EXP_MILEAGE",
+            'Lodging': "EXP_LODGING",
+            'Meals': "EXP_FOOD",
+            'Other': "EXP_OTHER",
+            'Phone': "EXP_COMMUNICATION",
+            'Transportation': "EXP_TRANSPORT",
         }
         default_code = default_codes.get(category, "EXP")
         product = self.env['product.product'].search([
@@ -207,7 +207,7 @@ class Expensify(models.TransientModel):
             ('default_code', '=', default_code)
         ], limit=1)
         if not product:
-            return None  # User must select a product on the Wizard
+            return False  # User must select a product on the Wizard
         return product.id
 
     @api.model
@@ -219,7 +219,7 @@ class Expensify(models.TransientModel):
             ('active', '=', False)
         ], limit=1)
         if not currency:
-            return None
+            return False
         if not currency.active:
             currency.sudo().write({
                 'active': True
@@ -231,7 +231,7 @@ class Expensify(models.TransientModel):
         try:
             return base64.b64encode(requests.get(url).content)
         except:
-            return None
+            return False
 
     # EXPENSIFY API
 
