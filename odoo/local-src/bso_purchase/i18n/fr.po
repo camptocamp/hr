@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* bso_purchase
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-05 12:23+0000\n"
+"PO-Revision-Date: 2017-09-05 14:28+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. module: bso_purchase
+#: model:ir.model.fields,field_description:bso_purchase.field_jira_res_users_automatic_supplier_invoicing
+#: model:ir.model.fields,field_description:bso_purchase.field_res_partner_automatic_supplier_invoicing
+#: model:ir.model.fields,field_description:bso_purchase.field_res_users_automatic_supplier_invoicing
+msgid "Automatic Supplier Invoicing"
+msgstr "Facturation automatique du fournisseur"
+
+#. module: bso_purchase
+#: model:ir.model.fields,field_description:bso_purchase.field_jira_res_users_group_supplier_invoice
+#: model:ir.model.fields,field_description:bso_purchase.field_res_partner_group_supplier_invoice
+#: model:ir.model.fields,field_description:bso_purchase.field_res_users_group_supplier_invoice
+msgid "Group Supplier Invoice"
+msgstr "Grouper les Factures Fournisseur"
+
+#. module: bso_purchase
+#: model:ir.model.fields,field_description:bso_purchase.field_purchase_order_has_subscription
+msgid "Has subscription"
+msgstr "A un abonnement"
+
+#. module: bso_purchase
+#: model:ir.model,name:bso_purchase.model_account_invoice
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: bso_purchase
+#: model:ir.model,name:bso_purchase.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: bso_purchase
+#: model:ir.model,name:bso_purchase.model_purchase_order
+msgid "Purchase Order"
+msgstr "Commande fournisseur"
+
+#. module: bso_purchase
+#: model:ir.model,name:bso_purchase.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Ligne de commande d'achat"
+
+#. module: bso_purchase
+#: model:ir.model.fields,field_description:bso_purchase.field_purchase_order_subscr_duration
+msgid "Subscription duration (months)"
+msgstr "Durée abonnement (mois)"
+
+#. module: bso_purchase
+#: model:ir.model.fields,field_description:bso_purchase.field_purchase_order_subscr_date_end
+msgid "Subscription end"
+msgstr "Fin Abonnement"
+
+#. module: bso_purchase
+#: model:ir.model.fields,field_description:bso_purchase.field_purchase_order_subscr_date_start
+msgid "Subscription start"
+msgstr "Début Abonnement"

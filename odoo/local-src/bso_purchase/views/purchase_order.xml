@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_form_specific" model="ir.ui.view">
+      <field name="name">purchase.order.form.specific</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//page/group/group/label[@for='date_planned']" position="before">
+          <field name="subscr_date_start"/>
+          <field name="subscr_date_end" />
+          <field name="subscr_duration" />
+          <field name="has_subscription" />
+        </xpath>
+      </field>
+    </record>
+</odoo>

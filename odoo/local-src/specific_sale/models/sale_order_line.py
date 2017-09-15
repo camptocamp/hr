@@ -4,8 +4,6 @@
 
 from __future__ import division
 from datetime import datetime
-from calendar import monthrange
-from dateutil import relativedelta
 from odoo import api, models, fields
 
 
@@ -51,6 +49,7 @@ class SaleOrderLine(models.Model):
     def _get_delivered_qty(self):
         """ Change the delivered_qty calculation method for MRC product"""
         self.ensure_one()
+        UtilsDuration = self.env['utils.duration']
         qty = 0
         ref_date = self.env.context.get('ref_date_mrc_delivery')
         if ref_date:
@@ -65,7 +64,7 @@ class SaleOrderLine(models.Model):
             ])
             for move in stock_moves:
                 delivery_date = fields.Datetime.from_string(move.date)
-                month_ratio = self.get_month_delta_for_mrc(
+                month_ratio = UtilsDuration.get_month_delta_for_mrc(
                         ref_date, delivery_date)
                 qty += move.product_uom_qty * month_ratio
         else:
@@ -91,26 +90,3 @@ class SaleOrderLine(models.Model):
                 qty -= move.product_uom._compute_quantity(
                         move.product_uom_qty, self.product_uom)
         return qty == self.product_uom_qty
-
-    @staticmethod
-    def get_month_delta_for_mrc(ref_date, delivery_date):
-        """ Return the timedelta in month between ref_date and delivery_date"""
-        months = 0
-        start_date = delivery_date
-        while True:
-            # Calculating each month in the given period separately
-            if (ref_date.month == start_date.month and
-               ref_date.year == start_date.year):
-                end_date = ref_date
-            else:
-                end_date = start_date + relativedelta.relativedelta(
-                        months=+1, day=1)
-            delta = relativedelta.relativedelta(end_date, start_date)
-            months += delta.months
-            if delta.days > 0:
-                months += delta.days / monthrange(
-                        start_date.year, start_date.month)[1]
-            if (end_date == ref_date):
-                break
-            start_date = end_date
-        return months

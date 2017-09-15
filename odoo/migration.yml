@@ -127,3 +127,5 @@ migration:
           - specific_product
           - specific_sale
           - expensify
+          - bso_base
+          - bso_purchase
