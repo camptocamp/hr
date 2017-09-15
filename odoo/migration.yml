@@ -128,3 +128,4 @@ migration:
           - specific_sale
           - bso_base
           - bso_purchase
+          - expensify
