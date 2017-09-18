@@ -86,3 +86,23 @@ class HrHolidays(models.Model):
             date_to2.strftime(DATETIME_FORMAT),
             employee_id)
         return days + diff_days
+
+    @api.onchange('employee_id')
+    def _onchange_employee(self):
+        res = super(HrHolidays, self)._onchange_employee()
+        if not isinstance(res, dict):
+            res = {}
+        emp = self.employee_id
+        if emp:
+            if res['domain']:
+                res['domain'].update(
+                    holiday_status_id=[
+                        ('company_id', '=', emp.company_id.id)
+                    ]
+                )
+            else:
+                res['domain'] = {'holiday_status_id': [
+                                    ('company_id', '=', emp.company_id.id)
+                                    ]
+                                 }
+        return res
