@@ -129,3 +129,4 @@ migration:
           - bso_base
           - bso_purchase
           - expensify
+          - specific_security

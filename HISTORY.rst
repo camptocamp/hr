@@ -25,6 +25,7 @@ Latest (Unreleased)
 * BSIBSO-1012 Logic creation subscription
 * Automatic Invoicing of PO BSIBSO-1010
 * Overload mrc compute_qty_received BSIBSO-1010
+* BSIBSO-1013 Prevent employees to edit or delete events if they are not owners
 
 **Bugfixes**
 
