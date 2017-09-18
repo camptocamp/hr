@@ -130,3 +130,4 @@ migration:
           - bso_purchase
           - expensify
           - specific_security
+          - invoice_timesheet_report
