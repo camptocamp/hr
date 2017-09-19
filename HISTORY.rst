@@ -21,18 +21,27 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.2.0 (2017-09-19)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1003 Invoicing process for MRP products
 * BSIBSO-1012 Logic creation subscription
 * Automatic Invoicing of PO BSIBSO-1010
 * Overload mrc compute_qty_received BSIBSO-1010
 * BSIBSO-1013 Prevent employees to edit or delete events if they are not owners
 * BSIBSO-962 Invoice timesheet report
-
-**Bugfixes**
-
-**Build**
-
-**Documentation**
+* BSIBSO-1014 employee form and kanban views enhancement
+* BSIBSO-1016 enforce employee company_id leave type on holiday allocation/request 
+* BSIBSO-1008 fix price from supplier info
 
 
 10.1.7 (2017-08-28)
