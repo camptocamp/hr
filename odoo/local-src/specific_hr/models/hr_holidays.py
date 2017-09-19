@@ -94,15 +94,11 @@ class HrHolidays(models.Model):
             res = {}
         emp = self.employee_id
         if emp:
-            if res['domain']:
-                res['domain'].update(
-                    holiday_status_id=[
-                        ('company_id', '=', emp.company_id.id)
-                    ]
-                )
-            else:
-                res['domain'] = {'holiday_status_id': [
-                                    ('company_id', '=', emp.company_id.id)
-                                    ]
-                                 }
+            if 'domain' not in res:
+                res['domain'] = {}
+            res['domain'].update(
+                holiday_status_id=[
+                    ('company_id', '=', emp.company_id.id)
+                ]
+            )
         return res
