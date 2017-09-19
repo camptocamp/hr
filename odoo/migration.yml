@@ -131,3 +131,4 @@ migration:
           - expensify
           - specific_security
           - invoice_timesheet_report
+          - specific_hr
