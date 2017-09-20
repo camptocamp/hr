@@ -21,7 +21,13 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* Update with last changes from odoo-template
+* Remove pending-merges in partner-contact partially removed in f71bb19
+* Update PO `subscr_date_start` if there is none while processing stock.picking BSIBSO-1009
+
 **Bugfixes**
+
+* Computation of PO `_compute_has_subscription` from BSIBSO-1008
 
 **Build**
 
@@ -40,7 +46,7 @@ Latest (Unreleased)
 * BSIBSO-1013 Prevent employees to edit or delete events if they are not owners
 * BSIBSO-962 Invoice timesheet report
 * BSIBSO-1014 employee form and kanban views enhancement
-* BSIBSO-1016 enforce employee company_id leave type on holiday allocation/request 
+* BSIBSO-1016 enforce employee company_id leave type on holiday allocation/request
 * BSIBSO-1008 fix price from supplier info
 
 
