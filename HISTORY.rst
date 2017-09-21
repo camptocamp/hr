@@ -33,6 +33,8 @@ Latest (Unreleased)
 
 **Build**
 
+* Update docker-image to 10.0-2.4.0
+
 **Documentation**
 
 
