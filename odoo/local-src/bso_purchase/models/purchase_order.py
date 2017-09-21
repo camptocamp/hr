@@ -27,7 +27,7 @@ class Purchase(models.Model):
 
     @api.depends('order_line.product_id')
     def _compute_has_subscription(self):
-        line_model = self.env['sale.order.line']
+        line_model = self.env['purchase.order.line']
         domain = [('product_id.recurring_invoice', '=', True)]
         for item in self:
             item.has_subscription = bool(line_model.search(

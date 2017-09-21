@@ -132,3 +132,4 @@ migration:
           - specific_security
           - invoice_timesheet_report
           - specific_hr
+    - version: 10.2.1
