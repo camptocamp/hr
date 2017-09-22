@@ -136,3 +136,4 @@ migration:
       addons:
         upgrade:
           - specific_expense
+          - specific_sale

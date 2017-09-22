@@ -26,6 +26,7 @@ Latest (Unreleased)
 * Update PO `subscr_date_start` if there is none while processing stock.picking BSIBSO-1009
 * update subscription invoicing BSIBSO-1004
 * add specific_expense BSIBSO-1017
+* subscription renewal/cancelation BSIBSO-1006
 
 **Bugfixes**
 
