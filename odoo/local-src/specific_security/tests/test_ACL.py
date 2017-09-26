@@ -295,11 +295,15 @@ class TestACL(common.TransactionCase):
         product_expense = self.env.ref('scen.expense_product_0013')
         for employee in emp_obj.search([('user_id', 'in',
                                          self.test_users.ids)]):
+            product = product_expense.copy(
+                {'company_id': employee.company_id.id}
+            )
             vals = {
                 'name': "Expense %s" % employee.name,
                 'employee_id': employee.id,
-                'product_id': product_expense.id,
+                'product_id': product.id,
                 'unit_amount': 123.45,
+                'company_id': employee.company_id.id,
             }
             expense = self.env['hr.expense'].sudo(
                 user=employee.user_id).create(vals)
@@ -311,11 +315,15 @@ class TestACL(common.TransactionCase):
         product_expense = self.env.ref('scen.expense_product_0013')
         for employee in emp_obj.search([('user_id', 'in',
                                          self.test_users.ids)]):
+            product = product_expense.copy(
+                {'company_id': employee.company_id.id}
+            )
             vals = {
                 'name': "Expense %s" % employee.name,
                 'employee_id': employee.id,
-                'product_id': product_expense.id,
+                'product_id': product.id,
                 'unit_amount': 123.45,
+                'company_id': employee.company_id.id,
             }
             expense = self.env['hr.expense'].sudo(
                 user=employee.user_id).create(vals)
