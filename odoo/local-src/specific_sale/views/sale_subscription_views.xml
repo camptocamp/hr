@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="sale_subscription_view_form" model="ir.ui.view">
+    <field name="name">sale.subscription.amount.form</field>
+    <field name="inherit_id" ref="sale_contract.sale_subscription_view_form"/>
+    <field name="model">sale.subscription</field>
+    <field name="arch" type="xml">
+
+      <xpath expr="//field[@name='recurring_total']" position="after">
+        <field name="period_total" class="oe_subtotal_footer_separator"
+               widget="monetary" options="{'currency_field': 'currency_id'}"/>
+      </xpath>
+      <field name="template_id" position="after">
+        <label for="recurring_interval" string="Recurrency"/>
+        <div>
+          <field name="recurring_interval" class="oe_inline"/>
+          <field name="recurring_rule_type" class="oe_inline"/>
+        </div>
+      </field>
+    </field>
+  </record>
+
+  <record id="sale_subscription_view_list" model="ir.ui.view">
+    <field name="name">sale.subscription.amount.list</field>
+    <field name="inherit_id" ref="sale_contract.sale_subscription_view_list"/>
+    <field name="model">sale.subscription</field>
+    <field name="arch" type="xml">
+
+      <xpath expr="//field[@name='recurring_total']" position="after">
+        <field name="period_total"/>
+      </xpath>
+
+    </field>
+  </record>
+
+
+</odoo>
