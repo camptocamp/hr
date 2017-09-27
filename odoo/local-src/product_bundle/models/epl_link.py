@@ -1,4 +1,4 @@
-from odoo import models, fields, api, exceptions, _
+from odoo import models, fields, api
 
 
 class EplLink(models.Model):
@@ -14,49 +14,18 @@ class EplLink(models.Model):
         index=True,
         required=True
     )
-    a_pop_id = fields.Many2one(
-        string='POP A',
-        related='a_device_id.pop_id',
-        required=True
-    )
     z_device_id = fields.Many2one(
         string='Device Z',
         comodel_name='epl.device',
         index=True,
         required=True
     )
-    z_pop_id = fields.Many2one(
-        string='POP Z',
-        related='z_device_id.pop_id',
-        required=True
-    )
-    bandwidth = fields.Float(
-        string='Bandwidth',
-        required=True
-    )
     latency = fields.Float(
-        string='Latency',
+        string='Latency (ms)',
         required=True
     )
-    latency_str = fields.Char(
-        string='Latency',
-        compute='compute_latency_str',
-    )
-    mrc = fields.Float(
-        string='MRC',
-        required=True
-    )
-    mrc_mb = fields.Float(
-        string='MRC / Mb',
-        compute='compute_mrc_mb',
-        store=True
-    )
-    nrc = fields.Float(
-        string='NRC'
-    )
-    currency_id = fields.Many2one(
-        string='Currency',
-        comodel_name='res.currency',
+    bandwidth = fields.Integer(
+        string='Bandwidth (Mbps)',
         required=True
     )
     partner_id = fields.Many2one(
@@ -71,24 +40,42 @@ class EplLink(models.Model):
         string='Is Protected',
         default=False
     )
+    currency_id = fields.Many2one(
+        string='Currency',
+        comodel_name='res.currency',
+        required=True
+    )
+    mrc = fields.Monetary(
+        string='MRC',
+        currency_field='currency_id',
+        required=True
+    )
+    mrc_per_mb = fields.Monetary(
+        string='MRC/Mbps',
+        currency_field='currency_id',
+        compute='compute_mrc_per_mb'
+    )
+    nrc = fields.Monetary(
+        string='NRC',
+        currency_field='currency_id'
+    )
     active = fields.Boolean(
         string='Active',
         default=True
     )
 
-    @api.depends('a_device_id', 'z_device_id', 'latency_str')
+    @api.depends('a_device_id', 'z_device_id', 'latency')
     def compute_name(self):
         for rec in self:
-            rec.name = "%s <-> %s @ %s" % (rec.a_device_id.name,
-                                           rec.z_device_id.name,
-                                           rec.latency_str)
+            link_name = "%s <-> %s @ %.2fms" % (rec.a_device_id.name,
+                                                rec.z_device_id.name,
+                                                rec.latency)
+            if rec.is_protected:
+                link_name += " (Protected)"
+            rec.name = link_name
 
-    @api.depends('latency')
-    def compute_latency_str(self):
+    @api.depends('mrc', 'bandwidth')
+    def compute_mrc_per_mb(self):
         for rec in self:
-            rec.latency_str = "%.2fms" % rec.latency
-
-    @api.depends('bandwidth', 'mrc')
-    def compute_mrc_mb(self):
-        for rec in self:
-            rec.mrc_mb = (rec.mrc / rec.bandwidth) if rec.bandwidth else 0
+            if rec.bandwidth:
+                rec.mrc_per_mb = rec.mrc / rec.bandwidth

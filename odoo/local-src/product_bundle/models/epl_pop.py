@@ -14,7 +14,7 @@ class EplPop(models.Model):
     longitude = fields.Float(
         string='Longitude'
     )
-    Latitude = fields.Float(
+    latitude = fields.Float(
         string='Latitude'
     )
     active = fields.Boolean(

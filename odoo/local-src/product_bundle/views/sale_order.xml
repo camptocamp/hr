@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="bundle_details_edit" model="ir.actions.server">
+        <field name="name">Bundle Wizard Edit</field>
+        <field name="model_id" ref="model_sale_order_line"/>
+        <field name="code">action = object.bundle_details_edit()</field>
+    </record>
 
-    <record id="add_bundle_to_sale_order" model="ir.ui.view">
-        <field name="name">sale.order.add_bundle</field>
+    <record id="add_bundle_edit_to_sale_order_line" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="inherit_id"
+               ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//notebook/page/field[@name='order_line']"
-                   position="before">
-                <button name="product_bundle.bundle_details_create"
-                        string="Add Cloud" type="action"
-                        context="{'default_sale_order_id': id, 'default_bundle_name': 'Cloud'}"/>
-                <button name="product_bundle.bundle_details_create"
-                        string="Add EPL" type="action"
-                        context="{'default_sale_order_id': id, 'default_bundle_name': 'EPL'}"/>
-                <button name="product_bundle.bundle_details_create"
-                        string="Add Network" type="action"
-                        context="{'default_sale_order_id': id, 'default_bundle_name': 'Network'}"/>
-                <button name="product_bundle.bundle_details_create"
-                        string="Add Hosting" type="action"
-                        context="{'default_sale_order_id': id, 'default_bundle_name': 'Hosting'}"/>
-                <button name="product_bundle.bundle_details_create"
-                        string="Add Service Desk" type="action"
-                        context="{'default_sale_order_id': id, 'default_bundle_name': 'Service Desk'}"/>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']"
+                   position="after">
+                <button string="Edit"
+                        name="%(product_bundle.bundle_details_edit)d"
+                        type="action"
+                        class="btn-link oe_edit_only"/>
             </xpath>
         </field>
     </record>
-
 </odoo>
