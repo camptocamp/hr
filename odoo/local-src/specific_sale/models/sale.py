@@ -20,29 +20,39 @@ class SaleOrder(models.Model):
 
     refusal_reason = fields.Text(track_visibility='onchange')
     has_mrc_product = fields.Boolean(compute='_compute_has_mrc_product')
+    state = fields.Selection(
+        selection_add=[
+            ('to_approve_tech', 'To Approve (technical)'),
+            ('refused', 'Refused'),
+        ]
+    )
 
-    @api.model
-    def _setup_fields(self, partial):
-        super(SaleOrder, self)._setup_fields(partial)
-        selection = self._fields['state'].selection
-        position = 0
-        exists = False
-        for idx, (state, __) in enumerate(selection):
-            if state == 'draft':
-                position = idx
-            elif state == 'to_approve':
-                exists = True
-        if not exists:
-            selection.insert(position + 1, (
-                'to_approve_tech', _('To Approve (technical)')
-            ))
-            selection.insert(position + 2, ('refused', _('Refused')))
+    # TODO: refactor thits.
+    # We added `selection_add` above to make tests happy
+    # since the value we are injecting was not there yet
+    # @api.model
+    # def _setup_fields(self, partial):
+    #     super(SaleOrder, self)._setup_fields(partial)
+    #     selection = self._fields['state'].selection
+    #     position = 0
+    #     exists = False
+    #     for idx, (state, __) in enumerate(selection):
+    #         if state == 'draft':
+    #             position = idx
+    #         elif state == 'to_approve':
+    #             exists = True
+    #     if not exists:
+    #         selection.insert(position + 1, (
+    #             'to_approve_tech', _('To Approve (technical)')
+    #         ))
+    #         selection.insert(position + 2, ('refused', _('Refused')))
 
     @api.multi
     def is_to_approve(self):
         """ Overwrite condition to approve to replace group by
         group_technical_mgmt
         """
+        self.ensure_one()
         validation_types = ('two_step', 'bso_three_step')
         return (self.company_id.so_double_validation in validation_types and
                 self.is_amount_to_approve() and
@@ -60,9 +70,9 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        to_approve = self.env['sale.order'].browse()
-        to_approve_technical = self.env['sale.order'].browse()
-        to_confirm = self.env['sale.order'].browse()
+        to_approve = self.browse()
+        to_approve_technical = self.browse()
+        to_confirm = self.browse()
         for order in self:
             if order.is_to_approve():
                 to_approve |= order

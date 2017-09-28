@@ -2,23 +2,42 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo.addons.sale.tests import test_sale_common
+from .common import BaseCase
 
 
-class TestSaleTripleValidation(test_sale_common.TestSale):
+class TestSaleTripleValidation(BaseCase):
+
+    @classmethod
+    def setup_records(cls):
+        cls.so = cls.env['sale.order'].sudo(cls.sale_user).create({
+            'partner_id': cls.partner.id,
+            'partner_invoice_id': cls.partner.id,
+            'partner_shipping_id': cls.partner.id,
+            'order_line': [
+                (0, 0, {'name': p.name,
+                        'product_id': p.id,
+                        'product_uom_qty': 2,
+                        'product_uom': p.uom_id.id,
+                        'price_unit': p.list_price})
+                for (_, p) in cls.products.iteritems()
+            ],
+            'pricelist_id': cls.env.ref('product.list0').id,
+        })
 
     def test_three_steps_under_limit(self):
         so = self.so
         so.company_id.sudo().so_double_validation = 'bso_three_step'
+        so.company_id.sudo().so_double_validation_amount = 10
         # confirm quotation
-        so.sudo(self.user).action_confirm()
-        self.assertEquals(so.state, 'sale')
+        # as simple user -> need approval (amounts won't match)
+        so.sudo(self.sale_user).action_confirm()
+        self.assertEquals(so.state, 'to_approve')
 
     def test_three_steps_technical_manager(self):
         so = self.so
         so.company_id.sudo().so_double_validation = 'bso_three_step'
         so.company_id.sudo().so_double_validation_amount = 10
-        # confirm quotation
+        # confirm quotation as tech manager -> approved
         so.sudo(self.technical_manager).action_confirm()
         self.assertEquals(so.state, 'sale')
 
@@ -26,9 +45,10 @@ class TestSaleTripleValidation(test_sale_common.TestSale):
         so = self.so
         so.company_id.sudo().so_double_validation = 'bso_three_step'
         so.company_id.sudo().so_double_validation_amount = 10
-        # confirm quotation
-        so.sudo(self.manager).action_confirm()
+        # confirm quotation as manager -> need tech approval
+        so.sudo(self.sale_manager).action_confirm()
         self.assertEquals(so.state, 'to_approve_tech')
+        # approve quotation as tech manager -> approved
         so.sudo(self.technical_manager).action_approve()
         self.assertEquals(so.state, 'sale')
 
@@ -37,9 +57,9 @@ class TestSaleTripleValidation(test_sale_common.TestSale):
         so.company_id.sudo().so_double_validation = 'bso_three_step'
         so.company_id.sudo().so_double_validation_amount = so.amount_total
         # confirm quotation
-        so.sudo(self.user).action_confirm()
+        so.sudo(self.sale_user).action_confirm()
         self.assertEquals(so.state, 'to_approve')
-        so.sudo(self.manager).action_confirm()
+        so.sudo(self.sale_manager).action_confirm()
         self.assertEquals(so.state, 'to_approve_tech')
         so.sudo(self.technical_manager).action_approve()
         self.assertEquals(so.state, 'sale')
@@ -49,9 +69,9 @@ class TestSaleTripleValidation(test_sale_common.TestSale):
         so.company_id.sudo().so_double_validation = 'bso_three_step'
         so.company_id.sudo().so_double_validation_amount = 10
         # confirm quotation
-        so.sudo(self.user).action_confirm()
+        so.sudo(self.sale_user).action_confirm()
         self.assertEquals(so.state, 'to_approve')
-        so.sudo(self.manager).action_confirm()
+        so.sudo(self.sale_manager).action_confirm()
         self.assertEquals(so.state, 'to_approve_tech')
         so.sudo(self.technical_manager).action_approve()
         self.assertEquals(so.state, 'sale')
@@ -61,40 +81,8 @@ class TestSaleTripleValidation(test_sale_common.TestSale):
         so.company_id.sudo().so_double_validation = 'bso_three_step'
         so.company_id.sudo().so_double_validation_amount = 10
         # confirm quotation
-        so.sudo(self.user).action_confirm()
+        so.sudo(self.sale_user).action_confirm()
         self.assertEquals(so.state, 'to_approve')
         # direct confirm by technical manager
         so.sudo(self.technical_manager).action_approve()
         self.assertEquals(so.state, 'sale')
-
-    def setUp(self):
-        super(TestSaleTripleValidation, self).setUp()
-        group_technical_manager = self.env.ref(
-            'specific_security.group_technical_mgmt')
-        self.technical_manager = self.env['res.users'].create({
-            'name': 'Technical Manager Petit Pierre',
-            'login': 'technical_manager',
-            'alias_name': 'tipierre',
-            'email': 'p.p@example.com',
-            'signature': '-- PP\n',
-            'notify_email': 'always',
-            'groups_id': [(6, 0, [group_technical_manager.id])]
-        })
-        self.so = self.env['sale.order'].sudo(self.user).create({
-            'partner_id': self.partner.id,
-            'partner_invoice_id': self.partner.id,
-            'partner_shipping_id': self.partner.id,
-            'order_line': [
-                (0, 0, {'name': p.name,
-                        'product_id': p.id,
-                        'product_uom_qty': 2,
-                        'product_uom': p.uom_id.id,
-                        'price_unit': p.list_price})
-                for (_, p) in self.products.iteritems()
-            ],
-            'pricelist_id': self.env.ref('product.list0').id,
-        })
-        self.assertEqual(
-            self.so.amount_total,
-            sum([2 * p.list_price for (k, p) in self.products.iteritems()]),
-            'Sale: total amount is wrong')
