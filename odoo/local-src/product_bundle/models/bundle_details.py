@@ -160,11 +160,11 @@ class BundleDetails(models.Model):
 
     @api.multi
     def button_bundle_save(self):
-        return self.bundle_save(bundle_id=self.bundle_id,
-                                bundle_name=self.bundle_name,
-                                quantity=self.bundle_quantity,
-                                uom_id=self.bundle_id.uom_id,
-                                price_per_unit=self.bundle_price_per_unit)
+        return self.bundle_save(self.bundle_id,
+                                self.bundle_name,
+                                self.bundle_quantity,
+                                self.bundle_id.uom_id,
+                                self.bundle_price_per_unit)
 
     @api.model
     def bundle_save(self, bundle_id, bundle_name, quantity, uom_id,
@@ -192,7 +192,8 @@ class BundleDetails(models.Model):
         currency_id = company_id.currency_id
         list_price = self.sale_order_currency_id.sudo().compute(
             from_amount=price_per_unit,
-            to_currency=currency_id)
+            to_currency=currency_id
+        )
         return self.env['product.product'].create({
             'name': bundle_id.name,
             'type': 'consu',  # consu / service

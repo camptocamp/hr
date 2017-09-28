@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="bundle_details_create" model="ir.actions.act_window">
-        <field name="name">Create Bundle</field>
-        <field name="res_model">bundle.details</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="bundle_details_view"/>
-        <field name="target">new</field>
-    </record>
-
     <record id="bundle_details_view" model="ir.ui.view">
         <field name="name">bundle.details.form</field>
         <field name="model">bundle.details</field>
@@ -62,6 +53,15 @@
                 </footer>
             </form>
         </field>
+    </record>
+
+    <record id="bundle_details_create" model="ir.actions.act_window">
+        <field name="name">Create Bundle</field>
+        <field name="res_model">bundle.details</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="bundle_details_view"/>
+        <field name="target">new</field>
     </record>
 
 </odoo>

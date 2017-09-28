@@ -8,6 +8,8 @@
             <form string="Cable">
                 <group>
                     <field name="name"/>
+                </group>
+                <group>
                     <field name="active"/>
                 </group>
             </form>

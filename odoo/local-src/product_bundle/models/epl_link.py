@@ -64,7 +64,7 @@ class EplLink(models.Model):
         default=True
     )
 
-    @api.depends('a_device_id', 'z_device_id', 'latency')
+    @api.depends('a_device_id', 'z_device_id', 'latency', 'is_protected')
     def compute_name(self):
         for rec in self:
             link_name = "%s <-> %s @ %.2fms" % (rec.a_device_id.name,

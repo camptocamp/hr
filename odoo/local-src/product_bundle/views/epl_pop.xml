@@ -11,6 +11,8 @@
                     <field name="partner_id"/>
                     <field name="longitude"/>
                     <field name="latitude"/>
+                </group>
+                <group>
                     <field name="active"/>
                 </group>
             </form>

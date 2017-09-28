@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, api
 from lxml import etree
 
 
@@ -31,12 +31,8 @@ class SaleOrder(models.Model):
 
     @api.model
     def get_bundle_button_xml(self, bundle_id):
-        button_str = """
-        <button name="product_bundle.bundle_details_create"
-                type="action"
-                class="oe_highlight"
-                string="Add %s"
-                context="{'default_sale_order_id': id, 
-                          'default_bundle_id': %s}"/>
+        button_str = """<button name="product_bundle.bundle_details_create"
+        type="action" class="oe_highlight" string="Add %s"
+        context="{'default_sale_order_id': id, 'default_bundle_id': %s}"/>
         """ % (bundle_id.name, bundle_id.id)
         return etree.XML(button_str)

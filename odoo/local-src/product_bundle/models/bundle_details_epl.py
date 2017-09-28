@@ -631,8 +631,8 @@ class BundleDetailsEPL(models.Model):
 
     @api.multi
     def button_epl_save(self):
-        return self.bundle_save(bundle_id=self.epl_products_bundle_id,
-                                bundle_name=self.epl_bundle_name,
-                                quantity=self.epl_bandwidth,
-                                uom_id=self.bundle_id.uom_id,
-                                price_per_unit=self.epl_bundle_price_per_mb)
+        return self.bundle_save(self.epl_products_bundle_id,
+                                self.epl_bundle_name,
+                                self.epl_bandwidth,
+                                self.bundle_id.uom_id,
+                                self.epl_bundle_price_per_mb)
