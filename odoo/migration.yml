@@ -145,3 +145,5 @@ migration:
           - specific_sale
           - date_range
           - account_financial_report_qweb
+          - bso_webservice
+          - account_invoice_merge

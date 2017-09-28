@@ -14,6 +14,9 @@
      'specific_security',
      'website_contract',
      'sale_contract',
+     'account_invoice_merge',
+     'base_report_to_printer',
+     'bso_webservice',
  ],
  'website': 'www.camptocamp.com',
  'demo': [

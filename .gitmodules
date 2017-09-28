@@ -63,3 +63,6 @@
 	path = odoo/external-src/reporting-engine
 	url = https://github.com/OCA/reporting-engine
 	branch = 10.0
+[submodule "odoo/external-src/account-invoicing"]
+	path = odoo/external-src/account-invoicing
+	url = git@github.com:OCA/account-invoicing.git
