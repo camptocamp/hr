@@ -60,7 +60,8 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook/page[@name='variants']"
                    position="attributes">
-                <attribute name="attrs">{'invisible':[('is_bundle', '=', 1)]}
+                <attribute name="attrs">
+                    {'invisible':[('is_bundle', '=', True)]}
                 </attribute>
             </xpath>
 
