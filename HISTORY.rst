@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.2.1 (2017-09-28)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * Update with last changes from odoo-template
 * Remove pending-merges in partner-contact partially removed in f71bb19
 * Update PO `subscr_date_start` if there is none while processing stock.picking BSIBSO-1009
