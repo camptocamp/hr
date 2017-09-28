@@ -19,6 +19,7 @@ class BundleDetails(models.Model):
     sale_order_id = fields.Many2one(
         string='Sale Order',
         comodel_name='sale.order',
+        ondelete='cascade',
         required=True
     )
     sale_order_currency_id = fields.Many2one(
@@ -184,6 +185,7 @@ class BundleDetails(models.Model):
             old_product_id = self.sale_order_line_id.product_id
             self.sale_order_line_id.update(line_data)
             old_product_id.unlink()
+        product_id.sale_order_line_id = self.sale_order_line_id
         return True
 
     @api.model
@@ -200,8 +202,11 @@ class BundleDetails(models.Model):
             'categ_id': bundle_id.categ_id.id,
             'list_price': list_price,
             'uom_id': uom_id.id,
+            'uom_po_id': uom_id.id,
             'company_id': company_id.id,
             'recurring_invoice': True,  # True / False,
             'invoice_policy': 'delivery',  # order / delivery
-            'active': False
+            'sale_ok': False,
+            'purchase_ok': False,
+            'can_be_expensed': False
         })

@@ -2,7 +2,7 @@
     'name': 'Product Bundle',
     'category': 'Sales',
     'description': """
-    Bundle Product of products
+    BSO Bundles + EPL
 """,
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',

@@ -15,9 +15,6 @@
                            attrs="{'invisible': [('is_bundle', '=', False)]}"/>
                     <label for="is_bundle_epl"
                            attrs="{'invisible': [('is_bundle', '=', False)]}"/>
-                    <field name="epl_products_bundle_id"
-                           attrs="{'invisible': [('is_bundle_epl', '=', False)], 'required': [('is_bundle_epl', '=', True)]}"
-                           domain="[('is_bundle', '=', True), ('is_bundle_epl', '=', False)]"/>
                 </div>
             </xpath>
 
@@ -36,23 +33,23 @@
                         </tree>
                     </field>
                 </page>
-                <page string="Bundle Products" name="no_bundle_products"
-                      attrs="{'invisible':['|', ('is_bundle','=', False), ('is_bundle_epl', '=', False)]}">
-                    <h1>Must be edited from related Bundle Products</h1>
+                <page string="EPL Products Bundle" name="epl_products_bundle"
+                      attrs="{'invisible':[('is_bundle_epl', '=', False)]}">
+                    <group>
+                        <field name="epl_products_bundle_id"
+                               attrs="{'required': [('is_bundle_epl', '=', True)]}"
+                               domain="[('is_bundle', '=', True), ('is_bundle_epl', '=', False)]"/>
+                    </group>
                 </page>
                 <page string="Bundle Templates" name="bundle_templates"
                       attrs="{'invisible':['|', ('is_bundle', '=', False), ('is_bundle_epl', '=', True)]}">
                     <h1>TODO</h1>
                 </page>
-                <page string="Bundle Templates" name="no_bundle_templates"
-                      attrs="{'invisible':['|', ('is_bundle','=', False), ('is_bundle_epl', '=', False)]}">
-                    <h1>Must be edited from related Bundle Templates</h1>
-                </page>
             </notebook>
         </field>
     </record>
 
-    <record id="disable_variants_if_bundle" model="ir.ui.view">
+    <record id="hide_variants_if_bundle" model="ir.ui.view">
         <field name="name">product.template.disable_variants</field>
         <field name="model">product.template</field>
         <field name="inherit_id"
@@ -63,14 +60,6 @@
                 <attribute name="attrs">
                     {'invisible':[('is_bundle', '=', True)]}
                 </attribute>
-            </xpath>
-
-            <xpath expr="//notebook/page[@name='variants']"
-                   position="after">
-                <page string="Variants" name="no_variants"
-                      attrs="{'invisible':[('is_bundle','=', False)]}">
-                    <h1>You cannot create variants of the Bundle</h1>
-                </page>
             </xpath>
         </field>
     </record>

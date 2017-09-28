@@ -19,6 +19,11 @@ class ProductTemplate(models.Model):
         comodel_name='bundle.product',
         inverse_name='bundle_id'
     )
+    sale_order_line_id = fields.Many2one(
+        string='Sale Order Line',
+        comodel_name='sale.order.line',
+        ondelete='cascade'
+    )
 
     @api.onchange('is_bundle')
     def onchange_is_bundle(self):
