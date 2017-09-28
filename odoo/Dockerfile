@@ -11,6 +11,8 @@ RUN set -x; \
         build-essential \
         libffi-dev \
         libssl-dev \
+        cups \
+        libcups2-dev \
         && cd /opt/odoo && pip install -r requirements.txt \
         # Install additional python packages
         && apt-get remove -y python-dev build-essential libffi-dev libssl-dev \
@@ -35,6 +37,7 @@ ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/external-src/partner-contact, \
   /opt/odoo/external-src/product-variant, \
   /opt/odoo/external-src/purchase-workflow, \
+  /opt/odoo/external-src/report-print-send, \
   /opt/odoo/external-src/sale-workflow, \
   /opt/odoo/external-src/server-tools, \
   /opt/odoo/external-src/queue, \

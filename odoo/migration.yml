@@ -147,3 +147,4 @@ migration:
           - account_financial_report_qweb
           - bso_webservice
           - account_invoice_merge
+          - base_report_to_printer
