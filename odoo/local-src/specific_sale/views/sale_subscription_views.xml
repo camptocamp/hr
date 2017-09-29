@@ -18,6 +18,11 @@
           <field name="recurring_rule_type" class="oe_inline"/>
         </div>
       </field>
+      <xpath expr="//field[@name='date']" position="after">
+        <field name="automatic_renewal"/>
+        <field name="customer_prior_notice"/>
+        <field name="date_cancelled"/>
+      </xpath>
     </field>
   </record>
 
@@ -34,5 +39,16 @@
     </field>
   </record>
 
+  <record id="sale_subscription_template_view_form_bso" model="ir.ui.view">
+    <field name="name">sale.subscription.template.form.viewbso</field>
+    <field name="model">sale.subscription.template</field>
+    <field name="inherit_id" ref="sale_contract.sale_subscription_template_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='journal_id']" position="before">
+        <field name="automatic_renewal"/>
+        <field name="customer_prior_notice"/>
+      </xpath>
+    </field>
+  </record>
 
 </odoo>

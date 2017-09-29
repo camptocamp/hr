@@ -38,12 +38,15 @@ Latest (Unreleased)
 * Update PO `subscr_date_start` if there is none while processing stock.picking BSIBSO-1009
 * update subscription invoicing BSIBSO-1004
 * add specific_expense BSIBSO-1017
+* subscription renewal/cancelation BSIBSO-1006
 
 **Bugfixes**
 
 * Computation of PO `_compute_has_subscription` from BSIBSO-1008
 
 **Build**
+
+* Update docker-image to 10.0-2.4.0
 
 **Documentation**
 
