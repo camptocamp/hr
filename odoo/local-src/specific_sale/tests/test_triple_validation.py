@@ -24,6 +24,13 @@ class TestSaleTripleValidation(BaseCase):
             'pricelist_id': cls.env.ref('product.list0').id,
         })
 
+    def test_so_state_options_order(self):
+        selection = self.env['sale.order']._fields['state'].selection
+        idxs = {state[0]: idx for idx, state in enumerate(selection)}
+        self.assertEqual(idxs['draft'], 0)
+        self.assertEqual(idxs['to_approve_tech'], 1)
+        self.assertEqual(idxs['refused'], 2)
+
     def test_three_steps_under_limit(self):
         so = self.so
         so.company_id.sudo().so_double_validation = 'bso_three_step'

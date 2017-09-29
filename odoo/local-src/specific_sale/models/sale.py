@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 from datetime import datetime
 
 
@@ -27,25 +27,17 @@ class SaleOrder(models.Model):
         ]
     )
 
-    # TODO: refactor thits.
-    # We added `selection_add` above to make tests happy
-    # since the value we are injecting was not there yet
-    # @api.model
-    # def _setup_fields(self, partial):
-    #     super(SaleOrder, self)._setup_fields(partial)
-    #     selection = self._fields['state'].selection
-    #     position = 0
-    #     exists = False
-    #     for idx, (state, __) in enumerate(selection):
-    #         if state == 'draft':
-    #             position = idx
-    #         elif state == 'to_approve':
-    #             exists = True
-    #     if not exists:
-    #         selection.insert(position + 1, (
-    #             'to_approve_tech', _('To Approve (technical)')
-    #         ))
-    #         selection.insert(position + 2, ('refused', _('Refused')))
+    @api.model
+    def _setup_fields(self, partial):
+        super(SaleOrder, self)._setup_fields(partial)
+        selection = self._fields['state'].selection
+        idxs = {state[0]: idx for idx, state in enumerate(selection)}
+        to_app = selection.pop(idxs['to_approve_tech'])
+        # since we've already removed one item here we get back by 1
+        refused = selection.pop(idxs['refused'] - 1)
+        # place both states right after draft
+        selection.insert(idxs['draft'] + 1, to_app)
+        selection.insert(idxs['draft'] + 2, refused)
 
     @api.multi
     def is_to_approve(self):
