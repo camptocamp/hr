@@ -136,4 +136,7 @@ migration:
       addons:
         upgrade:
           - specific_expense
+    - version: 10.2.2
+      addons:
+        upgrade:
           - specific_sale
