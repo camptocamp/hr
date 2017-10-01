@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions, _
 
 
 class ExpensifyWizard(models.TransientModel):
@@ -19,6 +19,10 @@ class ExpensifyWizard(models.TransientModel):
     @api.multi
     def button_import(self):
         for expense in self.expensify_expenses:
+            if not expense.product_id:
+                raise exceptions.ValidationError(
+                    _("Missing Product for Expense: %s" % expense.name)
+                )
             expense_data = {
                 'expensify_id': expense.expensify_id,
                 'date': expense.date,
@@ -26,7 +30,6 @@ class ExpensifyWizard(models.TransientModel):
                 'product_id': expense.product_id.id,
                 'quantity': 1,
                 'unit_amount': expense.amount,
-                'tax_ids': [[6, False, [tax.id for tax in expense.tax_ids]]],
                 'currency_id': expense.currency_id.id,
                 'analytic_account_id': expense.analytic_account_id.id,
                 'payment_mode': expense.payment_mode,

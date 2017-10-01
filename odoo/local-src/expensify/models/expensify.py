@@ -98,8 +98,8 @@ class Expensify(models.TransientModel):
                 continue
 
             # Extract category and get related Odoo product
-            category = expense.get('category')
-            product_id = self.get_product_id(category)
+            # category = expense.get('category')
+            # product_id = self.get_product_id(category)
 
             # Extract Expense transaction
             merchant = expense['merchant']
@@ -150,7 +150,7 @@ class Expensify(models.TransientModel):
                 'expensify_id': expensify_id,
                 'date': date,
                 'name': name,
-                'product_id': product_id,
+                # 'product_id': product_id,
                 'amount': amount,
                 'currency_id': currency_id,
                 'company_id': self.employee_id.company_id.id,

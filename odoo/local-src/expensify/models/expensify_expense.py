@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class ExpensifyWizardExpense(models.TransientModel):
@@ -14,6 +14,15 @@ class ExpensifyWizardExpense(models.TransientModel):
     date = fields.Date(
         required=True
     )
+    company_id = fields.Many2one(
+        string='Company',
+        comodel_name='res.company',
+        required=True
+    )
+    analytic_account_id = fields.Many2one(
+        string='Project',
+        comodel_name='account.analytic.account'
+    )
     name = fields.Char(
         string='Description',
         required=True
@@ -21,7 +30,6 @@ class ExpensifyWizardExpense(models.TransientModel):
     product_id = fields.Many2one(
         string='Product',
         comodel_name='product.product',
-        required=True
     )
     amount = fields.Float(
         required=True
@@ -30,19 +38,6 @@ class ExpensifyWizardExpense(models.TransientModel):
         string='Currency',
         comodel_name='res.currency',
         required=True
-    )
-    company_id = fields.Many2one(
-        string='Company',
-        comodel_name='res.company',
-        required=True
-    )
-    tax_ids = fields.Many2many(
-        string='Taxes',
-        comodel_name='account.tax',
-    )
-    analytic_account_id = fields.Many2one(
-        string='Project',
-        comodel_name='account.analytic.account'
     )
     payment_mode = fields.Selection(
         string='Paid By',
@@ -55,3 +50,8 @@ class ExpensifyWizardExpense(models.TransientModel):
         string='Notes'
     )
     receipt = fields.Binary()
+
+    @api.onchange('company_id')
+    def onchange_company_id(self):
+        for rec in self:
+            rec.product_id = False
