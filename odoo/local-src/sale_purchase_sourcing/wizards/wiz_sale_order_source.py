@@ -41,6 +41,10 @@ class SaleOrderSourceLineMixin(models.AbstractModel):
         related='so_line_id.product_uom',
         readonly=True,
     )
+    price = fields.Float(
+        string='Price',
+        digits=dp.get_precision('Product Price'),
+    )
 
 
 class SaleOrderSourceLineSource(models.TransientModel):
@@ -61,10 +65,6 @@ class SaleOrderSourceLineSourcing(models.TransientModel):
         string='Source line',
         comodel_name='sale.order.line.source',
         ondelete='set null',
-    )
-    price = fields.Float(
-        string='Price',
-        digits=dp.get_precision('Product Price'),
     )
 
 
@@ -167,9 +167,16 @@ class WizSaleOrderSource(models.TransientModel):
             lambda x: not x.supplier_id or x.supplier_id == self.supplier_id
         )
         for line in lines:
+            supplierinfo = line.product_id._select_seller(
+                partner_id=self.supplier_id,
+                quantity=line.qty,
+                date=fields.Date.today(),
+                uom_id=line.uom_id)
+
             data = line.copy_data()[0]
             data['supplier_id'] = self.supplier_id.id
             data['source_line_id'] = line.id
+            data['price'] = supplierinfo.price
             self.sourcing_line_ids |= self.sourcing_model.create(data)
 
     def _reset_sourcing_lines(self):
@@ -233,7 +240,7 @@ class WizSaleOrderSource(models.TransientModel):
             'product_uom': wiz_line.uom_id.id,
             'product_qty': wiz_line.qty,
             'name': wiz_line.product_id.display_name,
-            'price_unit': 1.0,
+            'price_unit': wiz_line.price,
             'date_planned': fields.Date.today(),
             'sourced_sale_line_id': wiz_line.so_line_id.id,
         }

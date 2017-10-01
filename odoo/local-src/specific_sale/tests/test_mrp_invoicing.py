@@ -10,7 +10,8 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
 
     def setUp(self):
         super(TestSaleMrpInvoicing, self).setUp()
-        # Create uom and uom category with recurring invoicing
+        Contract = self.env['sale.subscription']
+
         self.p_uom_categ_recurring = self.env['product.uom.categ'].create({
             'name': 'Unit/time',
             'recurring': True
@@ -53,8 +54,13 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
             'product_tmpl_id': self.prod_tmpl_setup_server.id,
         })
         # ubscription template
-        self.sbscription_tmpl = self.env['sale.subscription.template'].create({
-            'name': 'Special subscription'
+        self.sbscription_tmpl = self.env['sale.subscription.template'].create(
+            {
+                'name': 'Special subscription',
+                'subscription_template_line_ids': [(0, 0, {
+                    'product_id': self.prod_rent_server.id,
+                    'name': 'Recurring template line',
+                    'uom_id': self.prod_rent_server.uom_id.id})]
             })
         # Create a sale order with the two previous products
         self.so = self.env['sale.order'].create({
@@ -81,6 +87,14 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
             'product_uom': self.p_uom_2.id,
             'price_unit': self.prod_setup_server.list_price
         })
+
+        self.contract = Contract.create({
+            'name': 'TestContract',
+            'state': 'open',
+            'pricelist_id': self.ref('product.list0'),
+            'template_id': self.sbscription_tmpl.id,
+        })
+        self.contract.on_change_template()
 
     def test_recurring_value_uom(self):
         """ Test that recurring value is passed along """
@@ -204,3 +218,12 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
                           'The start date of the subscription should '
                           'be equal to the creation date of the last'
                           'invoice generated')
+
+    def test_create_invoice(self):
+        self.contract.write({'template_id': self.sbscription_tmpl.id})
+        self.contract.on_change_template()
+        self.contract._compute_recurring_total()
+
+        invoice = self.contract._recurring_create_invoice()[0]
+        self.contract.action_subscription_invoice()
+        self.assertNotEqual(0.0, invoice.amount_total)

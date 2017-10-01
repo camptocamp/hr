@@ -33,6 +33,7 @@
              'website',
              'product',
              'project_timesheet_currency',
+             'calendar',
              ],
  'website': 'http://www.camptocamp.com',
  'data': ['data/hr_department_no_company.sql',

@@ -26,7 +26,23 @@
                 <field name="per_month_rtt_allocation"/>
                 <field name='crt_date_start'/>
             </xpath>
+            <xpath expr="//field[@name='manager']" position="attributes">
+                <attribute name="groups"></attribute>
+            </xpath>
+        </field>
+    </record>
 
+    <record id="hr_kanban_view_employees_job_title" model="ir.ui.view">
+        <field name="name">hr.employee.kanban job title</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <li t-if="record.job_id.raw_value" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </li>
+            <li t-if="record.job_id.raw_value" position="after">
+                <li t-if="record.title.raw_value"><field name="title"/></li>
+            </li>
         </field>
     </record>
 
