@@ -21,6 +21,9 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* Added Employee group back to Timesheets access rights
+  via song BSIBSO-1019
+
 **Bugfixes**
 
 **Build**
