@@ -3,103 +3,117 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from __future__ import division
-from odoo.addons.sale.tests import test_sale_common
+from .common import BaseCase
 
 
-class TestSaleMrpInvoicing(test_sale_common.TestSale):
+class TestSaleMrpInvoicing(BaseCase):
 
-    def setUp(self):
-        super(TestSaleMrpInvoicing, self).setUp()
-        Contract = self.env['sale.subscription']
-
-        self.p_uom_categ_recurring = self.env['product.uom.categ'].create({
+    @classmethod
+    def setup_records(cls):
+        cls.p_uom_categ_recurring = cls.env['product.uom.categ'].create({
             'name': 'Unit/time',
             'recurring': True
         })
-        self.p_uom_1 = self.env['product.uom'].create({
+        cls.p_uom_1 = cls.env['product.uom'].create({
             'name': 'Unit/month',
-            'category_id': self.p_uom_categ_recurring.id,
+            'category_id': cls.p_uom_categ_recurring.id,
         })
         # Create uom and uom category without recurring invoicing
-        self.p_uom_categ_non_recurring = self.env['product.uom.categ'].create({
+        cls.p_uom_categ_non_recurring = cls.env['product.uom.categ'].create({
             'name': 'Unit',
             'recurring': False
         })
-        self.p_uom_2 = self.env['product.uom'].create({
+        cls.p_uom_2 = cls.env['product.uom'].create({
             'name': 'Unit/month',
-            'category_id': self.p_uom_categ_non_recurring.id,
+            'category_id': cls.p_uom_categ_non_recurring.id,
         })
         # Create a MRC product
-        self.prod_tmpl_rent_server = self.env['product.template'].create({
+        cls.prod_tmpl_rent_server = cls.env['product.template'].create({
             'name': 'Rent server',
-            'uom_id': self.p_uom_1.id,
-            'uom_po_id': self.p_uom_1.id,
+            'uom_id': cls.p_uom_1.id,
+            'uom_po_id': cls.p_uom_1.id,
             'list_price': 30,
             'recurring_invoice': True,
             'invoice_policy': 'delivery'
         })
-        self.prod_rent_server = self.env['product.product'].create({
-            'product_tmpl_id': self.prod_tmpl_rent_server.id,
+        cls.prod_rent_server = cls.env['product.product'].create({
+            'product_tmpl_id': cls.prod_tmpl_rent_server.id,
         })
         # Create a NRC product
-        self.prod_tmpl_setup_server = self.env['product.template'].create({
+        cls.prod_tmpl_setup_server = cls.env['product.template'].create({
             'name': 'Set up server',
-            'uom_id': self.p_uom_2.id,
-            'uom_po_id': self.p_uom_2.id,
+            'uom_id': cls.p_uom_2.id,
+            'uom_po_id': cls.p_uom_2.id,
             'list_price': 100,
             'recurring_invoice': False,
             'invoice_policy': 'order'
         })
-        self.prod_setup_server = self.env['product.product'].create({
-            'product_tmpl_id': self.prod_tmpl_setup_server.id,
+        cls.prod_setup_server = cls.env['product.product'].create({
+            'product_tmpl_id': cls.prod_tmpl_setup_server.id,
         })
         # ubscription template
-        self.sbscription_tmpl = self.env['sale.subscription.template'].create(
-            {
-                'name': 'Special subscription',
-                'subscription_template_line_ids': [(0, 0, {
-                    'product_id': self.prod_rent_server.id,
-                    'name': 'Recurring template line',
-                    'uom_id': self.prod_rent_server.uom_id.id})]
-            })
+        cls.sbscription_tmpl = cls.env['sale.subscription.template'].create({
+            'name': 'Special subscription',
+            'subscription_template_line_ids': [(0, 0, {
+                'product_id': cls.prod_rent_server.id,
+                'name': 'Recurring template line',
+                'uom_id': cls.prod_rent_server.uom_id.id
+            })],
+        })
         # Create a sale order with the two previous products
-        self.so = self.env['sale.order'].create({
-            'partner_id': self.partner.id,
-            'partner_invoice_id': self.partner.id,
-            'partner_shipping_id': self.partner.id,
-            'contract_template': self.sbscription_tmpl.id,
-            'order_line': [
-            ]
+        cls.so = cls.env['sale.order'].create({
+            'partner_id': cls.partner.id,
+            'partner_invoice_id': cls.partner.id,
+            'partner_shipping_id': cls.partner.id,
+            'contract_template': cls.sbscription_tmpl.id,
         })
-        self.sol_1 = self.env['sale.order.line'].create({
-            'order_id': self.so.id,
-            'name': self.prod_rent_server.name,
-            'product_id': self.prod_rent_server.id,
+        cls.sol_1 = cls.env['sale.order.line'].create({
+            'order_id': cls.so.id,
+            'name': cls.prod_rent_server.name,
+            'product_id': cls.prod_rent_server.id,
             'product_uom_qty': 3,
-            'product_uom': self.p_uom_1.id,
-            'price_unit': self.prod_rent_server.list_price
+            'product_uom': cls.p_uom_1.id,
+            'price_unit': cls.prod_rent_server.list_price
         })
-        self.sol_2 = self.env['sale.order.line'].create({
-            'order_id': self.so.id,
-            'name': self.prod_setup_server.name,
-            'product_id': self.prod_setup_server.id,
+        cls.sol_2 = cls.env['sale.order.line'].create({
+            'order_id': cls.so.id,
+            'name': cls.prod_setup_server.name,
+            'product_id': cls.prod_setup_server.id,
             'product_uom_qty': 3,
-            'product_uom': self.p_uom_2.id,
-            'price_unit': self.prod_setup_server.list_price
+            'product_uom': cls.p_uom_2.id,
+            'price_unit': cls.prod_setup_server.list_price
         })
+        cls.contract = cls.create_contract()
 
-        self.contract = Contract.create({
+    @classmethod
+    def create_contract(cls):
+        record = cls.env['sale.subscription'].new({
             'name': 'TestContract',
             'state': 'open',
-            'pricelist_id': self.ref('product.list0'),
-            'template_id': self.sbscription_tmpl.id,
+            'pricelist_id': cls.env.ref('product.list0').id,
+            'template_id': cls.sbscription_tmpl.id,
+            'partner_id': cls.partner.id,
         })
-        self.contract.on_change_template()
+        record.on_change_template()
+        # `on_change_template` works w/ NewId record only
+        # let's create a proper record now.
+        # Tnx https://twitter.com/RaphaelCollet/status/570877230781468672
+        contract = record.create(record._convert_to_write(record._cache))
+        contract._compute_recurring_total()
+        return contract
 
     def test_recurring_value_uom(self):
         """ Test that recurring value is passed along """
         self.assertEquals(self.p_uom_1.recurring,
                           self.p_uom_categ_recurring.recurring)
+
+    def test_create_invoice(self):
+        invoice = self.contract._recurring_create_invoice()[0]
+        # crapy api returns you ID
+        if isinstance(invoice, int):
+            invoice = self.env['account.invoice'].browse(invoice)
+        self.contract.action_subscription_invoice()
+        self.assertNotEqual(0.0, invoice.amount_total)
 
     def test_full_processus(self):
         """ Test sale order with one MRC product and one NRC product
@@ -218,12 +232,3 @@ class TestSaleMrpInvoicing(test_sale_common.TestSale):
                           'The start date of the subscription should '
                           'be equal to the creation date of the last'
                           'invoice generated')
-
-    def test_create_invoice(self):
-        self.contract.write({'template_id': self.sbscription_tmpl.id})
-        self.contract.on_change_template()
-        self.contract._compute_recurring_total()
-
-        invoice = self.contract._recurring_create_invoice()[0]
-        self.contract.action_subscription_invoice()
-        self.assertNotEqual(0.0, invoice.amount_total)

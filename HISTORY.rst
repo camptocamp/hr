@@ -43,6 +43,9 @@ Latest (Unreleased)
 **Bugfixes**
 
 * Computation of PO `_compute_has_subscription` from BSIBSO-1008
+* [fix] specific_sale: SO._setup_fields refactor and add tests for state ordering
+* [fix] specific_sale: make tests work
+
 
 **Build**
 
