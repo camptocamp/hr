@@ -129,3 +129,15 @@ migration:
           - expensify
           - bso_base
           - bso_purchase
+          - expensify
+          - specific_security
+          - invoice_timesheet_report
+          - specific_hr
+    - version: 10.2.1
+      addons:
+        upgrade:
+          - specific_expense
+    - version: 10.2.2
+      addons:
+        upgrade:
+          - specific_sale
