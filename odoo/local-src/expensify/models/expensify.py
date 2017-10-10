@@ -99,7 +99,7 @@ class Expensify(models.TransientModel):
 
             # Extract category and get related Odoo product
             category = expense.get('category')
-            product_id = self.get_product_id(category)
+            expensify_category_id = self.get_expensify_category_id(category)
 
             # Extract Expense transaction
             merchant = expense['merchant']
@@ -149,11 +149,11 @@ class Expensify(models.TransientModel):
             expensify_expense = {
                 'expensify_id': expensify_id,
                 'date': date,
+                'company_id': self.employee_id.company_id.id,
                 'name': name,
-                'product_id': product_id,
+                'expensify_category_id': expensify_category_id,
                 'amount': amount,
                 'currency_id': currency_id,
-                'company_id': self.employee_id.company_id.id,
                 'payment_mode': payment_mode,
                 'description': description,
                 'receipt': receipt_image
@@ -167,6 +167,7 @@ class Expensify(models.TransientModel):
         # Create and populate Expensify wizard
         expensify_wizard_id = self.env['expensify.wizard'].create({
             'employee_id': self.employee_id.id,
+            'since_date': self.since_date,
             'expensify_expenses': [(0, 0, exp) for exp in expensify_expenses]
         })
 
@@ -191,24 +192,13 @@ class Expensify(models.TransientModel):
         return expense.id
 
     @api.model
-    def get_product_id(self, category):
-        default_codes = {  # TODO: replace when available
-            'Entertainment': "EXP_PROMOTION",
-            'Fuel/Mileage': "EXP_MILEAGE",
-            'Lodging': "EXP_LODGING",
-            'Meals': "EXP_FOOD",
-            'Other': "EXP_OTHER",
-            'Phone': "EXP_COMMUNICATION",
-            'Transportation': "EXP_TRANSPORT",
-        }
-        default_code = default_codes.get(category, "EXP")
-        product = self.env['product.product'].search([
-            ('can_be_expensed', '=', True),
-            ('default_code', '=', default_code)
+    def get_expensify_category_id(self, category):
+        expensify_category_id = self.env['expensify.category'].search([
+            ('name', '=', category)
         ], limit=1)
-        if not product:
-            return False  # User must select a product on the Wizard
-        return product.id
+        if not expensify_category_id:
+            return False
+        return expensify_category_id.id
 
     @api.model
     def get_currency_id(self, currency_name):
