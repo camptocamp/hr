@@ -151,3 +151,4 @@ migration:
           - bso_webservice
           - account_invoice_merge
           - base_report_to_printer
+          - account_tag_category

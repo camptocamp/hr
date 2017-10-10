@@ -26,6 +26,7 @@ Latest (Unreleased)
 * Add modules date_range and account_financial_report_qweb BSIBSO-1020
 * Add leaves_constraints to prevent self validation / self refusal of
   hr.holidays requests
+* Install module account tag category
 
 **Bugfixes**
 
