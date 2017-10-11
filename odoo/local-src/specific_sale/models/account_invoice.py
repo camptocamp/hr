@@ -100,9 +100,31 @@ class AccountInvoice(models.Model):
                     return False
         return True
 
+    @api.multi
+    def action_invoice_sent(self):
+        """Override to handle partner settings.
+
+        When the composer wizard is opened the PDF is produced.
+        When this happens the report tries to print it as well
+        if the action type is set to `server` (as we did).
+        To skip printing we use the proper flag in the context.
+        """
+        action = super(AccountInvoice, self).action_invoice_sent()
+        partner = self.partner_id
+        if partner.invoice_send_method not in ('snail', 'both'):
+            # set flag to skip printing
+            # See `base_report_to_printer.models.report.Report_can_print_report`  # noqa
+            action['context']['must_skip_send_to_printer'] = True
+        return action
+
     def partner_auto_send(self):
         """Send mail to invoiced partner."""
-        pass
+        if not self.partner_id.invoice_send_method:
+            return
+        if self.partner_id.invoice_send_method in ('snail', 'both'):
+            self._partner_send_snail()
+        if self.partner_id.invoice_send_method in ('both', 'email'):
+            self._partner_send_email()
 
     def _partner_send_email(self):
         """Send email in any case."""

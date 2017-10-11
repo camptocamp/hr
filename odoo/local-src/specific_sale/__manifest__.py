@@ -25,6 +25,7 @@
  'data': [
      'wizard/sale_refusal_view.xml',
      'wizard/mrp_invoicing_view.xml',
+     'views/partner.xml',
      'views/sale.xml',
      'views/sale_order_line.xml',
      'views/sale_subscription_views.xml',
