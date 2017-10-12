@@ -145,3 +145,4 @@ migration:
           - specific_sale
           - date_range
           - account_financial_report_qweb
+          - leaves_constraints

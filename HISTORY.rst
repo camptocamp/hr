@@ -24,6 +24,8 @@ Latest (Unreleased)
 * Added Employee group back to Timesheets access rights
   via song BSIBSO-1019
 * Add modules date_range and account_financial_report_qweb BSIBSO-1020
+* Add leaves_constraints to prevent self validation / self refusal of
+  hr.holidays requests
 
 **Bugfixes**
 
