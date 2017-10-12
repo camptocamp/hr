@@ -70,7 +70,8 @@ class TestInvoiceMerge(SavepointCase):
             'lines': [self.default_line_values, ]
         }
         self.assertEqual(self.invoice.state, 'draft')
-        self.invoice._ws_handle_workflow()
+        self.invoice.with_context(
+            ws_invoice_skip_auto_send=1)._ws_handle_workflow()
         self.assertEqual(self.invoice.state, 'open')
 
     @mock.patch('%s._ws_get_info' % INV_MOD)
@@ -82,5 +83,7 @@ class TestInvoiceMerge(SavepointCase):
             'lines': [vals, ]
         }
         self.assertEqual(self.invoice.state, 'draft')
-        self.invoice._ws_handle_workflow()
+        # TODO: test also w/ autosend and verify email
+        self.invoice.with_context(
+            ws_invoice_skip_auto_send=1)._ws_handle_workflow()
         self.assertEqual(self.invoice.state, 'draft')

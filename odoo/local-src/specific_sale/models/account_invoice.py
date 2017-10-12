@@ -119,6 +119,8 @@ class AccountInvoice(models.Model):
 
     def partner_auto_send(self):
         """Send mail to invoiced partner."""
+        if self.env.context.get('ws_invoice_skip_auto_send'):
+            return
         if not self.partner_id.invoice_send_method:
             return
         if self.partner_id.invoice_send_method in ('snail', 'both'):
@@ -131,7 +133,7 @@ class AccountInvoice(models.Model):
         action = self.action_invoice_sent()
         ctx = action['context']
         composer = \
-            self.env['mail.compose.message'].with_context(**ctx).create()
+            self.env['mail.compose.message'].with_context(**ctx).create({})
         composer.send_mail(auto_commit=True)
 
     def _partner_send_snail(self):
