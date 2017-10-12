@@ -10,6 +10,9 @@
  'license': 'AGPL-3',
  'depends': ['hr_expense',
              ],
+ 'data': [
+     'views/expenses.xml'
+ ],
  'website': 'http://www.camptocamp.com',
  'installable': True,
  }

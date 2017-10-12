@@ -15,7 +15,9 @@ class HrExpense(models.Model):
         if self.company_id:
             return {
                 'domain': {
-                    'product_id': [('company_id', '=', self.company_id.id)]
+                    'product_id': ['&',
+                                   ('company_id', '=', self.company_id.id),
+                                   ('can_be_expensed', '=', 1)],
                 }
             }
 
