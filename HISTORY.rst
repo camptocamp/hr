@@ -29,6 +29,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* Fix selectable product on expense and restrict account field
+
 **Build**
 
 **Documentation**

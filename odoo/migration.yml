@@ -146,3 +146,4 @@ migration:
           - date_range
           - account_financial_report_qweb
           - leaves_constraints
+          - specific_expense
