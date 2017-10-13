@@ -14,6 +14,9 @@
      'specific_security',
      'website_contract',
      'sale_contract',
+     'account_invoice_merge',
+     'base_report_to_printer',
+     'bso_webservice',
  ],
  'website': 'www.camptocamp.com',
  'demo': [
@@ -22,6 +25,7 @@
  'data': [
      'wizard/sale_refusal_view.xml',
      'wizard/mrp_invoicing_view.xml',
+     'views/partner.xml',
      'views/sale.xml',
      'views/sale_order_line.xml',
      'views/sale_subscription_views.xml',

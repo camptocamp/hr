@@ -139,6 +139,7 @@ migration:
     - version: 10.2.2
       operations:
         post:
+          - anthem songs.install.printer::main
           - anthem songs.upgrade.upgrade_10_2_2::main
       addons:
         upgrade:
@@ -147,3 +148,6 @@ migration:
           - account_financial_report_qweb
           - leaves_constraints
           - specific_expense
+          - bso_webservice
+          - account_invoice_merge
+          - base_report_to_printer
