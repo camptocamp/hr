@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class ExpensifyExpense(models.TransientModel):
@@ -59,8 +59,3 @@ class ExpensifyExpense(models.TransientModel):
         string='Project',
         comodel_name='account.analytic.account'
     )
-
-    @api.onchange('company_id')
-    def onchange_company_id(self):
-        for rec in self:
-            rec.product_id = False
