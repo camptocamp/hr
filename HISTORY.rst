@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.2.2 (2017-10-17)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * Added Employee group back to Timesheets access rights
   via song BSIBSO-1019
 * Add modules date_range and account_financial_report_qweb BSIBSO-1020
@@ -31,9 +43,6 @@ Latest (Unreleased)
 
 * Fix selectable product on expense and restrict account field
 
-**Build**
-
-**Documentation**
 
 
 10.2.1 (2017-09-28)
