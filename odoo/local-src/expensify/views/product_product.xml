@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='type']" position="before">
                 <field name="expensify_category_id"
-                       attrs="{'invisible': [('can_be_expensed', '=', False)], 'required': [('can_be_expensed', '=', True)]}"/>
+                       attrs="{'invisible': [('can_be_expensed', '=', False)]}"/>
             </xpath>
         </field>
     </record>

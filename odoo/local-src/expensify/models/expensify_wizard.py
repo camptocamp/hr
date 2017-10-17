@@ -62,21 +62,19 @@ class ExpensifyWizard(models.TransientModel):
         for expense in self.expensify_expenses:
             expense_data = {
                 'expensify_id': expense.expensify_id,
-                'date': expense.date,
                 'name': expense.name,
+                'date': expense.date,
+                'employee_id': self.employee_id.id,
                 'product_id': expense.product_id.id,
-                'quantity': 1,
                 'unit_amount': expense.amount,
+                'tax_id': expense.tax_id.id,
+                'company_id': expense.company_id.id,
                 'currency_id': expense.currency_id.id,
                 'analytic_account_id': expense.analytic_account_id.id,
-                'payment_mode': expense.payment_mode,
                 'description': expense.description,
-                'company_id': expense.company_id.id,
-                'employee_id': self.employee_id.id
+                'payment_mode': expense.payment_mode,
             }
             expense_created = self.env['hr.expense'].create(expense_data)
-            expense_ids.append(expense_created.id)
-
             if expense.receipt:
                 attachment_data = {
                     'res_id': expense_created.id,
@@ -88,17 +86,21 @@ class ExpensifyWizard(models.TransientModel):
                     'datas': expense.receipt
                 }
                 self.env['ir.attachment'].create(attachment_data)
-
+            expense_ids.append(expense_created.id)
         return expense_ids
 
     @api.model
     def validate_expensify_expenses(self):
         for expense in self.expensify_expenses:
+            if not expense.receipt:
+                raise exceptions.ValidationError(
+                    _("Missing Receipt for Expense: %s" % expense.name)
+                )
             if not expense.product_id:
                 raise exceptions.ValidationError(
                     _("Missing Product for Expense: %s" % expense.name)
                 )
-            if not expense.receipt:
+            if not expense.tax_id:
                 raise exceptions.ValidationError(
-                    _("Missing Receipt for Expense: %s" % expense.name)
+                    _("Missing Tax for Expense: %s" % expense.name)
                 )

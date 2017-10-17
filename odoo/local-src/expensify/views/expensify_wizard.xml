@@ -13,7 +13,7 @@
                             string="Import &amp; Submit" type="object"
                             class="oe_highlight"/>
                     <button name="button_import"
-                            string="Import Only" type="object"
+                            string="Import" type="object"
                             class="oe_highlight"/>
                     <button name="button_cancel" string="Cancel"
                             class="oe_link" special="cancel"/>

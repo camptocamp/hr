@@ -28,7 +28,7 @@ class ExpensifyExpense(models.TransientModel):
     )
     receipt = fields.Binary(
         string='Receipt'
-        # Requirement validation in Wizard
+        # Required in Wizard (validate_expensify_expenses)
     )
     description = fields.Text(
         string='Notes'
@@ -45,14 +45,15 @@ class ExpensifyExpense(models.TransientModel):
         comodel_name='res.company',
         required=True
     )
-    expensify_category_id = fields.Many2one(
-        string='Category',
-        comodel_name='expensify.category'
-    )
     product_id = fields.Many2one(
         string='Product',
         comodel_name='product.product'
-        # Requirement validation in Wizard
+        # Required in Wizard (validate_expensify_expenses)
+    )
+    tax_id = fields.Many2one(
+        string='Tax',
+        comodel_name='account.tax'
+        # Required in Wizard (validate_expensify_expenses)
     )
     analytic_account_id = fields.Many2one(
         string='Project',

@@ -16,9 +16,10 @@
                 <field name="description" invisible="1"/>
                 <field name="payment_mode" invisible="1"/>
                 <field name="company_id" groups="base.group_multi_company"/>
-                <field name="expensify_category_id"/>
                 <field name="product_id"
-                       domain="[('company_id', '=', company_id), ('can_be_expensed', '=', True), ('expensify_category_id', '=?', expensify_category_id)]"/>
+                       domain="[('can_be_expensed', '=', True)]"/>
+                <field name="tax_id"
+                       domain="[('can_be_expensed', '=', True), ('company_id', '=', company_id)]"/>
                 <field name="analytic_account_id"
                        groups="analytic.group_analytic_accounting"/>
             </tree>
