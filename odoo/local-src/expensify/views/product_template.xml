@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="add_expensify_category_to_product_template" model="ir.ui.view">
+        <field name="name">product.template.add_expensify_category</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="before">
+                <field name="expensify_category_id"
+                       attrs="{'invisible': [('can_be_expensed', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
