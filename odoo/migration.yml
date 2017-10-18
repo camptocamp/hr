@@ -151,3 +151,7 @@ migration:
           - bso_webservice
           - account_invoice_merge
           - base_report_to_printer
+    - version: 10.2.3
+      addons:
+        upgrade:
+          - expense_tax

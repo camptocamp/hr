@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* Add expense_tax
+
 **Bugfixes**
 
 **Build**
