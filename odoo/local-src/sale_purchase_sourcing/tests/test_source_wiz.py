@@ -9,7 +9,7 @@ from .common import BaseTestCase
 class WizTestCase(BaseTestCase):
 
     def _init_wiz(self):
-        wiz = self.wiz_model.with_context(
+        wiz = self.wiz_model.sudo(self.sale_manager.id).with_context(
             default_order_id=self.sale_order.id).create({})
         wiz.onchange_order_id()
         return wiz
