@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.2.3 (2017-10-18)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * Add expense_tax
 * Install module account tag category BSIBSO-1021
 * Expensify connector
@@ -28,10 +40,6 @@ Latest (Unreleased)
 **Bugfixes**
 
 * issues in sale purchase sourcing (BSIBSO-1024)
-
-**Build**
-
-**Documentation**
 
 
 10.2.2 (2017-10-17)
