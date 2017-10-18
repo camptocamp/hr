@@ -29,7 +29,6 @@
      'views/hr_employee_family.xml',
      'views/hr_holidays_status.xml',
      'views/hr_imposed_days.xml',
-     'views/res_users.xml',
  ],
  'installable': True,
  }
