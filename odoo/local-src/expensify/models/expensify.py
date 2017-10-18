@@ -73,12 +73,14 @@ class Expensify(models.TransientModel):
 
         reports = self.fetch_reports(self.since_date)
         if not reports:
-            raise exceptions.ValidationError(_("No Expensify reports found"))
+            raise exceptions.ValidationError(
+                _("No reports found. Try setting an earlier date?"))
 
         expenses = [expense for report in reports for expense in
                     report.get('expenses', [])]
         if not expenses:
-            raise exceptions.ValidationError(_("No Expensify expenses found"))
+            raise exceptions.ValidationError(
+                _("No expenses found. Try submitting them to a report?"))
 
         expensify_expenses = []
         for expense in expenses:
@@ -118,13 +120,6 @@ class Expensify(models.TransientModel):
             reimbursable = expense['reimbursable']
             payment_mode = "own_account" if reimbursable else "company_account"
 
-            # Extract expense taxes (Never returned by Expensify atm)
-            # tax_amount = expense.get('taxAmount')
-            # tax_name = expense.get('taxName')
-            # tax_rate = expense.get('taxRate')
-            # tax_rate_name = expense.get('taxRateName')
-            # tax_code = expense.get('taxCode')
-
             # Extract Expense details
             comment = expense.get('comment')
             tag = expense.get('tag')
@@ -150,23 +145,25 @@ class Expensify(models.TransientModel):
                 'expensify_id': expensify_id,
                 'date': date,
                 'name': name,
-                'product_id': product_id,
                 'amount': amount,
                 'currency_id': currency_id,
-                'company_id': self.employee_id.company_id.id,
-                'payment_mode': payment_mode,
+                'receipt': receipt_image,
                 'description': description,
-                'receipt': receipt_image
+                'payment_mode': payment_mode,
+                'company_id': self.employee_id.company_id.id,
+                'product_id': product_id,
             }
 
             expensify_expenses.append(expensify_expense)
 
         if not expensify_expenses:
-            raise exceptions.ValidationError(_("No new expenses found"))
+            raise exceptions.ValidationError(
+                _("All expenses already imported"))
 
         # Create and populate Expensify wizard
         expensify_wizard_id = self.env['expensify.wizard'].create({
             'employee_id': self.employee_id.id,
+            'since_date': self.since_date,
             'expensify_expenses': [(0, 0, exp) for exp in expensify_expenses]
         })
 
@@ -192,23 +189,12 @@ class Expensify(models.TransientModel):
 
     @api.model
     def get_product_id(self, category):
-        default_codes = {  # TODO: replace when available
-            'Entertainment': "EXP_PROMOTION",
-            'Fuel/Mileage': "EXP_MILEAGE",
-            'Lodging': "EXP_LODGING",
-            'Meals': "EXP_FOOD",
-            'Other': "EXP_OTHER",
-            'Phone': "EXP_COMMUNICATION",
-            'Transportation': "EXP_TRANSPORT",
-        }
-        default_code = default_codes.get(category, "EXP")
-        product = self.env['product.product'].search([
-            ('can_be_expensed', '=', True),
-            ('default_code', '=', default_code)
+        product_id = self.env['product.product'].search([
+            ('expensify_category_id', '=', category)
         ], limit=1)
-        if not product:
-            return False  # User must select a product on the Wizard
-        return product.id
+        if not product_id:
+            return False
+        return product_id.id
 
     @api.model
     def get_currency_id(self, currency_name):

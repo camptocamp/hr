@@ -1,7 +1,7 @@
 from odoo import models, fields
 
 
-class ExpensifyWizardExpense(models.TransientModel):
+class ExpensifyExpense(models.TransientModel):
     _name = 'expensify.expense'
 
     expensify_wizard_id = fields.Many2one(
@@ -18,11 +18,6 @@ class ExpensifyWizardExpense(models.TransientModel):
         string='Description',
         required=True
     )
-    product_id = fields.Many2one(
-        string='Product',
-        comodel_name='product.product',
-        required=True
-    )
     amount = fields.Float(
         required=True
     )
@@ -31,18 +26,12 @@ class ExpensifyWizardExpense(models.TransientModel):
         comodel_name='res.currency',
         required=True
     )
-    company_id = fields.Many2one(
-        string='Company',
-        comodel_name='res.company',
-        required=True
+    receipt = fields.Binary(
+        string='Receipt'
+        # Required in Wizard (validate_expensify_expenses)
     )
-    tax_ids = fields.Many2many(
-        string='Taxes',
-        comodel_name='account.tax',
-    )
-    analytic_account_id = fields.Many2one(
-        string='Project',
-        comodel_name='account.analytic.account'
+    description = fields.Text(
+        string='Notes'
     )
     payment_mode = fields.Selection(
         string='Paid By',
@@ -51,7 +40,22 @@ class ExpensifyWizardExpense(models.TransientModel):
         default='own_account',
         required=True
     )
-    description = fields.Text(
-        string='Notes'
+    company_id = fields.Many2one(
+        string='Company',
+        comodel_name='res.company',
+        required=True
     )
-    receipt = fields.Binary()
+    product_id = fields.Many2one(
+        string='Product',
+        comodel_name='product.product'
+        # Required in Wizard (validate_expensify_expenses)
+    )
+    tax_id = fields.Many2one(
+        string='Tax',
+        comodel_name='account.tax'
+        # Required in Wizard (validate_expensify_expenses)
+    )
+    analytic_account_id = fields.Many2one(
+        string='Project',
+        comodel_name='account.analytic.account'
+    )

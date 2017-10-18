@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="expensify_category_entertainment" model="expensify.category">
+        <field name="name">Entertainment</field>
+    </record>
+
+    <record id="expensify_category_mileage" model="expensify.category">
+        <field name="name">Fuel/Mileage</field>
+    </record>
+
+    <record id="expensify_category_lodging" model="expensify.category">
+        <field name="name">Lodging</field>
+    </record>
+
+    <record id="expensify_category_meals" model="expensify.category">
+        <field name="name">Meals</field>
+    </record>
+
+    <record id="expensify_category_other" model="expensify.category">
+        <field name="name">Other</field>
+    </record>
+
+    <record id="expensify_category_phone" model="expensify.category">
+        <field name="name">Phone</field>
+    </record>
+    
+    <record id="expensify_category_transportation" model="expensify.category">
+        <field name="name">Transportation</field>
+    </record>
+
+</odoo>
