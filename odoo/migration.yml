@@ -155,3 +155,4 @@ migration:
       addons:
         upgrade:
           - expense_tax
+          - account_tag_category

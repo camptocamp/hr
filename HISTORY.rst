@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * Add expense_tax
+* Install module account tag category BSIBSO-1021
 
 **Bugfixes**
 
