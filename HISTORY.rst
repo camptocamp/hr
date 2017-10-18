@@ -27,6 +27,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* issues in sale purchase sourcing (BSIBSO-1024)
+
 **Build**
 
 **Documentation**

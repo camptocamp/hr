@@ -13,7 +13,12 @@ class BaseTestCase(common.SavepointCase):
     def setUpClass(cls):
         super(BaseTestCase, cls).setUpClass()
         cls.wiz_model = cls.env['wiz.sale.order.source']
-        cls.so_model = cls.env['sale.order']
+        cls.so_model = cls.env['sale.order'].with_context(tracking_disable=1)
+        cls.user_model = cls.env['res.users'].with_context({
+            'tracking_disable': True,
+            'no_reset_password': True,
+            'mail_create_nosubscribe': True
+        })
         cls.prod_iPadMini = cls.env.ref('product.product_product_6')
         cls.prod_iMac = cls.env.ref('product.product_product_8')
         cls.prod_appleWLKB = cls.env.ref('product.product_product_9')
@@ -63,6 +68,15 @@ class BaseTestCase(common.SavepointCase):
             ]
         }
         cls.sale_order = cls.so_model.create(so_vals)
+        cls.sale_manager = cls.user_model.create({
+            'name': 'Test Sale Manager',
+            'login': 'test_sale_manager',
+            'email': 'test_sale_manager@example.com',
+            'groups_id': [
+                (4, cls.env.ref('sales_team.group_sale_manager').id),
+                (4, cls.env.ref('purchase.group_purchase_manager').id),
+            ]
+        })
 
     @classmethod
     def load_suppliers(cls):

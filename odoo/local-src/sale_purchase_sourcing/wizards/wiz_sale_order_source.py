@@ -221,7 +221,7 @@ class WizSaleOrderSource(models.TransientModel):
         if self.env.context.get('sourcing_now') or not self.source_it:
             return
         self.action_source()
-        self.with_context(sourcing_now=True).write({
+        self.with_context(sourcing_now=True).update({
             'source_it': False,
             'supplier_id': False,
         })

@@ -158,3 +158,4 @@ migration:
           - expense_tax
           - account_tag_category
           - expensify
+          - sale_purchase_sourcing
