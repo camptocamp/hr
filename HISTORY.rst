@@ -23,6 +23,7 @@ Latest (Unreleased)
 
 * Add expense_tax
 * Install module account tag category BSIBSO-1021
+* Expensify connector
 
 **Bugfixes**
 

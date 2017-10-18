@@ -157,3 +157,4 @@ migration:
         upgrade:
           - expense_tax
           - account_tag_category
+          - expensify
