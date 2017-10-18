@@ -156,3 +156,7 @@ migration:
         upgrade:
           - expense_tax
           - account_tag_category
+    - version: 10.2.4
+      addons:
+        upgrade:
+          - sale_purchase_sourcing
