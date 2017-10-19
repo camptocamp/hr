@@ -190,6 +190,7 @@ class Expensify(models.TransientModel):
     @api.model
     def get_product_id(self, category):
         product_id = self.env['product.product'].search([
+            ('can_be_expensed', '=', True),
             ('expensify_category_id', '=', category)
         ], limit=1)
         if not product_id:

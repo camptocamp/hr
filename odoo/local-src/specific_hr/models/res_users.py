@@ -3,23 +3,11 @@
 # Copyright 2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, api, fields
+from odoo import models, api
 
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
-
-    expensify_id = fields.Char(string='Expensify ID')
-    expensify_secret = fields.Char(string='Expensify secret')
-
-    def __init__(self, pool, cr):
-        super(ResUsers, self).__init__(pool, cr)
-        self.SELF_READABLE_FIELDS += [
-            'expensify_id', 'expensify_secret', 'alias_id',
-        ]
-        self.SELF_WRITEABLE_FIELDS += [
-            'expensify_id', 'expensify_secret'
-        ]
 
     @api.model
     @api.returns('self', lambda value: value.id)
