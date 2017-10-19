@@ -28,6 +28,13 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.2.4 (2017-10-19)
++++++++++++++++++++
+
+**Bugfixes**
+
+* Expensify connector
+
 10.2.3 (2017-10-18)
 +++++++++++++++++++
 

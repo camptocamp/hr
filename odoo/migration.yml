@@ -159,3 +159,8 @@ migration:
           - account_tag_category
           - expensify
           - sale_purchase_sourcing
+    - version: 10.2.4
+      addons:
+        upgrade:
+          - expensify
+          - specific_hr
