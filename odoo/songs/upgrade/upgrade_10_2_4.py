@@ -10,7 +10,7 @@ def pre(ctx):
     '''remove views from expensify and specific_hr'''
     ctx.env.cr.execute("DELETE FROM ir_ui_view "
                        "WHERE id IN "
-                       "    (SELECT rec_id "
+                       "    (SELECT res_id "
                        "     FROM ir_model_data "
                        "     WHERE module IN ('expensify', 'specific_hr') "
                        "       AND model='ir.ui.view')"
