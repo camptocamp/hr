@@ -217,7 +217,7 @@ class Expensify(models.TransientModel):
     def get_b64_from_url(self, url):
         try:
             return base64.b64encode(requests.get(url).content)
-        except:
+        except Exception:
             return False
 
     # EXPENSIFY API
