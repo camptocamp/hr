@@ -1,5 +1,4 @@
 from odoo import models, fields, api
-import datetime
 
 
 class HrExpenseSheet(models.Model):
@@ -10,7 +9,7 @@ class HrExpenseSheet(models.Model):
     @api.multi
     def approve_expense_sheets(self):
         res = super(HrExpenseSheet, self).approve_expense_sheets()
-        validated_at = datetime.datetime.now()
+        validated_at = fields.Datetime.now()
         for sheet in self:
             sheet.date_validated = validated_at
         return res
