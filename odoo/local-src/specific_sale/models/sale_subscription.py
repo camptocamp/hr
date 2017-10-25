@@ -16,7 +16,9 @@ class SaleSubscription(models.Model):
     }
 
     duration = fields.Integer()
-    recurring_total = fields.Monetary(string='Monthly Total')
+    recurring_total = fields.Monetary(
+            compute='_compute_recurring_total',
+            store=True, track_visibility='onchange', string='Monthly Total')
     period_total = fields.Monetary(
         string='Period Total',
         compute='_compute_period_total',
@@ -37,6 +39,12 @@ class SaleSubscription(models.Model):
     date_cancelled = fields.Date(
         string='Date Cancelled'
     )
+
+    @api.depends('recurring_invoice_line_ids',
+                 'recurring_invoice_line_ids.quantity',
+                 'recurring_invoice_line_ids.price_subtotal')
+    def _compute_recurring_total(self):
+        super(SaleSubscription, self)._compute_recurring_total()
 
     @api.depends('recurring_total', 'recurring_interval')
     def _compute_period_total(self):
