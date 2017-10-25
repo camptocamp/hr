@@ -15,6 +15,7 @@ class SaleSubscription(models.Model):
         'semester': 6,
     }
 
+    duration = fields.Integer()
     recurring_total = fields.Monetary(string='Monthly Total')
     period_total = fields.Monetary(
         string='Period Total',
@@ -49,18 +50,29 @@ class SaleSubscription(models.Model):
             res['quantity'] = self.recurring_interval * res['quantity']
         return res
 
+    @api.onchange('date_start',
+                  'duration',
+                  'customer_prior_notice',
+                  'date_cancelled')
+    def onchange_date_duration(self):
+        if not self.date_cancelled:
+            if self.date_start and self.duration:
+                self.date = (fields.Date.from_string(self.date_start) +
+                             relativedelta(months=self.duration))
+        else:
+            if self.date:
+                date_prior_notice = (
+                    fields.Date.from_string(self.date_cancelled) +
+                    relativedelta(months=self.customer_prior_notice))
+                if date_prior_notice >= fields.Date.from_string(self.date):
+                    self.date = date_prior_notice
+
     @api.onchange('template_id')
     def on_change_template(self):
         if self.template_id:
             self.automatic_renewal = self.template_id.automatic_renewal
             self.customer_prior_notice = self.template_id.customer_prior_notice
         super(SaleSubscription, self).on_change_template()
-
-    @api.onchange('date_cancelled', 'customer_prior_notice')
-    def onchange_date_cancelled(self):
-        if self.date_cancelled:
-            self.date = fields.Date.from_string(self.date_cancelled) + (
-                relativedelta(months=self.customer_prior_notice))
 
     def _subscription_make_pending(self, next_month):
         """Set to pending if date is in less than a month and no auto renewal
