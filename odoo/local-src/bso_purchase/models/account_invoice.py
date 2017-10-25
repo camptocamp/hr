@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo import api, models
+from odoo import api, models, fields
 
 
 class AccountInvoice(models.Model):
@@ -10,10 +10,12 @@ class AccountInvoice(models.Model):
 
     @api.model
     def po_auto_invoice(self):
+        today = fields.Date.today()
         vendors = self.env['res.partner'].browse()
         invoice_ids = self.env['account.invoice'].browse()
         purchase_ids = self.env['purchase.order'].search(
-            [('state', '=', 'purchase')])
+            [('state', '=', 'purchase'),
+             ('subscr_date_end', '<=', today)])
         purchase_ids = self._check_po_in_invoice(purchase_ids)
         for purchase in purchase_ids:
             if purchase.partner_id.automatic_supplier_invoicing:
