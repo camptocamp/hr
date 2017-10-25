@@ -154,6 +154,9 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self)._prepare_contract_data(
                 payment_token_id=payment_token_id)
         duration = self.order_line.mapped('duration')
+        if self.env.context.get('ref_date_mrc_delivery'):
+            res['recurring_next_date'] = self.env.context.get(
+                    'ref_date_mrc_delivery')[:10]
         if duration:
             res['duration'] = duration[0]
             res['date'] = (fields.Date.from_string(res['date_start']) +
