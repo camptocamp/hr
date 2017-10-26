@@ -15,7 +15,7 @@ class AccountInvoice(models.Model):
         invoice_ids = self.env['account.invoice'].browse()
         purchase_ids = self.env['purchase.order'].search(
             [('state', '=', 'purchase'),
-             ('subscr_date_end', '<=', today)])
+             ('subscr_date_end', '>', today)])
         purchase_ids = self._check_po_in_invoice(purchase_ids)
         for purchase in purchase_ids:
             if purchase.partner_id.automatic_supplier_invoicing:
