@@ -63,7 +63,8 @@ class TestPurchase(common.TestBsoPurchaseCommon):
         })
         self.po.button_confirm()
         self.po2.button_confirm()
-        end = fields.Date.today() + relativedelta(months=3)
+        today_date = fields.Date.from_string(fields.Date.today())
+        end = today_date + relativedelta(months=3)
         self.po.subscr_date_end = end
         self.po2.subscr_date_end = end
         picking = self.po.picking_ids[0]
@@ -86,7 +87,8 @@ class TestPurchase(common.TestBsoPurchaseCommon):
         # Prepare the PO to be invoiced
         self.po.button_confirm()
         self.po2.button_confirm()
-        end = fields.Date.today() + relativedelta(months=3)
+        today_date = fields.Date.from_string(fields.Date.today())
+        end = today_date + relativedelta(months=3)
         self.po.subscr_date_end = end
         self.po2.subscr_date_end = end
         picking = self.po.picking_ids[0]
