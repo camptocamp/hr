@@ -176,3 +176,4 @@ migration:
           - bso_purchase
           - specific_sale
           - sale_purchase_sourcing
+          - specific_expense

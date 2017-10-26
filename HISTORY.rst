@@ -23,6 +23,19 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* remove onchange and constraint on hr_expense
+* migration and upgrade files
+* fix date next invoice of contract to ref_date of the last
+  invoice which fulfilled the delivery of mrc
+* fix monthly and period recurring price
+* hide 'cancel subscription' btn
+* contract creation from sale order
+* change computation of dates
+* do not invoice ended purchase subscriptions
+* purchase order generation. take care of duration
+* computation of date end subscription in purchase orders
+* subscription information in purchase order form view
+
 **Build**
 
 **Documentation**
