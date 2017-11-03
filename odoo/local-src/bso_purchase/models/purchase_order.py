@@ -4,6 +4,7 @@
 
 from odoo import api, models, fields
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 
 class Purchase(models.Model):
@@ -32,6 +33,16 @@ class Purchase(models.Model):
         for item in self:
             item.has_subscription = bool(line_model.search(
                 domain[:] + [('order_id', '=', item.id)]))
+
+    @api.onchange('subscr_date_start',
+                  'subscr_duration',
+                  'has_subscription')
+    def onchange_subscr(self):
+        if self.has_subscription:
+            if self.subscr_date_start and self.subscr_duration:
+                self.subscr_date_end = fields.Date.from_string(
+                        self.subscr_date_start) + (
+                        relativedelta(months=self.subscr_duration))
 
 
 class PurchaseLine(models.Model):

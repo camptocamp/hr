@@ -12,6 +12,7 @@
     'depends': [
         'sale',
         'purchase',
+        'specific_product',
     ],
     'data': [
         # 'security/ir.model.access.csv',

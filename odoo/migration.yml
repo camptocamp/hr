@@ -167,3 +167,15 @@ migration:
         upgrade:
           - expensify
           - specific_hr
+    - version: 10.2.5
+      operations:
+        post:
+          - anthem songs.upgrade.upgrade_10_2_5::main
+      addons:
+        upgrade:
+          - bso_purchase
+          - specific_sale
+          - sale_purchase_sourcing
+          - specific_expense
+          - specific_product
+          - hr_employee_firstname

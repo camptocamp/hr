@@ -19,9 +19,13 @@
         </div>
       </field>
       <xpath expr="//field[@name='date']" position="after">
+        <field name="duration" string="Initial duration"/>
         <field name="automatic_renewal"/>
         <field name="customer_prior_notice"/>
         <field name="date_cancelled"/>
+      </xpath>
+      <xpath expr="//header/button[contains(@context, 'cancel')]" position="attributes">
+        <attribute name="invisible">1</attribute>
       </xpath>
     </field>
   </record>

@@ -6,11 +6,17 @@
       <field name="model">purchase.order</field>
       <field name="inherit_id" ref="purchase.purchase_order_form"/>
       <field name="arch" type="xml">
-        <xpath expr="//page/group/group/label[@for='date_planned']" position="before">
-          <field name="subscr_date_start"/>
-          <field name="subscr_date_end" />
-          <field name="subscr_duration" />
-          <field name="has_subscription" />
+        <xpath expr="//notebook" position="before">
+          <field name="has_subscription" invisible="1"/>
+          <group name="subscription_informations" string="Subcription information" attrs="{'invisible': [('has_subscription', '=', False)]}">
+            <group>
+              <field name="subscr_date_start"/>
+              <field name="subscr_date_end" />
+            </group>
+            <group>
+              <field name="subscr_duration" />
+            </group>
+          </group>
         </xpath>
       </field>
     </record>

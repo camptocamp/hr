@@ -5,7 +5,6 @@
 
 from odoo import fields, models, api
 import odoo.addons.decimal_precision as dp
-from collections import defaultdict
 
 
 class SaleOrderSourceLineMixin(models.AbstractModel):
@@ -28,6 +27,7 @@ class SaleOrderSourceLineMixin(models.AbstractModel):
         string='Sale order line',
         comodel_name='sale.order.line',
     )
+    duration = fields.Integer(related="so_line_id.duration")
     product_id = fields.Many2one(
         string='Product',
         comodel_name='product.product',
@@ -247,20 +247,32 @@ class WizSaleOrderSource(models.TransientModel):
         return data
 
     def _create_orders(self):
-        grouped = defaultdict(list)
+        group = {}
         for line in self.line_ids:
-            grouped[line.supplier_id].append(line)
+            if line.supplier_id.id in group:
+                if line.duration in group[line.supplier_id.id]:
+                    group[line.supplier_id.id][line.duration].append(line)
+                else:
+                    group[line.supplier_id.id].update({line.duration: [line]})
+            else:
+                group[line.supplier_id.id] = {line.duration: [line]}
         created = []
-        for supplier, lines in grouped.iteritems():
-            order_data = {
-                'partner_id': supplier.id,
-                'subscr_duration': 0,  # TODO
-                'order_line': [
-                    (0, 0, self._purchase_line_value(line)) for line in lines
-                ]
-            }
-            order = self.env['purchase.order'].create(order_data)
-            created.append(order.id)
+        for supplier, lines_dict in group.iteritems():
+            for duration, lines in lines_dict.iteritems():
+                order_data = {
+                    'partner_id': supplier,
+                    'subscr_duration': duration,
+                    'order_line': [
+                        (0, 0, self._purchase_line_value(
+                            line)) for line in lines
+                    ]
+                }
+                order = self.env['purchase.order'].create(order_data)
+                for line in order.order_line:
+                    line.onchange_product_id()
+                print order.id
+                created.append(order.id)
+
         # link sale line to purchase line.
         # We can have more than one line w/ the same product
         # so we cannot just rely on product_id match.
