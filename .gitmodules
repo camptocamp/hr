@@ -21,7 +21,7 @@
 	url = git@github.com:OCA/hr-timesheet.git
 [submodule "odoo/external-src/hr"]
 	path = odoo/external-src/hr
-	url = git@github.com:oca/hr.git
+	url = git@github.com:camptocamp/hr.git
 [submodule "odoo/external-src/partner-contact"]
 	path = odoo/external-src/partner-contact
 	url = git@github.com:OCA/partner-contact.git

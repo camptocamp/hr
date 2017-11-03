@@ -30,3 +30,11 @@
     # [10.0][ADD] Module account_tag_category
     - oca refs/pull/535/head
   target: *default_target
+./external-src/hr:
+  remotes:
+    oca: git@github.com:OCA/hr.git
+    camptocamp: git@github.com:camptocamp/hr.git
+  merges:
+    - oca 10.0
+    - oca refs/pull/394/head
+  target: *default_target
