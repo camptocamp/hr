@@ -29,6 +29,12 @@ def configure_companies(ctx):
 
 
 @anthem.log
+def recompute_employee_names(ctx):
+    ctx.env['base.config.settings'].action_recalculate_employees_name()
+
+
+@anthem.log
 def main(ctx):
     """ Main: intercompany configuration """
     configure_companies(ctx)
+    recompute_employee_names(ctx)
