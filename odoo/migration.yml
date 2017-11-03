@@ -177,3 +177,4 @@ migration:
           - specific_sale
           - sale_purchase_sourcing
           - specific_expense
+          - specific_product
