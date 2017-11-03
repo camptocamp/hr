@@ -179,3 +179,4 @@ migration:
           - specific_expense
           - specific_product
           - hr_employee_firstname
+          - hr_date_validated
