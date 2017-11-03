@@ -178,3 +178,4 @@ migration:
           - sale_purchase_sourcing
           - specific_expense
           - specific_product
+          - hr_employee_firstname
