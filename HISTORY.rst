@@ -23,6 +23,20 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.2.5 (2017-11-06)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* install ``hr_date_validated`` from BSO
+
+**Bugfixes**
+
 * remove onchange and constraint on hr_expense
 * migration and upgrade files
 * fix date next invoice of contract to ref_date of the last
@@ -35,10 +49,6 @@ Latest (Unreleased)
 * purchase order generation. take care of duration
 * computation of date end subscription in purchase orders
 * subscription information in purchase order form view
-
-**Build**
-
-**Documentation**
 
 
 10.2.4 (2017-10-20)
