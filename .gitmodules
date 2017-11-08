@@ -69,3 +69,7 @@
 [submodule "odoo/external-src/report-print-send"]
 	path = odoo/external-src/report-print-send
 	url = git@github.com:OCA/report-print-send.git
+[submodule "odoo/external-src/social"]
+	path = odoo/external-src/social
+	url = git@github.com:OCA/social.git
+	branch = 10.0
