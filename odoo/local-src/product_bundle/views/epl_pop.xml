@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="epl_pop_view" model="ir.ui.view">
+        <field name="name">epl.pop.form</field>
+        <field name="model">epl.pop</field>
+        <field name="arch" type="xml">
+            <form string="Link">
+                <group>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="longitude"/>
+                    <field name="latitude"/>
+                </group>
+                <group>
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>

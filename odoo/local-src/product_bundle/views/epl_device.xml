@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="epl_device_view" model="ir.ui.view">
+        <field name="name">epl.device.form</field>
+        <field name="model">epl.device</field>
+        <field name="arch" type="xml">
+            <form string="Device">
+                <group>
+                    <field name="name"/>
+                    <field name="pop_id"/>
+                    <field name="partner_id"/>
+                </group>
+                <group>
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>

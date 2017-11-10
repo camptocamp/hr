@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="epl_cable_view" model="ir.ui.view">
+        <field name="name">epl.cable.form</field>
+        <field name="model">epl.cable</field>
+        <field name="arch" type="xml">
+            <form string="Cable">
+                <group>
+                    <field name="name"/>
+                </group>
+                <group>
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>

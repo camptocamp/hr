@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="epl_link_view" model="ir.ui.view">
+        <field name="name">epl.link.form</field>
+        <field name="model">epl.link</field>
+        <field name="arch" type="xml">
+            <form string="Link">
+                <group>
+                    <field name="name" invisible="1"/>
+                    <field name="a_device_id"/>
+                    <field name="z_device_id"/>
+                </group>
+                <group>
+                    <field name="latency"/>
+                    <field name="bandwidth"/>
+                    <field name="partner_id"/>
+                    <field name="cable_id"/>
+                    <field name="is_protected"/>
+                </group>
+                <group>
+                    <field name="currency_id"/>
+                    <field name="mrc" widget="monetary"/>
+                    <field name="mrc_per_mb" widget="monetary" invisible="1"/>
+                    <field name="nrc" widget="monetary"/>
+                </group>
+                <group>
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>

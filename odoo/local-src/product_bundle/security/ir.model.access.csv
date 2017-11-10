@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bundle_product,access_bundle_product,model_bundle_product,,1,0,0,0
+access_bundle_details,access_bundle_details,model_bundle_details,,1,1,1,1
+access_bundle_details_epl_link,access_bundle_details_epl_link,model_bundle_details_epl_link,,1,1,1,1
+access_bundle_details_product,access_bundle_details_product,model_bundle_details_product,,1,1,1,1
+access_epl_cable,access_epl_cable,model_epl_cable,,1,0,0,0
+access_epl_pop,access_epl_pop,model_epl_pop,,1,0,0,0
+access_epl_device,access_epl_device,model_epl_device,,1,0,0,0
+access_epl_link,access_epl_link,model_epl_link,,1,0,0,0
