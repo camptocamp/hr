@@ -28,6 +28,14 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.2.6 (2017-11-10)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* add ``product_bundle`` module
+
+
 10.2.5 (2017-11-06)
 +++++++++++++++++++
 

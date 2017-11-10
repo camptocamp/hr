@@ -180,3 +180,7 @@ migration:
           - specific_product
           - hr_employee_firstname
           - hr_date_validated
+    - version: 10.2.6
+      addons:
+        upgrade:
+          - product_bundle
