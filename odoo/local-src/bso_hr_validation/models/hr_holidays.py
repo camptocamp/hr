@@ -16,9 +16,8 @@ class HrHolidays(models.Model):
 
     @api.multi
     def action_validate(self):
-        for rec in self:
-            if rec.employee_is_user:
-                raise exceptions.ValidationError(_("Cannot approve own leave"))
+        if self.employee_is_user:
+            raise exceptions.ValidationError(_("Cannot approve own leave"))
         res = super(HrHolidays, self).action_validate()
         for rec in self:
             rec.date_validated = fields.Datetime.now()
@@ -26,9 +25,8 @@ class HrHolidays(models.Model):
 
     @api.multi
     def action_refuse(self):
-        for rec in self:
-            if rec.employee_is_user:
-                raise exceptions.ValidationError(_("Cannot refuse own leave"))
+        if self.employee_is_user:
+            raise exceptions.ValidationError(_("Cannot refuse own leave"))
         res = super(HrHolidays, self).action_refuse()
         for rec in self:
             rec.date_validated = False
