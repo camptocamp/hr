@@ -184,3 +184,4 @@ migration:
       addons:
         upgrade:
           - product_bundle
+    - version: 10.2.7

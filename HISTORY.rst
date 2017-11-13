@@ -28,6 +28,15 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.2.7 (2017-11-13)
++++++++++++++++++++
+
+**Build**
+
+* add OCA repos ``account-closing``, ``bank-payment``,
+  ``l10n-france``, ``intrastat``
+
+
 10.2.6 (2017-11-10)
 +++++++++++++++++++
 
