@@ -47,6 +47,10 @@ ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/external-src/odoo-cloud-platform, \
   /opt/odoo/external-src/odoo-prototype, \
   /opt/odoo/external-src/social, \
+  /opt/odoo/external-src/account-closing, \
+  /opt/odoo/external-src/bank-payment, \
+  /opt/odoo/external-src/l10n-france, \
+  /opt/odoo/external-src/intrastat, \
   /opt/odoo/local-src," \
   LIMIT_TIME_CPU=86400 \
   LIMIT_TIME_REAL=86400 \

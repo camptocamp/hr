@@ -73,3 +73,19 @@
 	path = odoo/external-src/social
 	url = git@github.com:OCA/social.git
 	branch = 10.0
+[submodule "odoo/external-src/account-closing"]
+	path = odoo/external-src/account-closing
+	url = git@github.com:OCA/account-closing.git
+	branch = 10.0
+[submodule "odoo/external-src/bank-payment"]
+	path = odoo/external-src/bank-payment
+	url = git@github.com:OCA/bank-payment.git
+	branch = 10.0
+[submodule "odoo/external-src/l10n-france"]
+	path = odoo/external-src/l10n-france
+	url = git@github.com:OCA/l10n-france.git
+	branch = 10.0
+[submodule "odoo/external-src/intrastat"]
+	path = odoo/external-src/intrastat
+	url = git@github.com:OCA/intrastat.git
+	branch = 10.0
