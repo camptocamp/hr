@@ -1,4 +1,4 @@
-from odoo import models, fields, api, exceptions, _
+from odoo import models, fields, api
 
 
 class HrHolidays(models.Model):
@@ -16,8 +16,6 @@ class HrHolidays(models.Model):
 
     @api.multi
     def action_validate(self):
-        if self.employee_is_user:
-            raise exceptions.ValidationError(_("Cannot approve own leave"))
         res = super(HrHolidays, self).action_validate()
         for rec in self:
             rec.date_validated = fields.Datetime.now()
@@ -25,8 +23,6 @@ class HrHolidays(models.Model):
 
     @api.multi
     def action_refuse(self):
-        if self.employee_is_user:
-            raise exceptions.ValidationError(_("Cannot refuse own leave"))
         res = super(HrHolidays, self).action_refuse()
         for rec in self:
             rec.date_validated = False
