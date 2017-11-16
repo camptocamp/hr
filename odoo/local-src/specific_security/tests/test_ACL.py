@@ -287,7 +287,7 @@ class TestACL(common.TransactionCase):
             leaves_requests.append(leave_request)
 
         for leave in leaves_requests:
-            leave.sudo(user=self.emmanuel).action_validate()
+            leave.sudo(user=self.melanie).action_validate()
 
     def test_create_expense(self):
         emp_obj = self.env['hr.employee']
