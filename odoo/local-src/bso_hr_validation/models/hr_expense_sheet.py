@@ -17,8 +17,9 @@ class HrExpenseSheet(models.Model):
     @api.multi
     def approve_expense_sheets(self):
         res = super(HrExpenseSheet, self).approve_expense_sheets()
+        validated_at = fields.Datetime.now()
         for rec in self:
-            rec.date_validated = fields.Datetime.now()
+            rec.date_validated = validated_at
         return res
 
     @api.multi

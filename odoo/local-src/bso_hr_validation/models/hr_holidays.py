@@ -17,8 +17,9 @@ class HrHolidays(models.Model):
     @api.multi
     def action_validate(self):
         res = super(HrHolidays, self).action_validate()
+        validated_at = fields.Datetime.now()
         for rec in self:
-            rec.date_validated = fields.Datetime.now()
+            rec.date_validated = validated_at
         return res
 
     @api.multi
