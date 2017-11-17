@@ -1,5 +1,4 @@
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo import models, fields, api, exceptions, _
 
 
 class HrExpenseSheet(models.Model):
@@ -17,9 +16,8 @@ class HrExpenseSheet(models.Model):
 
     @api.multi
     def approve_expense_sheets(self):
-        for rec in self:
-            if rec.employee_is_user:
-                raise ValidationError(_("Cannot approve own expenses"))
+        if any(rec.employee_is_user for rec in self):
+            raise exceptions.ValidationError(_("Cannot approve own expenses"))
         res = super(HrExpenseSheet, self).approve_expense_sheets()
         validated_at = fields.Datetime.now()
         for rec in self:
@@ -28,9 +26,8 @@ class HrExpenseSheet(models.Model):
 
     @api.multi
     def refuse_expenses(self, reason):
-        for rec in self:
-            if rec.employee_is_user:
-                raise ValidationError(_("Cannot refuse own expenses"))
+        if any(rec.employee_is_user for rec in self):
+            raise exceptions.ValidationError(_("Cannot refuse own expenses"))
         res = super(HrExpenseSheet, self).refuse_expenses(reason)
         for rec in self:
             rec.date_validated = False
