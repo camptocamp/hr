@@ -232,7 +232,7 @@ class TestACL(common.TransactionCase):
                 'type': 'add',
             }
             leave_allocation = self.env['hr.holidays'].sudo(
-                user=self.melanie).create(vals)
+                user=self.emmanuel).create(vals)
             self.assertTrue(leave_allocation)
             leave_allocation.sudo(
                 user=self.melanie).action_validate()
