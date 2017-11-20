@@ -8,6 +8,7 @@ class HrExpenseSheet(models.Model):
         compute='compute_employee_is_user'
     )
     date_validated = fields.Datetime()
+    date_refused = fields.Datetime()
 
     @api.depends('employee_id')
     def compute_employee_is_user(self):
@@ -22,6 +23,7 @@ class HrExpenseSheet(models.Model):
         validated_at = fields.Datetime.now()
         for rec in self:
             rec.date_validated = validated_at
+            rec.date_refused = False
         return res
 
     @api.multi
@@ -29,8 +31,10 @@ class HrExpenseSheet(models.Model):
         if any(rec.employee_is_user for rec in self):
             raise exceptions.ValidationError(_("Cannot refuse own expenses"))
         res = super(HrExpenseSheet, self).refuse_expenses(reason)
+        refused_at = fields.Datetime.now()
         for rec in self:
             rec.date_validated = False
+            rec.date_refused = refused_at
         return res
 
     @api.multi
@@ -38,4 +42,5 @@ class HrExpenseSheet(models.Model):
         res = super(HrExpenseSheet, self).reset_expense_sheets()
         for rec in self:
             rec.date_validated = False
+            rec.date_refused = False
         return res
