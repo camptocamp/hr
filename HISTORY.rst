@@ -28,6 +28,20 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.3.0 (2017-11-21)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* install ``product_bundle``
+
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
 10.2.8 (2017-11-21)
 +++++++++++++++++++
 
