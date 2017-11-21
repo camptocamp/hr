@@ -28,8 +28,13 @@ Latest (Unreleased)
 **Documentation**
 
 
-10.2.7 (2017-11-13)
+10.2.8 (2017-11-21)
 +++++++++++++++++++
+
+**Bugfixes**
+
+* install ``bso_hr_validation``
+* delete modules ``leaves_constraints`` and ``hr_date_validated``
 
 **Build**
 
@@ -37,12 +42,12 @@ Latest (Unreleased)
   ``l10n-france``, ``intrastat``
 
 
-10.2.6 (2017-11-10)
+10.2.7 (2017-11-13)
 +++++++++++++++++++
 
-**Features and Improvements**
 
-* add ``product_bundle`` module
+10.2.6 (2017-11-10)
++++++++++++++++++++
 
 
 10.2.5 (2017-11-06)
