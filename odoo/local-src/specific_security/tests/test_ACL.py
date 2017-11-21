@@ -22,7 +22,6 @@ class TestACL(common.TransactionCase):
         self.emp_damien = self.env.ref('specific_security.emp_damien')
 
         test_users = self.env['res.users']
-        test_users |= self.melanie
         test_users |= self.emmanuel
         test_users |= self.damien
         test_users |= self.andre
@@ -233,10 +232,8 @@ class TestACL(common.TransactionCase):
                 'type': 'add',
             }
             leave_allocation = self.env['hr.holidays'].sudo(
-                user=self.melanie).create(vals)
+                user=employee.user_id).create(vals)
             self.assertTrue(leave_allocation)
-            leave_allocation.sudo(
-                user=self.melanie).action_validate()
 
         for employee in emp_obj.search([('user_id', '!=', False)]):
             vals = {
@@ -288,7 +285,7 @@ class TestACL(common.TransactionCase):
             leaves_requests.append(leave_request)
 
         for leave in leaves_requests:
-            leave.sudo(user=self.emmanuel).action_validate()
+            leave.sudo(user=self.melanie).action_validate()
 
     def test_create_expense(self):
         emp_obj = self.env['hr.employee']

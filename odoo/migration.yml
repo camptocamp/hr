@@ -181,7 +181,11 @@ migration:
           - hr_employee_firstname
           - hr_date_validated
     - version: 10.2.6
+    - version: 10.2.7
+    - version: 10.2.8
+      operations:
+        pre:
+          - anthem songs.upgrade.upgrade_10_2_8::main
       addons:
         upgrade:
-          - product_bundle
-    - version: 10.2.7
+          - bso_hr_validation
