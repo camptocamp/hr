@@ -8,15 +8,16 @@
             <tree editable="bottom">
                 <field name="expensify_wizard_id" invisible="1"/>
                 <field name="expensify_id" invisible="1"/>
+                <field name="sequence" widget="handle"/>
                 <field name="date"/>
                 <field name="name"/>
                 <field name="amount"/>
                 <field name="currency_id"/>
-                <field name="receipt" widget="image"/>
+                <field name="receipt"/>
                 <field name="description" invisible="1"/>
                 <field name="payment_mode" invisible="1"/>
                 <field name="company_id" groups="base.group_multi_company"/>
-                <field name="product_id"
+                <field name="product_id" widget="selection"
                        domain="[('can_be_expensed', '=', True)]"/>
                 <field name="tax_id"
                        domain="[('can_be_expensed', '=', True), ('company_id', '=', company_id)]"/>
