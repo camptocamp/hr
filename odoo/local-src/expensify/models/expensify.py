@@ -140,6 +140,7 @@ class Expensify(models.TransientModel):
                 tax_rate = 0
             elif tax_rate:
                 tax_rate *= 100
+
             tax_id = self.get_tax_id(tax_rate)
 
             # Extract payment mode
