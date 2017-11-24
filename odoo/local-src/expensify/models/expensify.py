@@ -33,6 +33,9 @@ class Expensify(models.TransientModel):
         string='partnerUserSecret',
         required=True
     )
+    expensify_convert_currency = fields.Boolean(
+        string='Convert to local currency'
+    )
     since_date = fields.Date(
         string='Since date',
         default=lambda self: self.get_since_date(),
@@ -50,26 +53,32 @@ class Expensify(models.TransientModel):
         return datetime.date.today() - datetime.timedelta(days=30)
 
     @api.onchange('employee_id')
-    def set_expensify_credentials(self):
+    def get_employee_settings(self):
         for rec in self:
-            if not rec.employee_id:
+            employe = rec.employee_id
+            if not employe:
                 continue
-            rec.expensify_api_id = rec.employee_id.expensify_api_id
-            rec.expensify_api_secret = rec.employee_id.expensify_api_secret
+            rec.expensify_api_id = employe.expensify_api_id
+            rec.expensify_api_secret = employe.expensify_api_secret
+            rec.expensify_convert_currency = employe.expensify_convert_currency
 
     @api.model
-    def store_expensify_credentials(self, employee_id, api_id, api_secret):
-        employee_id = employee_id.sudo()
-        if api_id != employee_id.expensify_api_id:
-            employee_id.expensify_api_id = api_id
-        if api_secret != employee_id.expensify_api_secret:
-            employee_id.expensify_api_secret = api_secret
+    def store_employee_settings(self, employee_id, api_id, api_secret,
+                                convert_currency):
+        employee = employee_id.sudo()
+        if api_id != employee.expensify_api_id:
+            employee.expensify_api_id = api_id
+        if api_secret != employee.expensify_api_secret:
+            employee.expensify_api_secret = api_secret
+        if convert_currency != employee.expensify_convert_currency:
+            employee.expensify_convert_currency = convert_currency
 
     @api.multi
     def button_fetch(self):
-        self.store_expensify_credentials(self.employee_id,
-                                         self.expensify_api_id,
-                                         self.expensify_api_secret)
+        self.store_employee_settings(self.employee_id,
+                                     self.expensify_api_id,
+                                     self.expensify_api_secret,
+                                     self.expensify_convert_currency)
 
         reports = self.fetch_reports(self.since_date)
         if not reports:
@@ -104,26 +113,42 @@ class Expensify(models.TransientModel):
             product_id = self.get_product_id(category)
 
             # Extract Expense transaction
-            merchant = expense['merchant']
-            amount = expense['amount'] / 100.0
-            currency = expense['currency']
+            expense_amount = expense['amount'] / 100.0
+            expense_currency = expense['currency']
+
+            converted_amount = expense['convertedAmount'] / 100.0
+            converted_currency = expense['convertedCurrency']
+            converted_rate = expense['convertedRate']
+
+            # Extract and Deduct Surcharge from amounts
+            surcharge_rate = (expense.get('surchargeRate') or 0) / 100.0
+            expense_amount /= (1 + surcharge_rate)
+            converted_amount /= (1 + surcharge_rate)
+
+            if self.expensify_convert_currency:
+                amount = converted_amount
+                currency = converted_currency
+            else:
+                amount = expense_amount
+                currency = expense_currency
+
             currency_id = self.get_currency_id(currency)
 
-            if not currency_id:  # Currency not in Odoo, using converted amount
-                converted_amount = expense['convertedAmount'] / 100.0
-                converted_currency = expense['convertedCurrency']
-
-                amount = converted_amount
-                currency_id = self.get_currency_id(converted_currency)
+            # Extract Tax rate and get related Odoo tax
+            tax_rate = expense.get('taxRate')
+            if currency != expense_currency:  # Tax not recoverable
+                tax_rate = 0
+            elif tax_rate:
+                tax_rate *= 100
+            tax_id = self.get_tax_id(tax_rate)
 
             # Extract payment mode
             reimbursable = expense['reimbursable']
             payment_mode = "own_account" if reimbursable else "company_account"
 
             # Extract Expense details
+            merchant = expense['merchant']
             comment = expense.get('comment')
-            tag = expense.get('tag')
-            details = expense.get('details')
 
             # Extract Expense receipt
             receipt = expense.get('receipt', {})
@@ -137,12 +162,16 @@ class Expensify(models.TransientModel):
 
             # Build Expense description
             description = "Expensify id: %s\n" % expensify_id + \
-                          "Image url: %s\n" % receipt_url + \
-                          "Tag: %s\n" % tag + \
-                          "Details: %s\n" % details
+                          "Image url: %s\n" % receipt_url
+            if currency != expense_currency:
+                description += "Expense amount: %s\n" % expense_amount + \
+                               "Expense currency: %s\n" % expense_currency + \
+                               "Conversion rate: %s\n" % converted_rate + \
+                               "Surcharge rate (excl.): %s\n" % surcharge_rate
 
             expensify_expense = {
                 'expensify_id': expensify_id,
+                'sequence': len(expensify_expenses),
                 'date': date,
                 'name': name,
                 'amount': amount,
@@ -152,6 +181,7 @@ class Expensify(models.TransientModel):
                 'payment_mode': payment_mode,
                 'company_id': self.employee_id.company_id.id,
                 'product_id': product_id,
+                'tax_id': tax_id,
             }
 
             expensify_expenses.append(expensify_expense)
@@ -214,6 +244,18 @@ class Expensify(models.TransientModel):
         return currency.id
 
     @api.model
+    def get_tax_id(self, tax_rate):
+        tax = self.env['account.tax'].search([
+            ('amount', '=', tax_rate),
+            ('amount_type', '=', 'percent'),
+            ('can_be_expensed', '=', True),
+            ('company_id', '=', self.employee_id.company_id.id)
+        ], limit=1)
+        if not tax:
+            return False
+        return tax.id
+
+    @api.model
     def get_b64_from_url(self, url):
         try:
             return base64.b64encode(requests.get(url).content)
@@ -224,8 +266,8 @@ class Expensify(models.TransientModel):
 
     @api.model
     def _get_api_url(self):
-        return "https://integrations.expensify.com/" \
-               "Integration-Server/ExpensifyIntegrations"
+        return "https://integrations-tls12.expensify.com" \
+               "/Integration-Server/ExpensifyIntegrations"
 
     @api.model
     def _get_report_template(self, report_name):
@@ -248,6 +290,7 @@ class Expensify(models.TransientModel):
           convertedAmount: ${expense.convertedAmount}
           convertedCurrency: ${report.currency}
           convertedRate: ${expense.currencyConversionRate}
+          surchargeRate: ${expense.nameValuePairs.surcharge.conversionPercentage}
           category: ${expense.category}
           comment: ${expense.comment}
           reimbursable: ${expense.reimbursable?then(1,0)}
@@ -313,7 +356,7 @@ class Expensify(models.TransientModel):
                 },
                 "inputSettings": {
                     "type": "combinedReportData",
-                    # "reportState": "OPEN",
+                    "reportState": "OPEN,SUBMITTED,APPROVED",
                     "filters": {
                         "startDate": start_date
                     }
