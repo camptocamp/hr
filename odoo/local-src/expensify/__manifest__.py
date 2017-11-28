@@ -9,6 +9,7 @@
         'data/expensify_data.xml',
         'security/ir.model.access.csv',
         'views/expensify.xml',
+        'views/expensify_config_settings.xml',
         'views/expensify_expense.xml',
         'views/expensify_wizard.xml',
         'views/product_product.xml',

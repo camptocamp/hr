@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="expensify_configs" model="ir.ui.view">
+        <field name="name">Expensify Configs</field>
+        <field name="model">expensify.config.settings</field>
+        <field name="arch" type="xml">
+            <form string="Expensify Configs" class="oe_form_configuration">
+                <header>
+                    <button string="Save" type="object"
+                            name="execute" class="oe_highlight"/>
+                    <button string="Cancel" type="object"
+                            name="cancel" class="oe_link"/>
+                </header>
+                <group string="API">
+                    <field name="default_api_url"/>
+                    <field name="default_api_report_states"/>
+                </group>
+                <group string="Configs">
+                    <field name="default_convert_currency"/>
+                    <field name="default_deduct_surcharge"/>
+                    <field name="default_null_tax_foreign_currency"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="expensify_configs_action" model="ir.actions.act_window">
+        <field name="name">Expensify Configs</field>
+        <field name="res_model">expensify.config.settings</field>
+        <field name="view_id" ref="expensify_configs"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <menuitem id="expensify_configs_menu" name="Expensify" sequence="1"
+              action="expensify_configs_action"
+              parent="hr_expense.menu_hr_expense_configuration"
+              groups="base.group_system"/>
+
+</odoo>
