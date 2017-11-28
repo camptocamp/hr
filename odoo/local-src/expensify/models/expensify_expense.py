@@ -24,6 +24,7 @@ class ExpensifyExpense(models.TransientModel):
         required=True
     )
     amount = fields.Float(
+        string='Amount',
         required=True
     )
     currency_id = fields.Many2one(
