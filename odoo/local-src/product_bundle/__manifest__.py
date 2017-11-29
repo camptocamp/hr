@@ -9,8 +9,11 @@
     'depends': ['base', 'sale', 'purchase', 'product'],
     'data': [
         'security/ir.model.access.csv',
+        'views/assets.xml',
         'views/bundle_details.xml',
         'views/bundle_details_epl.xml',
+        'views/bundle_details_epl_link.xml',
+        'views/bundle_details_product.xml',
         'views/epl_cable.xml',
         'views/epl_device.xml',
         'views/epl_link.xml',

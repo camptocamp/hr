@@ -19,16 +19,12 @@
             </xpath>
 
             <notebook position='inside'>
-                <page string="Bundle NRC" name="bundle_nrc"
-                      attrs="{'invisible':[('is_bundle','=', False)]}">
-                    <h1>TODO</h1>
-                </page>
                 <page string="Bundle Products" name="bundle_products"
                       attrs="{'invisible':['|', ('is_bundle', '=', False), ('is_bundle_epl', '=', True)]}">
                     <field name="products">
                         <tree editable="bottom">
                             <field name="product_id"
-                                   domain="[('categ_id', 'child_of', parent.categ_id), ('is_bundle', '=', False)]"/>
+                                   domain="[('sale_ok', '=', True), ('categ_id', 'child_of', parent.categ_id), ('is_bundle', '=', False)]"/>
                             <field name="uom_id"/>
                         </tree>
                     </field>
@@ -38,12 +34,15 @@
                     <group>
                         <field name="epl_products_bundle_id"
                                attrs="{'required': [('is_bundle_epl', '=', True)]}"
-                               domain="[('is_bundle', '=', True), ('is_bundle_epl', '=', False)]"/>
+                               domain="[('sale_ok', '=', True), ('is_bundle', '=', True), ('is_bundle_epl', '=', False)]"/>
                     </group>
                 </page>
-                <page string="Bundle Templates" name="bundle_templates"
-                      attrs="{'invisible':['|', ('is_bundle', '=', False), ('is_bundle_epl', '=', True)]}">
-                    <h1>TODO</h1>
+                <page string="Bundle NRC" name="bundle_nrc"
+                      attrs="{'invisible':[('is_bundle', '=', False)]}">
+                    <group>
+                        <field name="bundle_nrc_uom_id"
+                               attrs="{'required': [('is_bundle', '=', True)]}"/>
+                    </group>
                 </page>
             </notebook>
         </field>

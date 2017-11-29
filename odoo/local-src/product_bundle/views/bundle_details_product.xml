@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bundle_details_product_tree" model="ir.ui.view">
+        <field name="name">bundle.details.product.tree</field>
+        <field name="model">bundle.details.product</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="bundle_details_id" invisible="1"/>
+                <field name="bundle_details_id_epl" invisible="1"/>
+                <field name="bundle_categ_id" invisible="1"/>
+                <field name="product_id"
+                       domain="[('sale_ok', '=', True), ('categ_id', 'child_of', bundle_categ_id), ('is_bundle', '=', False)]"/>
+                <field name="description"/>
+                <field name="quantity"/>
+                <field name="uom_id"/>
+                <field name="sale_order_currency_id" invisible="1"/>
+                <field name="price_per_unit" widget="monetary"
+                       options="{'currency_field': 'sale_order_currency_id'}"
+                       invisible="0"/>
+                <field name="cost_per_unit" widget="monetary"
+                       options="{'currency_field': 'sale_order_currency_id'}"
+                       invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

@@ -14,81 +14,73 @@ class BundleDetailsProduct(models.Model):
         comodel_name='bundle.details',
         ondelete='cascade'
     )
+    bundle_categ_id = fields.Many2one(
+        string='Bundle Category',
+        comodel_name='product.category',
+        required=True
+    )
     product_id = fields.Many2one(
         string='Product',
         comodel_name='product.product',
         required=True
     )
-    name = fields.Char(
-        string='Name',
-        related='product_id.display_name',
-        readonly=True
+    description = fields.Char(
+        string='Description'
+    )
+    quantity = fields.Integer(
+        string='Quantity',
+        required=True
     )
     uom_id = fields.Many2one(
         string='Unit of Measure',
         related='product_id.uom_id',
         readonly=True
     )
-    local_currency_id = fields.Many2one(
-        string='Local Currency',
-        related='product_id.currency_id',
-        readonly=True
-    )
-    local_price_per_unit = fields.Float(
-        string='Local Price/Unit',
-        related='product_id.lst_price',
-        readonly=True
-    )
-    local_cost_per_unit = fields.Float(
-        string='Local Cost/Unit',
-        related='product_id.standard_price',
-        readonly=True
-    )
-    currency_id = fields.Many2one(
-        string='Currency',
+    sale_order_currency_id = fields.Many2one(
+        string='Sale Order Currency',
         comodel_name='res.currency',
-        required=True
+        compute='compute_sale_order_currency_id',
+        store=True
     )
-    price_per_unit = fields.Monetary(
-        string='Price/Unit',
-        currency_field='currency_id',
-        compute='compute_price_per_unit'
+    price_per_unit = fields.Float(
+        string='Price/Unit'
     )
-    cost_per_unit = fields.Monetary(
-        string='Cost/Unit',
-        currency_field='currency_id',
-        compute='compute_price_per_unit'
+    cost_per_unit = fields.Float(
+        string='Cost/Unit'
     )
-    quantity = fields.Integer(
-        string='Quantity',
-        required=True
-    )
-    price = fields.Monetary(
+    price = fields.Float(
         string='Price',
-        currency_field='currency_id',
-        compute='compute_price',
+        compute='compute_price'
     )
-    cost = fields.Monetary(
+    cost = fields.Float(
         string='Cost',
-        currency_field='currency_id',
-        compute='compute_cost',
+        compute='compute_cost'
     )
 
-    @api.depends('product_id', 'currency_id')
-    def compute_price_per_unit(self):
-        for rec in self:
-            rec.price_per_unit = rec.local_currency_id.sudo().compute(
-                from_amount=rec.local_price_per_unit,
-                to_currency=rec.currency_id
-            )
+    # ONCHANGES
 
-    @api.depends('product_id', 'currency_id')
-    def compute_cost_per_unit(self):
+    @api.onchange('product_id')
+    def onchange_product_id(self):
         for rec in self:
-            rec.cost_per_unit = rec.local_currency_id.sudo().compute(
-                from_amount=rec.local_cost_per_unit,
-                to_currency=rec.currency_id
-            )
+            local_currency = rec.product_id.currency_id
+            local_price_per_unit = rec.product_id.lst_price
+            local_cost_per_unit = rec.product_id.standard_price
+
+            default_price_per_unit = self.to_sale_order_currency(
+                local_currency, local_price_per_unit)
+            default_cost_per_unit = self.to_sale_order_currency(
+                local_currency, local_cost_per_unit)
+
+            rec.price_per_unit = default_price_per_unit
+            rec.cost_per_unit = default_cost_per_unit
+
+    # COMPUTES
+
+    @api.depends('bundle_details_id', 'bundle_details_id_epl')
+    def compute_sale_order_currency_id(self):
+        for rec in self:
+            bd_id = rec.bundle_details_id or rec.bundle_details_id_epl
+            rec.sale_order_currency_id = bd_id.sale_order_currency_id
 
     @api.depends('price_per_unit', 'quantity')
     def compute_price(self):
@@ -99,3 +91,13 @@ class BundleDetailsProduct(models.Model):
     def compute_cost(self):
         for rec in self:
             rec.cost = rec.cost_per_unit * rec.quantity
+
+    # TOOLS
+
+    @api.model
+    def to_sale_order_currency(self, from_currency, from_amount):
+        return from_currency.sudo().compute(
+            from_amount=from_amount,
+            to_currency=self.sale_order_currency_id,
+            round=False
+        )

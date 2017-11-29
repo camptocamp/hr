@@ -10,14 +10,18 @@ class ProductTemplate(models.Model):
     is_bundle_epl = fields.Boolean(
         string='Is Bundle EPL'
     )
-    epl_products_bundle_id = fields.Many2one(
-        string='EPL Products Bundle',
-        comodel_name='product.product'
-    )
     products = fields.One2many(
         string='Products',
         comodel_name='bundle.product',
         inverse_name='bundle_id'
+    )
+    epl_products_bundle_id = fields.Many2one(
+        string='EPL Products Bundle',
+        comodel_name='product.product'
+    )
+    bundle_nrc_uom_id = fields.Many2one(
+        string='NRC Unit of Measure',
+        comodel_name='product.uom'
     )
     sale_order_line_id = fields.Many2one(
         string='Sale Order Line',
@@ -29,8 +33,3 @@ class ProductTemplate(models.Model):
     def onchange_is_bundle(self):
         for rec in self:
             rec.is_bundle_epl = False
-
-    @api.onchange('is_bundle_epl')
-    def onchange_is_bundle_epl(self):
-        for rec in self:
-            rec.epl_products_bundle_id = False

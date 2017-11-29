@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="bundle_details_epl_view" model="ir.ui.view">
+    <record id="bundle_details_epl_form" model="ir.ui.view">
         <field name="name">bundle.details.epl.form</field>
         <field name="model">bundle.details</field>
-        <field name="inherit_id" ref="product_bundle.bundle_details_view"/>
+        <field name="inherit_id" ref="product_bundle.bundle_details_form"/>
         <field name="arch" type="xml">
             <xpath expr="//form/footer" position="before">
                 <!--EPL LAYOUT-->
@@ -13,22 +13,13 @@
                     <notebook>
                         <page string="ROUTE">
                             <group>
-                                <field name="epl_route"
-                                       context="{'default_currency_id': sale_order_currency_id}">
-                                    <tree>
-                                        <field name="sequence"
-                                               widget="handle"/>
-                                        <field name="a_device_id"/>
-                                        <field name="z_device_id"/>
-                                        <field name="link_id" invisible="1"/>
-                                        <field name="latency"/>
-                                        <field name="is_protected"
-                                               invisible="1"/>
-                                        <field name="currency_id"
-                                               invisible="1"/>
-                                    </tree>
+                                <field name="epl_route">
                                     <form>
                                         <group>
+                                            <field name="bundle_details_id_epl_route"
+                                                   invisible="1"/>
+                                            <field name="bundle_details_id_epl_backup"
+                                                   invisible="1"/>
                                             <field name="sequence"
                                                    invisible="1"/>
                                             <field name="a_device_id"
@@ -36,13 +27,26 @@
                                             <field name="z_device_id"
                                                    attrs="{'readonly': [('a_device_id', '=', False)]}"/>
                                             <field name="link_id"
-                                                   attrs="{'readonly': ['|', ('a_device_id', '=', False), ('z_device_id', '=', False)]}"
+                                                   attrs="{'readonly': [('z_device_id', '=', False)]}"
                                                    context="{'default_a_device_id': a_device_id, 'default_z_device_id': z_device_id}"/>
                                             <field name="latency"
                                                    invisible="1"/>
+                                            <field name="bandwidth"
+                                                   invisible="1"/>
+                                            <field name="cable_id"
+                                                   invisible="1"/>
                                             <field name="is_protected"
                                                    invisible="1"/>
-                                            <field name="currency_id"
+                                            <field name="local_currency_id"
+                                                   invisible="1"/>
+                                            <field name="local_price"
+                                                   invisible="1"/>
+                                            <field name="local_price_per_mb"
+                                                   invisible="1"/>
+                                            <field name="sale_order_currency_id"
+                                                   invisible="1"/>
+                                            <field name="price" invisible="1"/>
+                                            <field name="price_per_mb"
                                                    invisible="1"/>
                                         </group>
                                     </form>
@@ -51,12 +55,18 @@
                                        invisible="1"/>
                                 <field name="epl_route_latency"/>
                                 <field name="epl_route_price_per_mb"
-                                       widget="monetary" invisible="1"/>
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       invisible="1"/>
                                 <field name="epl_route_cost_per_mb"
-                                       widget="monetary" invisible="1"/>
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       invisible="1"/>
                                 <field name="epl_route_price"
-                                       widget="monetary"/>
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"/>
                                 <field name="epl_route_cost" widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
                                        invisible="1"/>
                             </group>
                             <group>
@@ -64,34 +74,35 @@
                                        attrs="{'required': [('show_epl', '=', True)]}"/>
                                 <field name="epl_bundle_name"
                                        attrs="{'required': [('show_epl', '=', True)]}"/>
+                                <field name="epl_bundle_discount"/>
                                 <field name="epl_bundle_price_per_mb"
-                                       widget="monetary" invisible="1"/>
-                                <field name="epl_bundle_cost_per_mb"
-                                       widget="monetary" invisible="1"/>
-                                <field name="epl_bundle_price"
-                                       widget="monetary"/>
-                                <field name="epl_bundle_cost" widget="monetary"
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
                                        invisible="1"/>
+                                <field name="epl_bundle_cost_per_mb"
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_bundle_price"
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"/>
+                                <field name="epl_bundle_cost" widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_bundle_nrc" widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       invisible="0"/>
                             </group>
                         </page>
                         <page string="BACKUP">
                             <group>
-                                <field name="epl_backup"
-                                       context="{'default_currency_id': sale_order_currency_id}">
-                                    <tree>
-                                        <field name="sequence"
-                                               widget="handle"/>
-                                        <field name="a_device_id"/>
-                                        <field name="z_device_id"/>
-                                        <field name="link_id" invisible="1"/>
-                                        <field name="latency"/>
-                                        <field name="is_protected"
-                                               invisible="1"/>
-                                        <field name="currency_id"
-                                               invisible="1"/>
-                                    </tree>
+                                <field name="epl_backup">
                                     <form>
                                         <group>
+                                            <field name="bundle_details_id_epl_route"
+                                                   invisible="1"/>
+                                            <field name="bundle_details_id_epl_backup"
+                                                   invisible="1"/>
                                             <field name="sequence"
                                                    invisible="1"/>
                                             <field name="a_device_id"
@@ -99,12 +110,26 @@
                                             <field name="z_device_id"
                                                    attrs="{'readonly': [('a_device_id', '=', False)]}"/>
                                             <field name="link_id"
-                                                   attrs="{'readonly': ['|', ('a_device_id', '=', False), ('z_device_id', '=', False)]}"/>
+                                                   attrs="{'readonly': [('z_device_id', '=', False)]}"
+                                                   context="{'default_a_device_id': a_device_id, 'default_z_device_id': z_device_id}"/>
                                             <field name="latency"
+                                                   invisible="1"/>
+                                            <field name="bandwidth"
+                                                   invisible="1"/>
+                                            <field name="cable_id"
                                                    invisible="1"/>
                                             <field name="is_protected"
                                                    invisible="1"/>
-                                            <field name="currency_id"
+                                            <field name="local_currency_id"
+                                                   invisible="1"/>
+                                            <field name="local_price"
+                                                   invisible="1"/>
+                                            <field name="local_price_per_mb"
+                                                   invisible="1"/>
+                                            <field name="sale_order_currency_id"
+                                                   invisible="1"/>
+                                            <field name="price" invisible="1"/>
+                                            <field name="price_per_mb"
                                                    invisible="1"/>
                                         </group>
                                     </form>
@@ -112,13 +137,20 @@
                                 <field name="epl_backup_last_device"
                                        invisible="1"/>
                                 <field name="epl_backup_latency"/>
+                                <field name="epl_backup_discount"/>
                                 <field name="epl_backup_price_per_mb"
-                                       widget="monetary" invisible="1"/>
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       invisible="1"/>
                                 <field name="epl_backup_cost_per_mb"
-                                       widget="monetary" invisible="1"/>
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       invisible="1"/>
                                 <field name="epl_backup_price"
-                                       widget="monetary"/>
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"/>
                                 <field name="epl_backup_cost" widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
                                        invisible="1"/>
                             </group>
                         </page>
@@ -129,26 +161,22 @@
                                 <field name="epl_products_bundle_categ_id"
                                        invisible="1"/>
                                 <field name="epl_products"
-                                       context="{'default_currency_id': sale_order_currency_id}">
-                                    <tree editable="bottom">
-                                        <field name="product_id"
-                                               domain="[('categ_id', 'child_of', parent.epl_products_bundle_categ_id), ('is_bundle', '=', False)]"/>
-                                        <field name="quantity"/>
-                                        <field name="uom_id"/>
-                                        <field name="price_per_unit"
-                                               widget="monetary"/>
-                                        <field name="currency_id"
-                                               invisible="1"/>
-                                    </tree>
-                                </field>
+                                       context="{'default_bundle_categ_id': epl_products_bundle_categ_id}"/>
                                 <field name="epl_products_price"
-                                       widget="monetary"/>
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"/>
                                 <field name="epl_products_cost"
-                                       widget="monetary" invisible="1"/>
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       invisible="1"/>
                                 <field name="epl_products_price_per_mb"
-                                       widget="monetary" invisible="1"/>
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       invisible="1"/>
                                 <field name="epl_products_cost_per_mb"
-                                       widget="monetary" invisible="1"/>
+                                       widget="monetary"
+                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       invisible="1"/>
                             </group>
                         </page>
                         <page string="OPTIMAL PATH">

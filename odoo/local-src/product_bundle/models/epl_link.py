@@ -45,19 +45,16 @@ class EplLink(models.Model):
         comodel_name='res.currency',
         required=True
     )
-    mrc = fields.Monetary(
+    mrc = fields.Float(
         string='MRC',
-        currency_field='currency_id',
         required=True
     )
-    mrc_per_mb = fields.Monetary(
+    mrc_per_mb = fields.Float(
         string='MRC/Mbps',
-        currency_field='currency_id',
         compute='compute_mrc_per_mb'
     )
-    nrc = fields.Monetary(
+    nrc = fields.Float(
         string='NRC',
-        currency_field='currency_id'
     )
     active = fields.Boolean(
         string='Active',
