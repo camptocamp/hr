@@ -189,6 +189,10 @@ migration:
       addons:
         upgrade:
           - bso_hr_validation
+    - version: 10.2.9
+      addons:
+        upgrade:
+          - expensify
     - version: 10.3.0
       addons:
         upgrade:
