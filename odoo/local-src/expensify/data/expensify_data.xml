@@ -24,7 +24,7 @@
     <record id="expensify_category_phone" model="expensify.category">
         <field name="name">Phone</field>
     </record>
-    
+
     <record id="expensify_category_transportation" model="expensify.category">
         <field name="name">Transportation</field>
     </record>

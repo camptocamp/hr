@@ -10,6 +10,11 @@ class ExpensifyWizard(models.TransientModel):
         comodel_name='hr.employee',
         required=True
     )
+    company_id = fields.Many2one(
+        string='Company ID',
+        related='employee_id.company_id',
+        readonly=True
+    )
     since_date = fields.Date(
         string='Since date',
         required=True
@@ -82,7 +87,7 @@ class ExpensifyWizard(models.TransientModel):
                     'company_id': expense.company_id.id,
                     'name': 'Receipt',
                     'type': 'binary',
-                    'datas_fname': 'receipt_%s.jpg' % expense_created.id,
+                    'datas_fname': 'receipt_%s' % expense_created.id,
                     'datas': expense.receipt
                 }
                 self.env['ir.attachment'].create(attachment_data)

@@ -1,15 +1,20 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class ExpensifyExpense(models.TransientModel):
     _name = 'expensify.expense'
+    _order = 'expensify_wizard_id ASC,' \
+             'sequence ASC,' \
+             'id ASC'
 
     expensify_wizard_id = fields.Many2one(
-        comodel_name='expensify.wizard',
-        required=True
+        comodel_name='expensify.wizard'
     )
-    expensify_id = fields.Text(  # ID too big for Integer type
-        required=True
+    expensify_id = fields.Text(
+        # ID too big for Integer type
+    )
+    sequence = fields.Integer(
+        default=0
     )
     date = fields.Date(
         required=True
@@ -19,6 +24,7 @@ class ExpensifyExpense(models.TransientModel):
         required=True
     )
     amount = fields.Float(
+        string='Amount',
         required=True
     )
     currency_id = fields.Many2one(
@@ -59,3 +65,8 @@ class ExpensifyExpense(models.TransientModel):
         string='Project',
         comodel_name='account.analytic.account'
     )
+
+    @api.onchange('company_id')
+    def onchange_company_id(self):
+        for rec in self:
+            rec.tax_id = False
