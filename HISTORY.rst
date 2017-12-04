@@ -28,20 +28,27 @@ Latest (Unreleased)
 **Documentation**
 
 
-10.3.0 (2017-11-21)
+10.3.1 (2017-12-04)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* ``expensify`` module modifications
+
+
 10.2.9 (2017-12-04)
 +++++++++++++++++++
 
 **Features and Improvements**
 
-* install ``product_bundle``
-
-**Bugfixes**
-
-**Build**
-
-**Documentation**
 * ``expensify`` module modifications
+
+10.3.0 (2017-11-21)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* install ``product_bundle``
 
 
 10.2.8 (2017-11-21)
