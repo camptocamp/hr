@@ -29,6 +29,7 @@ Latest (Unreleased)
 
 
 10.3.0 (2017-11-21)
+10.2.9 (2017-12-04)
 +++++++++++++++++++
 
 **Features and Improvements**
@@ -40,6 +41,7 @@ Latest (Unreleased)
 **Build**
 
 **Documentation**
+* ``expensify`` module modifications
 
 
 10.2.8 (2017-11-21)
