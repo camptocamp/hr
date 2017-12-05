@@ -25,7 +25,7 @@ def activate_options(ctx):
 @anthem.log
 def set_delivery_pick_ship(ctx):
     """ Setting pick-ship on the warehouse """
-    ctx.env.ref('stock.warehouse0').delivery_steps = 'pick_ship'
+    ctx.env.ref('stock.warehouse0').delivery_steps = 'ship_only'
 
 
 @anthem.log
