@@ -6,7 +6,7 @@ class EplLink(models.Model):
 
     name = fields.Char(
         string='Name',
-        compute='compute_name',
+        compute='compute_name'
     )
     a_device_id = fields.Many2one(
         string='Device A',
@@ -45,23 +45,35 @@ class EplLink(models.Model):
         comodel_name='res.currency',
         required=True
     )
-    mrc = fields.Float(
-        string='MRC',
+    cost_upfront = fields.Float(
+        string='Non Recurring Cost',
+    )
+    cost = fields.Float(
+        string='Recurring Cost',
         required=True
     )
-    mrc_per_mb = fields.Float(
-        string='MRC/Mbps',
-        compute='compute_mrc_per_mb'
+    cost_per_mb = fields.Float(
+        string='Recurring Cost / Mbps',
+        compute='compute_cost_per_mb'
     )
-    nrc = fields.Float(
-        string='NRC',
+    price_upfront = fields.Float(
+        string='Non Recurring Price'
+    )
+    price = fields.Float(
+        string='Recurring Price',
+        required=True
+    )
+    price_per_mb = fields.Float(
+        string='Recurring Price / Mbps',
+        compute='compute_price_per_mb'
     )
     active = fields.Boolean(
         string='Active',
         default=True
     )
 
-    @api.depends('a_device_id', 'z_device_id', 'latency', 'is_protected')
+    @api.depends('a_device_id.name', 'z_device_id.name', 'latency',
+                 'is_protected')
     def compute_name(self):
         for rec in self:
             link_name = "%s <-> %s @ %.2fms" % (rec.a_device_id.name,
@@ -69,10 +81,22 @@ class EplLink(models.Model):
                                                 rec.latency)
             if rec.is_protected:
                 link_name += " (Protected)"
-            rec.name = link_name
+            rec.update({
+                'name': link_name
+            })
 
-    @api.depends('mrc', 'bandwidth')
-    def compute_mrc_per_mb(self):
+    @api.depends('cost', 'bandwidth')
+    def compute_cost_per_mb(self):
         for rec in self:
             if rec.bandwidth:
-                rec.mrc_per_mb = rec.mrc / rec.bandwidth
+                rec.update({
+                    'cost_per_mb': rec.cost / rec.bandwidth
+                })
+
+    @api.depends('price', 'bandwidth')
+    def compute_price_per_mb(self):
+        for rec in self:
+            if rec.bandwidth:
+                rec.update({
+                    'price_per_mb': rec.price / rec.bandwidth
+                })

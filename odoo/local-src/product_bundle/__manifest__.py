@@ -1,6 +1,6 @@
 {
     'name': 'Product Bundle',
-    'category': 'Sales',
+    'category': 'Sale',
     'description': """
     BSO Bundles + EPL
 """,

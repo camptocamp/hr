@@ -40,7 +40,7 @@
                 <page string="Bundle NRC" name="bundle_nrc"
                       attrs="{'invisible':[('is_bundle', '=', False)]}">
                     <group>
-                        <field name="bundle_nrc_uom_id"
+                        <field name="bundle_upfront_uom_id"
                                attrs="{'required': [('is_bundle', '=', True)]}"/>
                     </group>
                 </page>

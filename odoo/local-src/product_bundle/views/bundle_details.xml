@@ -8,7 +8,7 @@
             <form string="Product Bundle">
                 <!--SETUP VARIABLE-->
                 <field name="sale_order_id" invisible="1"/>
-                <field name="sale_order_currency_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
                 <field name="bundle_id" invisible="1"/>
                 <field name="bundle_categ_id" invisible="1"/>
                 <!--BUNDLE LAYOUT-->
@@ -19,11 +19,11 @@
                                context="{'default_bundle_categ_id': bundle_categ_id}"/>
                         <field name="bundle_price_per_unit"
                                widget="monetary"
-                               options="{'currency_field': 'sale_order_currency_id'}"
+                               options="{'currency_field': 'currency_id'}"
                                invisible="1"/>
                         <field name="bundle_cost_per_unit"
                                widget="monetary"
-                               options="{'currency_field': 'sale_order_currency_id'}"
+                               options="{'currency_field': 'currency_id'}"
                                invisible="1"/>
                     </group>
                     <group>
@@ -33,12 +33,12 @@
                                attrs="{'required': [('show_bundle', '=', True)]}"/>
                         <field name="bundle_discount"/>
                         <field name="bundle_price" widget="monetary"
-                               options="{'currency_field': 'sale_order_currency_id'}"/>
+                               options="{'currency_field': 'currency_id'}"/>
                         <field name="bundle_cost" widget="monetary"
-                               options="{'currency_field': 'sale_order_currency_id'}"
+                               options="{'currency_field': 'currency_id'}"
                                invisible="1"/>
-                        <field name="bundle_nrc" widget="monetary"
-                               options="{'currency_field': 'sale_order_currency_id'}"
+                        <field name="bundle_price_upfront" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
                                invisible="0"/>
                     </group>
                 </div>

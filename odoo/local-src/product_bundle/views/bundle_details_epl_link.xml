@@ -8,6 +8,7 @@
             <tree>
                 <field name="bundle_details_id_epl_route" invisible="1"/>
                 <field name="bundle_details_id_epl_backup" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
                 <field name="sequence" widget="handle"/>
                 <field name="a_device_id"/>
                 <field name="z_device_id"/>
@@ -16,12 +17,18 @@
                 <field name="bandwidth" invisible="1"/>
                 <field name="cable_id" invisible="1"/>
                 <field name="is_protected" invisible="1"/>
-                <field name="local_currency_id" invisible="1"/>
-                <field name="local_price" invisible="1"/>
-                <field name="local_price_per_mb" invisible="1"/>
-                <field name="sale_order_currency_id" invisible="1"/>
-                <field name="price" invisible="1"/>
-                <field name="price_per_mb" invisible="1"/>
+                <field name="cost_upfront" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="cost" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="cost_per_mb" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="price_upfront" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="price" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="price_per_mb" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
             </tree>
         </field>
     </record>

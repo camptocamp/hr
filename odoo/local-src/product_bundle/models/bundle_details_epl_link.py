@@ -18,6 +18,11 @@ class BundleDetailsEPLLink(models.Model):
         comodel_name='bundle.details',
         ondelete='cascade'
     )
+    currency_id = fields.Many2one(
+        string='Currency',
+        comodel_name='res.currency',
+        compute='compute_currency_id'
+    )
     sequence = fields.Integer(
         default=0
     )
@@ -37,12 +42,10 @@ class BundleDetailsEPLLink(models.Model):
         required=True
     )
     latency = fields.Float(
-        string='Latency (ms)',
         related='link_id.latency',
         readonly=True
     )
     bandwidth = fields.Integer(
-        string='Bandwidth (Mbps)',
         related='link_id.bandwidth',
         readonly=True
     )
@@ -52,63 +55,109 @@ class BundleDetailsEPLLink(models.Model):
         readonly=True
     )
     is_protected = fields.Boolean(
-        string='Is Protected',
         related='link_id.is_protected',
         readonly=True
     )
-    local_currency_id = fields.Many2one(
-        string='Local Currency',
-        related='link_id.currency_id',
-        readonly=True
+    cost_upfront = fields.Float(
+        string='Non Recurring Cost',
+        compute='compute_cost_upfront'
     )
-    local_price = fields.Float(
-        string='Local Price',
-        related='link_id.mrc',
-        readonly=True
+    cost = fields.Float(
+        string='Recurring Cost',
+        compute='compute_cost'
     )
-    local_price_per_mb = fields.Float(
-        string='Local Price/Mbps',
-        related='link_id.mrc_per_mb',
-        readonly=True
+    cost_per_mb = fields.Float(
+        string='Recurring Cost / Mbps',
+        compute='compute_cost_per_mb'
     )
-    sale_order_currency_id = fields.Many2one(
-        string='Sale Order Currency',
-        comodel_name='res.currency',
-        compute='compute_sale_order_currency_id',
-        store=True
+    price_upfront = fields.Float(
+        string='Non Recurring Price',
+        compute='compute_price_upfront'
     )
     price = fields.Float(
-        string='Price',
+        string='Recurring Price',
         compute='compute_price'
     )
     price_per_mb = fields.Float(
-        string='Price/Mbps',
+        string='Recurring Price / Mbps',
         compute='compute_price_per_mb'
     )
 
     # COMPUTES
 
-    @api.depends('bundle_details_id_epl_route', 'bundle_details_id_epl_backup')
-    def compute_sale_order_currency_id(self):
+    @api.depends('bundle_details_id_epl_route.currency_id',
+                 'bundle_details_id_epl_backup.currency_id')
+    def compute_currency_id(self):
         for rec in self:
-            bd_id = rec.bundle_details_id_epl_route \
-                    or rec.bundle_details_id_epl_backup
-            rec.sale_order_currency_id = bd_id.sale_order_currency_id
+            currency_id = rec.bundle_details_id_epl_route.currency_id \
+                          or rec.bundle_details_id_epl_backup.currency_id
+            rec.update({
+                'currency_id': currency_id
+            })
 
-    @api.depends('local_currency_id', 'local_price', 'sale_order_currency_id')
-    def compute_price(self):
+    @api.depends('link_id.currency_id', 'link_id.cost_upfront', 'currency_id')
+    def compute_cost_upfront(self):
         for rec in self:
-            rec.price = rec.local_currency_id.sudo().compute(
-                from_amount=rec.local_price,
-                to_currency=rec.sale_order_currency_id,
+            cost_upfront = rec.link_id.currency_id.sudo().compute(
+                from_amount=rec.link_id.cost_upfront,
+                to_currency=rec.currency_id,
                 round=False
             )
+            rec.update({
+                'cost_upfront': cost_upfront
+            })
 
-    @api.depends('price', 'sale_order_currency_id', 'bandwidth')
+    @api.depends('link_id.currency_id', 'link_id.cost', 'currency_id')
+    def compute_cost(self):
+        for rec in self:
+            cost = rec.link_id.currency_id.sudo().compute(
+                from_amount=rec.link_id.cost,
+                to_currency=rec.currency_id,
+                round=False
+            )
+            rec.update({
+                'cost': cost
+            })
+
+    @api.depends('cost', 'bandwidth')
+    def compute_cost_per_mb(self):
+        for rec in self:
+            if rec.bandwidth:
+                rec.update({
+                    'cost_per_mb': rec.cost / rec.bandwidth
+                })
+
+    @api.depends('link_id.currency_id', 'link_id.price_upfront', 'currency_id')
+    def compute_price_upfront(self):
+        for rec in self:
+            price_upfront = rec.link_id.currency_id.sudo().compute(
+                from_amount=rec.link_id.price_upfront,
+                to_currency=rec.currency_id,
+                round=False
+            )
+            rec.update({
+                'price_upfront': price_upfront
+            })
+
+    @api.depends('link_id.currency_id', 'link_id.price', 'currency_id')
+    def compute_price(self):
+        for rec in self:
+            price = rec.link_id.currency_id.sudo().compute(
+                from_amount=rec.link_id.price,
+                to_currency=rec.currency_id,
+                round=False
+            )
+            rec.update({
+                'price': price
+            })
+
+    @api.depends('price', 'bandwidth')
     def compute_price_per_mb(self):
         for rec in self:
             if rec.bandwidth:
-                rec.price_per_mb = rec.price / rec.bandwidth
+                rec.update({
+                    'price_per_mb': rec.price / rec.bandwidth
+                })
 
     # DOMAINS
 

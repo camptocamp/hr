@@ -8,11 +8,11 @@ class BundleDetails(models.Model):
     # VISIBILITY VARIABLES
 
     show_bundle = fields.Boolean(
-        compute='compute_show_bundle',
+        compute='compute_visibility',
         store=True
     )
     show_epl = fields.Boolean(
-        compute='compute_show_epl',
+        compute='compute_visibility',
         store=True
     )
 
@@ -25,8 +25,7 @@ class BundleDetails(models.Model):
         ondelete='cascade',
         required=True
     )
-    sale_order_currency_id = fields.Many2one(
-        string='Sale Order Currency',
+    currency_id = fields.Many2one(
         related='sale_order_id.currency_id',
         readonly=True
     )
@@ -48,14 +47,13 @@ class BundleDetails(models.Model):
         comodel_name='product.product'
     )
     bundle_categ_id = fields.Many2one(
-        string='Bundle Category',
         related='bundle_id.categ_id',
         readonly=True
     )
     bundle_products = fields.One2many(
         string='Products',
         comodel_name='bundle.details.product',
-        inverse_name='bundle_details_id',
+        inverse_name='bundle_details_id'
     )
     bundle_quantity = fields.Integer(
         string='Quantity',
@@ -84,21 +82,19 @@ class BundleDetails(models.Model):
         string='Bundle MRC',
         compute='compute_bundle_cost'
     )
-    bundle_nrc = fields.Float(
+    bundle_price_upfront = fields.Float(
         string='Bundle NRR'
     )
 
-    # VISIBILITY COMPUTES
+    # VISIBILITY
 
-    @api.depends('bundle_id')
-    def compute_show_bundle(self):
+    @api.depends('bundle_id.is_bundle_epl')
+    def compute_visibility(self):
         for rec in self:
-            rec.show_bundle = not rec.bundle_id.is_bundle_epl
-
-    @api.depends('bundle_id')
-    def compute_show_epl(self):
-        for rec in self:
-            rec.show_epl = rec.bundle_id.is_bundle_epl
+            rec.update({
+                'show_bundle': not rec.bundle_id.is_bundle_epl,
+                'show_epl': rec.bundle_id.is_bundle_epl
+            })
 
     # BUNDLE ONCHANGES
 
@@ -107,11 +103,14 @@ class BundleDetails(models.Model):
         for rec in self:
             if not rec.show_bundle:
                 continue
-            rec.bundle_products = [
-                (0, 0, {'bundle_categ_id': rec.bundle_id.categ_id,
-                        'product_id': p.product_id,
-                        'quantity': p.quantity})
-                for p in rec.bundle_id.products]
+            rec.update({
+                'bundle_products': [
+                    (0, 0, {'bundle_categ_id': rec.bundle_id.categ_id,
+                            'product_id': p.product_id,
+                            'quantity': p.quantity})
+                    for p in rec.bundle_id.products
+                ]
+            })
             for bdp in rec.bundle_products:
                 bdp.onchange_product_id()  # Compute default price_per_unit
 
@@ -119,35 +118,45 @@ class BundleDetails(models.Model):
     def onchange_bundle_products(self):
         for rec in self:
             bundle_details = self.get_bundle_details(rec.bundle_products)
-            rec.bundle_name = "%s [%s]" % (rec.bundle_id.name,
-                                           bundle_details)
+            rec.update({
+                'bundle_name': "%s [%s]" % (rec.bundle_id.name,
+                                            bundle_details)
+            })
 
     # BUNDLE COMPUTES
 
-    @api.depends('bundle_products', 'bundle_discount')
+    @api.depends('bundle_products.price', 'bundle_discount')
     def compute_bundle_price_per_unit(self):
         for rec in self:
             res = sum(rec.mapped('bundle_products.price'))
             res *= self.get_factor_from_percent(rec.bundle_discount)
-            rec.bundle_price_per_unit = res
+            rec.update({
+                'bundle_price_per_unit': res
+            })
 
-    @api.depends('bundle_products')
+    @api.depends('bundle_products.cost')
     def compute_bundle_cost_per_unit(self):
         for rec in self:
             res = sum(rec.mapped('bundle_products.cost'))
-            rec.bundle_cost_per_unit = res
+            rec.update({
+                'bundle_cost_per_unit': res
+            })
 
     @api.depends('bundle_price_per_unit', 'bundle_quantity')
     def compute_bundle_price(self):
         for rec in self:
             res = rec.bundle_price_per_unit * rec.bundle_quantity
-            rec.bundle_price = res
+            rec.update({
+                'bundle_price': res
+            })
 
     @api.depends('bundle_cost_per_unit', 'bundle_quantity')
     def compute_bundle_cost(self):
         for rec in self:
             res = rec.bundle_cost_per_unit * rec.bundle_quantity
-            rec.bundle_cost = res
+            rec.update({
+                'bundle_cost': res
+            })
 
     # BUNDLE CONSTRAINTS
 
@@ -180,7 +189,7 @@ class BundleDetails(models.Model):
                                 self.bundle_quantity,
                                 self.bundle_id.uom_id,
                                 self.bundle_price_per_unit,
-                                self.bundle_nrc)
+                                self.bundle_price_upfront)
 
     @api.model
     def bundle_save(self, bundle_id, bundle_name, qty, uom_id, mrc, nrc):
@@ -202,7 +211,7 @@ class BundleDetails(models.Model):
             self.sale_order_line_id_nrc.unlink()
             return
 
-        uom_id = bundle_id.bundle_nrc_uom_id
+        uom_id = bundle_id.bundle_upfront_uom_id
         description = bundle_id.name + " Project Management"
         self._create_or_update_line(bundle_id, uom_id, price, description, 1,
                                     recurring=False)
@@ -222,17 +231,16 @@ class BundleDetails(models.Model):
 
         company_id = self.sale_order_id.company_id
         currency_id = company_id.currency_id
-        converted_price = self.sale_order_currency_id.sudo().compute(
+        list_price = self.currency_id.sudo().compute(
             from_amount=price,
             to_currency=currency_id,
             round=False
         )
-        list_price = self.get_rounded_upper_decimal(converted_price)
 
         data = {'name': product_name,
                 'type': product_type,
                 'categ_id': bundle_id.categ_id.id,
-                'list_price': list_price,
+                'list_price': self.get_rounded_upper_decimal(list_price),
                 'uom_id': uom_id.id,
                 'uom_po_id': uom_id.id,
                 'company_id': company_id.id,
@@ -268,7 +276,7 @@ class BundleDetails(models.Model):
                 'name': description,
                 'product_uom_qty': quantity,
                 'product_uom': product_id.uom_id.id,
-                'price_unit': product_id.lst_price}
+                'price_unit': self.get_rounded_upper_decimal(price)}
 
         if recurring:
             line_id = self.sale_order_line_id_mrc

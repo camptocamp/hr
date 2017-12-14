@@ -72,19 +72,19 @@ class BundleDetailsEPL(models.Model):
     )
     epl_backup_price_per_mb = fields.Float(
         string='Backup Price per Mbps',
-        compute='compute_epl_backup_price_per_mb',
+        compute='compute_epl_backup_price_per_mb'
     )
     epl_backup_cost_per_mb = fields.Float(
         string='Backup Cost per Mbps',
-        compute='compute_epl_backup_cost_per_mb',
+        compute='compute_epl_backup_cost_per_mb'
     )
     epl_backup_price = fields.Float(
         string='Backup Price',
-        compute='compute_epl_backup_price',
+        compute='compute_epl_backup_price'
     )
     epl_backup_cost = fields.Float(
         string='Backup Cost',
-        compute='compute_epl_backup_cost',
+        compute='compute_epl_backup_cost'
     )
 
     # EPL PRODUCTS VARIABLES
@@ -94,14 +94,14 @@ class BundleDetailsEPL(models.Model):
         comodel_name='product.product'
     )
     epl_products_bundle_categ_id = fields.Many2one(
-        string='Products Bundle Category',
         related='epl_products_bundle_id.categ_id',
         readonly=True
     )
     epl_products = fields.One2many(
         string='Products',
         comodel_name='bundle.details.product',
-        inverse_name='bundle_details_id_epl')
+        inverse_name='bundle_details_id_epl'
+    )
     epl_products_price = fields.Float(
         string='Products Price',
         compute='compute_epl_products_price'
@@ -144,7 +144,7 @@ class BundleDetailsEPL(models.Model):
         compute='compute_epl_bundle_cost',
         help=_('Route Cost + Backup Cost + Products Cost')
     )
-    epl_bundle_nrc = fields.Float(
+    epl_bundle_price_upfront = fields.Float(
         string='Bundle NRR',
         default=1500
     )
@@ -180,12 +180,17 @@ class BundleDetailsEPL(models.Model):
         for rec in self:
             if not rec.show_epl:
                 continue
-            rec.epl_products_bundle_id = rec.bundle_id.epl_products_bundle_id
-            rec.epl_products = [
-                (0, 0, {'bundle_categ_id': rec.epl_products_bundle_id.categ_id,
-                        'product_id': p.product_id,
-                        'quantity': p.quantity})
-                for p in rec.epl_products_bundle_id.products]
+            epl_products_bundle_id = rec.bundle_id.epl_products_bundle_id
+            rec.update({
+                'epl_products_bundle_id': epl_products_bundle_id,
+                'epl_products': [
+                    (0, 0,
+                     {'bundle_categ_id': epl_products_bundle_id.categ_id,
+                      'product_id': p.product_id,
+                      'quantity': p.quantity})
+                    for p in epl_products_bundle_id.products
+                ]
+            })
             for bdp in rec.epl_products:
                 bdp.onchange_product_id()  # Compute default price_per_unit
 
@@ -207,122 +212,160 @@ class BundleDetailsEPL(models.Model):
                                                        rec.epl_route_latency)
             epl_bundle_name += "]"
 
-            rec.epl_bundle_name = epl_bundle_name
+            rec.update({
+                'epl_bundle_name': epl_bundle_name
+            })
 
     @api.onchange('epl_bandwidth')
     def onchange_epl_bandwidth(self):
         for rec in self:
             if rec.epl_bandwidth < 10000:
-                rec.epl_bundle_nrc = 1500
+                epl_bundle_price_upfront = 1500
             else:
-                rec.epl_bundle_nrc = 3000
+                epl_bundle_price_upfront = 3000
+            rec.update({
+                'epl_bundle_price_upfront': epl_bundle_price_upfront
+            })
 
     # EPL ROUTE COMPUTES
 
-    @api.depends('epl_route')
+    @api.depends('epl_route.z_device_id')
     def compute_epl_route_last_device(self):
         for rec in self:
             if rec.epl_route:
                 res = rec.epl_route[-1].z_device_id
-                rec.epl_route_last_device = res
+                rec.update({
+                    'epl_route_last_device': res
+                })
 
-    @api.depends('epl_route')
+    @api.depends('epl_route.latency')
     def compute_epl_route_latency(self):
         for rec in self:
             res = "%.2f ms" % sum(rec.mapped('epl_route.latency'))
-            rec.epl_route_latency = res
+            rec.update({
+                'epl_route_latency': res
+            })
 
-    @api.depends('epl_route')
+    @api.depends('epl_route.price_per_mb')
     def compute_epl_route_price_per_mb(self):
         for rec in self:
             res = sum(rec.mapped('epl_route.price_per_mb'))
-            rec.epl_route_price_per_mb = res
+            rec.update({
+                'epl_route_price_per_mb': res
+            })
 
-    @api.depends('epl_route')
+    @api.depends('epl_route.cost_per_mb')
     def compute_epl_route_cost_per_mb(self):
         for rec in self:
-            res = 0  # TODO
-            rec.epl_route_cost_per_mb = res
+            res = sum(rec.mapped('epl_route.cost_per_mb'))
+            rec.update({
+                'epl_route_cost_per_mb': res
+            })
 
     @api.depends('epl_route_price_per_mb', 'epl_bandwidth')
     def compute_epl_route_price(self):
         for rec in self:
             res = rec.epl_route_price_per_mb * rec.epl_bandwidth
-            rec.epl_route_price = res
+            rec.update({
+                'epl_route_price': res
+            })
 
     @api.depends('epl_route_cost_per_mb', 'epl_bandwidth')
     def compute_epl_route_cost(self):
         for rec in self:
             res = rec.epl_route_cost_per_mb * rec.epl_bandwidth
-            rec.epl_route_cost = res
+            rec.update({
+                'epl_route_cost': res
+            })
 
     # EPL BACKUP COMPUTES
 
-    @api.depends('epl_backup')
+    @api.depends('epl_backup.z_device_id')
     def compute_epl_backup_last_device(self):
         for rec in self:
             if rec.epl_backup:
                 res = rec.epl_backup[-1].z_device_id
-                rec.epl_backup_last_device = res
+                rec.update({
+                    'epl_backup_last_device': res
+                })
 
-    @api.depends('epl_backup')
+    @api.depends('epl_backup.latency')
     def compute_epl_backup_latency(self):
         for rec in self:
             res = "%.2f ms" % sum(rec.mapped('epl_backup.latency'))
-            rec.epl_backup_latency = res
+            rec.update({
+                'epl_backup_latency': res
+            })
 
-    @api.depends('epl_backup', 'epl_backup_discount')
+    @api.depends('epl_backup.price_per_mb', 'epl_backup_discount')
     def compute_epl_backup_price_per_mb(self):
         for rec in self:
             res = sum(rec.mapped('epl_backup.price_per_mb'))
             res *= self.get_factor_from_percent(rec.epl_backup_discount)
-            rec.epl_backup_price_per_mb = res
+            rec.update({
+                'epl_backup_price_per_mb': res
+            })
 
-    @api.depends('epl_backup')
+    @api.depends('epl_backup.cost_per_mb', 'epl_backup_discount')
     def compute_epl_backup_cost_per_mb(self):
         for rec in self:
-            res = 0  # TODO
-            rec.epl_backup_cost_per_mb = res
+            res = sum(rec.mapped('epl_backup.cost_per_mb'))
+            res *= self.get_factor_from_percent(rec.epl_backup_discount)
+            rec.update({
+                'epl_backup_cost_per_mb': res
+            })
 
     @api.depends('epl_backup_price_per_mb', 'epl_bandwidth')
     def compute_epl_backup_price(self):
         for rec in self:
             res = rec.epl_backup_price_per_mb * rec.epl_bandwidth
-            rec.epl_backup_price = res
+            rec.update({
+                'epl_backup_price': res
+            })
 
     @api.depends('epl_backup_cost_per_mb', 'epl_bandwidth')
     def compute_epl_backup_cost(self):
         for rec in self:
             res = rec.epl_backup_cost_per_mb * rec.epl_bandwidth
-            rec.epl_backup_cost = res
+            rec.update({
+                'epl_backup_cost': res
+            })
 
     # EPL PRODUCTS COMPUTES
 
-    @api.depends('epl_products')
+    @api.depends('epl_products.price')
     def compute_epl_products_price(self):
         for rec in self:
             res = sum(rec.mapped('epl_products.price'))
-            rec.epl_products_price = res
+            rec.update({
+                'epl_products_price': res
+            })
 
-    @api.depends('epl_products')
+    @api.depends('epl_products.cost')
     def compute_epl_products_cost(self):
         for rec in self:
             res = sum(rec.mapped('epl_products.cost'))
-            rec.epl_products_cost = res
+            rec.update({
+                'epl_products_cost': res
+            })
 
     @api.depends('epl_products_price', 'epl_bandwidth')
     def compute_epl_products_price_per_mb(self):
         for rec in self:
             if rec.epl_bandwidth:
                 res = rec.epl_products_price / rec.epl_bandwidth
-                rec.epl_products_price_per_mb = res
+                rec.update({
+                    'epl_products_price_per_mb': res
+                })
 
     @api.depends('epl_products_cost', 'epl_bandwidth')
     def compute_epl_products_cost_per_mb(self):
         for rec in self:
             if rec.epl_bandwidth:
                 res = rec.epl_products_cost / rec.epl_bandwidth
-                rec.epl_products_cost_per_mb = res
+                rec.update({
+                    'epl_products_cost_per_mb': res
+                })
 
     # EPL BUNDLE PRICE & COST COMPUTES
 
@@ -334,7 +377,9 @@ class BundleDetailsEPL(models.Model):
                   + rec.epl_backup_price_per_mb \
                   + rec.epl_products_price_per_mb
             res *= self.get_factor_from_percent(rec.epl_bundle_discount)
-            rec.epl_bundle_price_per_mb = res
+            rec.update({
+                'epl_bundle_price_per_mb': res
+            })
 
     @api.depends('epl_route_cost_per_mb', 'epl_backup_cost_per_mb',
                  'epl_products_cost_per_mb')
@@ -343,19 +388,25 @@ class BundleDetailsEPL(models.Model):
             res = rec.epl_route_cost_per_mb \
                   + rec.epl_backup_cost_per_mb \
                   + rec.epl_products_cost_per_mb
-            rec.epl_bundle_cost_per_mb = res
+            rec.update({
+                'epl_bundle_cost_per_mb': res
+            })
 
     @api.depends('epl_bundle_price_per_mb', 'epl_bandwidth')
     def compute_epl_bundle_price(self):
         for rec in self:
             res = rec.epl_bundle_price_per_mb * rec.epl_bandwidth
-            rec.epl_bundle_price = res
+            rec.update({
+                'epl_bundle_price': res
+            })
 
     @api.depends('epl_bundle_cost_per_mb', 'epl_bandwidth')
     def compute_epl_bundle_cost(self):
         for rec in self:
             res = rec.epl_bundle_cost_per_mb * rec.epl_bandwidth
-            rec.epl_bundle_cost = res
+            rec.update({
+                'epl_bundle_cost': res
+            })
 
     # OPTIMAL PATH API
 
@@ -365,9 +416,11 @@ class BundleDetailsEPL(models.Model):
             # Workaround to prevent function from running at startup
             if not rec.button_epl_optimal_clicked:
                 continue
-            rec.button_epl_optimal_clicked = False
-            rec.epl_route = []
-            rec.epl_backup = []
+            rec.update({
+                'button_epl_optimal_clicked': False,
+                'epl_route': [],
+                'epl_backup': []
+            })
 
             warnings = []
             if not rec.epl_optimal_pop_a:
@@ -386,15 +439,19 @@ class BundleDetailsEPL(models.Model):
                                            rec.epl_optimal_optimize,
                                            rec.epl_optimal_protected)
 
-                rec.epl_route = self.get_optimal_path_values(
-                    optimal['start_device'],
-                    optimal['path'])
+                rec.update({
+                    'epl_route': self.get_optimal_path_values(
+                        optimal['start_device'],
+                        optimal['path'])
+                })
                 warnings.append("Route Path updated")
 
                 if optimal['backup']:
-                    rec.epl_backup = self.get_optimal_path_values(
-                        optimal['start_device'],
-                        optimal['backup'])
+                    rec.update({
+                        'epl_backup': self.get_optimal_path_values(
+                            optimal['start_device'],
+                            optimal['backup'])
+                    })
                     warnings.append("Backup Path updated")
 
                 warnings += optimal['warnings']
@@ -549,8 +606,8 @@ class BundleDetailsEPL(models.Model):
             return link.latency
         if optimize == 'price':
             return link.currency_id.sudo().compute(
-                from_amount=link.mrc_per_mb,
-                to_currency=self.sale_order_currency_id,
+                from_amount=link.price_per_mb,
+                to_currency=self.currency_id,
                 round=False
             )
         raise exceptions.ValidationError(_("Invalid optimize: %s" % optimize))
@@ -630,4 +687,4 @@ class BundleDetailsEPL(models.Model):
                                 self.epl_bandwidth,
                                 self.bundle_id.uom_id,
                                 self.epl_bundle_price_per_mb,
-                                self.epl_bundle_nrc)
+                                self.epl_bundle_price_upfront)

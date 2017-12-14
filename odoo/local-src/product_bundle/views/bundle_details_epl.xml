@@ -20,6 +20,8 @@
                                                    invisible="1"/>
                                             <field name="bundle_details_id_epl_backup"
                                                    invisible="1"/>
+                                            <field name="currency_id"
+                                                   invisible="1"/>
                                             <field name="sequence"
                                                    invisible="1"/>
                                             <field name="a_device_id"
@@ -37,17 +39,28 @@
                                                    invisible="1"/>
                                             <field name="is_protected"
                                                    invisible="1"/>
-                                            <field name="local_currency_id"
-                                                   invisible="1"/>
-                                            <field name="local_price"
-                                                   invisible="1"/>
-                                            <field name="local_price_per_mb"
-                                                   invisible="1"/>
-                                            <field name="sale_order_currency_id"
-                                                   invisible="1"/>
-                                            <field name="price" invisible="1"/>
+                                            <field name="cost_upfront"
+                                                   invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
+                                            <field name="cost" invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
+                                            <field name="cost_per_mb"
+                                                   invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
+                                            <field name="price_upfront"
+                                                   invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
+                                            <field name="price" invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
                                             <field name="price_per_mb"
-                                                   invisible="1"/>
+                                                   invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
                                         </group>
                                     </form>
                                 </field>
@@ -56,17 +69,17 @@
                                 <field name="epl_route_latency"/>
                                 <field name="epl_route_price_per_mb"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                                 <field name="epl_route_cost_per_mb"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                                 <field name="epl_route_price"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"/>
+                                       options="{'currency_field': 'currency_id'}"/>
                                 <field name="epl_route_cost" widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                             </group>
                             <group>
@@ -77,20 +90,21 @@
                                 <field name="epl_bundle_discount"/>
                                 <field name="epl_bundle_price_per_mb"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                                 <field name="epl_bundle_cost_per_mb"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                                 <field name="epl_bundle_price"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"/>
+                                       options="{'currency_field': 'currency_id'}"/>
                                 <field name="epl_bundle_cost" widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
-                                <field name="epl_bundle_nrc" widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                <field name="epl_bundle_price_upfront"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="0"/>
                             </group>
                         </page>
@@ -102,6 +116,8 @@
                                             <field name="bundle_details_id_epl_route"
                                                    invisible="1"/>
                                             <field name="bundle_details_id_epl_backup"
+                                                   invisible="1"/>
+                                            <field name="currency_id"
                                                    invisible="1"/>
                                             <field name="sequence"
                                                    invisible="1"/>
@@ -120,17 +136,28 @@
                                                    invisible="1"/>
                                             <field name="is_protected"
                                                    invisible="1"/>
-                                            <field name="local_currency_id"
-                                                   invisible="1"/>
-                                            <field name="local_price"
-                                                   invisible="1"/>
-                                            <field name="local_price_per_mb"
-                                                   invisible="1"/>
-                                            <field name="sale_order_currency_id"
-                                                   invisible="1"/>
-                                            <field name="price" invisible="1"/>
+                                            <field name="cost_upfront"
+                                                   invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
+                                            <field name="cost" invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
+                                            <field name="cost_per_mb"
+                                                   invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
+                                            <field name="price_upfront"
+                                                   invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
+                                            <field name="price" invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
                                             <field name="price_per_mb"
-                                                   invisible="1"/>
+                                                   invisible="1"
+                                                   widget="monetary"
+                                                   options="{'currency_field': 'currency_id'}"/>
                                         </group>
                                     </form>
                                 </field>
@@ -140,17 +167,17 @@
                                 <field name="epl_backup_discount"/>
                                 <field name="epl_backup_price_per_mb"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                                 <field name="epl_backup_cost_per_mb"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                                 <field name="epl_backup_price"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"/>
+                                       options="{'currency_field': 'currency_id'}"/>
                                 <field name="epl_backup_cost" widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                             </group>
                         </page>
@@ -164,18 +191,18 @@
                                        context="{'default_bundle_categ_id': epl_products_bundle_categ_id}"/>
                                 <field name="epl_products_price"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"/>
+                                       options="{'currency_field': 'currency_id'}"/>
                                 <field name="epl_products_cost"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                                 <field name="epl_products_price_per_mb"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                                 <field name="epl_products_cost_per_mb"
                                        widget="monetary"
-                                       options="{'currency_field': 'sale_order_currency_id'}"
+                                       options="{'currency_field': 'currency_id'}"
                                        invisible="1"/>
                             </group>
                         </page>

@@ -19,7 +19,7 @@ class ProductTemplate(models.Model):
         string='EPL Products Bundle',
         comodel_name='product.product'
     )
-    bundle_nrc_uom_id = fields.Many2one(
+    bundle_upfront_uom_id = fields.Many2one(
         string='NRC Unit of Measure',
         comodel_name='product.uom'
     )
@@ -32,4 +32,6 @@ class ProductTemplate(models.Model):
     @api.onchange('is_bundle')
     def onchange_is_bundle(self):
         for rec in self:
-            rec.is_bundle_epl = False
+            rec.update({
+                'is_bundle_epl': False
+            })
