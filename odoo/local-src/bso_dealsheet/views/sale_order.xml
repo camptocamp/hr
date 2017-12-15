@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="add_dealsheet_buttons_to_sale_order" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_dealsheet_create"
+                        string="Create Dealsheet"
+                        type="object"
+                        class="oe_highlight"/> <!--states="draft"-->
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_dealsheet_line_tree" model="ir.ui.view">
+        <field name="name">sale.dealsheet.line.tree</field>
+        <field name="model">sale.dealsheet.line</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="dealsheet_id" invisible="1"/>
+                <field name="is_recurring" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="sale_order_line_id" invisible="1"/>
+                <field name="product_id"/>
+                <field name="description"/>
+                <field name="quantity"/>
+                <field name="uom_id"/>
+                <field name="cost" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
