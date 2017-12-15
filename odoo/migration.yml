@@ -201,3 +201,7 @@ migration:
       addons:
         upgrade:
           - expensify
+    - version: 10.3.2
+      addons:
+        upgrade:
+          - account_multicurrency_revaluation

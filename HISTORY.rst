@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* Install module account_multicurrency_revaluation
+
 **Bugfixes**
 
 **Build**
