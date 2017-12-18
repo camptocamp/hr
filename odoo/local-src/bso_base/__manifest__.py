@@ -7,7 +7,7 @@
  'author': 'Camptocamp SA',
  'maintainer': 'Camptocamp SA',
  'license': 'AGPL-3',
- 'depends': [],
+ 'depends': ['account'],
  'website': 'www.camptocamp.com',
  'data': [],
  'test': [],

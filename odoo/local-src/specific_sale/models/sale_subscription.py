@@ -56,6 +56,9 @@ class SaleSubscription(models.Model):
             line=line, fiscal_position=fiscal_position)
         if self.recurring_interval:
             res['quantity'] = self.recurring_interval * res['quantity']
+        res.update(self.env['account.invoice.line'].update_dates(
+            fields.Date.today(),
+            interval=self.recurring_interval))
         return res
 
     @api.onchange('date_start',

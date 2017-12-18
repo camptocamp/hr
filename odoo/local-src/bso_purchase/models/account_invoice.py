@@ -45,6 +45,10 @@ class AccountInvoice(models.Model):
                     invoice_ids |= inv
             # Force computation of taxes
             invoice_ids.compute_taxes()
+
+        # write start_date and end_date on created invoices
+        for line in invoice_ids.mapped('invoice_line_ids'):
+            line.write(line.update_dates(today))
         return invoice_ids
 
     @api.model
