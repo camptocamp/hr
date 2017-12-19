@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
+from odoo import api, models, fields
 
 
 class AccountInvoice(models.Model):
@@ -141,3 +141,13 @@ class AccountInvoice(models.Model):
         report = self.env.ref('account.account_invoices')
         # this takes care of printing it too
         report.get_pdf()
+
+
+class AccountInvoiceLine(models.Model):
+    _inherit = "account.invoice.line"
+
+    def _set_additional_fields(self, invoice):
+        if not self.start_date and not self.end_date:
+            self.write(self.update_dates(fields.Date.today()))
+
+        super(AccountInvoiceLine, self)._set_additional_fields(invoice)
