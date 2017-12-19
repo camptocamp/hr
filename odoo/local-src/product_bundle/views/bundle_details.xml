@@ -29,8 +29,9 @@
                     <group>
                         <field name="bundle_quantity"
                                attrs="{'required': [('show_bundle', '=', True)]}"/>
-                        <field name="bundle_name"
+                        <field name="bundle_details"
                                attrs="{'required': [('show_bundle', '=', True)]}"/>
+                        <field name="bundle_name" invisible="1"/>
                         <field name="bundle_discount"/>
                         <field name="bundle_price" widget="monetary"
                                options="{'currency_field': 'currency_id'}"/>

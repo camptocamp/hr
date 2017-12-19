@@ -59,8 +59,12 @@ class BundleDetails(models.Model):
         string='Quantity',
         default=1
     )
+    bundle_details = fields.Char(
+        string='Bundle Details'
+    )
     bundle_name = fields.Char(
-        string='Bundle Name'
+        string='Bundle Name',
+        compute='compute_bundle_name'
     )
     bundle_discount = fields.Integer(
         string='Bundle Discount (%)',
@@ -117,13 +121,31 @@ class BundleDetails(models.Model):
     @api.onchange('bundle_products')
     def onchange_bundle_products(self):
         for rec in self:
-            bundle_details = self.get_bundle_details(rec.bundle_products)
+            bundle_details = []
+            for product in rec.bundle_products:
+                if product.quantity <= 0:
+                    continue
+                detail = [product.product_id.name]
+                if product.description:
+                    detail.append(" (%s)" % product.description)
+                detail.append(": %s" % product.quantity)
+                bundle_details.append("".join(detail))
+
             rec.update({
-                'bundle_name': "%s [%s]" % (rec.bundle_id.name,
-                                            bundle_details)
+                'bundle_details': ', '.join(bundle_details)
             })
 
     # BUNDLE COMPUTES
+
+    @api.depends('bundle_id.name', 'bundle_details')
+    def compute_bundle_name(self):
+        for rec in self:
+            bundle_name = rec.bundle_id.name
+            if rec.bundle_details:
+                bundle_name += " [%s]" % rec.bundle_details
+            rec.update({
+                'bundle_name': bundle_name
+            })
 
     @api.depends('bundle_products.price', 'bundle_discount')
     def compute_bundle_price_per_unit(self):
@@ -187,22 +209,22 @@ class BundleDetails(models.Model):
         return self.bundle_save(self.bundle_id,
                                 self.bundle_name,
                                 self.bundle_quantity,
-                                self.bundle_id.uom_id,
                                 self.bundle_price_per_unit,
                                 self.bundle_price_upfront)
 
     @api.model
-    def bundle_save(self, bundle_id, bundle_name, qty, uom_id, mrc, nrc):
-        self._bundle_save_mrc(bundle_id, bundle_name, qty, mrc, uom_id)
+    def bundle_save(self, bundle_id, bundle_name, qty, mrc, nrc):
+        self._bundle_save_mrc(bundle_id, bundle_name, qty, mrc)
         self._bundle_save_nrc(bundle_id, nrc)
         return {'type': 'ir.actions.act_close_wizard_and_reload_view'}
 
     @api.model
-    def _bundle_save_mrc(self, bundle_id, bundle_name, qty, price, uom_id):
+    def _bundle_save_mrc(self, bundle_id, bundle_name, qty, price):
         if not price:
             raise exceptions.ValidationError(_("Bundle must have MRR"))
 
-        self._create_or_update_line(bundle_id, uom_id, price, bundle_name, qty,
+        uom_id = bundle_id.uom_id
+        self._create_or_update_line(bundle_id, bundle_name, uom_id, price, qty,
                                     recurring=True)
 
     @api.model
@@ -212,19 +234,49 @@ class BundleDetails(models.Model):
             return
 
         uom_id = bundle_id.bundle_upfront_uom_id
-        description = bundle_id.name + " Project Management"
-        self._create_or_update_line(bundle_id, uom_id, price, description, 1,
+        bundle_name = bundle_id.name + " Project Management"
+        self._create_or_update_line(bundle_id, bundle_name, uom_id, price, 1,
                                     recurring=False)
 
     @api.model
-    def _create_or_update_product(self, bundle_id, uom_id, price, recurring):
+    def _create_or_update_line(self, bundle_id, bundle_name, uom_id, price,
+                               quantity, recurring):
+        product_id = self._create_or_update_product(bundle_id, bundle_name,
+                                                    uom_id, price, recurring)
+
+        data = {'order_id': self.sale_order_id.id,
+                'bundle_details_id': self.id if recurring else False,
+                'product_id': product_id.id,
+                'name': bundle_name,
+                'product_uom_qty': quantity,
+                'product_uom': product_id.uom_id.id,
+                'price_unit': self.get_rounded_upper_decimal(price)}
+
         if recurring:
-            product_name = bundle_id.name + " MRC"
+            line_id = self.sale_order_line_id_mrc
+        else:
+            line_id = self.sale_order_line_id_nrc
+
+        if line_id:
+            line_id.sudo().update(data)
+        else:
+            line_id = self.env['sale.order.line'].sudo().create(data)
+            product_id.sudo().sale_order_line_id = line_id
+            if recurring:
+                self.sale_order_line_id_mrc = line_id
+            else:
+                self.sale_order_line_id_nrc = line_id
+
+        return line_id
+
+    @api.model
+    def _create_or_update_product(self, bundle_id, bundle_name, uom_id, price,
+                                  recurring):
+        if recurring:
             product_type = "consu"
             recurring_invoice = True
             invoice_policy = "delivery"
         else:
-            product_name = bundle_id.name + " NRC"
             product_type = "service"
             recurring_invoice = False
             invoice_policy = "order"
@@ -237,7 +289,7 @@ class BundleDetails(models.Model):
             round=False
         )
 
-        data = {'name': product_name,
+        data = {'name': bundle_name,
                 'type': product_type,
                 'categ_id': bundle_id.categ_id.id,
                 'list_price': self.get_rounded_upper_decimal(list_price),
@@ -264,51 +316,7 @@ class BundleDetails(models.Model):
 
         return product_id
 
-    @api.model
-    def _create_or_update_line(self, bundle_id, uom_id, price, description,
-                               quantity, recurring):
-        product_id = self._create_or_update_product(bundle_id, uom_id, price,
-                                                    recurring)
-
-        data = {'order_id': self.sale_order_id.id,
-                'bundle_details_id': self.id if recurring else False,
-                'product_id': product_id.id,
-                'name': description,
-                'product_uom_qty': quantity,
-                'product_uom': product_id.uom_id.id,
-                'price_unit': self.get_rounded_upper_decimal(price)}
-
-        if recurring:
-            line_id = self.sale_order_line_id_mrc
-        else:
-            line_id = self.sale_order_line_id_nrc
-
-        if line_id:
-            line_id.sudo().update(data)
-        else:
-            line_id = self.env['sale.order.line'].sudo().create(data)
-            product_id.sudo().sale_order_line_id = line_id
-            if recurring:
-                self.sale_order_line_id_mrc = line_id
-            else:
-                self.sale_order_line_id_nrc = line_id
-
-        return line_id
-
     # TOOLS
-
-    @api.model
-    def get_bundle_details(self, bundle_products):
-        details = []
-        for product in bundle_products:
-            if product.quantity <= 0:
-                continue
-            detail = [product.product_id.name]
-            if product.description:
-                detail.append(" (%s)" % product.description)
-            detail.append(": %s" % product.quantity)
-            details.append("".join(detail))
-        return ", ".join(details)
 
     @api.model
     def get_factor_from_percent(self, x):

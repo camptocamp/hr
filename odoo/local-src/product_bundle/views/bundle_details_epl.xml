@@ -85,8 +85,9 @@
                             <group>
                                 <field name="epl_bandwidth"
                                        attrs="{'required': [('show_epl', '=', True)]}"/>
-                                <field name="epl_bundle_name"
+                                <field name="epl_bundle_details"
                                        attrs="{'required': [('show_epl', '=', True)]}"/>
+                                <field name="epl_bundle_name" invisible="1"/>
                                 <field name="epl_bundle_discount"/>
                                 <field name="epl_bundle_price_per_mb"
                                        widget="monetary"

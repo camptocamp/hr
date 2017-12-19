@@ -8,13 +8,16 @@ class BundleDetailsEPL(models.Model):
 
     # EPL VARIABLES
 
-    epl_bundle_name = fields.Char(
-        string="Bundle Name",
-        default="EPL []"
+    epl_bundle_details = fields.Char(
+        string="Bundle Details"
     )
     epl_bandwidth = fields.Integer(
         string="Bandwidth (Mbps)",
         default=100
+    )
+    epl_bundle_name = fields.Char(
+        string="Bundle Name",
+        compute='compute_epl_bundle_name'
     )
 
     # EPL ROUTE VARIABLES
@@ -194,26 +197,19 @@ class BundleDetailsEPL(models.Model):
             for bdp in rec.epl_products:
                 bdp.onchange_product_id()  # Compute default price_per_unit
 
-    @api.onchange('epl_route', 'epl_backup')
+    @api.onchange('epl_route')
     def onchange_epl_route_backup(self):
         for rec in self:
-            epl_bundle_name = "EPL"
-
-            if rec.epl_backup:
-                epl_bundle_name += " Protected"
-
-            epl_bundle_name += " ["
-
+            epl_bundle_details = ""
             if rec.epl_route:
                 a_pop_id = rec.epl_route[0].a_device_id.pop_id
                 z_pop_id = rec.epl_route[-1].z_device_id.pop_id
-                epl_bundle_name += "%s <-> %s @ %s" % (a_pop_id.name,
-                                                       z_pop_id.name,
-                                                       rec.epl_route_latency)
-            epl_bundle_name += "]"
-
+                epl_bundle_details += "%s <-> %s @ %s" % (a_pop_id.name,
+                                                          z_pop_id.name,
+                                                          rec.epl_route_latency
+                                                          )
             rec.update({
-                'epl_bundle_name': epl_bundle_name
+                'epl_bundle_details': epl_bundle_details
             })
 
     @api.onchange('epl_bandwidth')
@@ -225,6 +221,24 @@ class BundleDetailsEPL(models.Model):
                 epl_bundle_price_upfront = 3000
             rec.update({
                 'epl_bundle_price_upfront': epl_bundle_price_upfront
+            })
+
+    # EPL VARIABLES COMPUTES
+
+    @api.depends('bundle_id.name', 'epl_bandwidth', 'epl_backup',
+                 'epl_bundle_details')
+    def compute_epl_bundle_name(self):
+        for rec in self:
+            epl_bundle_name = "%s %.0fM" % (rec.bundle_id.name,
+                                            rec.epl_bandwidth)
+            if rec.epl_backup:
+                epl_bundle_name += " Protected"
+
+            if rec.epl_bundle_details:
+                epl_bundle_name += " [%s]" % rec.epl_bundle_details
+
+            rec.update({
+                'epl_bundle_name': epl_bundle_name
             })
 
     # EPL ROUTE COMPUTES
@@ -682,9 +696,8 @@ class BundleDetailsEPL(models.Model):
 
     @api.multi
     def button_epl_save(self):
-        return self.bundle_save(self.epl_products_bundle_id,
+        return self.bundle_save(self.bundle_id,
                                 self.epl_bundle_name,
-                                self.epl_bandwidth,
-                                self.bundle_id.uom_id,
-                                self.epl_bundle_price_per_mb,
+                                1,
+                                self.epl_bundle_price,
                                 self.epl_bundle_price_upfront)
