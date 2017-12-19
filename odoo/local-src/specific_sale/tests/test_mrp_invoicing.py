@@ -4,6 +4,8 @@
 
 from __future__ import division
 from .common import BaseCase
+from odoo import fields
+from dateutil.relativedelta import relativedelta
 
 
 class TestSaleMrpInvoicing(BaseCase):
@@ -100,6 +102,13 @@ class TestSaleMrpInvoicing(BaseCase):
         # Tnx https://twitter.com/RaphaelCollet/status/570877230781468672
         contract = record.create(record._convert_to_write(record._cache))
         contract._compute_recurring_total()
+        advance_invoice_date = contract.template_id.advance_invoice_date
+        date_next_period = (
+            fields.Date.from_string(contract.recurring_next_date) +
+            relativedelta(months=advance_invoice_date)
+        )
+        date_next_str = fields.Date.to_string(date_next_period)
+        contract.date_next_invoice_period_start = date_next_str
         return contract
 
     def test_recurring_value_uom(self):
