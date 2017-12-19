@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from dateutil.relativedelta import relativedelta
 
 
@@ -39,6 +39,9 @@ class SaleSubscription(models.Model):
     date_cancelled = fields.Date(
         string='Date Cancelled'
     )
+    date_next_invoice_period_start = fields.Date(
+        string="Start date of next invoice period"
+    )
 
     @api.depends('recurring_invoice_line_ids',
                  'recurring_invoice_line_ids.quantity',
@@ -51,13 +54,33 @@ class SaleSubscription(models.Model):
         for sub in self:
             sub.period_total = sub.recurring_total * sub.recurring_interval
 
+    @api.returns('account.invoice')
+    def _recurring_create_invoice(self, automatic=False):
+        invoices = super(SaleSubscription, self)._recurring_create_invoice(
+            automatic=automatic)
+        # update 'date_next_invoice_period_start'
+        periods = {'daily': 'days',
+                   'weekly': 'weeks',
+                   'monthly': 'months',
+                   'yearly': 'years'}
+        for sub in self:
+            next_date = fields.Date.from_string(
+                sub.date_next_invoice_period_start)
+            rule, interval = sub.recurring_rule_type, sub.recurring_interval
+            new_date = next_date + relativedelta(**{periods[rule]: interval})
+            sub.write({'date_next_invoice_period_start': new_date})
+
+        return invoices
+
+    @api.multi
     def _prepare_invoice_line(self, line, fiscal_position):
         res = super(SaleSubscription, self)._prepare_invoice_line(
             line=line, fiscal_position=fiscal_position)
         if self.recurring_interval:
             res['quantity'] = self.recurring_interval * res['quantity']
+
         res.update(self.env['account.invoice.line'].update_dates(
-            fields.Date.today(),
+            line.analytic_account_id.date_next_invoice_period_start,
             interval=self.recurring_interval))
         return res
 
@@ -139,3 +162,31 @@ class SaleSubscription(models.Model):
         return dict(open=subscriptions_open.ids,
                     pending=subscriptions_pending.ids,
                     closed=subscriptions_close.ids)
+
+    @api.multi
+    def _prepare_invoice_data(self):
+        self.ensure_one()
+        res = super(SaleSubscription, self)._prepare_invoice_data()
+
+        next_date = fields.Date.from_string(
+            self.date_next_invoice_period_start)
+        # Code copied from Odoo
+        periods = {'daily': 'days',
+                   'weekly': 'weeks',
+                   'monthly': 'months',
+                   'yearly': 'years'}
+        end_date = next_date + relativedelta(
+            **{periods[self.recurring_rule_type]: self.recurring_interval})
+        # remove 1 day as normal people thinks in term of inclusive ranges.
+        end_date = end_date - relativedelta(days=1)
+        # DO NOT FORWARDPORT
+        format_date = self.env['ir.qweb.field.date'].value_to_html
+        # END code copied from Odoo
+
+        res['comment'] = (
+            _("This invoice covers the following period: %s - %s") %
+            (format_date(fields.Date.to_string(next_date), {}),
+             format_date(fields.Date.to_string(end_date), {}))
+        )
+
+        return res
