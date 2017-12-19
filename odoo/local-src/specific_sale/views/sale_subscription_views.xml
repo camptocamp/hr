@@ -54,6 +54,7 @@
       <xpath expr="//field[@name='journal_id']" position="before">
         <field name="automatic_renewal"/>
         <field name="customer_prior_notice"/>
+        <field name="advance_invoice_date"/>
       </xpath>
     </field>
   </record>

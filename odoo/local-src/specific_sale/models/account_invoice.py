@@ -148,6 +148,13 @@ class AccountInvoiceLine(models.Model):
 
     def _set_additional_fields(self, invoice):
         if not self.start_date and not self.end_date:
-            self.write(self.update_dates(fields.Date.today()))
+            today = fields.Date.today()
+            date_dict = self.update_dates(today)
+            if 'ref_date_mrc_delivery' in self.env.context:
+                date_dict['start_date'] = today
+                date_dict['end_date'] = (
+                    self.env.context.get('ref_date_mrc_delivery')[:10])
+
+            self.write(date_dict)
 
         super(AccountInvoiceLine, self)._set_additional_fields(invoice)
