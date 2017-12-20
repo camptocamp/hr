@@ -159,6 +159,7 @@ class SaleOrder(models.Model):
                     'ref_date_mrc_delivery')[:10]
         if duration:
             res['duration'] = duration[0]
+            # date is 'End date' (of course...)
             res['date'] = (fields.Date.from_string(res['date_start']) +
                            relativedelta(months=duration[0]))
 

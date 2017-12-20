@@ -28,6 +28,8 @@
      'views/partner.xml',
      'views/sale.xml',
      'views/sale_order_line.xml',
+     'views/account_invoice.xml',
+     'views/report_invoice.xml',
      'views/sale_subscription_views.xml',
  ],
  'test': [],

@@ -22,6 +22,8 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * Install module account_multicurrency_revaluation
+* display VAT in company currency + exchange rate on invoices with a different
+  currency
 
 **Bugfixes**
 

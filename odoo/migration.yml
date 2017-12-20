@@ -205,3 +205,4 @@ migration:
       addons:
         upgrade:
           - account_multicurrency_revaluation
+          - specific_sale
