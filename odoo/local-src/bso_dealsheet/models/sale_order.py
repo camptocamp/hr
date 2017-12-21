@@ -9,26 +9,22 @@ class SaleOrder(models.Model):
             ('dealsheet', 'Dealsheet'),
         ]
     )
+
     duration = fields.Integer(
         string='Duration (months)',
         default=12
     )
 
     @api.multi
-    def action_dealsheet_request(self):
-        dealsheet_id = self.env['sale.dealsheet'].create({
-            'sale_order_id': self.id
-        })
+    def dealsheet_action_request(self):
+        return self.dealsheet_create().action_request()
 
     @api.multi
-    def action_dealsheet_create(self):
-        dealsheet_id = self.env['sale.dealsheet'].create({
+    def dealsheet_action_create(self):
+        return self.dealsheet_create().action_create()
+
+    @api.model
+    def dealsheet_create(self):
+        return self.env['sale.dealsheet'].sudo().create({
             'sale_order_id': self.id
         })
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "sale.dealsheet",
-            "res_id": dealsheet_id.id,
-            "view_type": "form",
-            "view_mode": "form",
-        }

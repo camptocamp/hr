@@ -7,10 +7,14 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <button name="action_dealsheet_create"
+                <button name="dealsheet_action_request"
+                        string="Request Dealsheet"
+                        type="object"
+                        class="oe_highlight"/> <!--states="draft" groups="all"-->
+                <button name="dealsheet_action_create"
                         string="Create Dealsheet"
                         type="object"
-                        class="oe_highlight"/> <!--states="draft"-->
+                        class="oe_highlight"/> <!--states="draft" groups="presales"-->
             </xpath>
         </field>
     </record>

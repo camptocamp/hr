@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class SaleDealsheetLine(models.Model):
@@ -8,6 +8,12 @@ class SaleDealsheetLine(models.Model):
         string='Dealsheet',
         comodel_name='sale.dealsheet',
         ondelete='cascade'
+    )
+    is_cost = fields.Boolean(
+        string='Is Cost'
+    )
+    is_recurring = fields.Boolean(
+        string='Is Recurring'
     )
     currency_id = fields.Many2one(
         related='dealsheet_id.currency_id',
@@ -37,7 +43,4 @@ class SaleDealsheetLine(models.Model):
     )
     cost = fields.Float(
         string='Cost'
-    )
-    is_recurring = fields.Boolean(
-        string='Is Recurring'
     )

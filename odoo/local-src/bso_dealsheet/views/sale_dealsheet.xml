@@ -15,25 +15,26 @@
                     <button name="action_validate"
                             string="Validate"
                             type="object"
-                            states="confirmed"
+                            states="confirm"
                             class="oe_highlight"/>
                     <button name="action_refuse"
                             string="Refuse"
                             type="object"
-                            states="confirmed"/>
+                            states="confirm"/>
                     <field name="state" widget="statusbar"/>
                     <field name="name" invisible="1"/>
-                    <field name="user_filled" invisible="1"/>
-                    <field name="user_reviewed" invisible="1"/>
+                    <field name="presale_id" invisible="1"/>
+                    <field name="reviewer_id" invisible="1"/>
                     <field name="date_validated" invisible="1"/>
                     <field name="date_refused" invisible="1"/>
                 </header>
                 <sheet>
                     <group>
-                        <field name="sale_order_id" invisible="1"/>
+                        <field name="sale_order_id"/>
                         <field name="partner_id"/>
                         <field name="duration"/>
                         <field name="currency_id"/>
+                        <field name="compute_line" invisible="1"/>
                     </group>
                     <group>
                         <field name="cost_line"/>
@@ -76,10 +77,11 @@
                 <field name="date_validated"/>
                 <field name="date_refused"/>
                 <field name="partner_id"/>
-                <field name="user_filled"/>
-                <field name="user_reviewed"/>
+                <field name="presale_id"/>
+                <field name="reviewer_id"/>
                 <field name="duration" invisible="1"/>
                 <field name="currency_id" invisible="1"/>
+                <field name="compute_line" invisible="1"/>
                 <field name="cost_line" invisible="1"/>
                 <field name="cost_upfront_line" invisible="1"/>
                 <field name="cost_upfront" invisible="1" widget="monetary"

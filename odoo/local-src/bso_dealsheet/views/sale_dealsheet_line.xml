@@ -7,12 +7,15 @@
         <field name="arch" type="xml">
             <tree editable="bottom">
                 <field name="dealsheet_id" invisible="1"/>
+                <field name="is_cost" invisible="1"/>
                 <field name="is_recurring" invisible="1"/>
                 <field name="currency_id" invisible="1"/>
                 <field name="sale_order_line_id" invisible="1"/>
-                <field name="product_id"/>
+                <field name="product_id"
+                       attrs="{'readonly': [('sale_order_line_id', '!=', False)]}"/>
                 <field name="description"/>
-                <field name="quantity"/>
+                <field name="quantity"
+                       attrs="{'readonly': [('sale_order_line_id', '!=', False)]}"/>
                 <field name="uom_id"/>
                 <field name="cost" widget="monetary"
                        options="{'currency_field': 'currency_id'}"/>
