@@ -166,6 +166,13 @@ class SaleOrder(models.Model):
             contract_tmp = self.template_id.contract_template
         else:
             contract_tmp = self.contract_template
+        advance_invoice_date = contract_tmp.advance_invoice_date
+        date_next_period = (
+            fields.Date.from_string(res['recurring_next_date']) +
+            relativedelta(months=advance_invoice_date)
+        )
+        date_next_str = fields.Date.to_string(date_next_period)
         res.update(automatic_renewal=contract_tmp.automatic_renewal,
-                   customer_prior_notice=contract_tmp.customer_prior_notice)
+                   customer_prior_notice=contract_tmp.customer_prior_notice,
+                   date_next_invoice_period_start=date_next_str)
         return res

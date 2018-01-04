@@ -6,7 +6,7 @@ COPY ./requirements.txt /opt/odoo
 # Install additional debian packages
 RUN set -x; \
         apt-get update \
-        && apt-get install -y --no-install-recommends \
+        && apt-get install -y --force-yes --no-install-recommends \
         python-dev \
         build-essential \
         libffi-dev \
