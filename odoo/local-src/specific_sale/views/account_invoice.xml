@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+  <record id="view_invoice_tax_tree" model="ir.ui.view">
+    <field name="name">account invoice tax tree, with conversion</field>
+    <field name="model">account.invoice.tax</field>
+    <field name="inherit_id" ref="account.view_invoice_tax_tree"/>
+    <field name="arch" type="xml">
+      <field name="amount" position="after">
+        <field name="amount_currency"/>
+        <field name="exchange_rate"/>
+        <field name="company_currency_id" invisible="1"/>
+      </field>
+    </field>
+  </record>
+  <record id="view_invoice_tax_form" model="ir.ui.view">
+    <field name="name">account invoice tax form, with conversion</field>
+    <field name="inherit_id" ref="account.view_invoice_tax_tree"/>
+    <field name="model">account.invoice.tax</field>
+    <field name="arch" type="xml">
+      <field name="amount" position="after">
+        <field name="amount_currency"/>
+        <field name="exchange_rate"/>
+        <field name="company_currency_id" invisible="1"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="invoice_form" model="ir.ui.view">
+    <field name="name">invoice form, with tax conversion</field>
+    <field name="inherit_id" ref="account.invoice_form"/>
+    <field name="model">account.invoice</field>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='tax_line_ids']/tree" position="inside">
+        <field name="amount_currency"/>
+        <field name="exchange_rate"/>
+        <field name="company_currency_id" invisible="1"/>
+      </xpath>
+    </field>
+  </record>
+  <record id="invoice_supplier_form" model="ir.ui.view">
+    <field name="name">invoice supplier form, with tax conversion</field>
+    <field name="inherit_id" ref="account.invoice_supplier_form"/>
+    <field name="model">account.invoice</field>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='tax_line_ids']/tree" position="inside">
+        <field name="amount_currency"/>
+        <field name="exchange_rate"/>
+        <field name="company_currency_id" invisible="1"/>
+      </xpath>
+    </field>
+  </record>
+</data>
+</odoo>
