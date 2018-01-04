@@ -16,7 +16,6 @@ class BundleProduct(models.Model):
         required=True
     )
     uom_id = fields.Many2one(
-        string='Unit of Measure',
         related='product_id.uom_id',
         readonly=True
     )

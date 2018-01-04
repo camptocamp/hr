@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bundle_details_epl_link_tree" model="ir.ui.view">
+        <field name="name">bundle.details.epl.link.tree</field>
+        <field name="model">bundle.details.epl.link</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="bundle_details_id_epl_route" invisible="1"/>
+                <field name="bundle_details_id_epl_backup" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="sequence" widget="handle"/>
+                <field name="a_device_id"/>
+                <field name="z_device_id"/>
+                <field name="link_id" invisible="1"/>
+                <field name="latency"/>
+                <field name="bandwidth" invisible="1"/>
+                <field name="cable_id" invisible="1"/>
+                <field name="is_protected" invisible="1"/>
+                <field name="cost_upfront" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="cost" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="cost_per_mb" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="price_upfront" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="price" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="price_per_mb" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
