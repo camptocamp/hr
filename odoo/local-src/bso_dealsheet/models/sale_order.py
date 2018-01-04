@@ -10,11 +10,6 @@ class SaleOrder(models.Model):
         ]
     )
 
-    duration = fields.Integer(
-        string='Duration (months)',
-        default=12
-    )
-
     @api.multi
     def dealsheet_action_request(self):
         return self.dealsheet_create().action_request()
