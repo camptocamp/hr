@@ -211,6 +211,7 @@ migration:
           - account_banking_sepa_direct_debit
           - account_banking_sepa_credit_transfer
           - account_invoice_start_end_dates
+          - account_payment_partner
           - account_cutoff_prepaid
           - bso_base
           - bso_purchase
