@@ -77,8 +77,21 @@ class SaleOrder(models.Model):
         to_approve_technical.write({'state': 'to_approve_tech'})
 
         if to_confirm:
+            for order in to_confirm:
+                if not order.project_id:
+                    order.project_id = order.create_aa()
             return super(SaleOrder, to_confirm).action_confirm()
         return True
+
+    @api.multi
+    def create_aa(self):
+        self.ensure_one()
+        vals = {'name': self.name,
+                'partner_id': self.partner_id.id,
+                'company_id': self.company_id.id,
+                }
+        aa = self.env['account.analytic.account'].create(vals)
+        return aa.id
 
     @api.multi
     def action_refuse(self):
@@ -159,6 +172,7 @@ class SaleOrder(models.Model):
                     'ref_date_mrc_delivery')[:10]
         if duration:
             res['duration'] = duration[0]
+            # date is 'End date' (of course...)
             res['date'] = (fields.Date.from_string(res['date_start']) +
                            relativedelta(months=duration[0]))
 
@@ -166,6 +180,13 @@ class SaleOrder(models.Model):
             contract_tmp = self.template_id.contract_template
         else:
             contract_tmp = self.contract_template
+        advance_invoice_date = contract_tmp.advance_invoice_date
+        date_next_period = (
+            fields.Date.from_string(res['recurring_next_date']) +
+            relativedelta(months=advance_invoice_date)
+        )
+        date_next_str = fields.Date.to_string(date_next_period)
         res.update(automatic_renewal=contract_tmp.automatic_renewal,
-                   customer_prior_notice=contract_tmp.customer_prior_notice)
+                   customer_prior_notice=contract_tmp.customer_prior_notice,
+                   date_next_invoice_period_start=date_next_str)
         return res

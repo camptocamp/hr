@@ -9,7 +9,9 @@ from odoo.exceptions import ValidationError
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
+    @api.multi
     def _compute_default_uomid(self):
+        self.ensure_one()
         if self.recurring_invoice:
             return self.env.ref('specific_product.product_unit_month',
                                 raise_if_not_found=False)

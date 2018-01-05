@@ -1,0 +1,25 @@
+From 1f2841f094cd96ddd56195dc1c50e3912d02ad15 Mon Sep 17 00:00:00 2001
+From: Damien Crier <damien.crier@camptocamp.com>
+Date: Fri, 5 Jan 2018 11:04:52 +0100
+Subject: [PATCH] fix path for css assets
+
+---
+ .../report/unrealized_currency_gain_loss.xml                            | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/account_multicurrency_revaluation/report/unrealized_currency_gain_loss.xml b/account_multicurrency_revaluation/report/unrealized_currency_gain_loss.xml
+index 8fae1c8..11a2f3a 100644
+--- a/account_multicurrency_revaluation/report/unrealized_currency_gain_loss.xml
++++ b/account_multicurrency_revaluation/report/unrealized_currency_gain_loss.xml
+@@ -2,7 +2,7 @@
+ <odoo>
+         <template id="assets_specific" inherit_id="report.assets_common">
+             <xpath expr="." position="inside">
+-                <link href="/account_multicurrency_revaluation_report/static/src/css/reports.css" rel="stylesheet"/>
++                <link href="/account_multicurrency_revaluation/static/src/css/reports.css" rel="stylesheet"/>
+             </xpath>
+         </template>
+ 
+-- 
+2.7.4
+

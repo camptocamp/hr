@@ -19,13 +19,7 @@
  'website': 'http://www.camptocamp.com',
  'data': ['data/product.uom.categ.csv',
           'data/product.uom.csv',
-          'security/groups.xml',
-          'security/ir.model.access.csv',
           'views/sale_order.xml',
-          'views/product.xml',
-          'views/account_invoice.xml',
-          'views/network.xml',
-          'views/res_company.xml',
           'views/product_uom_categ.xml',
           'views/product_uom.xml'
           ],

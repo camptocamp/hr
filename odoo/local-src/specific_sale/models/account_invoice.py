@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
+from odoo import api, models, fields
 
 
 class AccountInvoice(models.Model):
@@ -141,3 +141,50 @@ class AccountInvoice(models.Model):
         report = self.env.ref('account.account_invoices')
         # this takes care of printing it too
         report.get_pdf()
+
+
+class AccountInvoiceLine(models.Model):
+    _inherit = "account.invoice.line"
+
+    def _set_additional_fields(self, invoice):
+        if not self.start_date and not self.end_date:
+            today = fields.Date.today()
+            date_dict = self.update_dates(today)
+            if 'ref_date_mrc_delivery' in self.env.context:
+                date_dict['start_date'] = today
+                date_dict['end_date'] = (
+                    self.env.context.get('ref_date_mrc_delivery')[:10])
+
+            self.write(date_dict)
+
+        super(AccountInvoiceLine, self)._set_additional_fields(invoice)
+
+
+class AccountInvoiceTax(models.Model):
+    _inherit = "account.invoice.tax"
+
+    amount_currency = fields.Monetary('Amount (company currency)',
+                                      currency_field='company_currency_id',
+                                      compute='_compute_amount_currency')
+    company_currency_id = fields.Many2one(related='company_id.currency_id')
+    exchange_rate = fields.Float('Exchange rate',
+                                 compute='_compute_exchange_rate')
+
+    @api.depends('invoice_id.date', 'currency_id', 'company_currency_id')
+    def _compute_exchange_rate(self):
+        for rec in self:
+            date = rec.invoice_id.date or fields.Datetime.now()
+            rec.exchange_rate = rec.currency_id.with_context(
+                date=date)._get_conversion_rate(rec.company_currency_id,
+                                                rec.currency_id
+                                                )
+
+    @api.depends('amount',
+                 'currency_id',
+                 'company_currency_id',
+                 'invoice_id.date')
+    def _compute_amount_currency(self):
+        for rec in self:
+            date = rec.invoice_id.date or fields.Datetime.now()
+            rec.amount_currency = rec.currency_id.with_context(
+                date=date).compute(rec.amount, rec.company_currency_id)

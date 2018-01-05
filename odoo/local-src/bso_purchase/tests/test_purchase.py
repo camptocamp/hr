@@ -33,10 +33,10 @@ class TestPurchase(common.TestBsoPurchaseCommon):
         picking2.do_transfer()
 
         # There should be 1 invoice
-        inv_ids = self.AccountInvoice.po_auto_invoice()
+        inv_ids = self.AccountInvoice.po_auto_invoice(1)
         self.assertEqual(1, len(inv_ids))
         # if we do it twice there should be no new invoice
-        inv_ids = self.AccountInvoice.po_auto_invoice()
+        inv_ids = self.AccountInvoice.po_auto_invoice(1)
         self.assertEqual(0, len(inv_ids))
 
     def test_auto_invoicing_no_group_end_date(self):
@@ -57,9 +57,9 @@ class TestPurchase(common.TestBsoPurchaseCommon):
         picking2.do_transfer()
 
         # There should be 2 invoices
-        inv_ids = self.AccountInvoice.po_auto_invoice()
+        inv_ids = self.AccountInvoice.po_auto_invoice(1)
         self.assertEqual(2, len(inv_ids))
 
         # There should be no new invoice
-        inv_ids = self.AccountInvoice.po_auto_invoice()
+        inv_ids = self.AccountInvoice.po_auto_invoice(1)
         self.assertEqual(0, len(inv_ids))
