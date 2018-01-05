@@ -77,8 +77,21 @@ class SaleOrder(models.Model):
         to_approve_technical.write({'state': 'to_approve_tech'})
 
         if to_confirm:
+            for order in to_confirm:
+                if not order.project_id:
+                    order.project_id = order.create_aa()
             return super(SaleOrder, to_confirm).action_confirm()
         return True
+
+    @api.multi
+    def create_aa(self):
+        self.ensure_one()
+        vals = {'name': self.name,
+                'partner_id': self.partner_id.id,
+                'company_id': self.company_id.id,
+                }
+        aa = self.env['account.analytic.account'].create(vals)
+        return aa.id
 
     @api.multi
     def action_refuse(self):

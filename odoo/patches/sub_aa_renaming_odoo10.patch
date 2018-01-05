@@ -1,0 +1,73 @@
+From ffcbbff8af06e00cf981275df3b7726da206df20 Mon Sep 17 00:00:00 2001
+From: Damien Crier <damien.crier@camptocamp.com>
+Date: Thu, 4 Jan 2018 17:18:19 +0100
+Subject: [PATCH] patch from odoo. not renaming analytic account when linked to
+ a subscription contract
+
+---
+ sale_contract/models/sale_subscription.py       |  2 +-
+ website_contract/models/sale_order.py           |  6 ++++--
+ website_contract/tests/test_website_contract.py | 18 ++++++++++++++++++
+ 3 files changed, 23 insertions(+), 3 deletions(-)
+
+diff --git a/sale_contract/models/sale_subscription.py b/sale_contract/models/sale_subscription.py
+index 1d65e98..94ea0e9 100644
+--- a/sale_contract/models/sale_subscription.py
++++ b/sale_contract/models/sale_subscription.py
+@@ -105,7 +105,7 @@ class SaleSubscription(models.Model):
+     @api.model
+     def create(self, vals):
+         vals['code'] = vals.get('code') or self.env.context.get('default_code') or self.env['ir.sequence'].next_by_code('sale.subscription') or 'New'
+-        if vals.get('name', 'New') == 'New':
++        if vals.get('name', 'New') == 'New' and not vals.get('analytic_account_id'):
+             vals['name'] = vals['code']
+         return super(SaleSubscription, self).create(vals)
+ 
+diff --git a/website_contract/models/sale_order.py b/website_contract/models/sale_order.py
+index c23e67d..0894894 100644
+--- a/website_contract/models/sale_order.py
++++ b/website_contract/models/sale_order.py
+@@ -63,8 +63,10 @@ class SaleOrder(models.Model):
+                 and any(self.order_line.mapped('product_id').mapped('recurring_invoice')):
+             values = self._prepare_contract_data(payment_token_id=payment_token.id if self.require_payment else False)
+             subscription = self.env['sale.subscription'].sudo().create(values)
+-            partner_name =  self.partner_id.name or self.partner_id.parent_id.name
+-            subscription.name = partner_name + ' - ' + subscription.code
++            partner_name = self.partner_id.name or self.partner_id.parent_id.name
++            # Avoid renaming an existing AA
++            if not values.get('analytic_account_id'):
++                subscription.name = partner_name + ' - ' + subscription.code
+             if not subscription.analytic_account_id.partner_id:
+                 subscription.analytic_account_id.partner_id = self.partner_id
+             elif subscription.analytic_account_id.partner_id != self.partner_id:
+diff --git a/website_contract/tests/test_website_contract.py b/website_contract/tests/test_website_contract.py
+index 9eda2ac..01b261e 100644
+--- a/website_contract/tests/test_website_contract.py
++++ b/website_contract/tests/test_website_contract.py
+@@ -78,5 +78,23 @@ class TestContract(TestContractCommon):
+ 
+         order.onchange_template_id()
+         order.action_confirm()
++        self.assertEqual(order.project_id.name, '%s - %s' % (order.partner_id.name, order.subscription_id.code), 'website_contract: analytic account created along subscription should be named as <Subscription code> - <Partner name>')
+         self.assertTrue(order.subscription_id, 'website_contract: subscription is not created at so confirmation')
+         self.assertEqual(order.subscription_management, 'create', 'website_contract: subscription creation should set the so to "create"')
++
++    def test_no_aa_renaming(self):
++        initial_aa_name = 'InitialName'
++        analytic = self.env['account.analytic.account'].create({
++            'partner_id': self.user_portal.partner_id.id,
++            'name': initial_aa_name
++        })
++        order = self.env['sale.order'].create({
++            'name': 'TestSOTemplate',
++            'partner_id': self.user_portal.partner_id.id,
++            'template_id': self.quote_template.id,
++            'project_id': analytic.id,
++        })
++
++        order.onchange_template_id()
++        order.action_confirm()
++        self.assertEqual(analytic.name, initial_aa_name, 'website_contract: subscription creation should not rename an existing AA')
+-- 
+2.7.4
+
