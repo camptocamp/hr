@@ -34,4 +34,4 @@ def correct_logistics_routes(ctx):
 @anthem.log
 def main(ctx):
     clean_views(ctx)
-    correct_logistics_routes(ctx)
+#    correct_logistics_routes(ctx)

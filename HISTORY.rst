@@ -21,9 +21,22 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.3.2 (2018-01-05)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * Install module account_multicurrency_revaluation
 * display VAT in company currency + exchange rate on invoices with a different
   currency
+* Invoicing release for production
 
 **Bugfixes**
 
