@@ -2,6 +2,7 @@
 # Copyright 2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 from pkg_resources import resource_stream
+import os
 
 import anthem
 from anthem.lyrics.loaders import load_csv_stream
@@ -25,8 +26,9 @@ def clean_views(ctx):
 
 @anthem.log
 def correct_logistics_routes(ctx):
-    content = resource_stream(req, 'data/upgrade/stock.location.route.csv')
-    load_csv_stream(ctx, 'stock.location.route', content, delimiter=',')
+    if os.environ.get('RUNNING_ENV') == 'prod':
+        content = resource_stream(req, 'data/upgrade/stock.location.route.csv')
+        load_csv_stream(ctx, 'stock.location.route', content, delimiter=',')
 
 
 @anthem.log
