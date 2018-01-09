@@ -15,4 +15,5 @@ class StockPicking(models.Model):
             po = picking.purchase_id
             if po and po.has_subscription and not po.subscr_date_start:
                 po.subscr_date_start = picking.date_done
+                po.onchange_subscr()
         return res

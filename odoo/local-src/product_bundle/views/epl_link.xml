@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="epl_link_view" model="ir.ui.view">
+    <record id="epl_link_form" model="ir.ui.view">
         <field name="name">epl.link.form</field>
         <field name="model">epl.link</field>
         <field name="arch" type="xml">
@@ -20,9 +20,18 @@
                 </group>
                 <group>
                     <field name="currency_id"/>
-                    <field name="mrc" widget="monetary"/>
-                    <field name="mrc_per_mb" widget="monetary" invisible="1"/>
-                    <field name="nrc" widget="monetary"/>
+                    <field name="cost_upfront" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"/>
+                    <field name="cost" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"/>
+                    <field name="cost_per_mb" invisible="1" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"/>
+                    <field name="price_upfront" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"/>
+                    <field name="price" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"/>
+                    <field name="price_per_mb" invisible="1" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"/>
                 </group>
                 <group>
                     <field name="active"/>

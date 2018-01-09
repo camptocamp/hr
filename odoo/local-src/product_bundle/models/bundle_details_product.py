@@ -14,88 +14,102 @@ class BundleDetailsProduct(models.Model):
         comodel_name='bundle.details',
         ondelete='cascade'
     )
+    bundle_categ_id = fields.Many2one(
+        string='Bundle Category',
+        comodel_name='product.category',
+        required=True
+    )
+    currency_id = fields.Many2one(
+        string='Currency',
+        comodel_name='res.currency',
+        compute='compute_currency_id'
+    )
     product_id = fields.Many2one(
         string='Product',
         comodel_name='product.product',
         required=True
     )
-    name = fields.Char(
-        string='Name',
-        related='product_id.display_name',
-        readonly=True
-    )
-    uom_id = fields.Many2one(
-        string='Unit of Measure',
-        related='product_id.uom_id',
-        readonly=True
-    )
-    local_currency_id = fields.Many2one(
-        string='Local Currency',
-        related='product_id.currency_id',
-        readonly=True
-    )
-    local_price_per_unit = fields.Float(
-        string='Local Price/Unit',
-        related='product_id.lst_price',
-        readonly=True
-    )
-    local_cost_per_unit = fields.Float(
-        string='Local Cost/Unit',
-        related='product_id.standard_price',
-        readonly=True
-    )
-    currency_id = fields.Many2one(
-        string='Currency',
-        comodel_name='res.currency',
-        required=True
-    )
-    price_per_unit = fields.Monetary(
-        string='Price/Unit',
-        currency_field='currency_id',
-        compute='compute_price_per_unit'
-    )
-    cost_per_unit = fields.Monetary(
-        string='Cost/Unit',
-        currency_field='currency_id',
-        compute='compute_price_per_unit'
+    description = fields.Char(
+        string='Description'
     )
     quantity = fields.Integer(
         string='Quantity',
         required=True
     )
-    price = fields.Monetary(
-        string='Price',
-        currency_field='currency_id',
-        compute='compute_price',
+    uom_id = fields.Many2one(
+        related='product_id.uom_id',
+        readonly=True
     )
-    cost = fields.Monetary(
-        string='Cost',
-        currency_field='currency_id',
-        compute='compute_cost',
+    cost_upfront = fields.Float(
+        string='Non Recurring Cost'
+    )
+    cost_per_unit = fields.Float(
+        string='Recurring Cost / Unit',
+        required=True
+    )
+    cost = fields.Float(
+        string='Recurring Cost',
+        compute='compute_cost'
+    )
+    price_upfront = fields.Float(
+        string='Non Recurring Price'
+    )
+    price_per_unit = fields.Float(
+        string='Recurring Price / Unit',
+        required=True
+    )
+    price = fields.Float(
+        string='Recurring Price',
+        compute='compute_price'
     )
 
-    @api.depends('product_id', 'currency_id')
-    def compute_price_per_unit(self):
+    # ONCHANGES
+
+    @api.onchange('product_id')
+    def onchange_product_id(self):
         for rec in self:
-            rec.price_per_unit = rec.local_currency_id.sudo().compute(
-                from_amount=rec.local_price_per_unit,
-                to_currency=rec.currency_id
+            local_currency = rec.product_id.currency_id
+            local_cost_per_unit = rec.product_id.standard_price
+            local_price_per_unit = rec.product_id.lst_price
+
+            default_cost_per_unit = local_currency.sudo().compute(
+                from_amount=local_cost_per_unit,
+                to_currency=rec.currency_id,
+                round=False
+            )
+            default_price_per_unit = local_currency.sudo().compute(
+                from_amount=local_price_per_unit,
+                to_currency=rec.currency_id,
+                round=False
             )
 
-    @api.depends('product_id', 'currency_id')
-    def compute_cost_per_unit(self):
-        for rec in self:
-            rec.cost_per_unit = rec.local_currency_id.sudo().compute(
-                from_amount=rec.local_cost_per_unit,
-                to_currency=rec.currency_id
-            )
+            rec.update({
+                'cost_per_unit': default_cost_per_unit,
+                'price_per_unit': default_price_per_unit,
+            })
 
-    @api.depends('price_per_unit', 'quantity')
-    def compute_price(self):
-        for rec in self:
-            rec.price = rec.price_per_unit * rec.quantity
+    # COMPUTES
 
-    @api.depends('cost_per_unit', 'quantity')
+    @api.depends('bundle_details_id.currency_id',
+                 'bundle_details_id_epl.currency_id')
+    def compute_currency_id(self):
+        for rec in self:
+            currency_id = rec.bundle_details_id.currency_id \
+                          or rec.bundle_details_id_epl.currency_id
+            rec.update({
+                'currency_id': currency_id
+            })
+
+    @api.depends('cost_per_unit', 'quantity', 'currency_id')
     def compute_cost(self):
         for rec in self:
-            rec.cost = rec.cost_per_unit * rec.quantity
+            rec.update({
+                'cost': rec.cost_per_unit * rec.quantity
+            })
+
+    @api.depends('price_per_unit', 'quantity', 'currency_id')
+    def compute_price(self):
+        for rec in self:
+            rec.update({
+                'price': rec.price_per_unit * rec.quantity
+            })

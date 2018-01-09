@@ -243,6 +243,7 @@ class WizSaleOrderSource(models.TransientModel):
             'price_unit': wiz_line.price,
             'date_planned': fields.Date.today(),
             'sourced_sale_line_id': wiz_line.so_line_id.id,
+            'account_analytic_id': wiz_line.so_line_id.order_id.project_id.id,
         }
         return data
 

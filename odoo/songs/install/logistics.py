@@ -25,7 +25,7 @@ def activate_options(ctx):
 @anthem.log
 def set_delivery_pick_ship(ctx):
     """ Setting pick-ship on the warehouse """
-    ctx.env.ref('stock.warehouse0').delivery_steps = 'pick_ship'
+    ctx.env.ref('stock.warehouse0').delivery_steps = 'ship_only'
 
 
 @anthem.log
@@ -66,4 +66,4 @@ def main(ctx):
     set_delivery_pick_ship(ctx)
     setup_wh_companies(ctx)
     # CAUTION: this will need to be run again after importing the POPs
-    setup_wh_pop(ctx)
+    # setup_wh_pop(ctx)
