@@ -16,7 +16,7 @@ class AccountInvoice(models.Model):
 
         if self.currency_id != self.company_id.currency_id:
             s_args.append(
-                ('fixed_journal_id.currency_id', '=', self.currency_id)
+                ('fixed_journal_id.currency_id', '=', self.currency_id.id)
             )
 
         payment = self.env['account.payment.mode'].search(s_args, limit=1)
@@ -29,7 +29,7 @@ class AccountInvoice(models.Model):
                   ]
         if self.currency_id != self.company_id.currency_id:
             s_args.append(
-                ('currency_id', '=', self.currency_id)
+                ('currency_id', '=', self.currency_id.id)
             )
 
         account = self.env['account.account'].search(s_args, limit=1)
@@ -47,6 +47,6 @@ class AccountInvoice(models.Model):
         if not partner_account:
             # get the one defined on partner
             partner_account = (
-                self.partner_id.property_account_receivable_id.id
+                self.partner_id.property_account_receivable_id
             )
         self.account_id = partner_account.id

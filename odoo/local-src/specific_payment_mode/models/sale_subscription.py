@@ -21,3 +21,13 @@ class SaleSubscription(models.Model):
         res['payment_mode_id'] = self.payment_mode_id.id
 
         return res
+
+    @api.returns('account.invoice')
+    def _recurring_create_invoice(self, automatic=False):
+        invoices = super(SaleSubscription, self)._recurring_create_invoice(
+            automatic=automatic
+        )
+        for inv in self.env['account.invoice'].browse(invoices):
+            inv.onchange_currency()
+
+        return invoices
