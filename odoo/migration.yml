@@ -224,3 +224,4 @@ migration:
       addons:
         upgrade:
           - specific_payment_mode
+          - website_contract
