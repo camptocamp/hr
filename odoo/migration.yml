@@ -225,3 +225,7 @@ migration:
         upgrade:
           - specific_payment_mode
           - website_contract
+    - version: 10.3.4
+      addons:
+        upgrade:
+          - expensify

@@ -20,6 +20,7 @@ Latest (Unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
+* expensify: only fetch user's reports & discard expense date
 
 **Bugfixes**
 
