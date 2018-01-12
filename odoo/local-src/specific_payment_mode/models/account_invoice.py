@@ -22,19 +22,6 @@ class AccountInvoice(models.Model):
         payment = self.env['account.payment.mode'].search(s_args, limit=1)
         return payment
 
-    def get_suitable_partner_account(self):
-        s_args = [('company_id', '=', self.company_id.id),
-                  ('internal_type', '=', 'receivable'),
-                  ('deprecated', '=', False)
-                  ]
-        if self.currency_id != self.company_id.currency_id:
-            s_args.append(
-                ('currency_id', '=', self.currency_id.id)
-            )
-
-        account = self.env['account.account'].search(s_args, limit=1)
-        return account
-
     @api.onchange('currency_id')
     def onchange_currency(self):
         payment_mode = self.get_suitable_payment_mode()
@@ -42,11 +29,3 @@ class AccountInvoice(models.Model):
             # get the one defined on partner
             payment_mode = self.partner_id.customer_payment_mode_id
         self.payment_mode_id = payment_mode.id
-
-        partner_account = self.get_suitable_partner_account()
-        if not partner_account:
-            # get the one defined on partner
-            partner_account = (
-                self.partner_id.property_account_receivable_id
-            )
-        self.account_id = partner_account.id
