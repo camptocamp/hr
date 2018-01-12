@@ -1,0 +1,66 @@
+From a36903acc81e2a51474ed88f55f2405cde4dc8db Mon Sep 17 00:00:00 2001
+From: Damien Crier <damien.crier@camptocamp.com>
+Date: Thu, 11 Jan 2018 08:27:38 +0100
+Subject: [PATCH] avoid contract_template to be empty while saving a sale order
+
+---
+ website_contract/models/sale_order.py              | 15 +++++++++++++--
+ website_contract/views/sale_subscription_views.xml |  2 +-
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/website_contract/models/sale_order.py b/website_contract/models/sale_order.py
+index 609f859..3a184d0 100644
+--- a/website_contract/models/sale_order.py
++++ b/website_contract/models/sale_order.py
+@@ -2,7 +2,7 @@
+ import datetime
+ from dateutil.relativedelta import relativedelta
+ 
+-from odoo import api, fields, models
++from odoo import api, fields, models, _
+ 
+ 
+ class SaleOrder(models.Model):
+@@ -20,6 +20,15 @@ class SaleOrder(models.Model):
+ 
+     @api.onchange('contract_template')
+     def onchange_contract_template(self):
++        res = {}
++        if self.template_id.contract_template and self.contract_template != self.template_id.contract_template:
++            res['warning'] = {
++                'title': _('Inconsistency detected!'),
++                'message' : _(
++                    'The contract set on the order (%s) is different from the contract set on the quotation template (%s)! '
++                    'It is advised to change the quotation template instead.'
++                ) % (self.contract_template.name, self.template_id.contract_template.name)
++            }
+         if not self.template_id.contract_template:
+             subscription_lines = [(0, 0, {
+                 'product_id': mand_line.product_id.id,
+@@ -40,7 +49,9 @@ class SaleOrder(models.Model):
+             for line in self.order_line:
+                 line._compute_tax_id()
+             self.options = options
+-            self.note = self.contract_template.description
++            if self.contract_template:
++                self.note = self.contract_template.description
++        return res
+ 
+     def create_contract(self):
+         """ Create a contract based on the order's quote template's contract template """
+diff --git a/website_contract/views/sale_subscription_views.xml b/website_contract/views/sale_subscription_views.xml
+index 3b1708b..a2f6c60 100644
+--- a/website_contract/views/sale_subscription_views.xml
++++ b/website_contract/views/sale_subscription_views.xml
+@@ -285,7 +285,7 @@
+         <field name="arch" type="xml">
+             <xpath expr="//div[field[@name='template_id']]" position="after">
+                 <field name="contract_template" options="{'no_create': True, 'no_open': True}"
+-                       attrs="{'readonly': ['|', ('template_id', '!=', False), ('state', 'not in', ['draft', 'sent'])]}"/>
++                       attrs="{'readonly': [('state', 'not in', ['draft', 'sent'])]}"/>
+             </xpath>
+         </field>
+     </record>
+-- 
+2.7.4
+

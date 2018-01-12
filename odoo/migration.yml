@@ -220,3 +220,8 @@ migration:
           - specific_product
           - specific_security
           - product_bundle
+    - version: 10.3.3
+      addons:
+        upgrade:
+          - specific_payment_mode
+          - website_contract
