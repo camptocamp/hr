@@ -28,6 +28,22 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.3.3 (2018-01-12)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* payment mode propagate from SO to invoices via subscriptions
+
+**Bugfixes**
+
+* do not empty contract_template field in sale order
+
+**Build**
+
+**Documentation**
+
+
 10.3.2 (2018-01-05)
 +++++++++++++++++++
 
