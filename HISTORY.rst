@@ -20,13 +20,19 @@ Latest (Unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
-* expensify: only fetch user's reports & discard expense date
 
 **Bugfixes**
 
 **Build**
 
 **Documentation**
+
+
+10.3.4 (2018-01-12)
++++++++++++++++++++
+
+**Features and Improvements**
+* expensify: only fetch user's reports & discard expense date
 
 
 10.3.3 (2018-01-12)
