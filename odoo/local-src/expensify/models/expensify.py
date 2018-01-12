@@ -126,20 +126,16 @@ class Expensify(models.TransientModel):
 
         expensify_expenses = []
         for expense in expenses:
-            # Extract expense date
-            created = expense['created']
-            date = created.strftime("%Y-%m-%d")
-
-            # Discard expense if created before since_date
-            if date < self.since_date:
-                continue
-
             # Extract expense ID as String (too big for Integer type)
             expensify_id = str(expense['id'])
 
             # Discard expense if already imported
             if self.get_expense_id(expensify_id):
                 continue
+
+            # Extract expense date
+            created = expense['created']
+            date = created.strftime("%Y-%m-%d")
 
             # Extract category and get related Odoo product
             category = expense.get('category')
@@ -298,10 +294,10 @@ class Expensify(models.TransientModel):
     # EXPENSIFY API
 
     @api.model
-    def _get_report_template(self, report_name):
+    def _get_report_template(self):
         return """reports:
 <#list reports as report>
-  <#if report.reportName?contains("%s")>
+  <#if report.accountEmail == request.requesterEmail>
     - id: ${report.reportID}
       name: ${report.reportName}
       status: ${report.status}
@@ -346,20 +342,20 @@ class Expensify(models.TransientModel):
           receipt_url: ${expense.receiptObject.url}
     </#list>
     </#if>
-</#list>""" % report_name
+</#list>"""
 
     @api.model
-    def fetch_reports(self, start_date, report_name=""):
+    def fetch_reports(self, start_date):
         """Requests all reports whose name contains `reportname` and
         where the report was created or updated after `start_date`.
         Returns a dict of reports, keyed on the report ID."""
 
-        report_filename = self._generate_report(start_date, report_name)
+        report_filename = self._generate_report(start_date)
         report = self._fetch_file(report_filename)
         return yaml.load(report)['reports']
 
     @api.model
-    def _generate_report(self, start_date, report_name):
+    def _generate_report(self, start_date):
         """Requests all reports whose name contains `reportname` and
         where the report was created or updated after `start_date`,
         Returns a filename which should be fed to _fetch_file."""
@@ -390,7 +386,7 @@ class Expensify(models.TransientModel):
                      "label": "Odoo"}
                 ]
             }),
-            "template": self._get_report_template(report_name)
+            "template": self._get_report_template()
         }
 
         response = requests.get(self.api_url, params=params)

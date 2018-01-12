@@ -6,12 +6,12 @@ class ExpensifyWizard(models.TransientModel):
     _name = 'expensify.wizard'
 
     employee_id = fields.Many2one(
-        string='Employee ID',
+        string='Employee',
         comodel_name='hr.employee',
         required=True
     )
     company_id = fields.Many2one(
-        string='Company ID',
+        string='Company',
         related='employee_id.company_id',
         readonly=True
     )
