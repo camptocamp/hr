@@ -12,9 +12,11 @@ class SaleDealsheetWizardRequest(models.TransientModel):
     )
     presale_id = fields.Many2one(
         string='Pre-Sale',
-        comodel_name='res.users'
+        comodel_name='res.users',
+        domain=lambda self: [('groups_id', 'in', self.env.ref(
+            'bso_backbone.bso_ops_confidential').id)]
     )
 
     @api.multi
     def action_requested(self):
-        return self.dealsheet_id.action_requested(self.presale_id)
+        return self.dealsheet_id.sudo().action_requested(self.presale_id)

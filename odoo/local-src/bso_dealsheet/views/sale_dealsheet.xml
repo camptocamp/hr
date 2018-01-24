@@ -21,7 +21,8 @@
                             string="Refuse"
                             type="object"
                             states="confirm"/>
-                    <field name="state" widget="statusbar"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirm,validate"/>
                     <field name="name" invisible="1"/>
                     <field name="presale_id" invisible="1"/>
                     <field name="reviewer_id" invisible="1"/>
@@ -32,6 +33,7 @@
                     <group>
                         <field name="sale_order_id"/>
                         <field name="partner_id"/>
+                        <field name="user_id"/>
                         <field name="duration"/>
                         <field name="currency_id"/>
                         <field name="compute_line" invisible="1"/>
@@ -73,12 +75,13 @@
             <tree>
                 <field name="name" invisible="1"/>
                 <field name="sale_order_id"/>
-                <field name="create_date"/>
-                <field name="date_validated"/>
-                <field name="date_refused"/>
                 <field name="partner_id"/>
+                <field name="create_date"/>
+                <field name="user_id"/>
                 <field name="presale_id"/>
                 <field name="reviewer_id"/>
+                <field name="date_validated"/>
+                <field name="date_refused"/>
                 <field name="duration" invisible="1"/>
                 <field name="currency_id" invisible="1"/>
                 <field name="compute_line" invisible="1"/>

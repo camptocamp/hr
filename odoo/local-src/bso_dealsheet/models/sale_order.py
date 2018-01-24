@@ -20,6 +20,11 @@ class SaleOrder(models.Model):
 
     @api.model
     def dealsheet_create(self):
+        self.update({
+            'state': 'dealsheet'
+        })
+        user_id = self.env.uid
         return self.env['sale.dealsheet'].sudo().create({
+            'user_id': user_id,
             'sale_order_id': self.id
         })

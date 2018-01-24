@@ -10,14 +10,19 @@ class SaleDealsheet(models.Model):
         string='Status',
         selection=[('draft', 'Draft'),
                    ('confirm', 'Confirmed'),
-                   ('refuse', 'Refused'),
-                   ('validate', 'Validated')],
+                   ('validate', 'Validated'),
+                   ('refuse', 'Refused')],
         default='draft',
         track_visibility='always'
     )
     name = fields.Char(
         compute='compute_name',
         store=True
+    )
+    user_id = fields.Many2one(
+        string='Salesperson',
+        comodel_name='res.users',
+        required=True
     )
     presale_id = fields.Many2one(
         string='Pre-Sale',
@@ -53,8 +58,7 @@ class SaleDealsheet(models.Model):
     currency_id = fields.Many2one(
         related='sale_order_id.currency_id',
         readonly=True,
-        store=True,
-        track_visibility='always'
+        store=True
     )
     compute_line = fields.One2many(
         string='Computed Lines',
@@ -112,20 +116,17 @@ class SaleDealsheet(models.Model):
     cost_total = fields.Float(
         string='Total Cost',
         compute='compute_cost_total',
-        store=True,
-        track_visibility='always'
+        store=True
     )
     price_total = fields.Float(
         string='Total Revenue',
         compute='compute_price_total',
-        store=True,
-        track_visibility='always'
+        store=True
     )
     margin_total = fields.Float(
         string='Total Margin (%)',
         compute='compute_margin_total',
-        store=True,
-        track_visibility='always'
+        store=True
     )
     summary = fields.One2many(
         string='Summary',
@@ -252,7 +253,8 @@ class SaleDealsheet(models.Model):
 
     @api.multi
     def action_request(self):
-        wizard_request_id = self.env['sale.dealsheet.wizard.request'].create({
+        wizard_request_model = self.env['sale.dealsheet.wizard.request']
+        wizard_request_id = wizard_request_model.sudo(self.user_id).create({
             'dealsheet_id': self.id
         })
         return {
@@ -267,24 +269,23 @@ class SaleDealsheet(models.Model):
 
     @api.multi
     def action_requested(self, presale_id):
-        dealsheet_id = self.sudo()
+        subject = "%s Requested" % self.name
 
-        subject = "%s Requested" % dealsheet_id.name
-
-        customer_str = "Customer: %s" % dealsheet_id.partner_id.name
-        currency_str = "Currency: %s" % dealsheet_id.currency_id.name
-        revenue_str = "Revenue: %.2f" % dealsheet_id.price_total
+        customer_str = "Customer: %s" % self.partner_id.name
+        currency_str = "Currency: %s" % self.currency_id.name
+        revenue_str = "Revenue: %.2f" % self.price_total
 
         body = '<br>'.join((customer_str, currency_str, revenue_str))
 
-        dealsheet_id.message_subscribe_users(presale_id.id, [1])
-        dealsheet_id.message_post(subject=subject,
-                                  body=body,
-                                  subtype='mt_comment')
+        self.message_subscribe_users(presale_id.id, [1])
+        self.message_post(subject=subject,
+                          body=body,
+                          subtype='mt_comment')
 
     @api.multi
     def action_confirm(self):
-        wizard_confirm_id = self.env['sale.dealsheet.wizard.confirm'].create({
+        wizard_confirm_model = self.env['sale.dealsheet.wizard.confirm']
+        wizard_confirm_id = wizard_confirm_model.create({
             'dealsheet_id': self.id
         })
         return {
@@ -300,7 +301,8 @@ class SaleDealsheet(models.Model):
     @api.multi
     def action_confirmed(self, reviewer_id):
         self.update({
-            'state': 'confirm'
+            'state': 'confirm',
+            'presale_id': self.env.uid
         })
 
         subject = "%s Confirmed" % self.name
@@ -321,7 +323,8 @@ class SaleDealsheet(models.Model):
 
     @api.multi
     def action_refuse(self):
-        wizard_refuse_id = self.env['sale.dealsheet.wizard.refuse'].create({
+        wizard_refuse_model = self.env['sale.dealsheet.wizard.refuse']
+        wizard_refuse_id = wizard_refuse_model.create({
             'dealsheet_id': self.id
         })
         return {
@@ -337,7 +340,9 @@ class SaleDealsheet(models.Model):
     @api.multi
     def action_refused(self, reason):
         self.update({
-            'state': 'refuse'
+            'state': 'refuse',
+            'reviewer_id': self.env.uid,
+            'date_refused': fields.Datetime.now()
         })
 
         subject = "%s Refused" % self.name
@@ -348,7 +353,9 @@ class SaleDealsheet(models.Model):
     @api.multi
     def action_validate(self):
         self.update({
-            'state': 'validate'
+            'state': 'validate',
+            'reviewer_id': self.env.uid,
+            'date_validated': fields.Datetime.now()
         })
 
     # TOOLS

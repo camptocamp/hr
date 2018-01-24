@@ -4,7 +4,7 @@
     'description': 'BSO Dealsheet Costs, Margins & Validation Process',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
-    'depends': ['base', 'sale', 'product_bundle', 'specific_sale'],
+    'depends': ['sale', 'product_bundle', 'specific_sale', 'bso_backbone'],
     'data': [
         'security/ir.model.access.csv',
         'views/sale_dealsheet.xml',
