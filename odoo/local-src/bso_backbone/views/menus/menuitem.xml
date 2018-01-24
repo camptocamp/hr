@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <menuitem
+                id="menu_backbone"
+                name="Backbone"
+                action="action_backbone_xco"
+                parent=""
+                web_icon="bso_backbone,static/description/icon.png"/>
+
+        <menuitem
+                id="menu_backbone_xco"
+                name="XConnects"
+                action="action_backbone_xco"
+                parent="menu_backbone"
+                sequence="1"/>
+
+        <menuitem
+                id="menu_backbone_link"
+                name="Links"
+                action="action_backbone_link"
+                parent="menu_backbone"
+                sequence="2"/>
+
+        <menuitem
+                id="menu_backbone_device"
+                name="Devices"
+                action="action_backbone_device"
+                parent="menu_backbone"
+                sequence="3"/>
+
+        <menuitem
+                id="menu_backbone_pop"
+                name="POPs"
+                action="action_backbone_pop"
+                parent="menu_backbone"
+                sequence="4"/>
+
+    </data>
+</openerp>
