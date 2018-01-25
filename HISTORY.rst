@@ -21,17 +21,25 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
-* New module bso_backbone: Store X-Connects, Links, Devices & POPs
-* New module bso_dealsheet: Dealsheet Costs, Margin & Validation Process
-
 **Bugfixes**
 
 **Build**
 
-* Update odoo-cloud-platform (BIZ-1093)
-
 **Documentation**
 
+
+10.3.5 (2018-01-25)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* New module bso_backbone: Store X-Connects, Links, Devices & POPs
+* New module bso_dealsheet: Dealsheet Costs, Margin & Validation Process
+* Update customer invoice layout
+
+**Build**
+
+* Update odoo-cloud-platform (BIZ-1093)
 
 10.3.4 (2018-01-12)
 +++++++++++++++++++
