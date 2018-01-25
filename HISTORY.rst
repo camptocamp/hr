@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* New module bso_backbone: Store X-Connects, Links, Devices & POPs
+
 **Bugfixes**
 
 **Build**

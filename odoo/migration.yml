@@ -229,3 +229,7 @@ migration:
       addons:
         upgrade:
           - expensify
+    - version: 10.3.5
+      addons:
+        upgrade:
+          - bso_backbone
