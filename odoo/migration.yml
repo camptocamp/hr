@@ -233,3 +233,4 @@ migration:
       addons:
         upgrade:
           - bso_backbone
+          - bso_dealsheet
