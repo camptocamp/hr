@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_dealsheet_recap_line_tree" model="ir.ui.view">
+        <field name="name">sale.dealsheet.summary.line.tree</field>
+        <field name="model">sale.dealsheet.summary.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="dealsheet_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="type"/>
+                <field name="cost" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="revenue" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="margin"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

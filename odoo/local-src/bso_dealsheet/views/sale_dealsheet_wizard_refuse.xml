@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dealsheet_wizard_refuse" model="ir.ui.view">
+        <field name="name">Dealsheet Wizard Refuse</field>
+        <field name="model">sale.dealsheet.wizard.refuse</field>
+        <field name="arch" type="xml">
+            <form string="Enter Reason">
+                <group>
+                    <field name="dealsheet_id" invisible="1"/>
+                    <field name="reason" required="1"/>
+                </group>
+                <footer>
+                    <button name="action_refused"
+                            string="Refuse" type="object"
+                            class="oe_highlight"/>
+                    <button name="action_cancel" string="Cancel"
+                            class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

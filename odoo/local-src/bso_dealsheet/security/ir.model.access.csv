@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_dealsheet,access_sale_dealsheet,model_sale_dealsheet,bso_backbone.bso_ops_confidential,1,1,1,1
+access_sale_dealsheet_line,access_sale_dealsheet_line,model_sale_dealsheet_line,bso_backbone.bso_ops_confidential,1,1,1,1
+access_sale_dealsheet_summary_line,access_sale_dealsheet_summary_line,model_sale_dealsheet_summary_line,bso_backbone.bso_ops_confidential,1,1,1,1

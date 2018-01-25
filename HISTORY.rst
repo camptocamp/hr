@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * New module bso_backbone: Store X-Connects, Links, Devices & POPs
+* New module bso_dealsheet: Dealsheet Costs, Margin & Validation Process
 
 **Bugfixes**
 

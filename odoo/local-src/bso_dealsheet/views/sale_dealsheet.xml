@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dealsheet_form" model="ir.ui.view">
+        <field name="name">sale.dealsheet.form</field>
+        <field name="model">sale.dealsheet</field>
+        <field name="arch" type="xml">
+            <form string="Dealsheet">
+                <header>
+                    <button name="action_confirm"
+                            string="Confirm"
+                            type="object"
+                            states="draft"
+                            class="oe_highlight"/>
+                    <button name="action_validate"
+                            string="Validate"
+                            type="object"
+                            states="confirm"
+                            class="oe_highlight"/>
+                    <button name="action_refuse"
+                            string="Refuse"
+                            type="object"
+                            states="confirm"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirm,validate"/>
+                    <field name="name" invisible="1"/>
+                    <field name="presale_id" invisible="1"/>
+                    <field name="reviewer_id" invisible="1"/>
+                    <field name="date_validated" invisible="1"/>
+                    <field name="date_refused" invisible="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="sale_order_id"/>
+                        <field name="partner_id"/>
+                        <field name="user_id"/>
+                        <field name="duration"/>
+                        <field name="currency_id"/>
+                        <field name="compute_line" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="cost_line"/>
+                    </group>
+                    <group>
+                        <field name="cost_upfront_line"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="cost_upfront" invisible="1"/>
+                            <field name="price_upfront" invisible="1"/>
+                            <field name="margin_upfront" invisible="1"/>
+                            <field name="cost" invisible="1"/>
+                            <field name="price" invisible="1"/>
+                            <field name="margin" invisible="1"/>
+                            <field name="cost_total" invisible="1"/>
+                            <field name="price_total" invisible="1"/>
+                            <field name="margin_total" invisible="1"/>
+                            <field name="summary"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"
+                           widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="dealsheet_tree" model="ir.ui.view">
+        <field name="name">sale.dealsheet.tree</field>
+        <field name="model">sale.dealsheet</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" invisible="1"/>
+                <field name="sale_order_id"/>
+                <field name="partner_id"/>
+                <field name="create_date"/>
+                <field name="user_id"/>
+                <field name="presale_id"/>
+                <field name="reviewer_id"/>
+                <field name="date_validated"/>
+                <field name="date_refused"/>
+                <field name="duration" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="compute_line" invisible="1"/>
+                <field name="cost_line" invisible="1"/>
+                <field name="cost_upfront_line" invisible="1"/>
+                <field name="cost_upfront" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="price_upfront" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="margin_upfront" invisible="1"/>
+                <field name="cost" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="price" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="margin" invisible="1"/>
+                <field name="cost_total" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="price_total" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="margin_total"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dealsheet_action" model="ir.actions.act_window">
+        <field name="name">Dealsheets</field>
+        <field name="res_model">sale.dealsheet</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="dealsheet_menu" name="Dealsheets" sequence="11"
+              action="dealsheet_action"
+              parent="sales_team.menu_sales"/>
+
+</odoo>

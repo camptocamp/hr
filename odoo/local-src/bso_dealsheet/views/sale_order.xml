@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="add_dealsheet_request_to_sale_order" model="ir.ui.view">
+        <field name="name">sale.order.dealsheet.request</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="dealsheet_action_request"
+                        string="Request Dealsheet"
+                        type="object"
+                        class="oe_highlight"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="add_dealsheet_create_to_sale_order" model="ir.ui.view">
+        <field name="name">sale.order.dealsheet.create</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id"
+               ref="bso_dealsheet.add_dealsheet_request_to_sale_order"/>
+        <field name="groups_id"
+               eval="[(4, ref('bso_backbone.bso_ops_confidential'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='dealsheet_action_request']"
+                   position="replace">
+                <button name="dealsheet_action_create"
+                        string="Create Dealsheet"
+                        type="object"
+                        class="oe_highlight"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
