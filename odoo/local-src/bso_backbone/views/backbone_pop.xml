@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="backbone_pop_tree" model="ir.ui.view">
+        <field name="name">backbone.pop.tree</field>
+        <field name="model">backbone.pop</field>
+        <field name="arch" type="xml">
+            <tree string="POP">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="longitude"/>
+                <field name="latitude"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="backbone_pop_form" model="ir.ui.view">
+        <field name="name">backbone.pop.form</field>
+        <field name="model">backbone.pop</field>
+        <field name="arch" type="xml">
+            <form string="Link">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                        <field name="longitude"/>
+                        <field name="latitude"/>
+                    </group>
+                    <group>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

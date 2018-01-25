@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <act_window
+                id="action_backbone_xco"
+                name="XConnects"
+                res_model="backbone.xco"/>
+
+        <act_window
+                id="action_backbone_link"
+                name="Links"
+                res_model="backbone.link"/>
+
+        <act_window
+                id="action_backbone_device"
+                name="Devices"
+                res_model="backbone.device"/>
+
+        <act_window
+                id="action_backbone_pop"
+                name="POPs"
+                res_model="backbone.pop"/>
+
+    </data>
+</openerp>
