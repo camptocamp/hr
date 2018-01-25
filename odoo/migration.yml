@@ -234,3 +234,4 @@ migration:
         upgrade:
           - bso_backbone
           - bso_dealsheet
+          - specific_reports

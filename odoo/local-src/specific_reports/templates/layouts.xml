@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--FOOTER-->
+    <template id="external_layout_footer_specific" inherit_id="report.external_layout_footer">
+        <xpath expr="//div[@class='text-center']" position="replace">
+            <div class="text-center">
+                <div class="footer-text">
+                    <ul t-if="not company.custom_footer" class="list-inline">
+                        <t t-set="company" t-value="company.sudo()"/>
+                        <li t-if="company.phone"><i class="fa fa-phone"/> <span t-field="company.phone"/></li>
+                        <li t-if="company.email">@: <span t-field="company.email"/></li>
+                        <li t-if="company.website"><i class="fa fa-globe"/> <span t-field="company.website"/></li>
+                    </ul>
+
+                    <ul t-if="not company.custom_footer" class="list-inline" name="financial_infos">
+                        <li t-if="company.vat"><i class="fa fa-building-o"/> VAT Number: <span t-field="company.vat"/></li>
+                        <li t-if="company.ape"><i class="fa fa-star"/> APE: <span t-field="company.ape"/></li>
+                        <li t-if="company.siret"><i class="fa fa-star"/> SIRET: <span t-field="company.siret"/></li>
+                        <li t-if="company.company_registry"><i class="fa
+                        fa-star"/> Registering Number: <span t-field="company.company_registry"/></li>
+                    </ul>
+                    <t t-if="company.custom_footer">
+                        <span t-raw="company.rml_footer"/>
+                    </t>
+                </div>
+
+                <ul class="list-inline">
+                    <li>Page:</li>
+                    <li><span class="page"/></li>
+                    <li>/</li>
+                    <li><span class="topage"/></li>
+                </ul>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
