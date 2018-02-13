@@ -24,6 +24,10 @@ class SaleOrder(models.Model):
             s_args.append(
                 ('fixed_journal_id.currency_id', '=', self.currency_id.id)
             )
+        else:
+            s_args.append(
+                ('fixed_journal_id.currency_id', '=', False)
+            )
 
         payment = self.env['account.payment.mode'].search(s_args, limit=1)
         return payment

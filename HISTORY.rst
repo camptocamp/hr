@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* Fix : change of the payment mode on a sale order when using the company currency
+
 **Build**
 
 **Documentation**
