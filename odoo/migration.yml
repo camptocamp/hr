@@ -235,3 +235,7 @@ migration:
           - bso_backbone
           - bso_dealsheet
           - specific_reports
+    - version: 10.3.6
+      addons:
+        upgrade:
+          - specific_reports

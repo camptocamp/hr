@@ -7,6 +7,7 @@
     "depends": [
         'sale',
         'report',
+        'account_payment_partner',
     ],
     "author": "Camptocamp SA",
     "website": "http://www.camptocamp.com",
