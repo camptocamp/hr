@@ -21,15 +21,23 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.3.6 (2018-02-19)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1030: Switch positions of payment mode and bank account on invoice report
 
 **Bugfixes**
 
 * Fix : change of the payment mode on a sale order when using the company currency
-
-**Build**
-
-**Documentation**
 
 
 10.3.5 (2018-01-25)
