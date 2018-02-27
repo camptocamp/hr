@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1031 Move procure from sale order to dealsheet
+
 **Bugfixes**
 
 **Build**

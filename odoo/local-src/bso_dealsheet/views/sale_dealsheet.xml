@@ -21,6 +21,9 @@
                             string="Refuse"
                             type="object"
                             states="confirm"/>
+                    <button name="action_procure"
+                            string="Procure"
+                            type="object"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,confirm,validate"/>
                     <field name="name" invisible="1"/>
