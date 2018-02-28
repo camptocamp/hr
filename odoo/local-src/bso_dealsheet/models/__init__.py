@@ -5,4 +5,3 @@ from . import sale_dealsheet_wizard_confirm
 from . import sale_dealsheet_wizard_refuse
 from . import sale_dealsheet_wizard_request
 from . import sale_order
-from . import purchase_order

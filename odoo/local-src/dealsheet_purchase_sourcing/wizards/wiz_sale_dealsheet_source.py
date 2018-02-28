@@ -245,7 +245,8 @@ class WizSaleDealsheetSource(models.TransientModel):
             'price_unit': wiz_line.price,
             'date_planned': fields.Date.today(),
             'sourced_dealsheet_line_id': wiz_line.dealsheet_line_id.id,
-            # 'account_analytic_id': wiz_line.dealsheet_line_id.dealsheet_id.project_id.id,
+            # 'account_analytic_id':
+            # wiz_line.dealsheet_line_id.dealsheet_id.project_id.id,
         }
         return data
 

@@ -20,7 +20,6 @@
         'views/sale_dealsheet_wizard_refuse.xml',
         'views/sale_dealsheet_wizard_request.xml',
         'views/sale_order.xml',
-        'wizard/wiz_sale_dealsheet_source.xml',
     ],
     'installable': True,
     'auto_install': False,

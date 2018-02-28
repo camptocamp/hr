@@ -44,14 +44,3 @@ class SaleDealsheetLine(models.Model):
     cost = fields.Float(
         string='Cost'
     )
-    duration = fields.Integer(
-        related='dealsheet_id.duration',
-        readonly=True,
-        store=False
-    )
-    sourcing_purchase_line_id = fields.Many2one(
-        string='Sourcing purchase order line',
-        comodel_name='purchase.order.line',
-        readonly=True,
-        ondelete='set null',
-    )

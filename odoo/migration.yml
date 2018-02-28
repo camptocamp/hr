@@ -239,3 +239,7 @@ migration:
       addons:
         upgrade:
           - specific_reports
+    - version: 10.3.7
+      addons:
+        upgrade:
+          - dealsheet_purchase_sourcing
