@@ -3,6 +3,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+# TODO Delete me after update 10.3.7
 {
     'name': 'Sale Purchase Procuremnt',
     'summary': """TODO.""",

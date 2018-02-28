@@ -240,6 +240,9 @@ migration:
         upgrade:
           - specific_reports
     - version: 10.3.7
+      operations:
+        pre:
+          - anthem songs.upgrade.upgrade_10_3_7::main
       addons:
         upgrade:
           - dealsheet_purchase_sourcing
