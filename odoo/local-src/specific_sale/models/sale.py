@@ -86,8 +86,7 @@ class SaleOrder(models.Model):
     @api.multi
     def create_aa(self):
         self.ensure_one()
-        vals = {'name': self.name,
-                'partner_id': self.partner_id.id,
+        vals = {'partner_id': self.partner_id.id,
                 'company_id': self.company_id.id,
                 }
         aa = self.env['account.analytic.account'].create(vals)

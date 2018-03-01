@@ -9,6 +9,7 @@
  'maintainer': 'Camptocamp',
  'license': 'AGPL-3',
  'depends': [
+     'account',
      'bso_base',
      'sale_double_validation',
      'specific_security',
@@ -31,6 +32,7 @@
      'views/account_invoice.xml',
      'views/report_invoice.xml',
      'views/sale_subscription_views.xml',
+     'data/ir_sequence.xml'
  ],
  'test': [],
  'installable': True,

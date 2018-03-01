@@ -4,16 +4,36 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0e\n"
+"Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-17 12:57+0000\n"
-"PO-Revision-Date: 2017-03-17 12:57+0000\n"
+"POT-Creation-Date: 2018-03-05 08:52+0000\n"
+"PO-Revision-Date: 2018-03-05 08:52+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.report_invoice_document
+msgid "@rate"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_subscription_template_advance_invoice_date
+msgid "Advance invoice date"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_account_invoice_tax_amount_currency
+msgid "Amount (company currency)"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model,name:specific_sale.model_account_analytic_account
+msgid "Analytic Account"
+msgstr ""
 
 #. module: specific_sale
 #: model:ir.ui.view,arch_db:specific_sale.view_order_form_confirm_buttons
@@ -26,6 +46,18 @@ msgid "Approve Order (Technical)"
 msgstr ""
 
 #. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_subscription_automatic_renewal
+#: model:ir.model.fields,field_description:specific_sale.field_sale_subscription_template_automatic_renewal
+msgid "Automatic renewal"
+msgstr ""
+
+#. module: specific_sale
+#: selection:res.partner,invoice_send_method:0
+msgid "Both"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.mrp_invoicing_form
 #: model:ir.ui.view,arch_db:specific_sale.sale_refusal_form
 msgid "Cancel"
 msgstr ""
@@ -36,38 +68,170 @@ msgid "Companies"
 msgstr ""
 
 #. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.report_invoice_document
+msgid "Converted"
+msgstr ""
+
+#. module: specific_sale
 #: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_create_uid
+#: model:ir.model.fields,field_description:specific_sale.field_wizard_mrp_invoicing_create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: specific_sale
 #: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_create_date
+#: model:ir.model.fields,field_description:specific_sale.field_wizard_mrp_invoicing_create_date
 msgid "Created on"
 msgstr ""
 
 #. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_account_invoice_tax_company_currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_subscription_template_customer_prior_notice
+msgid "Customer Prior Notice"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_subscription_customer_prior_notice
+msgid "Customer Prior Notice (months)"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_subscription_date_cancelled
+msgid "Date Cancelled"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model,name:specific_sale.model_wizard_mrp_invoicing
+msgid "Date for invoicing mrp product"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_order_line_qty_delivered_calculated
+msgid "Delivered"
+msgstr ""
+
+#. module: specific_sale
 #: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_display_name
+#: model:ir.model.fields,field_description:specific_sale.field_wizard_mrp_invoicing_display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_subscription_duration
+msgid "Duration"
+msgstr ""
+
+#. module: specific_sale
+#: selection:res.partner,invoice_send_method:0
+msgid "Email"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_account_invoice_tax_exchange_rate
+msgid "Exchange rate"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_order_has_mrc_product
+msgid "Has mrc product"
+msgstr ""
+
+#. module: specific_sale
 #: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_id
+#: model:ir.model.fields,field_description:specific_sale.field_wizard_mrp_invoicing_id
 msgid "ID"
 msgstr ""
 
 #. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.sale_subscription_view_form
+msgid "Initial duration"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model,name:specific_sale.model_account_invoice
+msgid "Invoice"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model,name:specific_sale.model_account_invoice_line
+msgid "Invoice Line"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model,name:specific_sale.model_account_invoice_tax
+msgid "Invoice Tax"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_jira_res_users_invoice_send_method
+#: model:ir.model.fields,field_description:specific_sale.field_res_partner_invoice_send_method
+#: model:ir.model.fields,field_description:specific_sale.field_res_users_invoice_send_method
+msgid "Invoice send method"
+msgstr ""
+
+#. module: specific_sale
 #: model:ir.model.fields,field_description:specific_sale.field_sale_refusal___last_update
+#: model:ir.model.fields,field_description:specific_sale.field_wizard_mrp_invoicing___last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: specific_sale
 #: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_write_uid
+#: model:ir.model.fields,field_description:specific_sale.field_wizard_mrp_invoicing_write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: specific_sale
 #: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_write_date
+#: model:ir.model.fields,field_description:specific_sale.field_wizard_mrp_invoicing_write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.mrp_invoicing_form
+msgid "MRP invoicing date"
+msgstr ""
+
+#. module: specific_sale
+#: selection:sale.subscription,automatic_renewal:0
+#: selection:sale.subscription.template,automatic_renewal:0
+msgid "Month"
+msgstr ""
+
+#. module: specific_sale
+#: code:addons/odoo/local-src/specific_sale/models/account_analytic_account.py:42
+#: code:addons/specific_sale/models/account_analytic_account.py:42
+#, python-format
+msgid "No country defined for partner %s"
+msgstr ""
+
+#. module: specific_sale
+#: code:addons/odoo/local-src/specific_sale/models/account_analytic_account.py:47
+#: code:addons/odoo/local-src/specific_sale/models/account_analytic_account.py:52
+#: code:addons/specific_sale/models/account_analytic_account.py:47
+#: code:addons/specific_sale/models/account_analytic_account.py:52
+#, python-format
+msgid "No internal reference specified on partner %s"
+msgstr ""
+
+#. module: specific_sale
+#: selection:sale.subscription,automatic_renewal:0
+#: selection:sale.subscription.template,automatic_renewal:0
+msgid "None"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,help:specific_sale.field_sale_subscription_customer_prior_notice
+msgid "Number of month before end of contract"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.mrp_invoicing_form
+msgid "Ok"
 msgstr ""
 
 #. module: specific_sale
@@ -76,8 +240,34 @@ msgid "Order id"
 msgstr ""
 
 #. module: specific_sale
+#: model:ir.model,name:specific_sale.model_res_partner
+msgid "Partner"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_subscription_period_total
+msgid "Period Total"
+msgstr ""
+
+#. module: specific_sale
+#: selection:sale.subscription,automatic_renewal:0
+#: selection:sale.subscription.template,automatic_renewal:0
+msgid "Quarter"
+msgstr ""
+
+#. module: specific_sale
 #: model:ir.model.fields,field_description:specific_sale.field_sale_refusal_reason
 msgid "Reason"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.sale_subscription_view_form
+msgid "Recurrency"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_wizard_mrp_invoicing_ref_date
+msgid "Ref date"
 msgstr ""
 
 #. module: specific_sale
@@ -98,13 +288,74 @@ msgid "Sale Refusal"
 msgstr ""
 
 #. module: specific_sale
+#: model:ir.model,name:specific_sale.model_sale_subscription
+msgid "Sale Subscription"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model,name:specific_sale.model_sale_subscription_template
+msgid "Sale Subscription Template"
+msgstr ""
+
+#. module: specific_sale
 #: model:ir.model,name:specific_sale.model_sale_order
 msgid "Sales Order"
 msgstr ""
 
 #. module: specific_sale
+#: model:ir.model,name:specific_sale.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: specific_sale
+#: selection:sale.subscription,automatic_renewal:0
+#: selection:sale.subscription.template,automatic_renewal:0
+msgid "Same Duration"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.ui.view,arch_db:specific_sale.mrp_invoicing_form
+msgid "Select a reference date to generate the invoice"
+msgstr ""
+
+#. module: specific_sale
+#: selection:sale.subscription,automatic_renewal:0
+#: selection:sale.subscription.template,automatic_renewal:0
+msgid "Semester"
+msgstr ""
+
+#. module: specific_sale
+#: code:addons/odoo/local-src/specific_sale/models/account_analytic_account.py:56
+#: code:addons/specific_sale/models/account_analytic_account.py:56
+#, python-format
+msgid "Sequence undefined: End name of Account analytic account"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,help:specific_sale.field_sale_subscription_template_advance_invoice_date
+msgid "Set the delta on the invoice date and the invoiced period.If 0, the start of the invoiced period will be the same as the invoice date.If > 0, it sets the invoiced period with a delta (in months) from the invoice date"
+msgstr ""
+
+#. module: specific_sale
 #: model:ir.ui.view,arch_db:specific_sale.view_order_form_confirm_buttons
 msgid "Set to Quotation"
+msgstr ""
+
+#. module: specific_sale
+#: selection:res.partner,invoice_send_method:0
+msgid "Snail mail"
+msgstr ""
+
+#. module: specific_sale
+#: model:ir.model.fields,field_description:specific_sale.field_sale_subscription_date_next_invoice_period_start
+msgid "Start date of next invoice period"
+msgstr ""
+
+#. module: specific_sale
+#: code:addons/odoo/local-src/specific_sale/models/sale_subscription.py:187
+#: code:addons/specific_sale/models/sale_subscription.py:187
+#, python-format
+msgid "This invoice covers the following period: %s - %s"
 msgstr ""
 
 #. module: specific_sale
