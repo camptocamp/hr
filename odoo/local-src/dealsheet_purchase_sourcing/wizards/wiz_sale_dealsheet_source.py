@@ -282,7 +282,8 @@ class WizSaleDealsheetSource(models.TransientModel):
         # so we cannot just rely on product_id match.
         po_lines = self.env['purchase.order.line'].search(
             [('order_id', 'in', created)])
-        mapping = po_lines.mapped(lambda x: (x.sourced_dealsheet_line_id.id, x.id))
+        mapping = po_lines.mapped(lambda x: (x.sourced_dealsheet_line_id.id,
+                                             x.id))
         self._update_dealsheet_lines(mapping)
         return created
 

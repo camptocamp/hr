@@ -18,7 +18,7 @@ class SaleDealsheet(models.Model):
     @api.multi
     def action_procure(self):
         action = self._load_win_action(
-            'bso_dealsheet.act_wiz_sale_dealsheet_source')
+            'dealsheet_purchase_sourcing.act_wiz_sale_dealsheet_source')
         action['context']['default_dealsheet_id'] = self.id
         return action
 

@@ -17,10 +17,14 @@ class WizTestCase(BaseTestCase):
     def test_load_wizard_init(self):
         wiz = self._init_wiz()
         # lines to source and sourcing lines must be the same as the order's
-        self.assertEqual(len(self.dealsheet.cost_upfront_line),
-                         len(wiz.sourcing_line_ids))
-        self.assertEqual(len(self.dealsheet.cost_upfront_line),
-                         len(wiz.to_source_line_ids))
+        self.assertEqual(
+            len(self.dealsheet.cost_upfront_line | self.dealsheet.cost_line),
+            len(wiz.sourcing_line_ids)
+        )
+        self.assertEqual(
+            len(self.dealsheet.cost_upfront_line | self.dealsheet.cost_line),
+            len(wiz.to_source_line_ids)
+        )
         # and no sourced line yet
         self.assertEqual(0, len(wiz.sourced_line_ids))
 
@@ -48,7 +52,7 @@ class WizTestCase(BaseTestCase):
         wiz.supplier_id = self.prod_suppliers[self.prod_gcard.id][0]
         wiz.onchange_supplier_id()
         # source lines are reloaded, all of them as there was no supplier set
-        self.assertEqual(len(wiz.sourcing_line_ids), 4)
+        self.assertEqual(len(wiz.sourcing_line_ids), 5)
         for line in wiz.sourcing_line_ids:
             # supplier is set on sourcing line
             self.assertEqual(line.supplier_id, wiz.supplier_id)
@@ -64,7 +68,7 @@ class WizTestCase(BaseTestCase):
             # supplier is set on wiz line
             self.assertEqual(line.supplier_id, wiz.supplier_id)
         # sourced lines: all
-        self.assertEqual(len(wiz.sourced_line_ids), 4)
+        self.assertEqual(len(wiz.sourced_line_ids), 5)
         # lines to source: none
         self.assertEqual(len(wiz.to_source_line_ids), 0)
 
@@ -82,7 +86,7 @@ class WizTestCase(BaseTestCase):
         wiz = self._init_wiz()
         self._source_partial(wiz, supplier, pid_to_exclude=self.prod_iMac.id)
         # sourced lines: all but the one with excluded product
-        self.assertEqual(len(wiz.sourced_line_ids), 3)
+        self.assertEqual(len(wiz.sourced_line_ids), 4)
         # lines to source: the excluded one
         self.assertEqual(len(wiz.to_source_line_ids), 1)
         self.assertEqual(wiz.to_source_line_ids[0].product_id, self.prod_iMac)
@@ -95,11 +99,11 @@ class WizTestCase(BaseTestCase):
         self._source_partial(wiz, supplier1, pid_to_exclude=self.prod_iMac.id)
         # the rest w/ supplier2
         self._source_partial(wiz, supplier2)
-        ids = wiz._create_orders()
+        ids = wiz._create_purchase_orders()
         self.assertEqual(len(ids), 2)
         order1 = self.env['purchase.order'].browse(ids[0])
         order2 = self.env['purchase.order'].browse(ids[1])
-        self.assertEqual(len(order1.order_line), 3)
+        self.assertEqual(len(order1.order_line), 4)
         self.assertEqual(len(order2.order_line), 1)
         # verify that SO lines are linked to PO lines
         po_lines = order1.order_line + order2.order_line
@@ -107,7 +111,8 @@ class WizTestCase(BaseTestCase):
             pid = prod.id
             wiz_line = wiz.line_ids.filtered(lambda x: x.product_id.id == pid)
             po_line = po_lines.filtered(lambda x: x.product_id.id == pid)
-            self.assertEqual(wiz_line.so_line_id.sourcing_purchase_line_id.id,
-                             po_line.id)
-            self.assertEqual(wiz_line.so_line_id.id,
-                             po_line.sourced_sale_line_id.id)
+            self.assertEqual(
+                wiz_line.dealsheet_line_id.sourcing_purchase_line_id.id,
+                po_line.id)
+            self.assertEqual(wiz_line.dealsheet_line_id.id,
+                             po_line.sourced_dealsheet_line_id.id)
