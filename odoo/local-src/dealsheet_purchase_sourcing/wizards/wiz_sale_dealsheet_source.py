@@ -185,7 +185,7 @@ class WizSaleDealsheetSource(models.TransientModel):
         self.sourcing_line_ids = False
 
     def _get_available_suppliers(self):
-        """All suppliers for all order lines' product w/out a supplier."""
+        """All suppliers for all dealsheet lines' product w/out a supplier."""
         # FIXME: make more clear and performant
         supp_info = self.line_ids.filtered(
             lambda x: not x.supplier_id
@@ -237,6 +237,7 @@ class WizSaleDealsheetSource(models.TransientModel):
         return action
 
     def _purchase_line_value(self, wiz_line):
+        dealsheet = wiz_line.dealsheet_line_id.dealsheet_id
         data = {
             'product_id': wiz_line.product_id.id,
             'product_uom': wiz_line.uom_id.id,
@@ -245,8 +246,7 @@ class WizSaleDealsheetSource(models.TransientModel):
             'price_unit': wiz_line.price,
             'date_planned': fields.Date.today(),
             'sourced_dealsheet_line_id': wiz_line.dealsheet_line_id.id,
-            # 'account_analytic_id':
-            # wiz_line.dealsheet_line_id.dealsheet_id.project_id.id,
+            'account_analytic_id': dealsheet.sale_order_id.project_id.id,
         }
         return data
 
@@ -288,12 +288,12 @@ class WizSaleDealsheetSource(models.TransientModel):
         return created
 
     def _update_dealsheet_lines(self, mapping):
-        """Link SO lines to PO lines.
+        """Link Dealsheet lines to PO lines.
 
         We might have tons of lines so here we
-        update all SO lines at once w/ one single query.
+        update all dealsheet lines at once w/ one single query.
 
-        Mapping must be a list of tuple like `(SO line id, PO line id)`.
+        Mapping must be a list of tuple like `(DS line id, PO line id)`.
         """
         query = """
                 UPDATE sale_dealsheet_line AS sol SET
