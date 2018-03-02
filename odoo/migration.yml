@@ -246,3 +246,4 @@ migration:
       addons:
         upgrade:
           - dealsheet_purchase_sourcing
+          - specific_sale

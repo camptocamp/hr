@@ -17,6 +17,7 @@
      'account_invoice_merge',
      'base_report_to_printer',
      'bso_webservice',
+     'sale_line_cost_control',
  ],
  'website': 'www.camptocamp.com',
  'demo': [
