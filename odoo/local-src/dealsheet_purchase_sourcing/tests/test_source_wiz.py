@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: Simone Orsi <simone.orsi@camptocamp.com>
 # Copyright 2017 Camptocamp SA
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from .common import BaseTestCase
 
