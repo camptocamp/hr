@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Author: Simone Orsi <simone.orsi@camptocamp.com>
-# Copyright 2017 Camptocamp SA
+# Copyright 2017-2018 Camptocamp SA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from .common import BaseTestCase
@@ -16,7 +16,7 @@ class WizTestCase(BaseTestCase):
 
     def test_load_wizard_init(self):
         wiz = self._init_wiz()
-        # lines to source and sourcing lines must be the same as the order's
+        # to source and sourcing lines must be the same as dealsheet's
         self.assertEqual(
             len(self.dealsheet.cost_upfront_line | self.dealsheet.cost_line),
             len(wiz.sourcing_line_ids)

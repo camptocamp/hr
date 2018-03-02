@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-# Copyright 2018 Camptocamp SA
+# Copyright 2017-2018 Camptocamp SA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+# This module is based on sale_purchase_sourcing module. In the future, we
+# might want to extrapolate the base machinery to provide a mixin class to be
+# inherited to sale.order, sale.dealsheet or any other model.
 {
     'name': 'Dealsheet Purchase Procurement',
     'summary': """TODO.""",

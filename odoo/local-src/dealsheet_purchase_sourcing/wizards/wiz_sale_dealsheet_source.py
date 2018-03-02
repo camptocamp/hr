@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2018 Camptocamp SA
+# Copyright 2017-2018 Camptocamp SA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import models, fields, api
@@ -274,7 +274,6 @@ class WizSaleDealsheetSource(models.TransientModel):
                 order = self.env['purchase.order'].create(order_data)
                 for line in order.order_line:
                     line.onchange_product_id()
-                print order.id
                 created.append(order.id)
 
         # link sale line to purchase line.
