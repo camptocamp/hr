@@ -9,7 +9,7 @@
         'product_bundle',
         'specific_sale',
         'bso_backbone',
-        'purchase'
+        'purchase',
     ],
     'data': [
         'security/ir.model.access.csv',

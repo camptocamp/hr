@@ -281,24 +281,25 @@ class WizSaleDealsheetSource(models.TransientModel):
         # so we cannot just rely on product_id match.
         po_lines = self.env['purchase.order.line'].search(
             [('order_id', 'in', created)])
-        mapping = po_lines.mapped(lambda x: (x.sourced_dealsheet_line_id.id,
-                                             x.id))
-        self._update_dealsheet_lines(mapping)
+        self._update_dealsheet_lines(po_lines)
         return created
 
-    def _update_dealsheet_lines(self, mapping):
+    def _update_dealsheet_lines(self, po_lines):
         """Link Dealsheet lines to PO lines.
 
         We might have tons of lines so here we
         update all dealsheet lines at once w/ one single query.
 
-        Mapping must be a list of tuple like `(DS line id, PO line id)`.
+        :param po_lines: Recordset of purchase.order.line
         """
         query = """
-                UPDATE sale_dealsheet_line AS sol SET
-                    sourcing_purchase_line_id = c.sourcing_purchase_line_id
-                FROM (VALUES {})
-                    AS c(id, sourcing_purchase_line_id)
-                WHERE c.id = sol.id;
-            """.format(','.join(['(%d, %d)' % (x[0], x[1]) for x in mapping]))
-        self.env.cr.execute(query)
+                UPDATE sale_dealsheet_line AS sdl
+                SET sourcing_purchase_line_id = pol.id
+                FROM (
+                    SELECT id, sourced_dealsheet_line_id
+                    FROM purchase_order_line
+                    WHERE id IN %s
+                ) AS pol(id, sdl_id)
+                WHERE pol.sdl_id = sdl.id;
+            """
+        self.env.cr.execute(query, (tuple(po_lines.ids),))
