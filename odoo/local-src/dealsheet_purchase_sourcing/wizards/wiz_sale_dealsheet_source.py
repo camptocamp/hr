@@ -185,12 +185,12 @@ class WizSaleDealsheetSource(models.TransientModel):
         self.sourcing_line_ids = False
 
     def _get_available_suppliers(self):
-        """All suppliers for all dealsheet lines' product w/out a supplier."""
-        # FIXME: make more clear and performant
-        supp_info = self.line_ids.filtered(
-            lambda x: not x.supplier_id
-        ).mapped('dealsheet_line_id.product_id').mapped('seller_ids')
-        return supp_info.mapped('name')  # name is m2o to partner :/
+        """Get all suppliers of the products.
+
+        For the wizard lines without a supplier defined."""
+        lines = self.line_ids.filtered(lambda x: not x.supplier_id)
+        # name is m2o to res.partner
+        return lines.mapped('dealsheet_line_id.product_id.seller_ids.name')
 
     def _get_supplier_domain(self):
         suppliers = self._get_available_suppliers()
