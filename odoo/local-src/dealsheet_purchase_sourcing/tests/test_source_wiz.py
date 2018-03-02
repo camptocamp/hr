@@ -116,3 +116,6 @@ class WizTestCase(BaseTestCase):
                 po_line.id)
             self.assertEqual(wiz_line.dealsheet_line_id.id,
                              po_line.sourced_dealsheet_line_id.id)
+            # Check qty on PO lines = qty on DS lines
+            self.assertEqual(wiz_line.dealsheet_line_id.quantity,
+                             po_line.product_qty)

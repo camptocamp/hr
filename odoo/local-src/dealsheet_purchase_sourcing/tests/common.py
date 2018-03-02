@@ -63,21 +63,21 @@ class BaseTestCase(common.SavepointCase):
             'product_id': cls.prod_appleWLKB.id,
             'name': "iMac",
             'product_uom': cls.uom_unit.id,
-            'product_uom_qty': 1.0,
+            'product_uom_qty': 10.0,
             'price_unit': cls.prod_appleWLKB.lst_price
         }
         sol4_vals = {
             'product_id': cls.prod_gcard.id,
             'name': "iMac",
             'product_uom': cls.uom_unit.id,
-            'product_uom_qty': 1.0,
+            'product_uom_qty': 5.0,
             'price_unit': cls.prod_gcard.lst_price
         }
         sol5_vals = {
             'product_id': cls.prod_rec.id,
             'name': "Test rec",
             'product_uom': cls.uom_unit.id,
-            'product_uom_qty': 1.0,
+            'product_uom_qty': 4.0,
             'price_unit': cls.prod_rec.lst_price
         }
         so_vals = {
