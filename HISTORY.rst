@@ -23,7 +23,7 @@ Latest (Unreleased)
 
 * BSIBSO-1032: Change the way analytic accounts / projects are numbered
   the name of the analytic account must be generated as follows AARRR/BBBBCC/DDDDD
-* BSIBSO-1032: Change the display name on account analytic account
+* BSIBSO-1031: move the Procure button from Sale Order to Dealsheet screen
 
 **Bugfixes**
 
