@@ -242,7 +242,7 @@ msgstr "Partenaire"
 #. module: specific_sale
 #: model:ir.model.fields,field_description:specific_sale.field_sale_subscription_period_total
 msgid "Period Total"
-msgstr "Période totale"
+msgstr "Total de la période"
 
 #. module: specific_sale
 #: selection:sale.subscription,automatic_renewal:0

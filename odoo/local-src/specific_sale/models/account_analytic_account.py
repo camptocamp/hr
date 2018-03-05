@@ -24,11 +24,12 @@ class AccountAnalyticAccount(models.Model):
         result = super(AccountAnalyticAccount, self).create(vals)
 
         if result.name == '/':
-            result.generate_name()
+            result.set_generated_name()
 
         return result
 
-    def generate_name(self):
+    @api.multi
+    def set_generated_name(self):
         self.ensure_one()
 
         company_country_code = self.company_id.partner_id.country_id.code
