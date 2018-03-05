@@ -90,11 +90,12 @@ class TestSaleMrpInvoicing(BaseCase):
     @classmethod
     def create_contract(cls):
         record = cls.env['sale.subscription'].new({
-            'name': 'TestContract',
+            'name': '/',
             'state': 'open',
             'pricelist_id': cls.env.ref('product.list0').id,
             'template_id': cls.sbscription_tmpl.id,
             'partner_id': cls.partner.id,
+            'company_id': cls.company.id
         })
         record.on_change_template()
         # `on_change_template` works w/ NewId record only

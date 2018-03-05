@@ -11,6 +11,7 @@ class BaseCase(SingleTransactionCase):
     def setUpClass(cls):
         super(BaseCase, cls).setUpClass()
         cls.partner = cls.env.ref('base.res_partner_1')
+        cls.partner.ref = '12345'
         cls.products = {
             'prod_order': cls.env.ref('product.product_order_01'),
             'prod_del': cls.env.ref('product.product_delivery_01'),
@@ -18,7 +19,10 @@ class BaseCase(SingleTransactionCase):
             'serv_del': cls.env.ref('product.service_delivery'),
         }
         cls.company = cls.env.ref('base.main_company')
+        cls.company.partner_id.ref = '000101'
         cls.company.currency_id = cls.env.ref('base.USD')
+        cls.company.partner_id.country_id = cls.env['res.country'].search(
+            [('code', '=', 'FR')])
         cls.setup_users()
         cls.setup_records()
 

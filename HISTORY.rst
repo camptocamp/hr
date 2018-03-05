@@ -21,9 +21,15 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1032: Change the way analytic accounts / projects are numbered
+  the name of the analytic account must be generated as follows AARRR/BBBBCC/DDDDD
+* BSIBSO-1032: Change the display name on account analytic account
+
 **Bugfixes**
 
 **Build**
+
+* Fix minion (increase memory used)
 
 **Documentation**
 
