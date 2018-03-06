@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_crm_industry_tree" model="ir.ui.view">
+        <field name="name">crm.industry.tree</field>
+        <field name="model">crm.industry</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="subsector_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_industry_search" model="ir.ui.view">
+        <field name="name">crm.industry.search</field>
+        <field name="model">crm.industry</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="subsector_ids"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_window_crm_industry" model="ir.actions.act_window">
+        <field name="name">Industry</field>
+        <field name="res_model">crm.industry</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="specific_crm.view_crm_industry_search"/>
+    </record>
+
+    <record id="view_crm_industry_subsector_tree" model="ir.ui.view">
+        <field name="name">crm.industry.subsector.tree</field>
+        <field name="model">crm.industry.subsector</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="industry_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_industry_subsector_search" model="ir.ui.view">
+        <field name="name">crm.industry.subsector.search</field>
+        <field name="model">crm.industry.subsector</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="industry_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_window_crm_industry_subsector" model="ir.actions.act_window">
+        <field name="name">Industry Subsector</field>
+        <field name="res_model">crm.industry.subsector</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="specific_crm.view_crm_industry_subsector_search"/>
+    </record>
+
+    <menuitem
+        name="Marketing"
+        parent="sales_team.menu_sale_config"
+        id="menu_crm_marketing"
+        sequence="99"/>
+
+    <menuitem
+        name="Industry"
+        parent="menu_crm_marketing"
+        action="action_window_crm_industry"
+        id="menu_crm_industry"
+        sequence="1"/>
+
+    <menuitem
+        name="Industry Subsector"
+        parent="menu_crm_marketing"
+        action="action_window_crm_industry_subsector"
+        id="menu_crm_industry_subsector"
+        sequence="2"/>
+
+</odoo>

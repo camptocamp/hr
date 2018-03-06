@@ -248,3 +248,7 @@ migration:
           - dealsheet_purchase_sourcing
           - specific_sale
           - camptocamp_tools
+    - version: 10.3.8
+      addons:
+        upgrade:
+          - specific_crm

@@ -24,6 +24,9 @@ Latest (Unreleased)
 * BSIBSO-1033: Set date and invoice_date to the same date as the cron generating
   the invoices for subscriptions is ran
 
+* BSIBSO-1035: create crm.industry and it's sub models, add new fields to leads
+  customers now create one lead id they don't have one
+
 **Bugfixes**
 
 **Build**
@@ -41,6 +44,8 @@ Latest (Unreleased)
 * BSIBSO-1031: move the Procure button from Sale Order to Dealsheet screen
 * BSIBSO-1031 Move procure from sale order to dealsheet
 * BSIBSO-1031 Hide Set cost button on sale order line
+
+**Bugfixes**
 
 **Build**
 
