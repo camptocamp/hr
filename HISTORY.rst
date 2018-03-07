@@ -27,11 +27,13 @@ Latest (Unreleased)
 * BSIBSO-1031 Move procure from sale order to dealsheet
 * BSIBSO-1031 Hide Set cost button on sale order line
 
+
 **Bugfixes**
 
 **Build**
 
 * Fix minion (increase memory used)
+* Update project from odoo template. Install camptocamp_tools.
 
 **Documentation**
 

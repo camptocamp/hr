@@ -31,7 +31,7 @@ def generate(ctx, addon_path, update_po=True):
     if not os.path.exists(i18n_dir):
         os.mkdir(i18n_dir)
     container_po_path = os.path.join(container_path, '%s.po' % addon)
-    user_id = ctx.run(['id --user'], hide='both').stdout.strip()
+    user_id = ctx.run('id --user', hide='both').stdout.strip()
     cmd = ('docker-compose run --rm  -e LOCAL_USER_ID=%(user)s '
            '-e DEMO=False -e MIGRATE=False odoo odoo '
            '--log-level=warn --workers=0 '
@@ -48,9 +48,9 @@ def generate(ctx, addon_path, update_po=True):
     source = os.path.join(i18n_dir, '%s.po' % addon)
     pot_file = source + 't'
     # dirty hack to remove duplicated entries for paths
+    ctx.run('mv %s %s' % (source, pot_file))
     ctx.run('sed -i "/local-src\|external-src/d" %(pot)s' %
             {'pot': pot_file, })
-    ctx.run('mv %s %s' % (source, pot_file))
 
     if update_po:
         for po_file in glob.glob('%s/*.po' % i18n_dir):
