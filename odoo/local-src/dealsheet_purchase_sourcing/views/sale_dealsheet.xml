@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dealsheet_form" model="ir.ui.view">
+        <field name="name">sale.dealsheet.form.inherit</field>
+        <field name="model">sale.dealsheet</field>
+        <field name="inherit_id" ref="bso_dealsheet.dealsheet_form" />
+        <field name="arch" type="xml">
+            <button name="action_refuse" position="after">
+                <button name="action_procure"
+                            string="Procure"
+                            type="object"/>
+            </button>
+        </field>
+    </record>
+</odoo>
