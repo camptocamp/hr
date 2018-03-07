@@ -21,21 +21,28 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.3.7 (2018-03-07)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1032: Change the way analytic accounts / projects are numbered
   the name of the analytic account must be generated as follows AARRR/BBBBCC/DDDDD
 * BSIBSO-1031: move the Procure button from Sale Order to Dealsheet screen
 * BSIBSO-1031 Move procure from sale order to dealsheet
 * BSIBSO-1031 Hide Set cost button on sale order line
 
-
-**Bugfixes**
-
 **Build**
 
 * Fix minion (increase memory used)
 * Update project from odoo template. Install camptocamp_tools.
-
-**Documentation**
 
 
 10.3.6 (2018-02-19)
