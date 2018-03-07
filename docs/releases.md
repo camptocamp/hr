@@ -12,7 +12,9 @@ In the following order, at the end of a sprint, the release manager will:
 
 * Merge all pending pull requests when possible, and for each corresponding card in Jira set the "Fix Version" field accordingly as well as change the status to "Waiting deploy"
 
-* Ensure that the migration scripts are complete and working (see [upgrade-scripts.md](upgrade-scripts.md#run-a-version-upgrade-again) on how to execute a specific version scripts)
+* Ensure that the migration scripts are complete and working (see [upgrade-scripts.md](upgrade-scripts.md#run-a-version-upgrade-again) on how to execute a specific version scripts).
+  
+* For projects already used in Production, ensure migration is working in FULL mode. (see [how-to-use-a-prod-db-in-dev.md](how-to-use-a-prod-db-in-dev.md) to get a dump for projects hosted on cloud platform). 
 
 * Increase the version number (see [invoke.md](invoke.md#releasebump) for more information)
 

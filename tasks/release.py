@@ -10,7 +10,15 @@ from __future__ import print_function
 import fileinput
 from datetime import date
 
-import yaml
+try:
+    from builtins import input
+except ImportError:
+    print('Please install future')
+
+try:
+    import yaml
+except ImportError:
+    print('Please install pyyaml')
 
 from distutils.version import StrictVersion
 
@@ -43,7 +51,7 @@ def push_branches(ctx, force=False):
     version = current_version()
     project_id = cookiecutter_context()['project_id']
     branch_name = 'merge-branch-{}-{}'.format(project_id, version)
-    response = raw_input(
+    response = input(
         'Push local branches to {}? (Y/n) '.format(branch_name)
     )
     if response in ('n', 'N', 'no'):
