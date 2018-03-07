@@ -243,3 +243,4 @@ migration:
       addons:
         upgrade:
           - specific_sale
+          - camptocamp_tools

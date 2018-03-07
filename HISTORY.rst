@@ -25,11 +25,13 @@ Latest (Unreleased)
   the name of the analytic account must be generated as follows AARRR/BBBBCC/DDDDD
 * BSIBSO-1031: move the Procure button from Sale Order to Dealsheet screen
 
+
 **Bugfixes**
 
 **Build**
 
 * Fix minion (increase memory used)
+* Update project from odoo template. Install camptocamp_tools.
 
 **Documentation**
 
