@@ -189,4 +189,7 @@ class SaleSubscription(models.Model):
              format_date(fields.Date.to_string(end_date), {}))
         )
 
+        res['date'] = fields.Date.today()
+        res['date_invoice'] = fields.Date.today()
+
         return res

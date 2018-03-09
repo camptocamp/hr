@@ -21,6 +21,9 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1033: Set date and invoice_date to the same date as the cron generating
+  the invoices for subscriptions is ran
+
 **Bugfixes**
 
 **Build**
