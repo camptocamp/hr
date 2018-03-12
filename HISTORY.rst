@@ -24,6 +24,12 @@ Latest (Unreleased)
 * BSIBSO-1033: Set date and invoice_date to the same date as the cron generating
   the invoices for subscriptions is ran
 
+* BSIBSO-1036: Add new module specific_mailchimp with models:
+  * crm.mailchimp.campaign
+  * crm.mailchimp.mailing
+  * crm.mailchimp.mailing.stats
+  * create.campaign.wizard to create campaigns from leads
+
 **Bugfixes**
 
 **Build**
