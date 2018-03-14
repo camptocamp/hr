@@ -64,6 +64,7 @@ class CrmLead(models.Model):
         related="partner_id.commercial_partner_id",
         readonly=True,
         store=True,
+        index=True,
     )
     original_lead_commercial_partner_id = fields.Many2one(
         related="original_lead_id.partner_id",

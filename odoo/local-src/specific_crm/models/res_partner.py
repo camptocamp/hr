@@ -19,6 +19,7 @@ class ResPartner(models.Model):
             'name': self.name,
             'partner_id': self.id,
             'user_id': self.env.user.id,
+            'type': 'lead',
         })
 
     @api.model

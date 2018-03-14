@@ -53,9 +53,22 @@ def add_stage_to_sale_team(ctx):
 
 
 @anthem.log
+def create_leads_for_partners(ctx):
+    """Create lead for every customer partner."""
+
+    partners = ctx.env['res.partner'].search([
+        ('customer', '=', True),
+        ('lead_id', '=', False),
+    ])
+    for partner in partners:
+        partner._create_lead()
+
+
+@anthem.log
 def main(ctx):
     """ Main: creating demo data """
     disable_sales_teams(ctx)
     create_sales_team(ctx)
     import_crm_stages(ctx)
     add_stage_to_sale_team(ctx)
+    create_leads_for_partners(ctx)
