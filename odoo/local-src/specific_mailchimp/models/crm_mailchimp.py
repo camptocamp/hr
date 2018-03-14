@@ -68,7 +68,7 @@ class CrmMailchimpMailing(models.Model):
     def action_view_leads(self):
         self.ensure_one()
         action = self.env.ref('crm.crm_lead_all_leads').read()[0]
-        action['domain'] = [('id', 'in', self.lead_ids.ids)]
+        action['domain'] = [('mailing_ids.id', '=', self.id)]
         return action
 
     def action_view_stats(self):
@@ -84,14 +84,14 @@ class CrmMailchimpMailing(models.Model):
         """
         TODO
         """
-        return
+        return True
 
     @api.multi
     def action_fetch(self):
         """
         TODO
         """
-        return
+        return True
 
 
 class CrmMailchimpMailingStats(models.Model):
