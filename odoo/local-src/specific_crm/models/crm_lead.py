@@ -185,7 +185,7 @@ class CrmLead(models.Model):
         quotations = self.env['sale.order'].search([
             '&',
             ('state', '=', 'draft'),
-            ('partner_id.commercial_partner_id', '=', self.partner_id.id),
+            ('commercial_partner_id', '=', self.partner_id.id),
         ])
         return quotations
 
@@ -194,7 +194,7 @@ class CrmLead(models.Model):
         sale_orders = self.env['sale.order'].search([
             '&',
             ('state', '!=', 'draft'),
-            ('partner_id.commercial_partner_id', '=', self.partner_id.id),
+            ('commercial_partner_id', '=', self.partner_id.id),
         ])
         return sale_orders
 
