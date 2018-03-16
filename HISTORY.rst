@@ -23,6 +23,7 @@ Latest (Unreleased)
 
 * BSIBSO-1033: Set date and invoice_date to the same date as the cron generating
   the invoices for subscriptions is ran
+* BSIBSO-1043 Use mailtrap as outgoing mail server if env not prod or integration
 
 **Bugfixes**
 
