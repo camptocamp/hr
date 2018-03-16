@@ -63,7 +63,7 @@
     <menuitem
         id="crm_mailchimp_mailing_stats_menu"
         string="Mailing Stats"
-        parent="crm_mailchimp_marketing_menu"
+        parent="specific_crm.sales_marketing_menu"
         action="crm_mailchimp_mailing_stats_action_specific"
         sequence="3"/>
 

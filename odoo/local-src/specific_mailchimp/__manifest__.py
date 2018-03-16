@@ -9,6 +9,7 @@
  'license': 'AGPL-3',
  'depends': [
      'crm',
+     'specific_crm',
  ],
  'website': 'www.camptocamp.com',
  'data': [

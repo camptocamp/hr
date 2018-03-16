@@ -29,16 +29,13 @@ class CreateCampaignWizard(models.Model):
         required=True,
     )
     new_mailing = fields.Boolean(
-        string="New",
+        string="Create New Mailing",
     )
     mailing_name = fields.Char(
-        string="New mailing name",
-    )
-    mailing_list = fields.Char(
-        string="New mailing list",
+        string="Mailing Name",
     )
     mailing_id = fields.Many2one(
-        string="Mailing",
+        string="Mailing Name",
         comodel_name="crm.mailchimp.mailing",
         domain="[('campaign_id', '=', campaign_id)]",
     )
@@ -68,7 +65,7 @@ class CreateCampaignWizard(models.Model):
         leads = [(4, lead.id, 0) for lead in self.lead_ids]
         mailing = mailing.create({
             'name': self.mailing_name,
-            'mailchimp_list': self.mailing_list,
+            'mailchimp_list': self.mailing_name,
             'campaign_id': self.campaign_id.id,
             'lead_ids': leads,
         })

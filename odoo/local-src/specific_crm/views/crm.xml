@@ -65,10 +65,11 @@
                     </group>
                 </page>
             </xpath>
-            <xpath expr="//header" position="inside">
+            <xpath expr="//div[@name='button_box']/button[@name='toggle_active']" position="before">
                 <field name="has_child_leads" invisible="1"/>
                 <button name="action_view_opportunities"
                         type="object"
+                        string="Opps.: "
                         class="oe_highlight oe_stat_button"
                         attrs="{'invisible': [('has_child_leads', '=', False)]}">
                     <span class="o_stat_value">NRC: <field name="sum_planned_revenue_nrc" widget="monetary"/> / MRC: <field name="sum_planned_revenue_mrc" widget="monetary" /></span>
@@ -84,10 +85,10 @@
                 <button name="action_view_so"
                         string="Sales: "
                         type="object"
-                        class="oe_highlight">
-                    <span class="o_stat_value">
-                        <field name="sum_sales" widget="monetary"/>
-                    </span>
+                        class="oe_highlight oe_stat_button">
+                  <span class="o_stat_value">
+                    <field name="sum_sales" widget="monetary"/>
+                  </span>
                 </button>
             </xpath>
         </field>
@@ -202,10 +203,16 @@
      </record>
 
      <menuitem
+        id="sales_marketing_menu"
+        name="Marketing"
+        parent="sales_team.menu_base_partner"
+        sequence="1"/>
+
+     <menuitem
          name="Leads"
-         parent="menu_crm_marketing"
+         parent="sales_marketing_menu"
          action="action_window_crm_marketing_lead"
          id="menu_crm_marketing_lead"
-         sequence="4"/>
+         sequence="0"/>
 
 </odoo>

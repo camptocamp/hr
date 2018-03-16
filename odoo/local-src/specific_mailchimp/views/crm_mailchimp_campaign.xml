@@ -51,16 +51,11 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem
-        id="crm_mailchimp_marketing_menu"
-        name="Marketing"
-        parent="sales_team.menu_base_partner"
-        sequence="1"/>
 
     <menuitem
         id="crm_mailchimp_campaign_menu"
         string="Campaign"
-        parent="crm_mailchimp_marketing_menu"
+        parent="specific_crm.sales_marketing_menu"
         action="crm_mailchimp_campaign_action_specific"
         sequence="1"/>
 </odoo>

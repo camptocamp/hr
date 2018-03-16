@@ -13,7 +13,6 @@
                         <field name="campaign_id"/>
                         <field name="new_mailing"/>
                         <field name="mailing_name" attrs="{'invisible': [('new_mailing', '=', False)], 'required': [('new_mailing', '=', True)]}"/>
-                        <field name="mailing_list" attrs="{'invisible': [('new_mailing', '=', False)], 'required': [('new_mailing', '=', True)]}"/>
                         <field name="mailing_id" attrs="{'invisible': [('new_mailing', '=', True)], 'required': [('new_mailing', '=', False)]}" />
                     </group>
                 </sheet>
