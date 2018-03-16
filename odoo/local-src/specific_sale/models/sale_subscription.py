@@ -40,7 +40,8 @@ class SaleSubscription(models.Model):
         string='Date Cancelled'
     )
     date_next_invoice_period_start = fields.Date(
-        string="Start date of next invoice period"
+        string="Start date of next invoice period",
+        required=True
     )
 
     @api.depends('recurring_invoice_line_ids',
