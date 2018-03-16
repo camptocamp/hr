@@ -26,6 +26,11 @@ Latest (Unreleased)
 
 * BSIBSO-1035: create crm.industry and it's sub models, add new fields to leads
   customers now create one lead id they don't have one
+* BSIBSO-1036: Add new module specific_mailchimp with models:
+  * crm.mailchimp.campaign
+  * crm.mailchimp.mailing
+  * crm.mailchimp.mailing.stats
+  * create.campaign.wizard to create campaigns from leads
 
 **Bugfixes**
 

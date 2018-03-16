@@ -255,3 +255,4 @@ migration:
       addons:
         upgrade:
           - specific_crm
+          - specific_mailchimp

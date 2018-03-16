@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_create_campaign_wizard_form_specific_mailchimp" model="ir.ui.view">
+        <field name="name">create.campaign.wizard.form.specific_mailchimp</field>
+        <field name="model">create.campaign.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="lead_ids" widget="many2many_tags" />
+                        <field name="lead_count"/>
+                        <field name="campaign_id"/>
+                        <field name="new_mailing"/>
+                        <field name="mailing_name" attrs="{'invisible': [('new_mailing', '=', False)], 'required': [('new_mailing', '=', True)]}"/>
+                        <field name="mailing_list" attrs="{'invisible': [('new_mailing', '=', False)], 'required': [('new_mailing', '=', True)]}"/>
+                        <field name="mailing_id" attrs="{'invisible': [('new_mailing', '=', True)], 'required': [('new_mailing', '=', False)]}" />
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="OK" name="action_create_mailing" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="create_campaign_wizard"
+        name="Create Campaign"
+        src_model="crm.lead"
+        res_model="create.campaign.wizard"
+        view_mode="form"
+        target="new"
+        key2="client_action_multi"/>
+
+</odoo>
