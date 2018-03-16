@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 import anthem
+import os
 
 
 @anthem.log
@@ -36,5 +37,9 @@ def remove_ldap_user_employee(ctx):
 def main(ctx):
     """ Main: creating demo data """
     # setup_company(ctx)
-    create_ldap_entries(ctx)
+    if os.environ.get('RUNNING_ENV') in ['prod', 'integration']:
+        create_ldap_entries(ctx)
+    else:
+        ctx.log_line('No LDAP Configuration if RUNNING_ENV is not prod '
+                     'or integration')
     remove_ldap_user_employee(ctx)

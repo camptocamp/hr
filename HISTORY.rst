@@ -29,6 +29,8 @@ Latest (Unreleased)
 
 **Build**
 
+* BSIBSO-1043 Do not setup LDAP if env not prod or integration
+
 **Documentation**
 
 
