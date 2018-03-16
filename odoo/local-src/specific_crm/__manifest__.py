@@ -8,10 +8,16 @@
  'author': 'Camptocamp',
  'license': 'AGPL-3',
  'category': 'Others',
- 'depends': ['crm',
-             ],
+ 'depends': [
+     'crm',
+     'sale',
+ ],
  'website': 'http://www.camptocamp.com',
- 'data': ['views/crm.xml'
-          ],
+ 'data': [
+     'views/crm_industry.xml',
+     'views/crm_lead_quicktitle.xml',
+     'views/crm.xml',
+     'security/ir.model.access.csv',
+ ],
  'installable': True,
  }

@@ -248,3 +248,11 @@ migration:
           - dealsheet_purchase_sourcing
           - specific_sale
           - camptocamp_tools
+    - version: 10.3.8
+      operations:
+        post:
+          - anthem songs.upgrade.upgrade_10_3_8::main
+      addons:
+        upgrade:
+          - specific_crm
+          - specific_mailchimp

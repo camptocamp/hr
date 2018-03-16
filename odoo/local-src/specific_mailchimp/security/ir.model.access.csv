@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_mailchimp_campaign_user,crm.mailchimp.campaign,model_crm_mailchimp_campaign,base.group_user,1,0,0,0
+access_crm_mailchimp_campaign_manager,crm.mailchimp.campaign,model_crm_mailchimp_campaign,sales_team.group_sale_manager,1,1,1,1
+access_crm_mailchimp_mailing_user,crm.mailchimp.mailing,model_crm_mailchimp_mailing,base.group_user,1,0,0,0
+access_crm_mailchimp_mailing_manager,crm.mailchimp.mailing,model_crm_mailchimp_mailing,sales_team.group_sale_manager,1,1,1,1
+access_crm_mailchimp_mailing_stats_user,crm.mailchimp.mailing.stats,model_crm_mailchimp_mailing_stats,base.group_user,1,0,0,0

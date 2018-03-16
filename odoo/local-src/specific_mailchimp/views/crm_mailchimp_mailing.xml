@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_crm_mailchimp_mailing_tree_specific_mailchimp" model="ir.ui.view">
+        <field name="name">crm.mailchimp.mailing.tree.specific_mailchimp</field>
+        <field name="model">crm.mailchimp.mailing</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="campaign_id"/>
+                <field name="name"/>
+                <field name="mailchimp_list"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_mailchimp_mailing_form_module" model="ir.ui.view">
+        <field name="name">crm.mailchimp.mailing.form.specific_mailchimp</field>
+        <field name="model">crm.mailchimp.mailing</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" nolabel="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button string="Leads" name="action_view_leads" type="object" icon="fa-bomb" class="oe_inline oe_stat_button" />
+                        <button string="Stats" name="action_view_stats" type="object" icon="fa-truck" class="oe_inline oe_stat_button" />
+                        <button string="Export" name="action_export" type="object" icon="fa-times" class="oe_inline oe_stat_button" />
+                        <button string="Fetch Result" name="action_fetch" type="object" icon="fa-times" class="oe_inline oe_stat_button" />
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="campaign_id"/>
+                        <field name="mailchimp_list"/>
+                        <field name="lead_ids" invisible="True" />
+                        <field name="report_ids" invisible="True" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_crm_mailchimp_mailing_search_specific_mailchimp" model="ir.ui.view">
+        <field name="name">crm.mailchimp.mailing.search.specific_mailchimp</field>
+        <field name="model">crm.mailchimp.mailing</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="campaign_id"/>
+                <field name="state"/>
+                <group expand="1" string="Group By">
+                    <filter string="Campaign" name="campaign_id" domain="[]" context="{'group_by': 'campaign_id'}" />
+                    <filter string="State" name="State" domain="[]" context="{'group_by': 'state'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="crm_mailchimp_mailing_action_specific" model="ir.actions.act_window">
+        <field name="name">Mailchimp Mailings</field>
+        <field name="res_model">crm.mailchimp.mailing</field>
+        <field name="search_view" ref="view_crm_mailchimp_mailing_search_specific_mailchimp"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="crm_mailchimp_mailing_menu"
+        name="Mailings"
+        parent="specific_crm.sales_marketing_menu"
+        action="crm_mailchimp_mailing_action_specific"
+        sequence="2"/>
+
+</odoo>

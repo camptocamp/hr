@@ -24,6 +24,14 @@ Latest (Unreleased)
 * BSIBSO-1033: Set date and invoice_date to the same date as the cron generating
   the invoices for subscriptions is ran
 
+* BSIBSO-1035: create crm.industry and it's sub models, add new fields to leads
+  customers now create one lead id they don't have one
+* BSIBSO-1036: Add new module specific_mailchimp with models:
+  * crm.mailchimp.campaign
+  * crm.mailchimp.mailing
+  * crm.mailchimp.mailing.stats
+  * create.campaign.wizard to create campaigns from leads
+
 **Bugfixes**
 
 * BSIBSO-1038: Set field "Start date of next invoice period" required to avoid
@@ -44,6 +52,8 @@ Latest (Unreleased)
 * BSIBSO-1031: move the Procure button from Sale Order to Dealsheet screen
 * BSIBSO-1031 Move procure from sale order to dealsheet
 * BSIBSO-1031 Hide Set cost button on sale order line
+
+**Bugfixes**
 
 **Build**
 

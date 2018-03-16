@@ -33,9 +33,66 @@
                     </div>
                 </h2><br/>
             </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Marketing" name="marketing">
+                    <group name="marketing">
+                        <field name="industry_id"/>
+                        <field name="industry_subsector_id"/>
+                        <field name="status"/>
+                        <field name="quick_title_id"/>
+                        <field name="company_type"/>
+                        <field name="size"/>
+                    </group>
+                </page>
+            </xpath>
         </field>
     </record>
 
+    <record id="crm_case_form_view_leads_bso" model="ir.ui.view">
+        <field name="name">crm.lead.form.bso</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Marketing" name="marketing">
+                    <group name="marketing">
+                        <field name="industry_id"/>
+                        <field name="industry_subsector_id"/>
+                        <field name="status"/>
+                        <field name="quick_title_id"/>
+                        <field name="company_type"/>
+                        <field name="size"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//div[@name='button_box']/button[@name='toggle_active']" position="before">
+                <field name="has_child_leads" invisible="1"/>
+                <button name="action_view_opportunities"
+                        type="object"
+                        string="Opps.: "
+                        class="oe_highlight oe_stat_button"
+                        attrs="{'invisible': [('has_child_leads', '=', False)]}">
+                    <span class="o_stat_value">NRC: <field name="sum_planned_revenue_nrc" widget="monetary"/> / MRC: <field name="sum_planned_revenue_mrc" widget="monetary" /></span>
+                </button>
+                <button name="action_view_quotations"
+                        string="Quotes: "
+                        type="object"
+                        class="oe_highlight oe_stat_button">
+                    <span class="o_stat_value">
+                        <field name="sum_quotes" widget="monetary"/>
+                    </span>
+                </button>
+                <button name="action_view_so"
+                        string="Sales: "
+                        type="object"
+                        class="oe_highlight oe_stat_button">
+                  <span class="o_stat_value">
+                    <field name="sum_sales" widget="monetary"/>
+                  </span>
+                </button>
+            </xpath>
+        </field>
+    </record>
 
     <record model="ir.ui.view" id="crm_case_tree_view_oppor_bso">
         <field name="model">crm.lead</field>
@@ -45,10 +102,64 @@
                 <field name="planned_duration"/>
                 <field name="planned_revenue_nrc"/>
                 <field name="planned_revenue_mrc"/>
+                <field name="industry_id"/>
+                <field name="industry_subsector_id"/>
+                <field name="status"/>
+                <field name="quick_title_id"/>
+                <field name="company_type"/>
+                <field name="size"/>
             </field>
         </field>
     </record>
 
+    <record id="view_crm_case_opportunities_filter_bso" model="ir.ui.view">
+        <field name="name">crm.lead.search</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='month']" position="after">
+                <filter string="Industry" name="industry_id" domain="[]" context="{'group_by': 'industry_id'}" />
+                <filter string="Industry subsector" name="industry_subsector_id" domain="[]" context="{'group_by': 'industry_subsector_id'}" />
+                <filter string="Status" name="status" domain="[]" context="{'group_by': 'status'}" />
+                <filter string="Quicktitle" name="quicktitle" domain="[]" context="{'group_by': 'quick_title_id'}" />
+                <filter string="Company Type" name="company_type" domain="[]" context="{'group_by': 'company_type'}" />
+                <filter string="Size" name="size" domain="[]" context="{'group_by': 'size'}" />
+                <filter string="Country" name="country_id" domain="[]" context="{'group_by': 'country_id'}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_case_tree_view_leads_bso" model="ir.ui.view">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="industry_id"/>
+                <field name="industry_subsector_id"/>
+                <field name="status"/>
+                <field name="quick_title_id"/>
+                <field name="company_type"/>
+                <field name="size"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_crm_case_leads_filter_bso" model="ir.ui.view">
+        <field name="name">crm.lead.search</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='groupby_createmonth']" position="after">
+                <filter string="Industry" name="industry_id" domain="[]" context="{'group_by': 'industry_id'}" />
+                <filter string="Industry subsector" name="industry_subsector_id" domain="[]" context="{'group_by': 'industry_subsector_id'}" />
+                <filter string="Status" name="status" domain="[]" context="{'group_by': 'status'}" />
+                <filter string="Quicktitle" name="quicktitle" domain="[]" context="{'group_by': 'quick_title_id'}" />
+                <filter string="Company Type" name="company_type" domain="[]" context="{'group_by': 'company_type'}" />
+                <filter string="Size" name="size" domain="[]" context="{'group_by': 'size'}" />
+                <filter string="Country" name="country_id" domain="[]" context="{'group_by': 'country_id'}" />
+            </xpath>
+        </field>
+    </record>
 
      <record model="ir.ui.view" id="crm_case_kanban_view_oppor_bso">
         <field name="model">crm.lead</field>
@@ -82,5 +193,26 @@
         </field>
      </record>
 
+     <record id="action_window_crm_marketing_lead" model="ir.actions.act_window">
+         <field name="name">Leads</field>
+         <field name="res_model">crm.lead</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">tree,form</field>
+         <field name="domain">[('type', '=', 'lead')]</field>
+         <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+     </record>
+
+     <menuitem
+        id="sales_marketing_menu"
+        name="Marketing"
+        parent="sales_team.menu_base_partner"
+        sequence="1"/>
+
+     <menuitem
+         name="Leads"
+         parent="sales_marketing_menu"
+         action="action_window_crm_marketing_lead"
+         id="menu_crm_marketing_lead"
+         sequence="0"/>
 
 </odoo>
