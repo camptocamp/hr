@@ -26,6 +26,9 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BSIBSO-1038: Set field "Start date of next invoice period" required to avoid
+  stacktraces when generating invoices for manually created subscriptions
+
 **Build**
 
 **Documentation**
