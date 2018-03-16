@@ -23,6 +23,7 @@ Latest (Unreleased)
 
 * BSIBSO-1033: Set date and invoice_date to the same date as the cron generating
   the invoices for subscriptions is ran
+* BSIBSO-1043 Use mailtrap as outgoing mail server if env not prod or integration
 
 * BSIBSO-1035: create crm.industry and it's sub models, add new fields to leads
   customers now create one lead id they don't have one
@@ -38,6 +39,8 @@ Latest (Unreleased)
   stacktraces when generating invoices for manually created subscriptions
 
 **Build**
+
+* BSIBSO-1043 Do not setup LDAP if env not prod or integration
 
 **Documentation**
 
