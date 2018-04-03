@@ -33,7 +33,7 @@ class TestNameAnalyticAccount(BaseCase):
         """ Test analytic account name 1 (from sale order)"""
         self.so.action_confirm()
         account_analytic_name = self.so.project_id.name
-        self.assertEquals(account_analytic_name, 'FR101/12345/00001')
+        self.assertEquals(account_analytic_name, 'FR101/12345/000001')
 
     def test_name_analytic_account_2(self):
         """ Test analytic account name 2 (manually created) """
