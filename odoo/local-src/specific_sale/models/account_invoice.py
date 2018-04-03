@@ -8,6 +8,28 @@ from odoo import api, models, fields
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
+    @api.model
+    @api.returns('self', lambda value: value.id)
+    def create(self, vals):
+        rec = super(AccountInvoice, self).create(vals)
+        if rec.type.startswith('out_'):
+            # partner is the commercial entity
+            # -> subscribe all the contacts with partner_type = 'invoice'
+            # to the invoice (BSIBSO-1047)
+            partner = rec.partner_id
+            company_partner = partner.commercial_partner_id
+            rec.partner_id = company_partner
+            contacts = company_partner.child_ids.filtered(
+                lambda r: r.type == 'invoice'
+            )
+            rec = rec.with_context(mail_auto_subscribe_no_notify=1)
+            rec.message_unsubscribe(partner_ids=partner.ids)
+            rec.message_subscribe(partner_ids=company_partner.ids)
+            if contacts:
+                rec.message_subscribe(partner_ids=contacts.ids)
+                rec.message_unsubscribe(partner_ids=partner.ids)
+        return rec
+
     @api.multi
     def write(self, vals):
         res = super(AccountInvoice, self).write(vals)

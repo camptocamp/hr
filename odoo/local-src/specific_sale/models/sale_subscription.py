@@ -192,5 +192,4 @@ class SaleSubscription(models.Model):
 
         res['date'] = fields.Date.today()
         res['date_invoice'] = fields.Date.today()
-
         return res
