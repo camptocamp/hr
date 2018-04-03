@@ -32,6 +32,7 @@ Latest (Unreleased)
   * crm.mailchimp.mailing
   * crm.mailchimp.mailing.stats
   * create.campaign.wizard to create campaigns from leads
+  * BSIBSO-1049: install CFONB bank statement import
 
 **Bugfixes**
 
