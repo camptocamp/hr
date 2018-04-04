@@ -7,7 +7,6 @@ from collections import defaultdict
 
 
 class BaseTestCase(common.SavepointCase):
-
     @classmethod
     def setUpClass(cls):
         super(BaseTestCase, cls).setUpClass()
