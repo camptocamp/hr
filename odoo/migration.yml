@@ -257,3 +257,4 @@ migration:
           - specific_crm
           - specific_mailchimp
           - account_bank_statement_import_fr_cfonb
+          - specific_inter_company
