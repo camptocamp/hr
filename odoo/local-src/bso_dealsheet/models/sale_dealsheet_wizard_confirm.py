@@ -13,8 +13,9 @@ class SaleDealsheetWizardConfirm(models.TransientModel):
     reviewer_id = fields.Many2one(
         string='Reviewer',
         comodel_name='res.users',
-        domain=lambda self: [('groups_id', 'in', self.env.ref(
-            'bso_backbone.bso_ops_confidential').id)]
+        domain=lambda self: [
+            ('groups_id', 'in',
+             self.env.ref('bso_dealsheet.group_dealsheet_role_reviewer').id)]
     )
 
     @api.multi

@@ -9,6 +9,10 @@ class SaleDealsheetLine(models.Model):
         comodel_name='sale.dealsheet',
         ondelete='cascade'
     )
+    dealsheet_state = fields.Selection(
+        related='dealsheet_id.state',
+        track_visibility=False
+    )
     is_cost = fields.Boolean(
         string='Is Cost'
     )
@@ -27,7 +31,7 @@ class SaleDealsheetLine(models.Model):
     product_id = fields.Many2one(
         string='Product',
         comodel_name='product.product',
-        domain=[('sale_ok', '=', True)],
+        domain=['|', ('sale_ok', '=', True), ('purchase_ok', '=', True)],
         required=True
     )
     description = fields.Char(
@@ -43,4 +47,7 @@ class SaleDealsheetLine(models.Model):
     )
     cost = fields.Float(
         string='Cost'
+    )
+    cost_delivery = fields.Float(
+        string='Delivery Cost'
     )
