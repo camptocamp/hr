@@ -24,7 +24,7 @@ class SaleOrder(models.Model):
         return self.dealsheet_create(sudo=False).action_create()
 
     @api.model
-    def dealsheet_create(self, sudo):
+    def dealsheet_create(self, sudo=True):
         dealsheet_model = self.env['sale.dealsheet']
         if sudo:
             dealsheet_model = dealsheet_model.sudo()
