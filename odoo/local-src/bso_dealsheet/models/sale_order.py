@@ -17,16 +17,17 @@ class SaleOrder(models.Model):
 
     @api.multi
     def dealsheet_action_request(self):
-        return self.dealsheet_create(sudo=True).action_request()
+        return self.dealsheet_create().action_request()
 
     @api.multi
     def dealsheet_action_create(self):
-        return self.dealsheet_create(sudo=False).action_create()
+        return self.dealsheet_create().action_create()
 
     @api.model
-    def dealsheet_create(self, sudo=True):
+    def dealsheet_create(self):
         dealsheet_model = self.env['sale.dealsheet']
-        if sudo:
+        if not self.env.user.has_group(
+                'bso_dealsheet.group_dealsheet_manager'):
             dealsheet_model = dealsheet_model.sudo()
         dealsheet_id = dealsheet_model.create({
             'seller_id': self.env.uid,

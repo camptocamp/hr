@@ -53,6 +53,10 @@ class SaleDealsheet(models.Model):
         readonly=True,
         required=True
     )
+    sale_order_state = fields.Selection(
+        related='sale_order_id.state',
+        readonly=True
+    )
     partner_id = fields.Many2one(
         related='sale_order_id.partner_id',
         readonly=True,
