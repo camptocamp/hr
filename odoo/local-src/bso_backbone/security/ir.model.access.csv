@@ -1,5 +1,12 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_backbone_device,access_backbone_device,model_backbone_device,bso_ops_confidential,1,1,1,1
-access_backbone_link,access_backbone_link,model_backbone_link,bso_ops_confidential,1,1,1,1
-access_backbone_pop,access_backbone_pop,model_backbone_pop,bso_ops_confidential,1,1,1,1
-access_backbone_xco,access_backbone_xco,model_backbone_xco,bso_ops_confidential,1,1,1,1
+access_backbone_device_bundle,backbone.device.bundle,model_backbone_device,,1,0,0,0
+access_backbone_device_user,backbone.device.user,model_backbone_device,group_backbone_user,1,0,0,0
+access_backbone_device_manager,backbone.device.manager,model_backbone_device,group_backbone_manager,1,1,1,1
+access_backbone_link_bundle,backbone.link.bundle,model_backbone_link,,1,0,0,0
+access_backbone_link_user,backbone.link.user,model_backbone_link,group_backbone_user,1,0,0,0
+access_backbone_link_manager,backbone.link.manager,model_backbone_link,group_backbone_manager,1,1,1,1
+access_backbone_pop_bundle,backbone.pop.bundle,model_backbone_pop,,1,0,0,0
+access_backbone_pop_user,backbone.pop.user,model_backbone_pop,group_backbone_user,1,0,0,0
+access_backbone_pop_manager,backbone.pop.manager,model_backbone_pop,group_backbone_manager,1,1,1,1
+access_backbone_xco_user,backbone.xco.user,model_backbone_xco,group_backbone_user,1,0,0,0
+access_backbone_xco_manager,backbone.xco.manager,model_backbone_xco,group_backbone_manager,1,1,1,1

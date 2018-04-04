@@ -7,10 +7,14 @@
         <field name="arch" type="xml">
             <tree string="XConnect">
                 <field name="a_side"/>
+                <field name="a_side_port_id"/>
                 <field name="z_side"/>
-                <field name="partner_id"/>
+                <field name="z_side_port_id"/>
+                <field name="supplier_id" invisible="1"/>
+                <field name="supplier_name"/>
                 <field name="xco_id"/>
                 <field name="used"/>
+                <field name="project_code"/>
                 <field name="xco_type"/>
                 <field name="service_id"
                        attrs="{'invisible': [('xco_type', '=', 'backbone')]}"/>
@@ -19,11 +23,13 @@
                 <field name="paid_by_bso"/>
                 <field name="currency_id"
                        attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
-                <field name="cost_upfront" widget="monetary"
+                <field name="nrc" widget="monetary"
                        options="{'currency_field': 'currency_id'}"
                        attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
-                <field name="cost_monthly" widget="monetary"
+                <field name="mrc" widget="monetary"
                        options="{'currency_field': 'currency_id'}"
+                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                <field name="date_start"
                        attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
                 <field name="date_end"
                        attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
@@ -56,12 +62,17 @@
                     </div>
                     <group>
                         <field name="a_side"/>
+                        <field name="a_side_port_id"/>
                         <field name="z_side"/>
-                        <field name="partner_id"/>
+                        <field name="z_side_port_id"/>
+                        <field name="supplier_id" invisible="1"
+                               options="{'create': false, 'create_edit': false}"/>
+                        <field name="supplier_name"/>
                         <field name="xco_id"/>
                         <field name="used"/>
                     </group>
                     <group>
+                        <field name="project_code"/>
                         <field name="xco_type"/>
                         <field name="service_id"
                                attrs="{'invisible': ['|', ('xco_type', '=', False), ('xco_type', '=', 'backbone')], 'required': [('xco_type', '=', 'client')]}"/>
@@ -72,13 +83,16 @@
                     </group>
                     <group attrs="{'invisible': [('paid_by_bso', '=', False)]}">
                         <field name="currency_id"
+                               attrs="{'required': [('paid_by_bso', '=', True)]}"
+                               options="{'create': false, 'create_edit': false}"/>
+                        <field name="nrc" widget="monetary"
+                               attrs="{'required': [('paid_by_bso', '=', True)]}"
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="mrc" widget="monetary"
+                               attrs="{'required': [('paid_by_bso', '=', True)]}"
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="date_start"
                                attrs="{'required': [('paid_by_bso', '=', True)]}"/>
-                        <field name="cost_upfront" widget="monetary"
-                               attrs="{'required': [('paid_by_bso', '=', True)]}"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="cost_monthly" widget="monetary"
-                               attrs="{'required': [('paid_by_bso', '=', True)]}"
-                               options="{'currency_field': 'currency_id'}"/>
                         <field name="date_end"
                                attrs="{'required': [('paid_by_bso', '=', True)]}"/>
                         <field name="auto_renewal"/>
@@ -98,7 +112,8 @@
             <search string="XConnect">
                 <field name="a_side"/>
                 <field name="z_side"/>
-                <field name="partner_id"/>
+                <field name="supplier_id" invisible="1"/>
+                <field name="supplier_name"/>
                 <field name="xco_id"/>
                 <separator/>
                 <filter string="XConnects Client"

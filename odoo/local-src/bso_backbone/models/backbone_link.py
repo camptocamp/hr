@@ -6,7 +6,8 @@ class BackboneLink(models.Model):
 
     name = fields.Char(
         string='Name',
-        compute='compute_name'
+        compute='compute_name',
+        store=True
     )
     a_device_id = fields.Many2one(
         string='Device A',
@@ -26,55 +27,77 @@ class BackboneLink(models.Model):
         string='XConnect Z',
         comodel_name='backbone.xco'
     )
-    partner_id = fields.Char(
+    tnms_id = fields.Char(
+        string='TNMS ID'
+    )
+    supplier_id = fields.Many2one(
         string='Supplier',
-        required=True
+        comodel_name='res.partner',
+        domain=[('supplier', '=', True)],
+        context={'default_supplier': True}
+    )
+    supplier_name = fields.Char(
+        string='Supplier Name'
+    )
+    supplier_link_id = fields.Char(
+        string='Supplier Link ID'
+    )
+    is_wireless = fields.Boolean(
+        string='Is Wireless'
     )
     latency = fields.Float(
-        string='Latency (ms)',
-        required=True
+        string='Latency (ms)'
+    )
+    latency_sla = fields.Float(
+        string='Latency SLA (ms)'
     )
     bandwidth = fields.Integer(
-        string='Bandwidth (Mbps)',
-        required=True
+        string='Bandwidth (Mbps)'
     )
-    cable = fields.Char(
-        string='Cable'
+    bearer = fields.Integer(
+        string='Bearer (Mbps)'
+    )
+    cable_system = fields.Char(
+        string='Cable System'
     )
     is_protected = fields.Boolean(
-        string='Protected',
+        string='Is Protected',
         default=False
+    )
+    cable_system_protection = fields.Char(
+        string='Protection System'
     )
     currency_id = fields.Many2one(
         string='Currency',
-        comodel_name='res.currency',
-        required=True
+        comodel_name='res.currency'
     )
-    cost_upfront = fields.Float(
-        string='Cost Upfront',
+    nrc = fields.Float(
+        string='NRC'
     )
-    cost_monthly = fields.Float(
-        string='Cost Monthly',
-        required=True
+    mrc = fields.Float(
+        string='MRC'
     )
-    cost_monthly_per_mb = fields.Float(
-        string='Cost Monthly / Mb',
-        compute='compute_cost_monthly_per_mb'
+    mrc_mb = fields.Float(
+        string='MRC / Mb',
+        compute='compute_mrc_mb',
+        store=True
     )
-    price_upfront = fields.Float(
-        string='Price Upfront'
+    nrr = fields.Float(
+        string='NRR'
     )
-    price_monthly = fields.Float(
-        string='Price Monthly',
-        required=True
+    mrr = fields.Float(
+        string='MRR'
     )
-    price_monthly_per_mb = fields.Float(
-        string='Price Monthly / Mb',
-        compute='compute_price_monthly_per_mb'
+    mrr_mb = fields.Float(
+        string='MRR / Mb',
+        compute='compute_mrr_mb',
+        store=True
+    )
+    date_start = fields.Date(
+        string='Billing Date'
     )
     date_end = fields.Date(
-        string='Expiration Date',
-        required=True
+        string='Expiration Date'
     )
     auto_renewal = fields.Selection(
         string='Auto-Renewal',
@@ -89,44 +112,18 @@ class BackboneLink(models.Model):
         string='Active',
         default=True
     )
+
+    # ATTACHMENTS
+
     attachment_number = fields.Integer(
         string='Number of Attachments',
         compute='_compute_attachment_number'
     )
 
-    @api.depends('a_device_id.name', 'z_device_id.name', 'latency',
-                 'is_protected')
-    def compute_name(self):
-        for rec in self:
-            link_name = "%s <-> %s @ %.2fms" % (rec.a_device_id.name,
-                                                rec.z_device_id.name,
-                                                rec.latency)
-            if rec.is_protected:
-                link_name += " (Protected)"
-            rec.update({
-                'name': link_name
-            })
-
-    @api.depends('cost_monthly', 'bandwidth')
-    def compute_cost_monthly_per_mb(self):
-        for rec in self:
-            if rec.bandwidth:
-                rec.update({
-                    'cost_monthly_per_mb': rec.cost_monthly / rec.bandwidth
-                })
-
-    @api.depends('price_monthly', 'bandwidth')
-    def compute_price_monthly_per_mb(self):
-        for rec in self:
-            if rec.bandwidth:
-                rec.update({
-                    'price_monthly_per_mb': rec.price_monthly / rec.bandwidth
-                })
-
     @api.multi
     def _compute_attachment_number(self):
         attachment_data = self.env['ir.attachment'].read_group(
-            [('res_model', '=', 'backbone.link'), ('res_id', 'in', self.ids)],
+            [('res_model', '=', self._name), ('res_id', 'in', self.ids)],
             ['res_id'], ['res_id'])
         attachment = dict(
             (data['res_id'], data['res_id_count']) for data in attachment_data)
@@ -138,8 +135,41 @@ class BackboneLink(models.Model):
         self.ensure_one()
         res = self.env['ir.actions.act_window'].for_xml_id('base',
                                                            'action_attachment')
-        res['domain'] = [('res_model', '=', 'backbone.link'),
+        res['domain'] = [('res_model', '=', self._name),
                          ('res_id', 'in', self.ids)]
-        res['context'] = {'default_res_model': 'backbone.link',
+        res['context'] = {'default_res_model': self._name,
                           'default_res_id': self.id}
         return res
+
+    # COMPUTES
+
+    @api.depends('a_device_id.name', 'z_device_id.name', 'latency',
+                 'is_wireless', 'is_protected')
+    def compute_name(self):
+        for rec in self:
+            link_name = "%s <-> %s @ %.2fms" % (rec.a_device_id.name,
+                                                rec.z_device_id.name,
+                                                rec.latency)
+            if rec.is_wireless:
+                link_name += " (Wireless)"
+            if rec.is_protected:
+                link_name += " (Protected)"
+            rec.update({
+                'name': link_name
+            })
+
+    @api.depends('mrc', 'bandwidth')
+    def compute_mrc_mb(self):
+        for rec in self:
+            if rec.bandwidth:
+                rec.update({
+                    'mrc_mb': rec.mrc / rec.bandwidth
+                })
+
+    @api.depends('mrr', 'bandwidth')
+    def compute_mrr_mb(self):
+        for rec in self:
+            if rec.bandwidth:
+                rec.update({
+                    'mrr_mb': rec.mrr / rec.bandwidth
+                })

@@ -13,13 +13,24 @@ class BackboneXCO(models.Model):
         default='BSO',
         required=True
     )
+    a_side_port_id = fields.Char(
+        string='A Side Port ID'
+    )
     z_side = fields.Char(
         string='Z Side',
         required=True
     )
-    partner_id = fields.Char(
+    z_side_port_id = fields.Char(
+        string='Z Side Port ID'
+    )
+    supplier_id = fields.Many2one(
         string='Supplier',
-        required=True
+        comodel_name='res.partner',
+        domain=[('supplier', '=', True)],
+        context={'default_supplier': True}
+    )
+    supplier_name = fields.Char(
+        string='Supplier Name'
     )
     xco_id = fields.Char(
         string='XConnect ID',
@@ -28,6 +39,10 @@ class BackboneXCO(models.Model):
     used = fields.Boolean(
         string='Used',
         default=True
+    )
+    project_code = fields.Char(
+        string='Project Code',
+        # comodel_name='delivery.project'
     )
     xco_type = fields.Selection(
         string='Type',
@@ -48,11 +63,14 @@ class BackboneXCO(models.Model):
         string='Currency',
         comodel_name='res.currency'
     )
-    cost_upfront = fields.Float(
-        string='Cost Upfront'
+    nrc = fields.Float(
+        string='NRC'
     )
-    cost_monthly = fields.Float(
-        string='Cost Monthly'
+    mrc = fields.Float(
+        string='MRC'
+    )
+    date_start = fields.Date(
+        string='Billing Date'
     )
     date_end = fields.Date(
         string='Expiration Date'
@@ -66,22 +84,18 @@ class BackboneXCO(models.Model):
     notes = fields.Text(
         string='Notes'
     )
+
+    # ATTACHMENTS
+
     attachment_number = fields.Integer(
         string='Number of Attachments',
         compute='_compute_attachment_number'
     )
 
-    @api.depends('partner_id', 'xco_id')
-    def compute_name(self):
-        for rec in self:
-            rec.update({
-                'name': "%s - %s" % (rec.partner_id, rec.xco_id)
-            })
-
     @api.multi
     def _compute_attachment_number(self):
         attachment_data = self.env['ir.attachment'].read_group(
-            [('res_model', '=', 'backbone.xco'), ('res_id', 'in', self.ids)],
+            [('res_model', '=', self._name), ('res_id', 'in', self.ids)],
             ['res_id'], ['res_id'])
         attachment = dict(
             (data['res_id'], data['res_id_count']) for data in attachment_data)
@@ -93,8 +107,17 @@ class BackboneXCO(models.Model):
         self.ensure_one()
         res = self.env['ir.actions.act_window'].for_xml_id('base',
                                                            'action_attachment')
-        res['domain'] = [('res_model', '=', 'backbone.xco'),
+        res['domain'] = [('res_model', '=', self._name),
                          ('res_id', 'in', self.ids)]
-        res['context'] = {'default_res_model': 'backbone.xco',
+        res['context'] = {'default_res_model': self._name,
                           'default_res_id': self.id}
         return res
+
+    # COMPUTES
+
+    @api.depends('supplier_name', 'xco_id')
+    def compute_name(self):
+        for rec in self:
+            rec.update({
+                'name': "%s - %s" % (rec.supplier_name, rec.xco_id)
+            })
