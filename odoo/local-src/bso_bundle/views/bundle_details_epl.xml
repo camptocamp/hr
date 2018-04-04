@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bundle_details_epl_form" model="ir.ui.view">
+        <field name="name">bundle.details.epl.form</field>
+        <field name="model">bundle.details</field>
+        <field name="inherit_id" ref="bso_bundle.bundle_details_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/footer" position="before">
+                <!--EPL BUNDLE LAYOUT-->
+                <div attrs="{'invisible': [('is_epl', '=', False)]}">
+                    <group>
+                        <field name="epl_bandwidth"
+                               attrs="{'required': [('is_epl', '=', True)]}"/>
+                        <field name="epl_description" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <page string="ROUTE">
+                            <group>
+                                <field name="epl_route"/>
+                                <field name="epl_route_first_device_id"
+                                       invisible="1"/>
+                                <field name="epl_route_last_device_id"
+                                       invisible="1"/>
+                                <field name="epl_route_latency"/>
+                                <field name="epl_route_mrc_mb"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_route_mrr_mb"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_route_mrc" widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_route_mrr"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                        <page string="BACKUP">
+                            <group>
+                                <field name="epl_backup"/>
+                                <field name="epl_backup_first_device_id"
+                                       invisible="1"/>
+                                <field name="epl_backup_last_device_id"
+                                       invisible="1"/>
+                                <field name="epl_backup_latency"/>
+                                <field name="epl_backup_discount"/>
+                                <field name="epl_backup_mrc_mb"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_backup_mrr_mb"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_backup_mrc" widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_backup_mrr"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                        <page string="PRODUCTS">
+                            <group>
+                                <field name="epl_products"/>
+                                <field name="epl_products_mrc"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_products_mrr"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                                <field name="epl_products_mrc_mb"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_products_mrr_mb"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       invisible="1"/>
+                                <field name="epl_products_nrr"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <hr/>
+                    <group>
+                        <field name="epl_side_a"
+                               attrs="{'required': [('is_epl', '=', True)]}"/>
+                        <field name="epl_side_z"
+                               attrs="{'required': [('is_epl', '=', True)]}"/>
+                        <field name="epl_mrc_mb"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               invisible="1"/>
+                        <field name="epl_mrr_mb"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               invisible="1"/>
+                        <field name="epl_mrc" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               invisible="1"/>
+                        <field name="dflt_epl_mrr"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               invisible="1"/>
+                        <field name="epl_mrr"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="epl_nrr"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                </div>
+            </xpath>
+            <!--EPL FOOTER LAYOUT-->
+            <xpath expr="//form/footer/button[@name='button_cancel']"
+                   position="before">
+                <button name="button_epl_save"
+                        string="Save EPL" type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('is_epl', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

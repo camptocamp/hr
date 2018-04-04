@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="add_bundle_to_product_template" model="ir.ui.view">
+        <field name="name">product.template.add_bundle</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']/div[@name='options']"
+                   position="inside">
+                <div>
+                    <field name="is_bundle"/>
+                    <label for="is_bundle"/>
+                </div>
+            </xpath>
+
+            <notebook position='inside'>
+                <page string="Bundle"
+                      attrs="{'invisible': [('is_bundle', '=', False)]}">
+                    <group>
+                        <field name="is_epl"/>
+                        <field name="nrc_product"
+                               attrs="{'required': [('is_bundle', '=', True)]}"
+                               domain="[('is_bundle', '=', False), ('recurring_invoice', '=', False), ('categ_id', 'child_of', categ_id)]"
+                               context="{'default_recurring_invoice': False, 'default_categ_id': categ_id}"/>
+                        <field name="products" widget="many2many_tags"
+                               attrs="{'required': [('is_bundle', '=', True)]}"
+                               domain="[('is_bundle', '=', False), ('recurring_invoice', '=', True), ('categ_id', 'child_of', categ_id)]"
+                               context="{'default_recurring_invoice': True, 'default_categ_id': categ_id}"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="hide_variants_if_bundle" model="ir.ui.view">
+        <field name="name">product.template.disable_variants</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id"
+               ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='variants']"
+                   position="attributes">
+                <attribute name="attrs">
+                    {'invisible':[('is_bundle', '=', True)]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="add_bundle_search_filter" model="ir.ui.view">
+        <field name="name">product.template.search</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id"
+               ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/filter[@name='filter_to_sell']"
+                   position="after">
+                <filter string="Is a bundle" name="is_a_bundle"
+                        domain="[('is_bundle', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
