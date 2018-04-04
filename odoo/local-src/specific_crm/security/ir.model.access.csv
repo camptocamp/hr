@@ -3,3 +3,5 @@ access_crm_industry_employee,crm.industry.employee,model_crm_industry,base.group
 access_crm_industry_sale_manager,crm.industry.employee,model_crm_industry,sales_team.group_sale_manager,1,1,1,1
 access_crm_industry_subsector_employee,crm.industry.subsector.employee,model_crm_industry_subsector,base.group_user,1,0,0,0
 access_crm_industry_subsector_sale_manager,crm.industry.subsector.employee,model_crm_industry_subsector,sales_team.group_sale_manager,1,1,1,1
+access_crm_quicktitle_employee,crm.quicktitle.employee,model_crm_lead_quicktitle,base.group_user,1,0,0,0
+access_crm_quicktitle_sale_manager,crm.quicktitle_.employee,model_crm_lead_quicktitle,sales_team.group_sale_manager,1,1,1,1
