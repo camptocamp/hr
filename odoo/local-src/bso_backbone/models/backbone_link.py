@@ -46,10 +46,12 @@ class BackboneLink(models.Model):
         string='Is Wireless'
     )
     latency = fields.Float(
-        string='Latency (ms)'
+        string='Latency (ms)',
+        digits=(7, 3)
     )
     latency_sla = fields.Float(
-        string='Latency SLA (ms)'
+        string='Latency SLA (ms)',
+        digits=(7, 3)
     )
     bandwidth = fields.Integer(
         string='Bandwidth (Mbps)'
@@ -147,9 +149,9 @@ class BackboneLink(models.Model):
                  'is_wireless', 'is_protected')
     def compute_name(self):
         for rec in self:
-            link_name = "%s <-> %s @ %.2fms" % (rec.a_device_id.name,
-                                                rec.z_device_id.name,
-                                                rec.latency)
+            link_name = "%s <-> %s @ %s ms" % (rec.a_device_id.name,
+                                               rec.z_device_id.name,
+                                               rec.latency)
             if rec.is_wireless:
                 link_name += " (Wireless)"
             if rec.is_protected:

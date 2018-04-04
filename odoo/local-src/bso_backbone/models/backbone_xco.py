@@ -115,9 +115,10 @@ class BackboneXCO(models.Model):
 
     # COMPUTES
 
-    @api.depends('supplier_name', 'xco_id')
+    @api.depends('supplier_id.name', 'supplier_name', 'xco_id')
     def compute_name(self):
         for rec in self:
+            supplier_name = rec.supplier_id.name or rec.supplier_name
             rec.update({
-                'name': "%s - %s" % (rec.supplier_name, rec.xco_id)
+                'name': "%s - %s" % (supplier_name, rec.xco_id)
             })

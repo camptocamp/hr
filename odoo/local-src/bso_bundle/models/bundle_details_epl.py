@@ -43,8 +43,9 @@ class BundleDetailsEPL(models.Model):
         compute='compute_epl_route_last_device_id',
         store=True
     )
-    epl_route_latency = fields.Char(
-        string='Route Latency',
+    epl_route_latency = fields.Float(
+        string='Route Latency (ms)',
+        digits=(7, 3),
         compute='compute_epl_route_latency',
         store=True
     )
@@ -90,8 +91,9 @@ class BundleDetailsEPL(models.Model):
         compute='compute_epl_backup_last_device_id',
         store=True
     )
-    epl_backup_latency = fields.Char(
-        string='Backup Latency',
+    epl_backup_latency = fields.Float(
+        string='Backup Latency (ms)',
+        digits=(7, 3),
         compute='compute_epl_backup_latency',
         store=True
     )
@@ -246,8 +248,8 @@ class BundleDetailsEPL(models.Model):
                  'epl_side_z')
     def compute_epl_description(self):
         for rec in self:
-            description = "Bandwidth: %.0f Mbps\n" % rec.epl_bandwidth
-            description += "Latency (est.): %s\n" % rec.epl_route_latency
+            description = "Bandwidth: %s Mbps\n" % rec.epl_bandwidth
+            description += "Latency (est.): %s ms\n" % rec.epl_route_latency
             description += "Side A: %s\n" % rec.epl_side_a
             description += "Side Z: %s" % rec.epl_side_z
             rec.update({
@@ -277,9 +279,8 @@ class BundleDetailsEPL(models.Model):
     @api.depends('epl_route.latency')
     def compute_epl_route_latency(self):
         for rec in self:
-            latency = sum(rec.mapped('epl_route.latency'))
             rec.update({
-                'epl_route_latency': "%.2f ms" % latency
+                'epl_route_latency': sum(rec.mapped('epl_route.latency'))
             })
 
     @api.depends('epl_route.mrc_mb')
@@ -333,9 +334,8 @@ class BundleDetailsEPL(models.Model):
     @api.depends('epl_backup.latency')
     def compute_epl_backup_latency(self):
         for rec in self:
-            latency = sum(rec.mapped('epl_backup.latency'))
             rec.update({
-                'epl_backup_latency': "%.2f ms" % latency
+                'epl_backup_latency': sum(rec.mapped('epl_backup.latency'))
             })
 
     @api.depends('epl_backup.mrc_mb', 'epl_backup_discount')
