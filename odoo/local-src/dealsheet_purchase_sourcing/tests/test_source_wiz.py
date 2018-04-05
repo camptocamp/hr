@@ -18,11 +18,11 @@ class WizTestCase(BaseTestCase):
         wiz = self._init_wiz()
         # to source and sourcing lines must be the same as dealsheet's
         self.assertEqual(
-            len(self.dealsheet.cost_upfront_line | self.dealsheet.cost_line),
+            len(self.dealsheet.nrc_lines | self.dealsheet.mrc_lines),
             len(wiz.sourcing_line_ids)
         )
         self.assertEqual(
-            len(self.dealsheet.cost_upfront_line | self.dealsheet.cost_line),
+            len(self.dealsheet.nrc_lines | self.dealsheet.mrc_lines),
             len(wiz.to_source_line_ids)
         )
         # and no sourced line yet
