@@ -382,7 +382,7 @@ class SaleDealsheet(models.Model):
                 True,
                 order_line,
                 order_line.product_id,
-                "%.0fM Backup" % epl_bandwidth,
+                "%sM Protection" % epl_bandwidth,
                 order_line.product_uom_qty,
                 bundle_details_id.epl_backup_mrc * order_line.product_uom_qty
             )

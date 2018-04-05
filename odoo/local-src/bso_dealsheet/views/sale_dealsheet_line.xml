@@ -25,7 +25,8 @@
                        attrs="{'readonly': [('dealsheet_state', 'not in', ('draft', 'confirmed'))]}"/>
                 <field name="cost_delivery" widget="monetary"
                        options="{'currency_field': 'currency_id'}"
-                       attrs="{'readonly': [('dealsheet_state', 'not in', ('validated'))]}"/>
+                       attrs="{'readonly': [('dealsheet_state', 'not in', ('validated'))]}"
+                       invisible="1"/>
             </tree>
         </field>
     </record>

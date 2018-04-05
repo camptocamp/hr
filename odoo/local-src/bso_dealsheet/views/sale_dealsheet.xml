@@ -137,7 +137,7 @@
                 <field name="revenue" widget="monetary"
                        options="{'currency_field': 'currency_id'}"/>
                 <field name="margin"/>
-                <field name="margin_delivery"/>
+                <field name="margin_delivery" invisible="1"/>
                 <field name="state"/>
                 <field name="attachment_number" invisible="True"/>
                 <button name="action_get_attachment_view"
