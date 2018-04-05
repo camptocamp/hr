@@ -34,6 +34,7 @@ Latest (Unreleased)
   * create.campaign.wizard to create campaigns from leads
 * BSIBSO-1049: install CFONB bank statement import
 * BSIBSO-1048: propagate PO analytic account on SO in intercompany flow.
+* BSIBSO-1047: manage subscriptions to customer invoices
 
 **Bugfixes**
 
