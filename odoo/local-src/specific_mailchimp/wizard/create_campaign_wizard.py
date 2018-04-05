@@ -6,7 +6,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
-class CreateCampaignWizard(models.Model):
+class CreateCampaignWizard(models.TransientModel):
     _name = "create.campaign.wizard"
 
     def _default_lead_ids(self):
