@@ -55,17 +55,17 @@ class BundleDetails(models.Model):
         context={'default_is_epl': False}
     )
     bundle_mrc = fields.Float(
-        string='Bundle MRC',
+        string='MRC',
         compute='compute_bundle_mrc',
         store=True
     )
     bundle_mrr = fields.Float(
-        string='Bundle MRR',
+        string='MRR',
         compute='compute_bundle_mrr',
         store=True
     )
     bundle_nrr = fields.Float(
-        string='Bundle NRR'
+        string='NRR'
     )
 
     # BUNDLE ONCHANGES
@@ -155,7 +155,7 @@ class BundleDetails(models.Model):
         self._set_line(product_mrc, description, mrr)
         if nrr > 0:
             product_nrc = self.bundle_id.nrc_product
-            self._set_line(product_nrc, product_mrc.name + " NRC", nrr)
+            self._set_line(product_nrc, "NRC " + product_mrc.name, nrr)
         elif self.sale_order_line_id_nrc:
             self.sale_order_line_id_nrc.unlink()
         return {'type': 'ir.actions.act_close_wizard_and_reload_view'}

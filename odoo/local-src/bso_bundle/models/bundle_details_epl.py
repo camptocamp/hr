@@ -157,8 +157,12 @@ class BundleDetailsEPL(models.Model):
         store=True
     )
 
-    # EPL SIDES
+    # EPL DETAILS
 
+    epl_latency = fields.Float(
+        string='Latency (ms)',
+        related='epl_route_latency'
+    )
     epl_side_a = fields.Char(
         string='Side A'
     )
@@ -169,35 +173,35 @@ class BundleDetailsEPL(models.Model):
     # EPL PRICE & COST
 
     epl_mrc_mb = fields.Float(
-        string='EPL MRC / Mb',
+        string='MRC / Mb',
         compute='compute_epl_mrc_mb',
         help=_('(Route MRC + Backup MRC + Products MRC) / Bandwidth'),
         store=True
     )
     epl_mrr_mb = fields.Float(
-        string='EPL MRR / Mb',
+        string='MRR / Mb',
         compute='compute_epl_mrr_mb',
         help=_('(Route MRR + Backup MRR + Products MRR) / Bandwidth'),
         store=True
     )
     epl_mrc = fields.Float(
-        string='EPL MRC',
+        string='MRC',
         compute='compute_epl_mrc',
         help=_('Route MRC + Backup MRC + Products MRC'),
         store=True
     )
     dflt_epl_mrr = fields.Float(
-        string='Default Bundle MRR',
+        string='Default MRR',
         compute='compute_dflt_epl_mrr',
         help=_('Route MRR + Backup MRR + Products MRR'),
         store=True
     )
     epl_mrr = fields.Float(
-        string='EPL MRR',
+        string='MRR',
         help=_('Route MRR + Backup MRR + Products MRR')
     )
     epl_nrr = fields.Float(
-        string='EPL NRR'
+        string='NRR'
     )
 
     # EPL ONCHANGES
@@ -232,28 +236,36 @@ class BundleDetailsEPL(models.Model):
 
     # EPL VARIABLES COMPUTES
 
-    @api.depends('epl_bandwidth', 'epl_route_first_device_id',
-                 'epl_route_last_device_id')
+    @api.depends('epl_bandwidth', 'epl_latency', 'epl_backup',
+                 'epl_route_first_device_id.pop_id.name',
+                 'epl_route_last_device_id.pop_id.name')
     def compute_epl_name(self):
         for rec in self:
+            epl_name = "%s %sM [%s <-> %s] @ %s ms" \
+                       % (rec.bundle_id.name,
+                          rec.epl_bandwidth,
+                          rec.epl_route_first_device_id.pop_id.name,
+                          rec.epl_route_last_device_id.pop_id.name,
+                          rec.epl_latency)
+            if rec.epl_backup:
+                epl_name += " (Protected)"
             rec.update({
-                'epl_name': "%s %sM [%s <-> %s]"
-                            % (rec.bundle_id.name,
-                               rec.epl_bandwidth,
-                               rec.epl_route_first_device_id.pop_id.name,
-                               rec.epl_route_last_device_id.pop_id.name)
+                'epl_name': epl_name
             })
 
-    @api.depends('epl_bandwidth', 'epl_route_latency', 'epl_side_a',
-                 'epl_side_z')
+    @api.depends('epl_bandwidth', 'epl_latency', 'epl_backup',
+                 'epl_side_a', 'epl_side_z')
     def compute_epl_description(self):
         for rec in self:
-            description = "Bandwidth: %s Mbps\n" % rec.epl_bandwidth
-            description += "Latency (est.): %s ms\n" % rec.epl_route_latency
-            description += "Side A: %s\n" % rec.epl_side_a
-            description += "Side Z: %s" % rec.epl_side_z
+            epl_description = [
+                "Bandwidth: %s Mbps" % rec.epl_bandwidth,
+                "Latency (est.): %s ms" % rec.epl_latency,
+                "Protection: %s" % "Yes" if rec.epl_backup else "No",
+                "Side A: %s" % rec.epl_side_a,
+                "Side Z: %s" % rec.epl_side_z
+            ]
             rec.update({
-                'epl_description': description
+                'epl_description': "\n".join(epl_description)
             })
 
     # EPL ROUTE COMPUTES

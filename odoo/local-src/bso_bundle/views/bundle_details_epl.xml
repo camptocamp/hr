@@ -90,6 +90,7 @@
                     </notebook>
                     <hr/>
                     <group>
+                        <field name="epl_latency"/>
                         <field name="epl_side_a"
                                attrs="{'required': [('is_epl', '=', True)]}"/>
                         <field name="epl_side_z"

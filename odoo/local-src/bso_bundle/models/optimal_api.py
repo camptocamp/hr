@@ -1,7 +1,6 @@
 from collections import defaultdict
 from heapq import heappop, heappush
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
 
 
 class OptimalAPI(models.Model):
@@ -47,14 +46,15 @@ class OptimalAPI(models.Model):
                                        rec.epl_optimal_optimize,
                                        rec.epl_optimal_protected)
 
-            rec.update({
-                'epl_route': self._get_path_values(
-                    optimal['start_device'],
-                    optimal['path'],
-                    is_epl_backup=False)
-            })
+            if optimal.get('path'):
+                rec.update({
+                    'epl_route': self._get_path_values(
+                        optimal['start_device'],
+                        optimal['path'],
+                        is_epl_backup=False)
+                })
 
-            if optimal['backup']:
+            if optimal.get('backup'):
                 rec.update({
                     'epl_backup': self._get_path_values(
                         optimal['start_device'],
@@ -62,7 +62,7 @@ class OptimalAPI(models.Model):
                         is_epl_backup=True)
                 })
 
-            if optimal['warnings']:
+            if optimal.get('warnings'):
                 return {
                     'warning': {
                         'message': _("\n".join(optimal['warnings']))}
@@ -95,10 +95,11 @@ class OptimalAPI(models.Model):
             if not optimal or potential['cost'] < optimal['cost']:
                 optimal = potential
 
-        # Raise error if no path found
+        # No path found
         if not optimal:
-            raise ValidationError(_("No path available between '%s' & '%s'"
-                                    % (a_pop_id.name, z_pop_id.name)))
+            warnings.append("No route available: %s <-> %s" % (a_pop_id.name,
+                                                               z_pop_id.name))
+            return {'warnings': warnings}
 
         # Find backup path if protection requested
         backup = {}
@@ -120,10 +121,9 @@ class OptimalAPI(models.Model):
                     warning = "Backup uses duplicate link %s" % duplicate.name
                     warnings.append(warning)
             else:  # No backup found: notify it to user
-                warnings.append(
-                    "No valid backup found for path: %s <-> %s" %
-                    (optimal['start_device'].name,
-                     optimal['end_device'].name))
+                warnings.append("No backup available: %s <-> %s" %
+                                (optimal['start_device'].name,
+                                 optimal['end_device'].name))
 
         return {'start_device': optimal['start_device'],
                 'end_device': optimal['end_device'],
@@ -212,7 +212,6 @@ class OptimalAPI(models.Model):
                 to_currency=self.currency_id,
                 round=False
             )
-        raise ValidationError(_("Invalid optimize: %s" % optimize))
 
     @api.model
     def _get_path_values(self, start_device, path, is_epl_backup):
