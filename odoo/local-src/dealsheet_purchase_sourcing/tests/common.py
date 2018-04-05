@@ -98,7 +98,7 @@ class BaseTestCase(common.SavepointCase):
             'groups_id': [
                 (4, cls.env.ref('sales_team.group_sale_manager').id),
                 (4, cls.env.ref('purchase.group_purchase_manager').id),
-                (4, cls.env.ref('bso_backbone.group_backbone_manager').id),
+                (4, cls.env.ref('bso_dealsheet.group_dealsheet_manager').id),
             ]
         })
 
