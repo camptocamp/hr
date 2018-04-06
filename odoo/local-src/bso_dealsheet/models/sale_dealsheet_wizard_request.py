@@ -11,10 +11,11 @@ class SaleDealsheetWizardRequest(models.TransientModel):
         required=True
     )
     presale_id = fields.Many2one(
-        string='Pre-Sale',
+        string='Presale',
         comodel_name='res.users',
-        domain=lambda self: [('groups_id', 'in', self.env.ref(
-            'bso_backbone.bso_ops_confidential').id)]
+        domain=lambda self: [
+            ('groups_id', 'in',
+             self.env.ref('bso_dealsheet.group_dealsheet_role_presale').id)]
     )
 
     @api.multi

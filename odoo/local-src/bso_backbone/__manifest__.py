@@ -1,7 +1,7 @@
 {
     'name': 'BSO Backbone',
     # 'category': 'Placeholder',
-    'description': 'Backbone Devices, POPs, XCo, Links',
+    'description': 'Backbone XConnects, Links, Devices & POPs',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
     'depends': ['base'],
@@ -15,6 +15,5 @@
         'views/backbone_pop.xml',
         'views/backbone_xco.xml',
     ],
-    'installable': True,
     'application': True,
 }

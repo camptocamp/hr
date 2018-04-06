@@ -7,7 +7,6 @@ from collections import defaultdict
 
 
 class BaseTestCase(common.SavepointCase):
-
     @classmethod
     def setUpClass(cls):
         super(BaseTestCase, cls).setUpClass()
@@ -99,7 +98,7 @@ class BaseTestCase(common.SavepointCase):
             'groups_id': [
                 (4, cls.env.ref('sales_team.group_sale_manager').id),
                 (4, cls.env.ref('purchase.group_purchase_manager').id),
-                (4, cls.env.ref('bso_backbone.bso_ops_confidential').id),
+                (4, cls.env.ref('bso_dealsheet.group_dealsheet_manager').id),
             ]
         })
 

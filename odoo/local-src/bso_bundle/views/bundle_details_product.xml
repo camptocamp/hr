@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bundle_details_product_tree" model="ir.ui.view">
+        <field name="name">bundle.details.product.tree</field>
+        <field name="model">bundle.details.product</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="bundle_details_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="bundle_categ_id" invisible="1"/>
+                <field name="is_epl" invisible="1"/>
+                <field name="product_id"
+                       domain="[('is_bundle', '=', False), ('recurring_invoice', '=', True), ('categ_id', 'child_of', bundle_categ_id)]"
+                       options="{'create': false, 'create_edit': false}"/>
+                <field name="description"/>
+                <field name="quantity"/>
+                <field name="uom_id"/>
+                <field name="mrc_unit" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="dflt_mrr_unit" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="mrr_unit" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="nrr_unit" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="not context.get('default_is_epl')"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

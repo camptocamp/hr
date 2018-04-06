@@ -9,6 +9,11 @@ class SaleOrder(models.Model):
             ('dealsheet', 'Dealsheet'),
         ]
     )
+    dealsheet_id = fields.Many2one(
+        string='Dealsheet',
+        comodel_name='sale.dealsheet',
+        readonly=True
+    )
 
     @api.multi
     def dealsheet_action_request(self):
@@ -20,11 +25,23 @@ class SaleOrder(models.Model):
 
     @api.model
     def dealsheet_create(self):
+        dealsheet_model = self.env['sale.dealsheet']
+        if not self.env.user.has_group(
+                'bso_dealsheet.group_dealsheet_manager'):
+            dealsheet_model = dealsheet_model.sudo()
+        dealsheet_id = dealsheet_model.create({
+            'seller_id': self.env.uid,
+            'sale_order_id': self.id,
+        })
         self.update({
-            'state': 'dealsheet'
+            'state': 'dealsheet',
+            'dealsheet_id': dealsheet_id.id,
         })
-        user_id = self.env.uid
-        return self.env['sale.dealsheet'].sudo().create({
-            'user_id': user_id,
-            'sale_order_id': self.id
-        })
+        return dealsheet_id
+
+    @api.multi
+    def unlink(self):
+        for rec in self:
+            if rec.state == 'dealsheet':
+                rec.write({'state': 'draft'})
+        return super(SaleOrder, self).unlink()

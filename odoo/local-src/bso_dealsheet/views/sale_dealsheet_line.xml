@@ -7,18 +7,26 @@
         <field name="arch" type="xml">
             <tree editable="bottom">
                 <field name="dealsheet_id" invisible="1"/>
+                <field name="dealsheet_state" invisible="1"/>
                 <field name="is_cost" invisible="1"/>
                 <field name="is_recurring" invisible="1"/>
                 <field name="currency_id" invisible="1"/>
                 <field name="sale_order_line_id" invisible="1"/>
                 <field name="product_id"
-                       attrs="{'readonly': [('sale_order_line_id', '!=', False)]}"/>
-                <field name="description"/>
+                       attrs="{'readonly': ['|', ('dealsheet_state', 'not in', ('draft', 'confirmed')), ('sale_order_line_id', '!=', False)]}"
+                       options="{'create': false, 'create_edit': false}"/>
+                <field name="description"
+                       attrs="{'readonly': [('dealsheet_state', 'not in', ('draft', 'confirmed'))]}"/>
                 <field name="quantity"
-                       attrs="{'readonly': [('sale_order_line_id', '!=', False)]}"/>
+                       attrs="{'readonly': ['|', ('dealsheet_state', 'not in', ('draft', 'confirmed')), ('sale_order_line_id', '!=', False)]}"/>
                 <field name="uom_id"/>
                 <field name="cost" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
+                       options="{'currency_field': 'currency_id'}"
+                       attrs="{'readonly': [('dealsheet_state', 'not in', ('draft', 'confirmed'))]}"/>
+                <field name="cost_delivery" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       attrs="{'readonly': [('dealsheet_state', 'not in', ('validated'))]}"
+                       invisible="1"/>
             </tree>
         </field>
     </record>

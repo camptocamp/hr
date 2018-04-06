@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bundle_details_epl_link_tree" model="ir.ui.view">
+        <field name="name">bundle.details.epl.link.tree</field>
+        <field name="model">bundle.details.epl.link</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="bundle_details_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="is_epl_backup" invisible="1"/>
+                <field name="is_epl_route" invisible="1"/>
+                <field name="sequence" widget="handle"/>
+                <field name="a_device_id"/>
+                <field name="z_device_id"/>
+                <field name="link_id" invisible="1"/>
+                <field name="is_wireless" invisible="1"/>
+                <field name="latency"/>
+                <field name="bandwidth" invisible="1"/>
+                <field name="cable_system" invisible="1"/>
+                <field name="is_protected" invisible="1"/>
+                <field name="mrc" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrc_mb" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrr" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrr_mb" invisible="1" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bundle_details_epl_link_form" model="ir.ui.view">
+        <field name="name">bundle.details.epl.link.form</field>
+        <field name="model">bundle.details.epl.link</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="bundle_details_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="is_epl_backup" invisible="1"/>
+                    <field name="is_epl_route" invisible="1"/>
+                    <field name="sequence" invisible="1"/>
+                    <field name="a_device_id"
+                           domain="['|', '&amp;', (is_epl_route, '=', True), ('id', '=?', parent.epl_route_last_device_id), '&amp;', (is_epl_backup, '=', True), ('id', '=?', parent.epl_backup_last_device_id)]"
+                           options="{'create': false, 'create_edit': false}"/>
+                    <field name="z_device_id"
+                           attrs="{'readonly': [('a_device_id', '=', False)]}"
+                           options="{'create': false, 'create_edit': false}"/>
+                    <field name="link_id"
+                           attrs="{'readonly': [('z_device_id', '=', False)]}"
+                           options="{'create': false, 'create_edit': false}"/>
+                    <field name="is_wireless" invisible="1"/>
+                    <field name="latency" invisible="1"/>
+                    <field name="bandwidth" invisible="1"/>
+                    <field name="cable_system" invisible="1"/>
+                    <field name="is_protected" invisible="1"/>
+                    <field name="mrc" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"
+                           invisible="1"/>
+                    <field name="mrc_mb" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"
+                           invisible="1"/>
+                    <field name="mrr" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"
+                           invisible="1"/>
+                    <field name="mrr_mb" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"
+                           invisible="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>

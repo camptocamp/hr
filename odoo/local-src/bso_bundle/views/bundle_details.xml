@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bundle_details_form" model="ir.ui.view">
+        <field name="name">bundle.details.form</field>
+        <field name="model">bundle.details</field>
+        <field name="arch" type="xml">
+            <form string="Bundle Form">
+                <!--SETUP VARIABLE-->
+                <field name="sale_order_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="bundle_id" invisible="1"/>
+                <field name="bundle_categ_id" invisible="1"/>
+                <field name="is_epl" invisible="1"/>
+                <!--BUNDLE LAYOUT-->
+                <div attrs="{'invisible': ['|', ('currency_id', '=', False), ('is_epl', '=', True)]}">
+                    <group>
+                        <field name="bundle_products"/>
+                    </group>
+                    <group>
+                        <field name="bundle_mrc" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               invisible="1"/>
+                        <field name="bundle_mrr" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="bundle_nrr" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                </div>
+                <!--FOOTER LAYOUT-->
+                <footer>
+                    <button name="button_bundle_save"
+                            string="Save Bundle" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('is_epl', '=', True)]}"/>
+                    <button name="button_cancel" string="Cancel"
+                            class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="bundle_details_create" model="ir.actions.act_window">
+        <field name="name">Create Bundle</field>
+        <field name="res_model">bundle.details</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="bundle_details_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

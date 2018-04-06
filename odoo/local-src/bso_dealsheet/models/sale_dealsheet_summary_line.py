@@ -13,17 +13,21 @@ class SaleDealsheetSummaryLine(models.Model):
         related='dealsheet_id.currency_id',
         readonly=True
     )
-    type = fields.Selection(
-        string='',
+    cost_type = fields.Selection(
         selection=[
-            ('non_recurring', 'Non Recurring'),
-            ('recurring', 'Recurring'),
+            ('nr', 'Non Recurring'),
+            ('mr', 'Recurring'),
             ('total', 'Total')
         ],
         required=True
     )
     cost = fields.Float(
         string='Cost',
+        compute='compute_values',
+        store=True
+    )
+    cost_delivery = fields.Float(
+        string='Delivery Cost',
         compute='compute_values',
         store=True
     )
@@ -37,35 +41,49 @@ class SaleDealsheetSummaryLine(models.Model):
         compute='compute_values',
         store=True
     )
+    margin_delivery = fields.Char(
+        string='Delivery Margin',
+        compute='compute_values',
+        store=True
+    )
 
-    @api.depends('dealsheet_id.cost_upfront', 'dealsheet_id.price_upfront',
-                 'dealsheet_id.margin_upfront', 'dealsheet_id.cost',
-                 'dealsheet_id.price', 'dealsheet_id.margin',
-                 'dealsheet_id.cost_total', 'dealsheet_id.price_total',
-                 'dealsheet_id.margin_total', 'type')
+    @api.depends('dealsheet_id.nrc', 'dealsheet_id.nrc_delivery',
+                 'dealsheet_id.nrr', 'dealsheet_id.nrm',
+                 'dealsheet_id.nrm_delivery', 'dealsheet_id.mrc',
+                 'dealsheet_id.mrc_delivery', 'dealsheet_id.mrr',
+                 'dealsheet_id.mrm', 'dealsheet_id.mrm_delivery',
+                 'dealsheet_id.cost', 'dealsheet_id.cost_delivery',
+                 'dealsheet_id.revenue', 'dealsheet_id.margin',
+                 'dealsheet_id.margin_delivery', 'cost_type')
     def compute_values(self):
         for rec in self:
-            if rec.type == 'non_recurring':
-                rec.update({
-                    'cost': rec.dealsheet_id.cost_upfront,
-                    'revenue': rec.dealsheet_id.price_upfront,
-                    'margin': self.get_margin_str(
-                        rec.dealsheet_id.margin_upfront)
-                })
-            elif rec.type == 'recurring':
-                rec.update({
-                    'cost': rec.dealsheet_id.cost,
-                    'revenue': rec.dealsheet_id.price,
-                    'margin': self.get_margin_str(rec.dealsheet_id.margin)
-                })
-            elif rec.type == 'total':
-                rec.update({
-                    'cost': rec.dealsheet_id.cost_total,
-                    'revenue': rec.dealsheet_id.price_total,
-                    'margin': self.get_margin_str(
-                        rec.dealsheet_id.margin_total)
-                })
+            if rec.cost_type == 'nr':
+                rec.update(self._data(rec.dealsheet_id.nrc,
+                                      rec.dealsheet_id.nrc_delivery,
+                                      rec.dealsheet_id.nrr,
+                                      rec.dealsheet_id.nrm,
+                                      rec.dealsheet_id.nrm_delivery))
+            elif rec.cost_type == 'mr':
+                rec.update(self._data(rec.dealsheet_id.mrc,
+                                      rec.dealsheet_id.mrc_delivery,
+                                      rec.dealsheet_id.mrr,
+                                      rec.dealsheet_id.mrm,
+                                      rec.dealsheet_id.mrm_delivery))
+            elif rec.cost_type == 'total':
+                rec.update(self._data(rec.dealsheet_id.cost,
+                                      rec.dealsheet_id.cost_delivery,
+                                      rec.dealsheet_id.revenue,
+                                      rec.dealsheet_id.margin,
+                                      rec.dealsheet_id.margin_delivery))
+
+    @api.model
+    def _data(self, cost, cost_delivery, revenue, margin, margin_delivery):
+        return {'cost': cost,
+                'cost_delivery': cost_delivery,
+                'revenue': revenue,
+                'margin': self.get_margin_str(margin),
+                'margin_delivery': self.get_margin_str(margin_delivery)}
 
     @api.model
     def get_margin_str(self, margin):
-        return '%.2f %s' % (margin, '%')
+        return '%.2f %%' % margin

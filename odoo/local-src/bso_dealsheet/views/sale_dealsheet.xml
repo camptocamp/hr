@@ -11,50 +11,69 @@
                             string="Confirm"
                             type="object"
                             states="draft"
-                            class="oe_highlight"/>
+                            class="oe_highlight"
+                            groups="bso_dealsheet.group_dealsheet_manager"/>
                     <button name="action_validate"
                             string="Validate"
                             type="object"
-                            states="confirm"
-                            class="oe_highlight"/>
+                            states="confirmed"
+                            class="oe_highlight"
+                            groups="bso_dealsheet.group_dealsheet_role_reviewer"/>
                     <button name="action_refuse"
                             string="Refuse"
                             type="object"
-                            states="confirm"/>
+                            states="confirmed"
+                            groups="bso_dealsheet.group_dealsheet_role_reviewer"/>
                     <field name="state" widget="statusbar"
-                           statusbar_visible="draft,confirm,validate"/>
+                           statusbar_visible="draft,confirmed,validated"/>
                     <field name="name" invisible="1"/>
                     <field name="presale_id" invisible="1"/>
                     <field name="reviewer_id" invisible="1"/>
-                    <field name="date_validated" invisible="1"/>
-                    <field name="date_refused" invisible="1"/>
+                    <field name="validated_date" invisible="1"/>
+                    <field name="refused_date" invisible="1"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box">
+                        <button name="action_get_attachment_view"
+                                class="oe_stat_button"
+                                icon="fa-book"
+                                type="object">
+                            <field name="attachment_number" widget="statinfo"
+                                   string="Documents"/>
+                        </button>
+                    </div>
                     <group>
                         <field name="sale_order_id"/>
+                        <field name="sale_order_state" invisible="1"/>
                         <field name="partner_id"/>
-                        <field name="user_id"/>
+                        <field name="seller_id"/>
                         <field name="duration"/>
                         <field name="currency_id"/>
-                        <field name="compute_line" invisible="1"/>
+                        <field name="compute_lines" invisible="1"/>
                     </group>
                     <group>
-                        <field name="cost_line"/>
+                        <field name="mrc_lines"/>
                     </group>
                     <group>
-                        <field name="cost_upfront_line"/>
+                        <field name="nrc_lines"/>
                     </group>
                     <group>
                         <group>
-                            <field name="cost_upfront" invisible="1"/>
-                            <field name="price_upfront" invisible="1"/>
-                            <field name="margin_upfront" invisible="1"/>
+                            <field name="nrc" invisible="1"/>
+                            <field name="nrc_delivery" invisible="1"/>
+                            <field name="nrr" invisible="1"/>
+                            <field name="nrm" invisible="1"/>
+                            <field name="nrm_delivery" invisible="1"/>
+                            <field name="mrc" invisible="1"/>
+                            <field name="mrc_delivery" invisible="1"/>
+                            <field name="mrr" invisible="1"/>
+                            <field name="mrm" invisible="1"/>
+                            <field name="mrm_delivery" invisible="1"/>
                             <field name="cost" invisible="1"/>
-                            <field name="price" invisible="1"/>
+                            <field name="cost_delivery" invisible="1"/>
+                            <field name="revenue" invisible="1"/>
                             <field name="margin" invisible="1"/>
-                            <field name="cost_total" invisible="1"/>
-                            <field name="price_total" invisible="1"/>
-                            <field name="margin_total" invisible="1"/>
+                            <field name="margin_delivery" invisible="1"/>
                             <field name="summary"/>
                         </group>
                     </group>
@@ -75,34 +94,56 @@
             <tree>
                 <field name="name" invisible="1"/>
                 <field name="sale_order_id"/>
-                <field name="partner_id"/>
+                <field name="sale_order_state" invisible="1"/>
                 <field name="create_date"/>
-                <field name="user_id"/>
+                <field name="validated_date"/>
+                <field name="refused_date"/>
+                <field name="partner_id"/>
+                <field name="seller_id"/>
                 <field name="presale_id"/>
                 <field name="reviewer_id"/>
-                <field name="date_validated"/>
-                <field name="date_refused"/>
-                <field name="duration" invisible="1"/>
+                <field name="duration"/>
                 <field name="currency_id" invisible="1"/>
-                <field name="compute_line" invisible="1"/>
-                <field name="cost_line" invisible="1"/>
-                <field name="cost_upfront_line" invisible="1"/>
-                <field name="cost_upfront" invisible="1" widget="monetary"
+                <field name="compute_lines" invisible="1"/>
+                <field name="mrc_lines" invisible="1"/>
+                <field name="nrc_lines" invisible="1"/>
+                <field name="nrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="nrc_delivery" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="nrr" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="nrm" invisible="1"/>
+                <field name="nrm_delivery" invisible="1"/>
+                <field name="mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="mrc_delivery" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="mrr" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="mrm" invisible="1"/>
+                <field name="mrm_delivery" invisible="1"/>
+                <field name="cost" widget="monetary"
                        options="{'currency_field': 'currency_id'}"/>
-                <field name="price_upfront" invisible="1" widget="monetary"
+                <field name="cost_delivery" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="revenue" widget="monetary"
                        options="{'currency_field': 'currency_id'}"/>
-                <field name="margin_upfront" invisible="1"/>
-                <field name="cost" invisible="1" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="price" invisible="1" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="margin" invisible="1"/>
-                <field name="cost_total" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="price_total" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="margin_total"/>
+                <field name="margin"/>
+                <field name="margin_delivery" invisible="1"/>
                 <field name="state"/>
+                <field name="attachment_number" invisible="True"/>
+                <button name="action_get_attachment_view"
+                        string="View Attached Documents" type="object"
+                        icon="fa-paperclip"
+                        attrs="{'invisible': [('attachment_number', '=', 0)]}"/>
             </tree>
         </field>
     </record>
@@ -116,6 +157,7 @@
 
     <menuitem id="dealsheet_menu" name="Dealsheets" sequence="11"
               action="dealsheet_action"
-              parent="sales_team.menu_sales"/>
+              parent="sales_team.menu_sales"
+              groups="bso_dealsheet.group_dealsheet_user"/>
 
 </odoo>

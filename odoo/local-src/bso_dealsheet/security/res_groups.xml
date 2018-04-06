@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.module.category" id="module_category_dealsheet">
+        <field name="name">Dealsheet</field>
+        <field name="sequence">22</field>
+    </record>
+
+    <record id="group_dealsheet_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_dealsheet"/>
+        <field name="implied_ids"
+               eval="[(4, ref('bso_backbone.group_backbone_user'))]"/>
+    </record>
+
+    <record id="group_dealsheet_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_dealsheet"/>
+        <field name="implied_ids"
+               eval="[(4, ref('group_dealsheet_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+    <record model="ir.module.category" id="module_category_dealsheet_role">
+        <field name="name">Dealsheet Role</field>
+        <field name="sequence">23</field>
+    </record>
+
+    <record id="group_dealsheet_role_presale" model="res.groups">
+        <field name="name">Presale</field>
+        <field name="category_id" ref="module_category_dealsheet_role"/>
+        <field name="implied_ids"
+               eval="[(4, ref('group_dealsheet_manager'))]"/>
+    </record>
+
+    <record id="group_dealsheet_role_reviewer" model="res.groups">
+        <field name="name">Reviewer</field>
+        <field name="category_id" ref="module_category_dealsheet_role"/>
+        <field name="implied_ids"
+               eval="[(4, ref('group_dealsheet_manager'))]"/>
+    </record>
+
+</odoo>

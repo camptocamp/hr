@@ -6,8 +6,7 @@ class SaleOrderLine(models.Model):
 
     bundle_details_id = fields.Many2one(
         string='Bundle Details',
-        comodel_name='bundle.details',
-        ondelete='cascade'
+        comodel_name='bundle.details'
     )
 
     @api.model

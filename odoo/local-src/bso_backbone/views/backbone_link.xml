@@ -11,30 +11,46 @@
                 <field name="a_xco_id"/>
                 <field name="z_device_id"/>
                 <field name="z_xco_id"/>
-                <field name="partner_id"/>
+                <field name="tnms_id"/>
+                <field name="supplier_id" invisible="1"/>
+                <field name="supplier_name"/>
+                <field name="supplier_link_id"/>
+                <field name="is_wireless"/>
                 <field name="latency"/>
+                <field name="latency_sla"/>
                 <field name="bandwidth"/>
-                <field name="cable"/>
+                <field name="bearer"/>
+                <field name="cable_system"/>
                 <field name="is_protected"/>
-                <field name="currency_id"/>
-                <field name="cost_upfront" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="cost_monthly" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="cost_monthly_per_mb" invisible="1"
-                       widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="price_upfront" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="price_monthly" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="price_monthly_per_mb" invisible="1"
-                       widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="date_end"
-                       attrs="{'required': [('paid_by_bso', '=', True)]}"/>
-                <field name="auto_renewal"
-                       attrs="{'required': [('paid_by_bso', '=', True)]}"/>
+                <field name="cable_system_protection"
+                       attrs="{'invisible': [('is_protected', '=', False)]}"/>
+                <field name="currency_id"
+                       groups="bso_backbone.group_backbone_manager"/>
+                <field name="nrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"/>
+                <field name="mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"/>
+                <field name="mrc_mb" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"
+                       invisible="1"/>
+                <field name="nrr" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"
+                       invisible="1"/>
+                <field name="mrr" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"
+                       invisible="1"/>
+                <field name="mrr_mb" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"
+                       invisible="1"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="auto_renewal"/>
                 <field name="notes" invisible="1"/>
                 <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
@@ -69,28 +85,46 @@
                         <field name="z_xco_id"/>
                     </group>
                     <group>
-                        <field name="partner_id"/>
+                        <field name="tnms_id"/>
+                        <field name="supplier_id" invisible="1"
+                               options="{'create': false, 'create_edit': false}"/>
+                        <field name="supplier_name"/>
+                        <field name="supplier_link_id"/>
+                        <field name="is_wireless"/>
                         <field name="latency"/>
+                        <field name="latency_sla"/>
                         <field name="bandwidth"/>
-                        <field name="cable"/>
+                        <field name="bearer"/>
+                        <field name="cable_system"/>
                         <field name="is_protected"/>
+                        <field name="cable_system_protection"
+                               attrs="{'invisible': [('is_protected', '=', False)]}"/>
                     </group>
                     <group>
-                        <field name="currency_id"/>
-                        <field name="cost_upfront" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="cost_monthly" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="cost_monthly_per_mb" invisible="1"
-                               widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="price_upfront" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="price_monthly" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="price_monthly_per_mb" invisible="1"
-                               widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="currency_id"
+                               groups="bso_backbone.group_backbone_manager"
+                               options="{'create': false, 'create_edit': false}"/>
+                        <field name="nrc" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               groups="bso_backbone.group_backbone_manager"/>
+                        <field name="mrc" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               groups="bso_backbone.group_backbone_manager"/>
+                        <field name="mrc_mb" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               groups="bso_backbone.group_backbone_manager"
+                               invisible="1"/>
+                        <field name="nrr" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               groups="bso_backbone.group_backbone_manager"/>
+                        <field name="mrr" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               groups="bso_backbone.group_backbone_manager"/>
+                        <field name="mrr_mb" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               groups="bso_backbone.group_backbone_manager"
+                               invisible="1"/>
+                        <field name="date_start"/>
                         <field name="date_end"/>
                         <field name="auto_renewal"/>
                     </group>
@@ -102,6 +136,21 @@
                     </group>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="backbone_link_search" model="ir.ui.view">
+        <field name="name">backbone.link.search</field>
+        <field name="model">backbone.link</field>
+        <field name="arch" type="xml">
+            <search string="Link">
+                <field name="name"/>
+                <field name="a_device_id"/>
+                <field name="z_device_id"/>
+                <field name="supplier_id" invisible="1"/>
+                <field name="supplier_name"/>
+                <field name="supplier_link_id"/>
+            </search>
         </field>
     </record>
 

@@ -1,6 +1,6 @@
-odoo.define('product_bundle.bundle_details', function(require) {
+odoo.define('bso_bundle.reload_sale_order', function(require) {
   var action_manager = require('web.ActionManager');
-  var ProductBundleActionManager = action_manager.include({
+  var BundleActionManager = action_manager.include({
     ir_actions_act_close_wizard_and_reload_view: function (action, options) {
       if (!this.dialog) {
         options.on_close();
@@ -10,5 +10,5 @@ odoo.define('product_bundle.bundle_details', function(require) {
       return $.when();
     },
   });
-  return ProductBundleActionManager;
+  return BundleActionManager;
 });

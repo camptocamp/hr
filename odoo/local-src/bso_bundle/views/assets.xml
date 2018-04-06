@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <template id="product_bundle_assets" name="product_bundle_assets"
+    <template id="bso_bundle_assets" name="bso_bundle_assets"
               inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript"
-                    src="/product_bundle/static/src/js/bundle_details.js"></script>
+                    src="/bso_bundle/static/src/js/reload_sale_order.js"/>
         </xpath>
     </template>
 
