@@ -248,13 +248,17 @@ migration:
           - dealsheet_purchase_sourcing
           - specific_sale
           - camptocamp_tools
-    - version: 10.3.8
+    - version: 10.4.0
       operations:
         post:
-          - anthem songs.upgrade.upgrade_10_3_8::main
+          - anthem songs.upgrade.upgrade_10_4_0::main
       addons:
         upgrade:
           - specific_crm
           - specific_mailchimp
           - account_bank_statement_import_fr_cfonb
           - specific_inter_company
+          - bso_backbone
+          - bso_bundle
+          - bso_dealsheet
+          - dealsheet_purchase_sourcing
