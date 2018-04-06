@@ -274,8 +274,15 @@ class WizSaleDealsheetSource(models.TransientModel):
                 order = self.env['purchase.order'].create(order_data)
                 for line in order.order_line:
                     line_qty = line.product_qty
+                    line_cost = line.price_unit
+                    line_name = line.name
                     line.onchange_product_id()
-                    line.write({'product_qty': line_qty})
+                    line.write(
+                        {'product_qty': line_qty,
+                         'price_unit': line_cost,
+                         'name': line_name,
+                         }
+                    )
                 created.append(order.id)
 
         # link sale line to purchase line.
