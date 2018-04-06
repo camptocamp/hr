@@ -260,7 +260,7 @@ class BundleDetailsEPL(models.Model):
             epl_description = [
                 "Bandwidth: %s Mbps" % rec.epl_bandwidth,
                 "Latency (est.): %s ms" % rec.epl_latency,
-                "Protection: %s" % "Yes" if rec.epl_backup else "No",
+                "Protection: %s" % ("Yes" if rec.epl_backup else "No"),
                 "Side A: %s" % rec.epl_side_a,
                 "Side Z: %s" % rec.epl_side_z
             ]
