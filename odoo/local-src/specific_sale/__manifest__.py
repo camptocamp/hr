@@ -16,6 +16,7 @@
      'website_contract',
      'sale_contract',
      'account_invoice_merge',
+     'account_payment_partner',
      'base_report_to_printer',
      'bso_webservice',
      'sale_line_cost_control',
