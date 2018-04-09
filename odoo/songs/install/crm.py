@@ -61,7 +61,7 @@ def create_leads_for_partners(ctx):
         ('lead_id', '=', False),
     ])
     for partner in partners:
-        partner._create_lead()
+        partner._create_or_update_lead()
 
 
 @anthem.log
