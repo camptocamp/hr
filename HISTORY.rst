@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.4.0 (2018-04-09)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1050: Remove Bank account section on customer invoice
 * BSIBSO-1033: Set date and invoice_date to the same date as the cron generating
   the invoices for subscriptions is ran
@@ -45,8 +57,6 @@ Latest (Unreleased)
 **Build**
 
 * BSIBSO-1043 Do not setup LDAP if env not prod or integration
-
-**Documentation**
 
 
 10.3.7 (2018-03-07)
