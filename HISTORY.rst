@@ -28,6 +28,14 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.4.1 (2018-04-11)
++++++++++++++++++++
+
+**Bugfixes**
+
+* preserve price and description when sourcing from a dealsheet
+
+
 10.4.0 (2018-04-09)
 +++++++++++++++++++
 

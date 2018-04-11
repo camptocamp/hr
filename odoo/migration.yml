@@ -263,3 +263,4 @@ migration:
           - bso_dealsheet
           - dealsheet_purchase_sourcing
           - specific_sale
+    - version: 10.4.1
