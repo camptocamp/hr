@@ -57,21 +57,36 @@ class SaleSubscription(models.Model):
 
     @api.returns('account.invoice')
     def _recurring_create_invoice(self, automatic=False):
-        invoices = super(SaleSubscription, self)._recurring_create_invoice(
+        invoice_ids = super(SaleSubscription, self)._recurring_create_invoice(
             automatic=automatic)
+        invoices = self.env["account.invoice"].browse(invoice_ids)
         # update 'date_next_invoice_period_start'
         periods = {'daily': 'days',
                    'weekly': 'weeks',
                    'monthly': 'months',
                    'yearly': 'years'}
         for sub in self:
+            # Add origin to the invoice lines so
+            # it will be propagated to their names
+            invoices_to_update = invoices.filtered(
+                lambda x: (x.invoice_line_ids.account_analytic_id ==
+                           sub.analytic_account_id)
+            )
+            orders = self.env['sale.order'].search_read(
+                domain=[('subscription_id', '=', sub.id)],
+                fields=['name'],
+            )
+            invoices_to_update.mapped("invoice_line_ids").write({
+                'origin': u', '.join([order['name'] for order in orders]),
+            })
+
             next_date = fields.Date.from_string(
                 sub.date_next_invoice_period_start)
             rule, interval = sub.recurring_rule_type, sub.recurring_interval
             new_date = next_date + relativedelta(**{periods[rule]: interval})
             sub.write({'date_next_invoice_period_start': new_date})
 
-        return invoices
+        return invoice_ids
 
     @api.multi
     def _prepare_invoice_line(self, line, fiscal_position):

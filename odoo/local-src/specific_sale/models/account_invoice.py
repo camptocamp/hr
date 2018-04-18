@@ -181,6 +181,21 @@ class AccountInvoiceLine(models.Model):
 
         super(AccountInvoiceLine, self)._set_additional_fields(invoice)
 
+    @api.model
+    def create(self, values):
+        res = super(AccountInvoiceLine, self).create(values)
+        if res.origin and res.origin not in res.name:
+            res.name = u"{}, {}".format(res.origin, res.name)
+        return res
+
+    @api.multi
+    def write(self, values):
+        res = super(AccountInvoiceLine, self).write(values)
+        for line in self:
+            if line.origin and line.origin not in line.name:
+                line.name = u"{}, {}".format(line.origin, line.name)
+        return res
+
 
 class AccountInvoiceTax(models.Model):
     _inherit = "account.invoice.tax"

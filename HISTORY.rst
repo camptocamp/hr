@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1052 Added propagation of origin to the invoice lines
+
 **Bugfixes**
 
 **Build**
