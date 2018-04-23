@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <form string="Select Pre-Sale">
                 <group>
-                    <field name="dealsheet_id" invisible="1"/>
+                    <field name="sale_order_id" invisible="1"/>
                     <field name="presale_id" required="1"/>
                 </group>
                 <footer>

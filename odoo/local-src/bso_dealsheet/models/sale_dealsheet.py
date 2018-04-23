@@ -22,30 +22,6 @@ class SaleDealsheet(models.Model):
         compute='compute_name',
         store=True
     )
-    seller_id = fields.Many2one(
-        string='Salesperson',
-        comodel_name='res.users',
-        readonly=True,
-        required=True
-    )
-    presale_id = fields.Many2one(
-        string='Pre-Sale',
-        comodel_name='res.users',
-        readonly=True
-    )
-    reviewer_id = fields.Many2one(
-        string='Reviewer',
-        comodel_name='res.users',
-        readonly=True
-    )
-    validated_date = fields.Datetime(
-        string='Validated on',
-        readonly=True
-    )
-    refused_date = fields.Datetime(
-        string='Refused on',
-        readonly=True
-    )
     sale_order_id = fields.Many2one(
         string='Sale Order',
         comodel_name='sale.order',
@@ -71,6 +47,28 @@ class SaleDealsheet(models.Model):
         related='sale_order_id.currency_id',
         readonly=True,
         store=True
+    )
+    seller_id = fields.Many2one(
+        related='sale_order_id.user_id',
+        readonly=True
+    )
+    presale_id = fields.Many2one(
+        string='Pre-Sale',
+        comodel_name='res.users',
+        readonly=True
+    )
+    reviewer_id = fields.Many2one(
+        string='Reviewer',
+        comodel_name='res.users',
+        readonly=True
+    )
+    validated_date = fields.Datetime(
+        string='Validated on',
+        readonly=True
+    )
+    refused_date = fields.Datetime(
+        string='Refused on',
+        readonly=True
     )
     compute_lines = fields.One2many(
         string='Computed Lines',
@@ -462,19 +460,15 @@ class SaleDealsheet(models.Model):
             "res_id": self.id,
             "view_type": "form",
             "view_mode": "form",
+            "target": "inline"
         }
 
     @api.multi
     def action_request(self):
-        wizard_request_model = self.env['sale.dealsheet.wizard.request']
-        wizard_request_id = wizard_request_model.create({
-            'dealsheet_id': self.id
-        })
         return {
             "name": "Select Presale",
             "type": "ir.actions.act_window",
             "res_model": "sale.dealsheet.wizard.request",
-            "res_id": wizard_request_id.id,
             "view_type": "form",
             "view_mode": "form",
             "target": "new",

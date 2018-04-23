@@ -3,7 +3,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import models, fields, api
-import odoo.addons.decimal_precision as dp
 
 
 class SaleDealsheetSourceLineMixin(models.AbstractModel):
@@ -27,24 +26,25 @@ class SaleDealsheetSourceLineMixin(models.AbstractModel):
         string='Dealsheet line',
         comodel_name='sale.dealsheet.line',
     )
-
-    duration = fields.Integer(related="dealsheet_line_id.duration")
-    product_id = fields.Many2one(
-        string='Product',
-        comodel_name='product.product',
-        related='dealsheet_line_id.product_id',
-        readonly=True,
+    duration = fields.Integer(
+        related="dealsheet_line_id.duration",
+        readonly=True
     )
-    qty = fields.Integer(related='dealsheet_line_id.quantity')
+    product_id = fields.Many2one(
+        related='dealsheet_line_id.product_id',
+        readonly=True
+    )
+    qty = fields.Integer(
+        related='dealsheet_line_id.quantity',
+        readonly=True
+    )
     uom_id = fields.Many2one(
-        comodel_name='product.uom',
-        string='UoM',
         related='dealsheet_line_id.uom_id',
-        readonly=True,
+        readonly=True
     )
     price = fields.Float(
-        string='Price',
-        digits=dp.get_precision('Product Price'),
+        related='dealsheet_line_id.cost',
+        readonly=True
     )
 
 
@@ -70,7 +70,6 @@ class SaleDealsheetSourceLineSourcing(models.TransientModel):
 
 
 class WizSaleDealsheetSource(models.TransientModel):
-
     _name = 'wiz.sale.dealsheet.source'
     _description = 'Manage dealsheet sourcing'
 
@@ -274,8 +273,15 @@ class WizSaleDealsheetSource(models.TransientModel):
                 order = self.env['purchase.order'].create(order_data)
                 for line in order.order_line:
                     line_qty = line.product_qty
+                    line_cost = line.price_unit
+                    line_name = line.name
                     line.onchange_product_id()
-                    line.write({'product_qty': line_qty})
+                    line.write(
+                        {'product_qty': line_qty,
+                         'price_unit': line_cost,
+                         'name': line_name,
+                         }
+                    )
                 created.append(order.id)
 
         # link sale line to purchase line.

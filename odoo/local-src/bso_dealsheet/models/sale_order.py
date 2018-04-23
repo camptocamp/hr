@@ -16,28 +16,18 @@ class SaleOrder(models.Model):
     )
 
     @api.multi
-    def dealsheet_action_request(self):
-        return self.dealsheet_create().action_request()
-
-    @api.multi
-    def dealsheet_action_create(self):
-        return self.dealsheet_create().action_create()
-
-    @api.model
-    def dealsheet_create(self):
-        dealsheet_model = self.env['sale.dealsheet']
-        if not self.env.user.has_group(
-                'bso_dealsheet.group_dealsheet_manager'):
-            dealsheet_model = dealsheet_model.sudo()
-        dealsheet_id = dealsheet_model.create({
-            'seller_id': self.env.uid,
-            'sale_order_id': self.id,
-        })
-        self.update({
-            'state': 'dealsheet',
-            'dealsheet_id': dealsheet_id.id,
-        })
-        return dealsheet_id
+    def action_dealsheet(self):
+        model_dealsheet = self.env['sale.dealsheet']
+        group_manager = 'bso_dealsheet.group_dealsheet_manager'
+        if self.env.user.has_group(group_manager):
+            dealsheet_id = model_dealsheet.create({})
+            self.update({
+                'state': 'dealsheet',
+                'dealsheet_id': dealsheet_id.id
+            })
+            return dealsheet_id.action_create()
+        else:
+            return model_dealsheet.action_request()
 
     @api.multi
     def unlink(self):
