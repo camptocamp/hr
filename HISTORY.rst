@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * BSIBSO-1052 Added propagation of origin to the invoice lines
+* Uninstall sale_line_cost_control and sale_margin
 
 **Bugfixes**
 

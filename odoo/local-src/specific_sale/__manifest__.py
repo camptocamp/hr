@@ -19,7 +19,6 @@
      'account_payment_partner',
      'base_report_to_printer',
      'bso_webservice',
-     'sale_line_cost_control',
  ],
  'website': 'www.camptocamp.com',
  'demo': [
