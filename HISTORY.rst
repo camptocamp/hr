@@ -26,6 +26,9 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* Manually generated invoices from SO: end date on invoice line must be the
+  day before the reference date
+
 **Build**
 
 **Documentation**

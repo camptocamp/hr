@@ -28,4 +28,8 @@ class MrpInvoicing(models.TransientModel):
                 'active_ids': [sale_order.id],
                 'ref_date_mrc_delivery': self.ref_date
             }
+        if "test_today" in self.env.context:
+            # test_today is used by tests to force a date
+            # we need to propagate it
+            res['context']['test_today'] = self.env.context['test_today']
         return res

@@ -165,16 +165,19 @@ class TestSaleMrpInvoicing(BaseCase):
                 'Delivered quantity on 1st July for the MRC is not correct')
         # Generate invoice using action for another date 1st July
         # First wizard, to select the reference date for MRC products
-        wiz_act = self.so.action_invoicing()
+        wiz_act = self.so.with_context(
+            test_today='2017-06-10').action_invoicing()
         wiz = self.env[wiz_act['res_model']].browse(wiz_act['res_id'])
         wiz.ref_date = '2017-07-01 12:00:00'
-        self.env.context = {
+        wiz.env.context = {
             'active_id': self.so.id,
-            'active_ids': [self.so.id]
+            'active_ids': [self.so.id],
+            'test_today': '2017-06-10',
         }
         wiz_act = wiz.button_ok()
         # Second wizard, that generate the invoice
-        wiz = self.env[wiz_act['res_model']].browse(wiz_act['res_id'])
+        wiz = self.env[wiz_act['res_model']].with_context(
+            wiz_act['context']).browse(wiz_act['res_id'])
         wiz.advance_payment_method = 'delivered'
         wiz.create_invoices()
         self.assertEquals(len(self.so.invoice_ids), 1,
@@ -202,7 +205,8 @@ class TestSaleMrpInvoicing(BaseCase):
             'create_date': '2017-07-20 12:00:00'
         })
         self.env.context = {
-                'ref_date_mrc_delivery': '2017-08-01 12:00:00'
+            'ref_date_mrc_delivery': '2017-08-01 12:00:00',
+            'test_today': '2017-07-20',
             }
         # Checking the delivered qty for the MRC product
         delivered_qty += 1
@@ -212,22 +216,27 @@ class TestSaleMrpInvoicing(BaseCase):
                 delivered_qty, 3,
                 'The delivered quantity for MRC on 1st August is not correct')
         # Generate the 2nd invoice
-        wiz_act = self.so.action_invoicing()
+        wiz_act = self.so.with_context(
+            test_today='2017-07-20').action_invoicing()
         wiz = self.env[wiz_act['res_model']].browse(wiz_act['res_id'])
         wiz.ref_date = '2017-08-01 12:00:00'
-        self.env.context = {
+        wiz.env.context = {
             'active_id': self.so.id,
-            'active_ids': [self.so.id]
+            'active_ids': [self.so.id],
+            'test_today': '2017-07-20',
         }
         wiz_act = wiz.button_ok()
         # Second wizard, that generate the invoice
-        wiz = self.env[wiz_act['res_model']].browse(wiz_act['res_id'])
+        wiz = self.env[wiz_act['res_model']].with_context(
+            wiz_act['context']).browse(wiz_act['res_id'])
         wiz.advance_payment_method = 'delivered'
         wiz.create_invoices()
         self.assertEquals(len(self.so.invoice_ids), 2,
                           'There should be two invoices created')
         invoice_line = self.so.invoice_ids[0].invoice_line_ids
         invoiced_qty = 1 + 2 * (12/31)
+        for line in invoice_line:
+            self.assertEqual(line.end_date, '2017-07-31')
         self.assertAlmostEquals(invoice_line[0].quantity, invoiced_qty, 3,
                                 'The invoiced quantity for the subscription'
                                 'on 1st August is incorrect')

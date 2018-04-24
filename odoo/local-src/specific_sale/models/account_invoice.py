@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
+from datetime import timedelta
 from odoo import api, models, fields
 
 
@@ -170,12 +170,20 @@ class AccountInvoiceLine(models.Model):
 
     def _set_additional_fields(self, invoice):
         if not self.start_date and not self.end_date:
-            today = fields.Date.today()
+            # test_today is used in tests to force a date
+            today = self.env.context.get('test_today',
+                                         fields.Date.today())
             date_dict = self.update_dates(today)
             if 'ref_date_mrc_delivery' in self.env.context:
+                refdatetime = fields.Datetime.from_string(
+                    self.env.context['ref_date_mrc_delivery']
+                )
+                # end date is the day before the ref_date
+                refdate = fields.Date.to_string(
+                    refdatetime.date() - timedelta(days=1)
+                )
                 date_dict['start_date'] = today
-                date_dict['end_date'] = (
-                    self.env.context.get('ref_date_mrc_delivery')[:10])
+                date_dict['end_date'] = refdate
 
             self.write(date_dict)
 
