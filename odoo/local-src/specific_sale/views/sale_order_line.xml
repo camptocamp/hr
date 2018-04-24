@@ -12,14 +12,4 @@
     </field>
   </record>
 
-  <record id="sale_margin_sale_order_line_tree" model="ir.ui.view">
-    <field name="name">sale.order.form</field>
-    <field name="model">sale.order</field>
-    <field name="inherit_id" ref="sale_line_cost_control.sale_margin_sale_order_line_tree"/>
-    <field name="arch" type="xml">
-      <xpath expr="//button" position="attributes">
-        <attribute name="invisible">1</attribute>
-      </xpath>
-    </field>
-  </record>
 </odoo>

@@ -268,3 +268,10 @@ migration:
       addons:
         upgrade:
           - specific_sale
+    - version: 10.5.0
+      addons:
+        upgrade:
+          - specific_sale
+      operations:
+        post:
+          - anthem songs.upgrade.upgrade_10_5_0::main
