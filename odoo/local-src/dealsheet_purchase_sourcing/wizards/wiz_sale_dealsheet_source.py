@@ -27,8 +27,7 @@ class SaleDealsheetSourceLineMixin(models.AbstractModel):
         comodel_name='sale.dealsheet.line',
     )
     duration = fields.Integer(
-        related="dealsheet_line_id.duration",
-        readonly=True
+        related="dealsheet_line_id.duration"
     )
     product_id = fields.Many2one(
         related='dealsheet_line_id.product_id',

@@ -90,7 +90,7 @@ class BaseTestCase(common.SavepointCase):
             ]
         }
         cls.sale_order = cls.sale_order_model.create(so_vals)
-        cls.dealsheet = cls.sale_order.dealsheet_create()
+        cls.dealsheet = cls.sale_order.action_dealsheet()
         cls.sale_manager = cls.user_model.create({
             'name': 'Test Sale Manager',
             'login': 'test_sale_manager',
