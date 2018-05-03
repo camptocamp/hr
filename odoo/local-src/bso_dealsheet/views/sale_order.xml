@@ -24,8 +24,7 @@
                     <button name="action_dealsheet"
                             string="Dealsheet" type="object"
                             class="btn-primary"
-                            attrs="{'invisible': [('dealsheet_id', '!=', False)]}"
-                            context="{'default_sale_order_id': id}"/>
+                            attrs="{'invisible': [('dealsheet_id', '!=', False)]}"/>
                     <button name="action_quotation_send" string="Send by Email"
                             type="object" class="btn-primary"
                             attrs="{'invisible': ['|', ('dealsheet_id', '=', False), ('state', '!=', 'draft')]}"/>
@@ -41,6 +40,10 @@
                     <button name="action_invoicing" string="Create Invoice"
                             type="object" class="btn-primary"
                             attrs="{'invisible': [('invoice_status', '!=', 'to invoice')]}"/>
+                    <button name="action_invoicing" string="Create Invoice"
+                            type="object"
+                            context="{'default_advance_payment_method': 'percentage'}"
+                            attrs="{'invisible': ['|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale')]}"/>
                     <button name="action_cancel" string="Cancel"
                             type="object" states="sent,sale"/>
                     <button name="action_draft" string="Set to Quotation"

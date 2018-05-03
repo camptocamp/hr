@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
-        <act_window
-                id="action_backbone_xco"
-                name="XConnects"
-                res_model="backbone.xco"
-                view_mode="tree,form,graph,pivot"/>
+    <act_window
+            id="action_backbone_xco"
+            name="XConnects"
+            res_model="backbone.xco"
+            view_mode="tree,form,graph,pivot"/>
 
-        <act_window
-                id="action_backbone_link"
-                name="Links"
-                res_model="backbone.link"
-                view_mode="tree,form,graph,pivot"/>
+    <act_window
+            id="action_backbone_link"
+            name="Links"
+            res_model="backbone.link"
+            view_mode="tree,form,graph,pivot"/>
 
-        <act_window
-                id="action_backbone_device"
-                name="Devices"
-                res_model="backbone.device"
-                view_mode="tree,form,graph,pivot"/>
+    <act_window
+            id="action_backbone_device"
+            name="Devices"
+            res_model="backbone.device"
+            view_mode="tree,form,graph,pivot"/>
 
 
-        <act_window
-                id="action_backbone_pop"
-                name="POPs"
-                res_model="backbone.pop"
-                view_mode="tree,form,graph,pivot"/>
+    <act_window
+            id="action_backbone_pop"
+            name="POPs"
+            res_model="backbone.pop"
+            view_mode="tree,form,graph,pivot"/>
 
-    </data>
-</openerp>
+</odoo>

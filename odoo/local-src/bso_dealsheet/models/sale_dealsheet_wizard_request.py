@@ -20,11 +20,5 @@ class SaleDealsheetWizardRequest(models.TransientModel):
 
     @api.multi
     def action_requested(self):
-        dealsheet_id = self.env['sale.dealsheet'].sudo().create({
-            'sale_order_id': self.sale_order_id.id
-        })
-        dealsheet_id.action_requested(self.presale_id)
-        self.sale_order_id.update({
-            'state': 'dealsheet',
-            'dealsheet_id': dealsheet_id.id
-        })
+        self.env['sale.dealsheet'].action_requested(self.sale_order_id,
+                                                    self.presale_id)

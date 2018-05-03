@@ -17,17 +17,26 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_dealsheet(self):
-        model_dealsheet = self.env['sale.dealsheet']
         group_manager = 'bso_dealsheet.group_dealsheet_manager'
         if self.env.user.has_group(group_manager):
-            dealsheet_id = model_dealsheet.create({})
-            self.update({
-                'state': 'dealsheet',
-                'dealsheet_id': dealsheet_id.id
-            })
-            return dealsheet_id.action_create()
+            return self.dealsheet_create()
         else:
-            return model_dealsheet.action_request()
+            return self.dealsheet_request()
+
+    @api.model
+    def dealsheet_create(self):
+        dealsheet_id = self.env['sale.dealsheet'].create({
+            'sale_order_id': self.id
+        })
+        self.update({
+            'state': 'dealsheet',
+            'dealsheet_id': dealsheet_id.id
+        })
+        return dealsheet_id.action_create()
+
+    @api.model
+    def dealsheet_request(self):
+        return self.env['sale.dealsheet'].action_request(self.id)
 
     @api.multi
     def unlink(self):
