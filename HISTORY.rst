@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.5.0 (2018-05-03)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1052 Added propagation of origin to the invoice lines
 * Uninstall sale_line_cost_control and sale_margin
 
@@ -28,10 +40,6 @@ Latest (Unreleased)
 
 * Manually generated invoices from SO: end date on invoice line must be the
   day before the reference date
-
-**Build**
-
-**Documentation**
 
 
 10.4.1 (2018-04-11)
