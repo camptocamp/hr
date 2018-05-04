@@ -17,11 +17,12 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_dealsheet(self):
+        self.ensure_one()
         group_manager = 'bso_dealsheet.group_dealsheet_manager'
         if self.env.user.has_group(group_manager):
-            return self.dealsheet_create()
+            return self.dealsheet_create().action_create()
         else:
-            return self.dealsheet_request()
+            return self.env['sale.dealsheet'].action_request(self.id)
 
     @api.model
     def dealsheet_create(self):
@@ -32,11 +33,7 @@ class SaleOrder(models.Model):
             'state': 'dealsheet',
             'dealsheet_id': dealsheet_id.id
         })
-        return dealsheet_id.action_create()
-
-    @api.model
-    def dealsheet_request(self):
-        return self.env['sale.dealsheet'].action_request(self.id)
+        return dealsheet_id
 
     @api.multi
     def unlink(self):
