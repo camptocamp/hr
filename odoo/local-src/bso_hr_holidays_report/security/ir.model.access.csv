@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_holidays_report,hr.holidays.report.access,model_hr_holidays_report,group_holidays_report_access,1,0,0,0
+access_hr_holidays_report_line,hr.holidays.report.line.access,model_hr_holidays_report_line,group_holidays_report_access,1,0,0,0

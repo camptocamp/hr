@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_holidays_report_tree" model="ir.ui.view">
+        <field name="name">hr.holidays.report.tree</field>
+        <field name="model">hr.holidays.report</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="start_date" widget="date"/>
+                <field name="end_date" widget="date"/>
+                <field name="last_report_date" widget="date"/>
+                <field name="report_lines" invisible="1"/>
+                <button string="Report details" type="object"
+                        name="open_report_lines"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_holidays_report_action" model="ir.actions.act_window">
+        <field name="name">Leave Reports</field>
+        <field name="res_model">hr.holidays.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+</odoo>
