@@ -265,10 +265,7 @@ migration:
           - specific_sale
     - version: 10.4.1
     - version: 10.5.0
-      addons:
-        upgrade:
-          - specific_sale
-    - version: 10.5.0
+    - version: 10.5.1
       addons:
         upgrade:
           - specific_sale
