@@ -21,14 +21,20 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
-* install bso_employee_notebook_visibility
-* update bso_backbone_bundle_dealsheet
-
 **Bugfixes**
 
 **Build**
 
 **Documentation**
+
+
+10.6.0 (2018-05-18)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* install bso_employee_notebook_visibility
+* update bso_backbone_bundle_dealsheet
 
 
 10.5.0 (2018-05-03)
