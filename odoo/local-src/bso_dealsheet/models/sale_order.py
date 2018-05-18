@@ -16,26 +16,22 @@ class SaleOrder(models.Model):
     )
 
     @api.multi
-    def dealsheet_action_request(self):
-        return self.dealsheet_create().action_request()
-
-    @api.multi
-    def dealsheet_action_create(self):
-        return self.dealsheet_create().action_create()
+    def action_dealsheet(self):
+        self.ensure_one()
+        group_manager = 'bso_dealsheet.group_dealsheet_manager'
+        if self.env.user.has_group(group_manager):
+            return self.dealsheet_create().action_create()
+        else:
+            return self.env['sale.dealsheet'].action_request(self.id)
 
     @api.model
     def dealsheet_create(self):
-        dealsheet_model = self.env['sale.dealsheet']
-        if not self.env.user.has_group(
-                'bso_dealsheet.group_dealsheet_manager'):
-            dealsheet_model = dealsheet_model.sudo()
-        dealsheet_id = dealsheet_model.create({
-            'seller_id': self.env.uid,
-            'sale_order_id': self.id,
+        dealsheet_id = self.env['sale.dealsheet'].create({
+            'sale_order_id': self.id
         })
         self.update({
             'state': 'dealsheet',
-            'dealsheet_id': dealsheet_id.id,
+            'dealsheet_id': dealsheet_id.id
         })
         return dealsheet_id
 

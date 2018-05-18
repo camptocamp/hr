@@ -253,13 +253,11 @@ class BundleDetailsEPL(models.Model):
                 'epl_name': epl_name
             })
 
-    @api.depends('epl_bandwidth', 'epl_latency', 'epl_backup',
-                 'epl_side_a', 'epl_side_z')
+    @api.depends('epl_bandwidth', 'epl_backup', 'epl_side_a', 'epl_side_z')
     def compute_epl_description(self):
         for rec in self:
             epl_description = [
                 "Bandwidth: %s Mbps" % rec.epl_bandwidth,
-                "Latency (est.): %s ms" % rec.epl_latency,
                 "Protection: %s" % ("Yes" if rec.epl_backup else "No"),
                 "Side A: %s" % rec.epl_side_a,
                 "Side Z: %s" % rec.epl_side_z

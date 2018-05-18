@@ -13,29 +13,37 @@
         </field>
     </record>
 
-    <record id="sale_order_header_replace" model="ir.ui.view">
-        <field name="name">sale.order.header.replace</field>
+    <record id="sale_order_header_dealsheet" model="ir.ui.view">
+        <field name="name">sale.order.header.dealsheet</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority">17</field>
         <field name="arch" type="xml">
             <xpath expr="//header" position="replace">
                 <header>
-                    <button name="dealsheet_action_request"
-                            string="Request Dealsheet" type="object"
+                    <button name="action_dealsheet"
+                            string="Dealsheet" type="object"
                             class="btn-primary"
                             attrs="{'invisible': [('dealsheet_id', '!=', False)]}"/>
                     <button name="action_quotation_send" string="Send by Email"
                             type="object" class="btn-primary"
                             attrs="{'invisible': ['|', ('dealsheet_id', '=', False), ('state', '!=', 'draft')]}"/>
+                    <button name="action_quotation_send" string="Send by Email"
+                            type="object" states="sent,sale"/>
                     <button name="print_quotation" string="Print"
                             type="object" class="btn-primary"
-                            attrs="{'invisible': ['|', ('dealsheet_id', '=', False), ('state', '=', 'dealsheet')]}"/>
+                            attrs="{'invisible': ['|', ('dealsheet_id', '=', False), ('state', '!=', 'draft')]}"/>
+                    <button name="print_quotation" string="Print"
+                            type="object" states="sent,sale"/>
                     <button name="action_confirm" string="Confirm Sale"
                             type="object" states="sent" class="btn-primary"/>
-                    <button name="%(sale.action_view_sale_advance_payment_inv)d"
-                            string="Create Invoice"
-                            type="action" class="btn-primary"
+                    <button name="action_invoicing" string="Create Invoice"
+                            type="object" class="btn-primary"
                             attrs="{'invisible': [('invoice_status', '!=', 'to invoice')]}"/>
+                    <button name="action_invoicing" string="Create Invoice"
+                            type="object"
+                            context="{'default_advance_payment_method': 'percentage'}"
+                            attrs="{'invisible': ['|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale')]}"/>
                     <button name="action_cancel" string="Cancel"
                             type="object" states="sent,sale"/>
                     <button name="action_draft" string="Set to Quotation"
@@ -46,24 +54,6 @@
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,sent,sale"/>
                 </header>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="sale_order_button_create_dealsheet" model="ir.ui.view">
-        <field name="name">sale.order.button.create.dealsheet</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id"
-               ref="bso_dealsheet.sale_order_header_replace"/>
-        <field name="groups_id"
-               eval="[(4, ref('bso_dealsheet.group_dealsheet_manager'))]"/>
-        <field name="arch" type="xml">
-            <xpath expr="//button[@name='dealsheet_action_request']"
-                   position="replace">
-                <button name="dealsheet_action_create"
-                        string="Create Dealsheet"
-                        type="object" class="btn-primary"
-                        attrs="{'invisible': [('dealsheet_id', '!=', False)]}"/>
             </xpath>
         </field>
     </record>

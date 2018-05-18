@@ -15,7 +15,7 @@
             <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']"
                    position="after">
                 <field name="bundle_details_id" invisible="1"/>
-                <button string="Bundle"
+                <button string="Edit"
                         name="%(bso_bundle.bundle_details_edit)d"
                         type="action"
                         class="oe_edit_only oe-link"

@@ -164,9 +164,9 @@ class BundleDetails(models.Model):
     def _get_product_mrc(self, name):
         product = self.sale_order_line_id_mrc.product_id
         if not product:
-            product = self.bundle_id.copy()
-            product.product_tmpl_id.write({'active': False})
-        product.product_tmpl_id.write({'name': name})
+            product = self.bundle_id.sudo().copy()
+            product.product_tmpl_id.sudo().write({'active': False})
+        product.product_tmpl_id.sudo().write({'name': name})
         return product
 
     @api.model
@@ -187,7 +187,7 @@ class BundleDetails(models.Model):
         else:
             line = self.env['sale.order.line'].create(data)
             if product_id.recurring_invoice:
-                product_id.write({'sale_order_line_id': line.id})
+                product_id.sudo().write({'sale_order_line_id': line.id})
                 self.sale_order_line_id_mrc = line
             else:
                 self.sale_order_line_id_nrc = line

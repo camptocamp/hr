@@ -22,30 +22,6 @@ class SaleDealsheet(models.Model):
         compute='compute_name',
         store=True
     )
-    seller_id = fields.Many2one(
-        string='Salesperson',
-        comodel_name='res.users',
-        readonly=True,
-        required=True
-    )
-    presale_id = fields.Many2one(
-        string='Pre-Sale',
-        comodel_name='res.users',
-        readonly=True
-    )
-    reviewer_id = fields.Many2one(
-        string='Reviewer',
-        comodel_name='res.users',
-        readonly=True
-    )
-    validated_date = fields.Datetime(
-        string='Validated on',
-        readonly=True
-    )
-    refused_date = fields.Datetime(
-        string='Refused on',
-        readonly=True
-    )
     sale_order_id = fields.Many2one(
         string='Sale Order',
         comodel_name='sale.order',
@@ -71,6 +47,28 @@ class SaleDealsheet(models.Model):
         related='sale_order_id.currency_id',
         readonly=True,
         store=True
+    )
+    seller_id = fields.Many2one(
+        related='sale_order_id.user_id',
+        readonly=True
+    )
+    presale_id = fields.Many2one(
+        string='Pre-Sale',
+        comodel_name='res.users',
+        readonly=True
+    )
+    reviewer_id = fields.Many2one(
+        string='Reviewer',
+        comodel_name='res.users',
+        readonly=True
+    )
+    validated_date = fields.Datetime(
+        string='Validated on',
+        readonly=True
+    )
+    refused_date = fields.Datetime(
+        string='Refused on',
+        readonly=True
     )
     compute_lines = fields.One2many(
         string='Computed Lines',
@@ -462,13 +460,14 @@ class SaleDealsheet(models.Model):
             "res_id": self.id,
             "view_type": "form",
             "view_mode": "form",
+            "flags": {'initial_mode': 'edit'},
         }
 
     @api.multi
-    def action_request(self):
+    def action_request(self, sale_order_id):
         wizard_request_model = self.env['sale.dealsheet.wizard.request']
         wizard_request_id = wizard_request_model.create({
-            'dealsheet_id': self.id
+            'sale_order_id': sale_order_id
         })
         return {
             "name": "Select Presale",
@@ -481,16 +480,25 @@ class SaleDealsheet(models.Model):
         }
 
     @api.multi
-    def action_requested(self, presale_id):
-        subject = "%s Requested" % self.name
-        body = '<br>'.join(("Customer: %s" % self.partner_id.name,
-                            "Currency: %s" % self.currency_id.name,
-                            "Revenue: %.2f" % self.revenue))
+    def action_requested(self, sale_order_id, presale_id):
+        dealsheet_id = self.sudo().create({
+            'sale_order_id': sale_order_id.id
+        })
+        sale_order_id.update({
+            'state': 'dealsheet',
+            'dealsheet_id': dealsheet_id.id
+        })
 
-        self.message_subscribe_users(presale_id.id, [1])
-        self.message_post(subject=subject,
-                          body=body,
-                          subtype='mt_comment')
+        subject = "%s Requested" % dealsheet_id.name
+        body = '<br>'.join(("Customer: %s" % dealsheet_id.partner_id.name,
+                            "Duration: %s" % dealsheet_id.duration,
+                            "Currency: %s" % dealsheet_id.currency_id.name,
+                            "Revenue: %.2f" % dealsheet_id.revenue))
+
+        dealsheet_id.message_subscribe_users(presale_id.id, [1])
+        dealsheet_id.message_post(subject=subject,
+                                  body=body,
+                                  subtype='mt_comment')
 
     @api.multi
     def action_confirm(self):
@@ -517,6 +525,7 @@ class SaleDealsheet(models.Model):
 
         subject = "%s Confirmed" % self.name
         body = '<br>'.join(("Customer: %s" % self.partner_id.name,
+                            "Duration: %s" % self.duration,
                             "Currency: %s" % self.currency_id.name,
                             "Cost: %.2f" % self.cost,
                             "Revenue: %.2f" % self.revenue,
