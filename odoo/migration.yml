@@ -272,3 +272,8 @@ migration:
       operations:
         post:
           - anthem songs.upgrade.upgrade_10_5_0::main
+    - version: 10.6.0
+      addons:
+        upgrade:
+          - bso_backbone_bundle_dealsheet
+          - bso_employee_notebook_visibility

@@ -21,6 +21,9 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* install bso_employee_notebook_visibility
+* update bso_backbone_bundle_dealsheet
+
 **Bugfixes**
 
 **Build**
