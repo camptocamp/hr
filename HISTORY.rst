@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* Enforce default `type` value to `crm.lead` records through custom action BSIBSO-1054
+
 **Build**
 
 **Documentation**
