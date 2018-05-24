@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* Add `Existing customers` filter to `crm.lead` search view BSIBSO-1055
+
 **Bugfixes**
 
 * Enforce default `type` value to `crm.lead` records through custom action BSIBSO-1054

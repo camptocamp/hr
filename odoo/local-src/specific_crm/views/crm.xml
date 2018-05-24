@@ -149,6 +149,11 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
         <field name="arch" type="xml">
+            <xpath expr="//filter[@name='unassigned']" position="after">
+                <filter string="Existing customers" name="existing_customer"
+                        domain="[('partner_id', '!=', False)]"
+                        help="Show only existing customers"/>
+            </xpath>
             <xpath expr="//filter[@name='groupby_createmonth']" position="after">
                 <filter string="Industry" name="industry_id" domain="[]" context="{'group_by': 'industry_id'}" />
                 <filter string="Industry subsector" name="industry_subsector_id" domain="[]" context="{'group_by': 'industry_subsector_id'}" />
