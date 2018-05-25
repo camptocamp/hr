@@ -28,3 +28,4 @@ class HrHolidays(models.Model):
 
     def get_employee_department_id(self):
         return self.env.user.employee_ids.department_id.id
+
