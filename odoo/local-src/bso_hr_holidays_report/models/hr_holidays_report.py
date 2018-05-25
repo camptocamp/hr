@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 class HrHolidaysReport(models.Model):
     _name = "hr.holidays.report"
     _description = "Leave report"
-    _order = 'id DESC'
+    _order = 'start_date DESC'
 
     _sql_constraints = [
         ('name_unique', 'UNIQUE (name)', 'Report already exists')
