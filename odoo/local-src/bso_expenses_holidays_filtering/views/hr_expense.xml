@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_expense_sheet_filter_bso" model="ir.ui.view">
+        <field name="name">hr.expense.sheet.search</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id"
+               ref="hr_expense.view_hr_expense_sheet_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[4]" position="after">
+                <filter string="My Perimeter Reports" name="my_perimeter"
+                        groups="hr_expense.group_hr_expense_manager"/>
+            </xpath>
+             <xpath expr="//filter[4]" position="attributes">
+               <attribute name="name">my_team</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_expense.action_hr_expense_sheet_all_to_approve"
+            model="ir.actions.act_window">
+        <field name="context">{'search_default_submitted': 1, 'search_default_my_team': 1,}</field>
+    </record>
+
+</odoo>

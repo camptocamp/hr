@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_holidays_sheet_filter_bso" model="ir.ui.view">
+        <field name="name">hr.holidays.search</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id"
+               ref="hr_holidays.view_hr_holidays_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='department']" position="after">
+                <filter name="my_perimeter"
+                        groups="hr_expense.group_hr_expense_manager"
+                        string="My Perimeter Leaves"/>
+            </xpath>
+            <xpath expr="//filter[7]" position="attributes">
+                <attribute name="name">my_team</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_holidays.open_department_holidays_approve"
+            model="ir.actions.act_window">
+        <field name="context">{'search_default_approve': 1,
+            'search_default_my_team': 1,}
+        </field>
+    </record>
+
+    <record id="hr_holidays.open_department_holidays_allocation_approve"
+            model="ir.actions.act_window">
+        <field name="context">{'default_type':'add','search_default_approve':1,
+            'search_default_my_team': 1}
+        </field>
+    </record>
+
+
+</odoo>
