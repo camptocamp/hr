@@ -1,21 +1,11 @@
 from datetime import datetime, date, time
 
-from dateutil.relativedelta import *
-from odoo import api, models, fields
-from odoo.exceptions import ValidationError
-from odoo.tools.translate import _
+from dateutil.relativedelta import relativedelta
+from odoo import api, models
 
 
 class HrHolidays(models.Model):
     _inherit = "hr.holidays"
-    is_reported = fields.Boolean(string='Is reported')
-
-    @api.constrains('state')
-    def _check_leave_state(self):
-        today = datetime.combine(date.today(), time())
-        for holiday in self:
-            if holiday.date_from and holiday.date_from < str(today):
-                raise ValidationError(_('You can not update a passed leave'))
 
     @api.model
     def auto_validate_leaves(self):
@@ -28,6 +18,6 @@ class HrHolidays(models.Model):
         date_delta = today + relativedelta(days=2)
         return self.env['hr.holidays'].search([
             ('state', 'in', ['confirm']),
-            ('date_from', '<=', str(date_delta)),
             ('date_from', '>', str(today)),
+            ('date_from', '<', str(date_delta)),
         ])

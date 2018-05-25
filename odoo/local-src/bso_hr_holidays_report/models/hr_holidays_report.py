@@ -3,7 +3,7 @@ import calendar
 import logging
 from datetime import datetime, date, time
 
-from dateutil.relativedelta import *
+from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
 from pytz import timezone
 
@@ -109,13 +109,8 @@ class HrHolidaysReport(models.Model):
         return self.env['hr.holidays'].search([
             ('state', 'in', ['validate']),
             ('type', 'in', ['remove']),
-            '|',
-            '&',
-            ('date_from', '>=', start_date),
-            ('date_from', '<=', end_date),
-            '&',
-            ('date_to', '>=', start_date),
-            ('date_to', '<=', end_date),
+            ('date_to', '>', start_date),
+            ('date_from', '<', end_date)
         ])
 
     @api.model
@@ -126,15 +121,9 @@ class HrHolidaysReport(models.Model):
         return self.env['hr.holidays'].search([
             ('state', 'in', ['validate']),
             ('type', 'in', ['remove']),
-            ('date_validated', '>=', last_report_date),
-            ('date_validated', '<', start_date),
-            '|',
-            '&',
-            ('date_from', '>=', last_report_date),
-            ('date_from', '<', start_date),
-            '&',
-            ('date_to', '>=', last_report_date),
-            ('date_to', '<', start_date),
+            ('date_validated', '>', last_report_date),
+            ('date_to', '>', last_report_date),
+            ('date_from', '<', start_date)
         ])
 
     @api.model
@@ -145,22 +134,14 @@ class HrHolidaysReport(models.Model):
         return self.env['hr.holidays'].search([
             ('state', 'in', ['refuse']),
             ('type', 'in', ['remove']),
-            ('is_reported', '=', True),
-            ('date_refused', '>=', last_report_date),
-            ('date_refused', '<', start_date),
-            '|',
-            '&',
-            ('date_from', '>=', last_report_date),
-            ('date_from', '<', start_date),
-            '&',
-            ('date_to', '>=', last_report_date),
-            ('date_to', '<', start_date),
+            ('date_validated', '<', last_report_date),
+            ('date_refused', '>', last_report_date),
+            ('date_to', '<', start_date)
         ])
 
     @api.model
     def _get_line_item(self, holiday_id, start_date, end_date):
         # Build line item with static content
-        holiday_id.write({"is_reported": True})
         employee_id = holiday_id.employee_id
         holiday_status_id = holiday_id.holiday_status_id
         return {
@@ -261,7 +242,5 @@ class HrHolidaysReport(models.Model):
             "view_type": "form",
             "view_mode": "tree,form",
             "domain": [('holiday_report_id', '=', self.id)],
-            "context": {
-                'search_default_group_employee_leave_type': 1,
-            },
+            "context": {'search_default_group_employee_leave_type': 1},
         }
