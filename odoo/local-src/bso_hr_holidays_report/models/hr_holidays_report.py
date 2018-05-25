@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import calendar
 import logging
-from datetime import datetime, date, time
+from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
@@ -19,6 +19,16 @@ class HrHolidaysReport(models.Model):
         ('name_unique', 'UNIQUE (name)', 'Report already exists')
     ]
 
+    year = fields.Integer(
+        string='Year',
+        default=lambda self: self._get_year(),
+        readonly=True
+    )
+    month = fields.Integer(
+        string='Month',
+        default=lambda self: self._get_month(),
+        readonly=True
+    )
     name = fields.Char(
         string='Report',
         compute='compute_name',
@@ -26,18 +36,23 @@ class HrHolidaysReport(models.Model):
     )
     start_date = fields.Datetime(
         string='Start Date',
-        default=lambda self: self._get_start_date(),
-        readonly=True
+        compute='compute_dates',
+        store=True
     )
     end_date = fields.Datetime(
         string='End Date',
-        default=lambda self: self._get_end_date(),
+        compute='compute_dates',
+        store=True
+    )
+    last_create = fields.Datetime(
+        string='Last Report Date',
+        default=lambda self: self._get_last_create(),
         readonly=True
     )
-    last_report_date = fields.Datetime(
-        string='Last Report Date',
-        default=lambda self: self._get_last_report_date(),
-        readonly=True
+    last_end = fields.Datetime(
+        string='Last End Date',
+        compute='compute_dates',
+        store=True
     )
     report_lines = fields.One2many(
         string='Report Lines',
@@ -50,27 +65,38 @@ class HrHolidaysReport(models.Model):
     # DEFAULTS
 
     @api.model
-    def _get_start_date(self):
-        return datetime.combine(date.today(), time()).replace(day=1)
+    def _get_year(self):
+        return datetime.today().year
 
     @api.model
-    def _get_end_date(self):
-        return self._get_start_date() + relativedelta(months=1, seconds=-1)
+    def _get_month(self):
+        return datetime.today().month
 
     @api.model
-    def _get_last_report_date(self):
-        last_report = self.env[self._name].search([], limit=1, order='id desc')
-        return last_report.create_date
+    def _get_last_create(self):
+        lst = self.env[self._name].search([], limit=1, order='start_date DESC')
+        return lst.create_date
 
     # COMPUTES
 
-    @api.depends('start_date')
+    @api.depends('year', 'month')
     def compute_name(self):
         for rec in self:
-            start_date = fields.Date.from_string(rec.start_date)
-            month_str = calendar.month_name[start_date.month]
+            month_str = calendar.month_name[rec.month]
             rec.update({
-                'name': "Report %s %s" % (month_str, start_date.year)
+                'name': "Report %s %s" % (month_str, rec.year)
+            })
+
+    @api.depends('year', 'month')
+    def compute_dates(self):
+        for rec in self:
+            start_date = datetime(rec.year, rec.month, 1)
+            end_date = start_date + relativedelta(months=1, seconds=-1)
+            last_end = start_date - relativedelta(seconds=1)
+            rec.update({
+                'start_date': start_date,
+                'end_date': end_date,
+                'last_end': last_end
             })
 
     @api.depends('start_date', 'end_date')
@@ -80,8 +106,8 @@ class HrHolidaysReport(models.Model):
 
             start_date = rec.start_date
             end_date = rec.end_date
-            last_create = rec.last_report_date
-            last_end = self._get_last_end_date(start_date)
+            last_create = rec.last_create
+            last_end = rec.last_end
 
             validated = self._get_holidays_validated(start_date, end_date)
             for leave in validated:
@@ -103,12 +129,6 @@ class HrHolidaysReport(models.Model):
             })
 
     # TOOLS
-
-    @api.model
-    def _get_last_end_date(self, start_date):
-        start_dt = fields.Datetime.from_string(start_date)
-        last_end_date = start_dt - relativedelta(seconds=1)
-        return str(last_end_date)
 
     @api.model
     def _get_holidays_validated(self, start_date, end_date):

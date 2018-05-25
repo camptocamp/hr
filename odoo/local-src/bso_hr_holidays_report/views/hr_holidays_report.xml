@@ -6,10 +6,13 @@
         <field name="model">hr.holidays.report</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="year" invisible="1"/>
+                <field name="month" invisible="1"/>
                 <field name="name"/>
                 <field name="start_date" widget="date"/>
                 <field name="end_date" widget="date"/>
-                <field name="last_report_date" widget="date"/>
+                <field name="last_create" widget="date"/>
+                <field name="last_end" invisible="1"/>
                 <field name="report_lines" invisible="1"/>
                 <button string="Report details" type="object"
                         name="open_report_lines"/>
