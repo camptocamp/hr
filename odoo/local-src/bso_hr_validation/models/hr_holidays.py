@@ -23,7 +23,6 @@ class HrHolidays(models.Model):
         validated_at = fields.Datetime.now()
         for rec in self:
             rec.date_validated = validated_at
-            rec.date_refused = False
         return res
 
     @api.multi
@@ -33,7 +32,6 @@ class HrHolidays(models.Model):
         res = super(HrHolidays, self).action_refuse()
         refused_at = fields.Datetime.now()
         for rec in self:
-            rec.date_validated = False
             rec.date_refused = refused_at
         return res
 

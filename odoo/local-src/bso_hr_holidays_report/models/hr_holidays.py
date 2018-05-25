@@ -18,6 +18,7 @@ class HrHolidays(models.Model):
         date_delta = today + relativedelta(days=2)
         return self.env['hr.holidays'].search([
             ('state', 'in', ['confirm']),
+            ('type', 'in', ['remove']),
             ('date_from', '>', str(today)),
             ('date_from', '<', str(date_delta)),
         ])

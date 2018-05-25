@@ -80,21 +80,22 @@ class HrHolidaysReport(models.Model):
 
             start_date = rec.start_date
             end_date = rec.end_date
-            last_report_date = rec.last_report_date
+            last_create = rec.last_report_date
+            last_end = self._get_last_end_date(start_date)
 
             validated = self._get_holidays_validated(start_date, end_date)
             for leave in validated:
                 item = self._get_line_item(leave, start_date, end_date)
                 lines.append((0, 0, item))
 
-            missing = self._get_holidays_missing(last_report_date, start_date)
+            missing = self._get_holidays_missing(last_create, last_end)
             for leave in missing:
-                item = self._get_line_item(leave, last_report_date, start_date)
+                item = self._get_line_item(leave, last_create, last_end)
                 lines.append((0, 0, item))
 
-            refused = self._get_holidays_refused(last_report_date, start_date)
+            refused = self._get_holidays_refused(last_create, last_end)
             for leave in refused:
-                item = self._get_line_item(leave, last_report_date, start_date)
+                item = self._get_line_item(leave, None, last_end)
                 lines.append((0, 0, item))
 
             rec.update({
@@ -104,39 +105,45 @@ class HrHolidaysReport(models.Model):
     # TOOLS
 
     @api.model
+    def _get_last_end_date(self, start_date):
+        start_dt = fields.Datetime.from_string(start_date)
+        last_end_date = start_dt - relativedelta(seconds=1)
+        return str(last_end_date)
+
+    @api.model
     def _get_holidays_validated(self, start_date, end_date):
         # browse validated holidays for given period
         return self.env['hr.holidays'].search([
             ('state', 'in', ['validate']),
             ('type', 'in', ['remove']),
-            ('date_to', '>', start_date),
-            ('date_from', '<', end_date)
+            ('date_from', '<=', end_date),
+            ('date_to', '>=', start_date)
         ])
 
     @api.model
-    def _get_holidays_missing(self, last_report_date, start_date):
+    def _get_holidays_missing(self, last_create, last_end):
         # browse missing holidays from previous report
-        if not last_report_date:
+        if not last_create:
             return []
         return self.env['hr.holidays'].search([
             ('state', 'in', ['validate']),
             ('type', 'in', ['remove']),
-            ('date_validated', '>', last_report_date),
-            ('date_to', '>', last_report_date),
-            ('date_from', '<', start_date)
+            ('date_validated', '>', last_create),
+            ('date_from', '<=', last_end),
+            ('date_to', '>=', last_create)
         ])
 
     @api.model
-    def _get_holidays_refused(self, last_report_date, start_date):
+    def _get_holidays_refused(self, last_create, last_end):
         # browse refused holidays from previous report
-        if not last_report_date:
+        if not last_create:
             return []
         return self.env['hr.holidays'].search([
             ('state', 'in', ['refuse']),
             ('type', 'in', ['remove']),
-            ('date_validated', '<', last_report_date),
-            ('date_refused', '>', last_report_date),
-            ('date_to', '<', start_date)
+            ('date_validated', '<', last_create),
+            ('date_refused', '>', last_create),
+            ('date_from', '<=', last_end)
         ])
 
     @api.model
