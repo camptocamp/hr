@@ -136,8 +136,8 @@ class HrHolidaysReport(models.Model):
         return self.env['hr.holidays'].search([
             ('state', 'in', ['validate']),
             ('type', 'in', ['remove']),
-            ('date_from', '<=', end_date),
-            ('date_to', '>=', start_date)
+            ('date_from', '<', end_date),
+            ('date_to', '>', start_date)
         ])
 
     @api.model
@@ -149,8 +149,8 @@ class HrHolidaysReport(models.Model):
             ('state', 'in', ['validate']),
             ('type', 'in', ['remove']),
             ('date_validated', '>', last_create),
-            ('date_from', '<=', last_end),
-            ('date_to', '>=', last_create)
+            ('date_from', '<', last_end),
+            ('date_to', '>', last_create)
         ])
 
     @api.model
@@ -163,7 +163,7 @@ class HrHolidaysReport(models.Model):
             ('type', 'in', ['remove']),
             ('date_validated', '<', last_create),
             ('date_refused', '>', last_create),
-            ('date_from', '<=', last_end)
+            ('date_from', '<', last_end)
         ])
 
     @api.model
