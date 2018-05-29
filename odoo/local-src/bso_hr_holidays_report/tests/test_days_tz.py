@@ -54,19 +54,21 @@ class TestDays(TransactionCase):
             self.assertEqual(expected_days, reported_days)
 
     def _create_employee(self, name, tz):
-        user_id = self.env['res.users'].create({
+        user_id = self.env['res.users'].with_context({
+            'tracking_disable': True,
+            'no_reset_password': True,
+            'mail_create_nosubscribe': True
+        }).create({
             'name': name,
             'login': "%s@test.com" % name,
             'password': 'test',
             'partner_id': self.env.user.partner_id.id,
             'tz': tz
         })
-        company_id = self._get_company()
         employee_id = self.env['hr.employee'].create({
             'name': name,
             'user_id': user_id.id,
-            'company_id': company_id.id,
-            'address_id': company_id.partner_id.id,
+            'address_id': self._get_company().partner_id.id,
         })
         return employee_id
 
