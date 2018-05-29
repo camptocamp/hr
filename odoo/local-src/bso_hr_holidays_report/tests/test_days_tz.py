@@ -47,7 +47,7 @@ class TestDays(TransactionCase):
 
         for holiday_id, expected_days in created_holidays:
             reported_days = self._get_reported_days(holiday_id)
-            self.assertEqual(expected_days, reported_days,
+            self.assertEqual(reported_days, expected_days,
                              holiday_id.employee_id.name)
 
     def _create_holiday(self, start_date, end_date, tz):
@@ -65,7 +65,7 @@ class TestDays(TransactionCase):
         return holiday_id
 
     def _create_employee(self, start_date, end_date, tz):
-        name = "%s %s" % (start_date, end_date)
+        name = "%s %s %s" % (tz, start_date, end_date)
         user_id = self.env['res.users'].with_context({
             'tracking_disable': True,
             'no_reset_password': True,
