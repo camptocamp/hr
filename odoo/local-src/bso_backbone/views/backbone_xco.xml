@@ -36,6 +36,7 @@
                 <field name="auto_renewal"
                        attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
                 <field name="notes" invisible="1"/>
+                <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
                 <button name="action_get_attachment_view"
                         string="View Attached Documents" type="object"
@@ -100,7 +101,13 @@
                     <group>
                         <field name="notes"/>
                     </group>
+                    <group>
+                        <field name="active"/>
+                    </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
@@ -122,6 +129,8 @@
                         domain="[('xco_type', '=', 'backbone')]"/>
                 <filter string="Paid By BSO"
                         domain="[('paid_by_bso', '=', True)]"/>
+                <separator/>
+                <filter string="Archived" domain="[('active', '=', False)]"/>
             </search>
         </field>
     </record>

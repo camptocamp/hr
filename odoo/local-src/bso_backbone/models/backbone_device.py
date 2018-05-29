@@ -3,28 +3,34 @@ from odoo import models, fields, api
 
 class BackboneDevice(models.Model):
     _name = 'backbone.device'
+    _inherit = ['mail.thread']
     _order = "name ASC"
 
     name = fields.Char(
-        required=True
+        required=True,
+        track_visibility='onchange'
     )
     pop_id = fields.Many2one(
         string='POP',
         comodel_name='backbone.pop',
-        required=True
+        required=True,
+        track_visibility='onchange'
     )
     supplier_id = fields.Many2one(
         string='Supplier',
         comodel_name='res.partner',
         domain=[('supplier', '=', True)],
-        context={'default_supplier': True}
+        context={'default_supplier': True},
+        track_visibility='onchange'
     )
     supplier_name = fields.Char(
-        string='Supplier Name'
+        string='Supplier Name',
+        track_visibility='onchange'
     )
     active = fields.Boolean(
         string='Active',
-        default=True
+        default=True,
+        track_visibility='onchange'
     )
 
     # ATTACHMENTS

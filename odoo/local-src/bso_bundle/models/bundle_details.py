@@ -165,7 +165,11 @@ class BundleDetails(models.Model):
         product = self.sale_order_line_id_mrc.product_id
         if not product:
             product = self.bundle_id.sudo().copy()
-            product.product_tmpl_id.sudo().write({'active': False})
+            product.product_tmpl_id.sudo().write({
+                'active': False,
+                'is_bundle': False,
+                'is_bundle_epl': False
+            })
         product.product_tmpl_id.sudo().write({'name': name})
         return product
 

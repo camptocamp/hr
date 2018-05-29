@@ -4,18 +4,10 @@
     <menuitem
             id="menu_backbone"
             name="Backbone"
-            action="action_backbone_xco"
+            action="action_backbone_link"
             parent=""
             web_icon="bso_backbone,static/description/icon.png"
             groups="group_backbone_user"/>
-
-    <menuitem
-            id="menu_backbone_xco"
-            name="XConnects"
-            action="action_backbone_xco"
-            parent="menu_backbone"
-            groups="group_backbone_user"
-            sequence="1"/>
 
     <menuitem
             id="menu_backbone_link"
@@ -23,7 +15,7 @@
             action="action_backbone_link"
             parent="menu_backbone"
             groups="group_backbone_user"
-            sequence="2"/>
+            sequence="1"/>
 
     <menuitem
             id="menu_backbone_device"
@@ -31,12 +23,20 @@
             action="action_backbone_device"
             parent="menu_backbone"
             groups="group_backbone_user"
-            sequence="3"/>
+            sequence="2"/>
 
     <menuitem
             id="menu_backbone_pop"
             name="POPs"
             action="action_backbone_pop"
+            parent="menu_backbone"
+            groups="group_backbone_user"
+            sequence="3"/>
+
+    <menuitem
+            id="menu_backbone_xco"
+            name="XConnects"
+            action="action_backbone_xco"
             parent="menu_backbone"
             groups="group_backbone_user"
             sequence="4"/>

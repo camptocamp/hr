@@ -11,13 +11,14 @@
                 <field name="a_xco_id"/>
                 <field name="z_device_id"/>
                 <field name="z_xco_id"/>
-                <field name="tnms_id"/>
+                <field name="circuit_id"/>
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
                 <field name="supplier_link_id"/>
                 <field name="is_wireless"/>
                 <field name="latency"/>
                 <field name="latency_sla"/>
+                <field name="latency_live"/>
                 <field name="bandwidth"/>
                 <field name="bearer"/>
                 <field name="cable_system"/>
@@ -85,7 +86,7 @@
                         <field name="z_xco_id"/>
                     </group>
                     <group>
-                        <field name="tnms_id"/>
+                        <field name="circuit_id"/>
                         <field name="supplier_id" invisible="1"
                                options="{'create': false, 'create_edit': false}"/>
                         <field name="supplier_name"/>
@@ -93,6 +94,7 @@
                         <field name="is_wireless"/>
                         <field name="latency"/>
                         <field name="latency_sla"/>
+                        <field name="latency_live"/>
                         <field name="bandwidth"/>
                         <field name="bearer"/>
                         <field name="cable_system"/>
@@ -135,6 +137,9 @@
                         <field name="active"/>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
@@ -150,6 +155,8 @@
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
                 <field name="supplier_link_id"/>
+                <separator/>
+                <filter string="Archived" domain="[('active', '=', False)]"/>
             </search>
         </field>
     </record>
