@@ -168,7 +168,9 @@ class BundleDetails(models.Model):
             product.product_tmpl_id.sudo().write({
                 'active': False,
                 'is_bundle': False,
-                'is_bundle_epl': False
+                'is_epl': False,
+                'nrc_product': False,
+                'products': False,
             })
         product.product_tmpl_id.sudo().write({'name': name})
         return product
