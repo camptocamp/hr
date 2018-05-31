@@ -49,9 +49,12 @@
                        options="{'currency_field': 'currency_id'}"
                        groups="bso_backbone.group_backbone_manager"
                        invisible="1"/>
-                <field name="date_start"/>
-                <field name="date_end"/>
-                <field name="auto_renewal"/>
+                <field name="date_start"
+                       groups="bso_backbone.group_backbone_manager"/>
+                <field name="date_end"
+                       groups="bso_backbone.group_backbone_manager"/>
+                <field name="auto_renewal"
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="notes" invisible="1"/>
                 <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
@@ -102,29 +105,22 @@
                         <field name="cable_system_protection"
                                attrs="{'invisible': [('is_protected', '=', False)]}"/>
                     </group>
-                    <group>
+                    <group groups="bso_backbone.group_backbone_manager">
                         <field name="currency_id"
-                               groups="bso_backbone.group_backbone_manager"
                                options="{'create': false, 'create_edit': false}"/>
                         <field name="nrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"/>
+                               options="{'currency_field': 'currency_id'}"/>
                         <field name="mrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"/>
+                               options="{'currency_field': 'currency_id'}"/>
                         <field name="mrc_mb" widget="monetary"
                                options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"
                                invisible="1"/>
                         <field name="nrr" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"/>
+                               options="{'currency_field': 'currency_id'}"/>
                         <field name="mrr" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"/>
+                               options="{'currency_field': 'currency_id'}"/>
                         <field name="mrr_mb" widget="monetary"
                                options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"
                                invisible="1"/>
                         <field name="date_start"/>
                         <field name="date_end"/>
@@ -134,8 +130,7 @@
                         <field name="notes"/>
                     </group>
                     <group>
-                        <field name="active"
-                               groups="bso_backbone.group_backbone_manager"/>
+                        <field name="active"/>
                     </group>
                 </sheet>
                 <div class="oe_chatter">

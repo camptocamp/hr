@@ -13,17 +13,23 @@
                 <field name="address"/>
                 <field name="latitude"/>
                 <field name="longitude"/>
-                <field name="currency_id"/>
+                <field name="currency_id"
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="kva_mrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="rack_nrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="rack_mrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="xco_nrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="xco_mrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
+                       options="{'currency_field': 'currency_id'}"
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
                 <button name="action_get_attachment_view"
@@ -59,7 +65,7 @@
                         <field name="latitude"/>
                         <field name="longitude"/>
                     </group>
-                    <group>
+                    <group groups="bso_backbone.group_backbone_manager">
                         <field name="currency_id"
                                options="{'create': false, 'create_edit': false}"/>
                         <field name="kva_mrc" widget="monetary"
@@ -74,8 +80,7 @@
                                options="{'currency_field': 'currency_id'}"/>
                     </group>
                     <group>
-                        <field name="active"
-                               groups="bso_backbone.group_backbone_manager"/>
+                        <field name="active"/>
                     </group>
                 </sheet>
                 <div class="oe_chatter">

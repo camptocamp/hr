@@ -22,19 +22,19 @@
                        attrs="{'invisible': [('xco_type', '=', 'client')]}"/>
                 <field name="paid_by_bso"/>
                 <field name="currency_id"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="nrc" widget="monetary"
                        options="{'currency_field': 'currency_id'}"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="mrc" widget="monetary"
                        options="{'currency_field': 'currency_id'}"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="date_start"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="date_end"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="auto_renewal"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="notes" invisible="1"/>
                 <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
@@ -82,7 +82,7 @@
                         <field name="paid_by_bso"
                                attrs="{'invisible': [('xco_type', '=', False)]}"/>
                     </group>
-                    <group attrs="{'invisible': [('paid_by_bso', '=', False)]}">
+                    <group groups="bso_backbone.group_backbone_manager">
                         <field name="currency_id"
                                attrs="{'required': [('paid_by_bso', '=', True)]}"
                                options="{'create': false, 'create_edit': false}"/>
@@ -102,8 +102,7 @@
                         <field name="notes"/>
                     </group>
                     <group>
-                        <field name="active"
-                               groups="bso_backbone.group_backbone_manager"/>
+                        <field name="active"/>
                     </group>
                 </sheet>
                 <div class="oe_chatter">

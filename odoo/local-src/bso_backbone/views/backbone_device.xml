@@ -43,8 +43,7 @@
                         <field name="supplier_name"/>
                     </group>
                     <group>
-                        <field name="active"
-                               groups="bso_backbone.group_backbone_manager"/>
+                        <field name="active"/>
                     </group>
                 </sheet>
                 <div class="oe_chatter">
