@@ -94,8 +94,7 @@ class BundleDetails(models.Model):
                 item = "%s: %s" % (p.product_id.display_name, p.quantity)
                 bundle_name.append(item)
             rec.update({
-                'bundle_name': "%s [%s]" % (rec.bundle_id.display_name,
-                                            ', '.join(bundle_name))
+                'bundle_name': ', '.join(bundle_name)
             })
 
     @api.depends('bundle_products.product_id', 'bundle_products.description',

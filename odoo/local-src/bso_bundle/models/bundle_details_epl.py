@@ -241,9 +241,8 @@ class BundleDetailsEPL(models.Model):
                  'epl_route_last_device_id.pop_id.name')
     def compute_epl_name(self):
         for rec in self:
-            epl_name = "%s %sM [%s <-> %s] @ %s ms" \
-                       % (rec.bundle_id.name,
-                          rec.epl_bandwidth,
+            epl_name = "%sM %s <-> %s @ %s ms" \
+                       % (rec.epl_bandwidth,
                           rec.epl_route_first_device_id.pop_id.name,
                           rec.epl_route_last_device_id.pop_id.name,
                           rec.epl_latency)
