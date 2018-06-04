@@ -154,7 +154,7 @@ class BundleDetails(models.Model):
         self._set_line(product_mrc, description, mrr)
         if nrr > 0:
             product_nrc = self.bundle_id.nrc_product
-            self._set_line(product_nrc, "NRC " + product_mrc.name, nrr)
+            self._set_line(product_nrc, product_nrc.name, nrr)
         elif self.sale_order_line_id_nrc:
             self.sale_order_line_id_nrc.unlink()
         return {'type': 'ir.actions.act_close_wizard_and_reload_view'}
