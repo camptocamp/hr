@@ -18,6 +18,9 @@
           <field name="recurring_rule_type" class="oe_inline"/>
         </div>
       </field>
+      <field name="date" position="attributes">
+         <attribute name="string">Renewal date</attribute>
+      </field>
       <xpath expr="//field[@name='date']" position="after">
         <field name="duration" string="Initial duration"/>
         <field name="automatic_renewal"/>

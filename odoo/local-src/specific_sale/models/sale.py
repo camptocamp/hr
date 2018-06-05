@@ -165,15 +165,17 @@ class SaleOrder(models.Model):
     def _prepare_contract_data(self, payment_token_id=False):
         res = super(SaleOrder, self)._prepare_contract_data(
                 payment_token_id=payment_token_id)
-        duration = self.order_line.mapped('duration')
+        duration = self.duration
         if self.env.context.get('ref_date_mrc_delivery'):
             res['recurring_next_date'] = self.env.context.get(
                     'ref_date_mrc_delivery')[:10]
         if duration:
-            res['duration'] = duration[0]
+            res['duration'] = duration
             # date is 'End date' (of course...)
             res['date'] = (fields.Date.from_string(res['date_start']) +
-                           relativedelta(months=duration[0]))
+                           relativedelta(months=duration))
+        if self.client_order_ref:
+            res['code'] = self.client_order_ref
 
         if self.template_id and self.template_id.contract_template:
             contract_tmp = self.template_id.contract_template

@@ -43,6 +43,11 @@
             groups="specific_security.group_technical_mgmt" />
         </button>
 
+        <field name="client_order_ref" position="replace"/>
+        <field name="payment_mode_id" position="after">
+            <field name="client_order_ref"/>
+        </field>
+
       </field>
     </record>
 
