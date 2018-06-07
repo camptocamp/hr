@@ -12,23 +12,20 @@
                         groups="hr_expense.group_hr_expense_manager"
                         string="My Perimeter Leaves"/>
             </xpath>
-            <xpath expr="//filter[7]" position="attributes">
-                <attribute name="name">my_team</attribute>
-            </xpath>
         </field>
     </record>
 
     <record id="hr_holidays.open_department_holidays_approve"
             model="ir.actions.act_window">
         <field name="context">{'search_default_approve': 1,
-            'search_default_my_team': 1,}
+            'search_default_my_team_leaves': 1,}
         </field>
     </record>
 
     <record id="hr_holidays.open_department_holidays_allocation_approve"
             model="ir.actions.act_window">
         <field name="context">{'default_type':'add','search_default_approve':1,
-            'search_default_my_team': 1}
+            'search_default_my_team_leaves': 1}
         </field>
     </record>
 
