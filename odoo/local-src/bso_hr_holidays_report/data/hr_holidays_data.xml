@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <odoo>
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="ir_cron_auto_validate_leaves" model="ir.cron">
             <field name="function">auto_validate_leaves</field>
             <field name="user_id" ref="base.user_root"/>

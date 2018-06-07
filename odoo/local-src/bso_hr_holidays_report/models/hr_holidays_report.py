@@ -74,8 +74,8 @@ class HrHolidaysReport(models.Model):
 
     @api.model
     def _get_last_create(self):
-        lst = self.env[self._name].search([], limit=1, order='start_date DESC')
-        return lst.create_date
+        last_report = self.search([], limit=1, order='start_date DESC')
+        return last_report.create_date
 
     # COMPUTES
 
@@ -94,9 +94,9 @@ class HrHolidaysReport(models.Model):
             end_date = start_date + relativedelta(months=1, seconds=-1)
             last_end = start_date - relativedelta(seconds=1)
             rec.update({
-                'start_date': start_date,
-                'end_date': end_date,
-                'last_end': last_end
+                'start_date': fields.Datetime.to_string(start_date),
+                'end_date': fields.Datetime.to_string(end_date),
+                'last_end': fields.Datetime.to_string(last_end)
             })
 
     @api.depends('start_date', 'end_date')

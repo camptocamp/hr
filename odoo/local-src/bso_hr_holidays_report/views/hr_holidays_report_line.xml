@@ -58,7 +58,7 @@
                 <separator/>
                 <filter name="filter_fr_lux"
                         string="FR &amp; LUX"
-                        domain="[('company_id', 'in', ['BSO Network Solutions SAS', 'BSO Network Solutions Luxembourg SARL'])]"/>
+                        domain="[('country_code', 'in', ('FR', 'LU'))]"/>
             </search>
         </field>
     </record>

@@ -36,6 +36,12 @@ class HrHolidaysReportLine(models.Model):
         readonly=True,
         required=True
     )
+    country_code = fields.Char(
+        string='Country Code',
+        related='company_id.country_id.code',
+        readonly=True,
+        store=True
+    )
     holiday_status_id = fields.Many2one(
         string='Leave Type',
         comodel_name='hr.holidays.status',

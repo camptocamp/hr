@@ -1,24 +1,28 @@
-from datetime import datetime, date, time
+# -*- coding: utf-8 -*-
+from datetime import date
 
 from dateutil.relativedelta import relativedelta
-from odoo import api, models
+from odoo import api, models, fields
 
 
 class HrHolidays(models.Model):
     _inherit = "hr.holidays"
 
-    @api.model
+    @api.multi
     def auto_validate_leaves(self):
         leaves = self._get_non_validated_leaves()
         for line in leaves:
-            line.state = "validate"
+            line.update({
+                'state': 'validate'
+            })
 
+    @api.model
     def _get_non_validated_leaves(self):
-        today = datetime.combine(date.today(), time())
+        today = date.today()
         date_delta = today + relativedelta(days=2)
-        return self.env['hr.holidays'].search([
+        return self.search([
             ('state', 'in', ['confirm']),
             ('type', 'in', ['remove']),
-            ('date_from', '>', str(today)),
-            ('date_from', '<', str(date_delta)),
+            ('date_from', '>', fields.Date.to_string(today)),
+            ('date_from', '<', fields.Date.to_string(date_delta)),
         ])
