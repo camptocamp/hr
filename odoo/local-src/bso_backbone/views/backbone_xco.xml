@@ -7,18 +7,18 @@
         <field name="arch" type="xml">
             <tree string="XConnect">
                 <field name="a_side"/>
-                <field name="a_side_port_id"/>
+                <field name="a_side_port"/>
                 <field name="z_side"/>
-                <field name="z_side_port_id"/>
+                <field name="z_side_port"/>
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
-                <field name="xco_id"/>
+                <field name="xco_ref"/>
                 <field name="used"/>
                 <field name="project_code"/>
                 <field name="xco_type"/>
-                <field name="service_id"
+                <field name="service_ref"
                        attrs="{'invisible': [('xco_type', '=', 'backbone')]}"/>
-                <field name="link_id"
+                <field name="link_ref"
                        attrs="{'invisible': [('xco_type', '=', 'client')]}"/>
                 <field name="paid_by_bso"/>
                 <field name="currency_id"
@@ -63,21 +63,21 @@
                     </div>
                     <group>
                         <field name="a_side"/>
-                        <field name="a_side_port_id"/>
+                        <field name="a_side_port"/>
                         <field name="z_side"/>
-                        <field name="z_side_port_id"/>
+                        <field name="z_side_port"/>
                         <field name="supplier_id" invisible="1"
                                options="{'create': false, 'create_edit': false}"/>
                         <field name="supplier_name"/>
-                        <field name="xco_id"/>
+                        <field name="xco_ref"/>
                         <field name="used"/>
                     </group>
                     <group>
                         <field name="project_code"/>
                         <field name="xco_type"/>
-                        <field name="service_id"
+                        <field name="service_ref"
                                attrs="{'invisible': ['|', ('xco_type', '=', False), ('xco_type', '=', 'backbone')], 'required': [('xco_type', '=', 'client')]}"/>
-                        <field name="link_id"
+                        <field name="link_ref"
                                attrs="{'invisible': ['|', ('xco_type', '=', False), ('xco_type', '=', 'client')], 'required': [('xco_type', '=', 'backbone')]}"/>
                         <field name="paid_by_bso"
                                attrs="{'invisible': [('xco_type', '=', False)]}"/>
@@ -121,7 +121,7 @@
                 <field name="z_side"/>
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
-                <field name="xco_id"/>
+                <field name="xco_ref"/>
                 <separator/>
                 <filter string="XConnects Client"
                         domain="[('xco_type', '=', 'client')]"/>

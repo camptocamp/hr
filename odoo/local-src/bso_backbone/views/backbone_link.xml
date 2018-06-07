@@ -11,10 +11,10 @@
                 <field name="a_xco_id"/>
                 <field name="z_device_id"/>
                 <field name="z_xco_id"/>
-                <field name="circuit_id"/>
+                <field name="circuit_ref"/>
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
-                <field name="supplier_link_id"/>
+                <field name="supplier_link_ref"/>
                 <field name="is_wireless"/>
                 <field name="latency"/>
                 <field name="latency_sla"/>
@@ -89,11 +89,11 @@
                         <field name="z_xco_id"/>
                     </group>
                     <group>
-                        <field name="circuit_id"/>
+                        <field name="circuit_ref"/>
                         <field name="supplier_id" invisible="1"
                                options="{'create': false, 'create_edit': false}"/>
                         <field name="supplier_name"/>
-                        <field name="supplier_link_id"/>
+                        <field name="supplier_link_ref"/>
                         <field name="is_wireless"/>
                         <field name="latency"/>
                         <field name="latency_sla"/>
@@ -150,7 +150,7 @@
                 <field name="z_device_id"/>
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
-                <field name="supplier_link_id"/>
+                <field name="supplier_link_ref"/>
                 <separator/>
                 <filter string="Archived" domain="[('active', '=', False)]"/>
             </search>

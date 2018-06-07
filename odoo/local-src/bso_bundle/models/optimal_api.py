@@ -135,14 +135,14 @@ class OptimalAPI(models.Model):
     def _get_graph(self):
         """Dict of all links with their a & z device_id as keys"""
         graph = defaultdict(lambda: [])
-        links = self.env['backbone.link'].search(self._get_domain())
+        links = self.env['backbone.link'].search(self._get_graph_domain())
         for link in links:
             graph[link.a_device_id.id].append(link)
             graph[link.z_device_id.id].append(link)
         return graph
 
     @api.model
-    def _get_domain(self):
+    def _get_graph_domain(self):
         domain = [
             ('bandwidth', '>=', self.epl_bandwidth),
             ('latency', '>', 0),
@@ -162,7 +162,7 @@ class OptimalAPI(models.Model):
     @api.model
     def _get_optimal_path(self, graph, start_device, end_devices, optimize,
                           exclude_link_ids=None):
-        """Find the optimal path between a starting device and any devices"""
+        """Find the optimal path between a start device and end devices"""
         # Start device cannot be in end devices
         if start_device in end_devices:
             end_devices.remove(start_device)

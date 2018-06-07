@@ -33,8 +33,9 @@ class BackboneLink(models.Model):
         comodel_name='backbone.xco',
         track_visibility='onchange'
     )
-    circuit_id = fields.Char(
+    circuit_ref = fields.Char(
         string='Circuit ID',
+        oldname='circuit_id',
         track_visibility='onchange'
     )
     supplier_id = fields.Many2one(
@@ -48,8 +49,9 @@ class BackboneLink(models.Model):
         string='Supplier Name',
         track_visibility='onchange'
     )
-    supplier_link_id = fields.Char(
+    supplier_link_ref = fields.Char(
         string='Supplier Link ID',
+        oldname='supplier_link_id',
         track_visibility='onchange'
     )
     is_wireless = fields.Boolean(

@@ -16,8 +16,9 @@ class BackboneXCO(models.Model):
         required=True,
         track_visibility='onchange'
     )
-    a_side_port_id = fields.Char(
-        string='A Side Port ID',
+    a_side_port = fields.Char(
+        string='A Side Port',
+        oldname='a_side_port_id',
         track_visibility='onchange'
     )
     z_side = fields.Char(
@@ -25,8 +26,9 @@ class BackboneXCO(models.Model):
         required=True,
         track_visibility='onchange'
     )
-    z_side_port_id = fields.Char(
-        string='Z Side Port ID',
+    z_side_port = fields.Char(
+        string='Z Side Port',
+        oldname='z_side_port_id',
         track_visibility='onchange'
     )
     supplier_id = fields.Many2one(
@@ -40,8 +42,9 @@ class BackboneXCO(models.Model):
         string='Supplier Name',
         track_visibility='onchange'
     )
-    xco_id = fields.Char(
+    xco_ref = fields.Char(
         string='XConnect ID',
+        oldname='xco_id',
         required=True,
         track_visibility='onchange'
     )
@@ -62,12 +65,14 @@ class BackboneXCO(models.Model):
         required=True,
         track_visibility='onchange'
     )
-    service_id = fields.Char(
+    service_ref = fields.Char(
         string='Client Service ID',
+        oldname='service_id',
         track_visibility='onchange'
     )
-    link_id = fields.Char(
+    link_ref = fields.Char(
         string='Backbone Link ID',
+        oldname='link_id',
         track_visibility='onchange'
     )
     paid_by_bso = fields.Boolean(
@@ -142,10 +147,10 @@ class BackboneXCO(models.Model):
 
     # COMPUTES
 
-    @api.depends('supplier_id.name', 'supplier_name', 'xco_id')
+    @api.depends('supplier_id.name', 'supplier_name', 'xco_ref')
     def compute_name(self):
         for rec in self:
             supplier_name = rec.supplier_id.name or rec.supplier_name
             rec.update({
-                'name': "%s - %s" % (supplier_name, rec.xco_id)
+                'name': "%s - %s" % (supplier_name, rec.xco_ref)
             })
