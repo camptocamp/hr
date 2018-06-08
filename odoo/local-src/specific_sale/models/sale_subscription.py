@@ -69,7 +69,7 @@ class SaleSubscription(models.Model):
             # Add origin to the invoice lines so
             # it will be propagated to their names
             invoices_to_update = invoices.filtered(
-                lambda x: (x.invoice_line_ids.account_analytic_id ==
+                lambda x: (x.mapped("invoice_line_ids.account_analytic_id") >=
                            sub.analytic_account_id)
             )
             orders = self.env['sale.order'].search_read(
