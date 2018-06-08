@@ -62,3 +62,6 @@ rancher/*/rancher.env
 
 # GIMP Images
 *.xcf
+
+# Pycharm IDE
+.idea
