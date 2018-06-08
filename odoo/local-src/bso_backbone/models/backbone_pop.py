@@ -3,56 +3,71 @@ from odoo import models, fields, api
 
 class BackbonePop(models.Model):
     _name = 'backbone.pop'
+    _inherit = ['mail.thread']
     _order = "name ASC"
 
     name = fields.Char(
-        required=True
+        required=True,
+        track_visibility='onchange'
     )
     code = fields.Char(
-        string='Code'
+        string='Code',
+        track_visibility='onchange'
     )
     supplier_id = fields.Many2one(
         string='Supplier',
         comodel_name='res.partner',
         domain=[('supplier', '=', True)],
-        context={'default_supplier': True}
+        context={'default_supplier': True},
+        track_visibility='onchange'
     )
     supplier_name = fields.Char(
-        string='Supplier Name'
+        string='Supplier Name',
+        track_visibility='onchange'
     )
     address = fields.Char(
-        string='Address'
+        string='Address',
+        track_visibility='onchange'
     )
     latitude = fields.Float(
         string='Latitude',
-        digits=(10, 8)
+        digits=(10, 8),
+        track_visibility='onchange'
     )
     longitude = fields.Float(
         string='Longitude',
-        digits=(11, 8)
+        digits=(11, 8),
+        track_visibility='onchange'
     )
     currency_id = fields.Many2one(
         string='Currency',
-        comodel_name='res.currency'
+        comodel_name='res.currency',
+        track_visibility='onchange'
     )
     kva_mrc = fields.Float(
-        string='KVA MRC'
+        string='KVA MRC',
+        track_visibility='onchange'
     )
     rack_nrc = fields.Float(
-        string='Rack NRC'
+        string='Rack NRC',
+        track_visibility='onchange'
     )
     rack_mrc = fields.Float(
-        string='Rack MRC'
+        string='Rack MRC',
+        track_visibility='onchange'
     )
     xco_nrc = fields.Float(
-        string='XCo NRC'
+        string='XCo NRC',
+        track_visibility='onchange'
     )
     xco_mrc = fields.Float(
-        string='XCo MRC'
+        string='XCo MRC',
+        track_visibility='onchange'
     )
     active = fields.Boolean(
         string='Active',
-        default=True
+        default=True,
+        track_visibility='onchange'
     )
 
     # ATTACHMENTS

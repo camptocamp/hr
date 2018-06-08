@@ -12,6 +12,7 @@ class SaleOrder(models.Model):
     dealsheet_id = fields.Many2one(
         string='Dealsheet',
         comodel_name='sale.dealsheet',
+        copy=False,
         readonly=True
     )
 

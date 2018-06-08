@@ -94,8 +94,7 @@ class BundleDetails(models.Model):
                 item = "%s: %s" % (p.product_id.display_name, p.quantity)
                 bundle_name.append(item)
             rec.update({
-                'bundle_name': "%s [%s]" % (rec.bundle_id.display_name,
-                                            ', '.join(bundle_name))
+                'bundle_name': ', '.join(bundle_name)
             })
 
     @api.depends('bundle_products.product_id', 'bundle_products.description',
@@ -155,7 +154,7 @@ class BundleDetails(models.Model):
         self._set_line(product_mrc, description, mrr)
         if nrr > 0:
             product_nrc = self.bundle_id.nrc_product
-            self._set_line(product_nrc, "NRC " + product_mrc.name, nrr)
+            self._set_line(product_nrc, product_nrc.name, nrr)
         elif self.sale_order_line_id_nrc:
             self.sale_order_line_id_nrc.unlink()
         return {'type': 'ir.actions.act_close_wizard_and_reload_view'}
@@ -165,7 +164,13 @@ class BundleDetails(models.Model):
         product = self.sale_order_line_id_mrc.product_id
         if not product:
             product = self.bundle_id.sudo().copy()
-            product.product_tmpl_id.sudo().write({'active': False})
+            product.product_tmpl_id.sudo().write({
+                'active': False,
+                'is_bundle': False,
+                'is_epl': False,
+                'nrc_product': False,
+                'products': False,
+            })
         product.product_tmpl_id.sudo().write({'name': name})
         return product
 

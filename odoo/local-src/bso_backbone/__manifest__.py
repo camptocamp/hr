@@ -1,10 +1,13 @@
 {
     'name': 'BSO Backbone',
     # 'category': 'Placeholder',
-    'description': 'Backbone XConnects, Links, Devices & POPs',
+    'description': 'Backbone Links, Devices, POPs & XConnects',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
-    'depends': ['base'],
+    'depends': [
+        'base',
+        'mail',
+    ],
     'data': [
         'security/res_groups.xml',
         'security/ir.model.access.csv',
