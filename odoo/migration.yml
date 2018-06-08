@@ -22,17 +22,18 @@ migration:
           # Specific case for cloud platform: on our platform, AWS_ACCESS_KEY_ID will be defined
           # so we know we have to install and configure the platform addons.
           # Won't be done on the image delivered to BSO.
-          - bash -c '[ -z "$AWS_ACCESS_KEY_ID" ] && exit 0 || gosu odoo odoo --stop-after-init --workers=0 --log-level=warn -i cloud_platform'
+          - bash -c '[ -z "$AWS_ACCESS_KEY_ID" ] && exit 0 || gosu odoo odoo --stop-after-init
+            --workers=0 --log-level=warn -i cloud_platform'
           - bash -c '[ -z "$AWS_ACCESS_KEY_ID" ] && exit 0 || anthem odoo.addons.cloud_platform.songs::install_exoscale'
       modes:
         full:
           operations:
             post:
               - anthem songs.install.data_full::main
-        demo:
+        sample:
           operations:
             post:
-              - anthem songs.install.data_demo::main
+              - anthem songs.sample.data_sample::main
       addons:
         upgrade:
           #### core
