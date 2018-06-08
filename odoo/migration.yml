@@ -284,3 +284,4 @@ migration:
           - specific_sale
           - bso_expenses_holidays_filtering
           - bso_hr_holidays_report
+          - bso_backbone

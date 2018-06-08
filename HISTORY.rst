@@ -24,7 +24,8 @@ Latest (Unreleased)
 * BSIBSO-1055: Add `Existing customers` filter to `crm.lead` search view
 * BSIBSO-1056: Use data from SO when create subscription.
 * install bso_expenses_holidays_filtering
-* install bso_hr_holidays_repor
+* install bso_hr_holidays_report
+* bso_backbone: log all changes
 
 **Bugfixes**
 
