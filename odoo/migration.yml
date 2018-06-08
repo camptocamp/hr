@@ -282,3 +282,4 @@ migration:
         upgrade:
           - specific_crm
           - specific_sale
+          - bso_expenses_holidays_filtering
