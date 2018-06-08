@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+            id="menu_hr_holidays_reports"
+            name="Leave Reports"
+            action="hr_holidays_report_action"
+            parent=""
+            web_icon="bso_hr_holidays_report,static/description/icon.png"
+            groups="group_holidays_report_access"/>
+
+</odoo>

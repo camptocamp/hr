@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_holidays_report_line_tree" model="ir.ui.view">
+        <field name="name">hr.holidays.report.line.tree</field>
+        <field name="model">hr.holidays.report.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="holiday_report_id" invisible="1"/>
+                <field name="employee_id"/>
+                <field name="company_id"/>
+                <field name="holiday_id" invisible="1"/>
+                <field name="holiday_status_id"/>
+                <field name="holiday_state"/>
+                <field name="start_date" widget="date"/>
+                <field name="end_date" widget="date"/>
+                <field name="days"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_holidays_report_line_form" model="ir.ui.view">
+        <field name="name">hr.holidays.report.line.form</field>
+        <field name="model">hr.holidays.report.line</field>
+        <field name="arch" type="xml">
+            <form string="Leave">
+                <sheet>
+                    <group>
+                        <field name="holiday_report_id"/>
+                    </group>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="company_id"/>
+                    </group>
+                    <group>
+                        <field name="holiday_id"/>
+                        <field name="holiday_status_id"/>
+                        <field name="holiday_state"/>
+                    </group>
+                    <group>
+                        <field name="start_date" widget="date"/>
+                        <field name="end_date" widget="date"/>
+                        <field name="days"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_holidays_report_line_search" model="ir.ui.view">
+        <field name="name">hr.holidays.report.line.search</field>
+        <field name="model">hr.holidays.report.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="group_employee_leave_type"
+                        string="Employee &amp; Leave Type"
+                        context="{'group_by': ['employee_id', 'holiday_status_id']}"/>
+                <separator/>
+                <filter name="filter_fr_lux"
+                        string="FR &amp; LUX"
+                        domain="[('country_code', 'in', ('FR', 'LU'))]"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>
