@@ -11,13 +11,14 @@
                 <field name="a_xco_id"/>
                 <field name="z_device_id"/>
                 <field name="z_xco_id"/>
-                <field name="tnms_id"/>
+                <field name="circuit_ref"/>
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
-                <field name="supplier_link_id"/>
+                <field name="supplier_link_ref"/>
                 <field name="is_wireless"/>
                 <field name="latency"/>
                 <field name="latency_sla"/>
+                <field name="latency_live"/>
                 <field name="bandwidth"/>
                 <field name="bearer"/>
                 <field name="cable_system"/>
@@ -48,9 +49,12 @@
                        options="{'currency_field': 'currency_id'}"
                        groups="bso_backbone.group_backbone_manager"
                        invisible="1"/>
-                <field name="date_start"/>
-                <field name="date_end"/>
-                <field name="auto_renewal"/>
+                <field name="date_start"
+                       groups="bso_backbone.group_backbone_manager"/>
+                <field name="date_end"
+                       groups="bso_backbone.group_backbone_manager"/>
+                <field name="auto_renewal"
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="notes" invisible="1"/>
                 <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
@@ -85,14 +89,15 @@
                         <field name="z_xco_id"/>
                     </group>
                     <group>
-                        <field name="tnms_id"/>
+                        <field name="circuit_ref"/>
                         <field name="supplier_id" invisible="1"
                                options="{'create': false, 'create_edit': false}"/>
                         <field name="supplier_name"/>
-                        <field name="supplier_link_id"/>
+                        <field name="supplier_link_ref"/>
                         <field name="is_wireless"/>
                         <field name="latency"/>
                         <field name="latency_sla"/>
+                        <field name="latency_live"/>
                         <field name="bandwidth"/>
                         <field name="bearer"/>
                         <field name="cable_system"/>
@@ -100,29 +105,22 @@
                         <field name="cable_system_protection"
                                attrs="{'invisible': [('is_protected', '=', False)]}"/>
                     </group>
-                    <group>
+                    <group groups="bso_backbone.group_backbone_manager">
                         <field name="currency_id"
-                               groups="bso_backbone.group_backbone_manager"
                                options="{'create': false, 'create_edit': false}"/>
                         <field name="nrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"/>
+                               options="{'currency_field': 'currency_id'}"/>
                         <field name="mrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"/>
+                               options="{'currency_field': 'currency_id'}"/>
                         <field name="mrc_mb" widget="monetary"
                                options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"
                                invisible="1"/>
                         <field name="nrr" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"/>
+                               options="{'currency_field': 'currency_id'}"/>
                         <field name="mrr" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"/>
+                               options="{'currency_field': 'currency_id'}"/>
                         <field name="mrr_mb" widget="monetary"
                                options="{'currency_field': 'currency_id'}"
-                               groups="bso_backbone.group_backbone_manager"
                                invisible="1"/>
                         <field name="date_start"/>
                         <field name="date_end"/>
@@ -135,6 +133,9 @@
                         <field name="active"/>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
@@ -149,7 +150,9 @@
                 <field name="z_device_id"/>
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
-                <field name="supplier_link_id"/>
+                <field name="supplier_link_ref"/>
+                <separator/>
+                <filter string="Archived" domain="[('active', '=', False)]"/>
             </search>
         </field>
     </record>

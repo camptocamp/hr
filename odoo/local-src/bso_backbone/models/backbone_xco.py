@@ -3,6 +3,8 @@ from odoo import models, fields, api
 
 class BackboneXCO(models.Model):
     _name = 'backbone.xco'
+    _inherit = ['mail.thread']
+    _order = "name ASC"
 
     name = fields.Char(
         compute='compute_name',
@@ -11,78 +13,108 @@ class BackboneXCO(models.Model):
     a_side = fields.Char(
         string='A Side',
         default='BSO',
-        required=True
+        required=True,
+        track_visibility='onchange'
     )
-    a_side_port_id = fields.Char(
-        string='A Side Port ID'
+    a_side_port = fields.Char(
+        string='A Side Port',
+        oldname='a_side_port_id',
+        track_visibility='onchange'
     )
     z_side = fields.Char(
         string='Z Side',
-        required=True
+        required=True,
+        track_visibility='onchange'
     )
-    z_side_port_id = fields.Char(
-        string='Z Side Port ID'
+    z_side_port = fields.Char(
+        string='Z Side Port',
+        oldname='z_side_port_id',
+        track_visibility='onchange'
     )
     supplier_id = fields.Many2one(
         string='Supplier',
         comodel_name='res.partner',
         domain=[('supplier', '=', True)],
-        context={'default_supplier': True}
+        context={'default_supplier': True},
+        track_visibility='onchange'
     )
     supplier_name = fields.Char(
-        string='Supplier Name'
+        string='Supplier Name',
+        track_visibility='onchange'
     )
-    xco_id = fields.Char(
+    xco_ref = fields.Char(
         string='XConnect ID',
-        required=True
+        oldname='xco_id',
+        required=True,
+        track_visibility='onchange'
     )
     used = fields.Boolean(
         string='Used',
-        default=True
+        default=True,
+        track_visibility='onchange'
     )
     project_code = fields.Char(
         string='Project Code',
-        # comodel_name='delivery.project'
+        # comodel_name='delivery.project',
+        track_visibility='onchange'
     )
     xco_type = fields.Selection(
         string='Type',
         selection=[('backbone', 'Backbone'),
                    ('client', 'Client')],
-        required=True
+        required=True,
+        track_visibility='onchange'
     )
-    service_id = fields.Char(
-        string='Client Service ID'
+    service_ref = fields.Char(
+        string='Client Service ID',
+        oldname='service_id',
+        track_visibility='onchange'
     )
-    link_id = fields.Char(
-        string='Backbone Link ID'
+    link_ref = fields.Char(
+        string='Backbone Link ID',
+        oldname='link_id',
+        track_visibility='onchange'
     )
     paid_by_bso = fields.Boolean(
-        string='Paid by BSO'
+        string='Paid by BSO',
+        track_visibility='onchange'
     )
     currency_id = fields.Many2one(
         string='Currency',
-        comodel_name='res.currency'
+        comodel_name='res.currency',
+        track_visibility='onchange'
     )
     nrc = fields.Float(
-        string='NRC'
+        string='NRC',
+        track_visibility='onchange'
     )
     mrc = fields.Float(
-        string='MRC'
+        string='MRC',
+        track_visibility='onchange'
     )
     date_start = fields.Date(
-        string='Billing Date'
+        string='Billing Date',
+        track_visibility='onchange'
     )
     date_end = fields.Date(
-        string='Expiration Date'
+        string='Expiration Date',
+        track_visibility='onchange'
     )
     auto_renewal = fields.Selection(
         string='Auto-Renewal',
         selection=[('monthly', 'Monthly'),
                    ('quarterly', 'Quarterly'),
-                   ('yearly', 'Yearly')]
+                   ('yearly', 'Yearly')],
+        track_visibility='onchange'
     )
     notes = fields.Text(
-        string='Notes'
+        string='Notes',
+        track_visibility='onchange'
+    )
+    active = fields.Boolean(
+        string='Active',
+        default=True,
+        track_visibility='onchange'
     )
 
     # ATTACHMENTS
@@ -115,10 +147,10 @@ class BackboneXCO(models.Model):
 
     # COMPUTES
 
-    @api.depends('supplier_id.name', 'supplier_name', 'xco_id')
+    @api.depends('supplier_id.name', 'supplier_name', 'xco_ref')
     def compute_name(self):
         for rec in self:
             supplier_name = rec.supplier_id.name or rec.supplier_name
             rec.update({
-                'name': "%s - %s" % (supplier_name, rec.xco_id)
+                'name': "%s - %s" % (supplier_name, rec.xco_ref)
             })

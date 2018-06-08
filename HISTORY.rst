@@ -30,6 +30,7 @@ Latest (Unreleased)
 **Bugfixes**
 
 * BSIBSO-1054: Enforce default `type` value to `crm.lead` records through custom action
+* BSIBSO-1057: Fix error when click on 'generate invoice' from subscription
 
 **Build**
 

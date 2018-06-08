@@ -3,6 +3,8 @@ from odoo import models, fields, api
 
 class BackboneLink(models.Model):
     _name = 'backbone.link'
+    _inherit = ['mail.thread']
+    _order = "name ASC"
 
     name = fields.Char(
         string='Name',
@@ -12,72 +14,98 @@ class BackboneLink(models.Model):
     a_device_id = fields.Many2one(
         string='Device A',
         comodel_name='backbone.device',
-        required=True
+        required=True,
+        track_visibility='onchange'
     )
     a_xco_id = fields.Many2one(
         string='XConnect A',
-        comodel_name='backbone.xco'
+        comodel_name='backbone.xco',
+        track_visibility='onchange'
     )
     z_device_id = fields.Many2one(
         string='Device Z',
         comodel_name='backbone.device',
-        required=True
+        required=True,
+        track_visibility='onchange'
     )
     z_xco_id = fields.Many2one(
         string='XConnect Z',
-        comodel_name='backbone.xco'
+        comodel_name='backbone.xco',
+        track_visibility='onchange'
     )
-    tnms_id = fields.Char(
-        string='TNMS ID'
+    circuit_ref = fields.Char(
+        string='Circuit ID',
+        oldname='circuit_id',
+        track_visibility='onchange'
     )
     supplier_id = fields.Many2one(
         string='Supplier',
         comodel_name='res.partner',
         domain=[('supplier', '=', True)],
-        context={'default_supplier': True}
+        context={'default_supplier': True},
+        track_visibility='onchange'
     )
     supplier_name = fields.Char(
-        string='Supplier Name'
+        string='Supplier Name',
+        track_visibility='onchange'
     )
-    supplier_link_id = fields.Char(
-        string='Supplier Link ID'
+    supplier_link_ref = fields.Char(
+        string='Supplier Link ID',
+        oldname='supplier_link_id',
+        track_visibility='onchange'
     )
     is_wireless = fields.Boolean(
-        string='Is Wireless'
+        string='Is Wireless',
+        track_visibility='onchange'
     )
     latency = fields.Float(
         string='Latency (ms)',
-        digits=(7, 3)
+        digits=(7, 3),
+        track_visibility='onchange'
     )
     latency_sla = fields.Float(
         string='Latency SLA (ms)',
-        digits=(7, 3)
+        digits=(7, 3),
+        track_visibility='onchange'
+    )
+    latency_live = fields.Float(
+        string='Latency Live (ms)',
+        digits=(7, 3),
+        readonly=True
     )
     bandwidth = fields.Integer(
-        string='Bandwidth (Mbps)'
+        string='Bandwidth (Mbps)',
+        track_visibility='onchange'
     )
     bearer = fields.Integer(
-        string='Bearer (Mbps)'
+        string='Bearer (Mbps)',
+        track_visibility='onchange'
     )
     cable_system = fields.Char(
-        string='Cable System'
+        string='Cable System',
+        track_visibility='onchange'
     )
     is_protected = fields.Boolean(
         string='Is Protected',
-        default=False
+        default=False,
+        track_visibility='onchange'
     )
     cable_system_protection = fields.Char(
-        string='Protection System'
+        string='Protection System',
+        track_visibility='onchange'
     )
     currency_id = fields.Many2one(
         string='Currency',
-        comodel_name='res.currency'
+        comodel_name='res.currency',
+        track_visibility='onchange'
     )
     nrc = fields.Float(
-        string='NRC'
+        string='NRC',
+        track_visibility='onchange'
     )
     mrc = fields.Float(
-        string='MRC'
+        string='MRC',
+        track_visibility='onchange'
     )
     mrc_mb = fields.Float(
         string='MRC / Mb',
@@ -85,10 +113,12 @@ class BackboneLink(models.Model):
         store=True
     )
     nrr = fields.Float(
-        string='NRR'
+        string='NRR',
+        track_visibility='onchange'
     )
     mrr = fields.Float(
-        string='MRR'
+        string='MRR',
+        track_visibility='onchange'
     )
     mrr_mb = fields.Float(
         string='MRR / Mb',
@@ -96,23 +126,28 @@ class BackboneLink(models.Model):
         store=True
     )
     date_start = fields.Date(
-        string='Billing Date'
+        string='Billing Date',
+        track_visibility='onchange'
     )
     date_end = fields.Date(
-        string='Expiration Date'
+        string='Expiration Date',
+        track_visibility='onchange'
     )
     auto_renewal = fields.Selection(
         string='Auto-Renewal',
         selection=[('monthly', 'Monthly'),
                    ('quarterly', 'Quarterly'),
-                   ('yearly', 'Yearly')]
+                   ('yearly', 'Yearly')],
+        track_visibility='onchange'
     )
     notes = fields.Text(
-        string='Notes'
+        string='Notes',
+        track_visibility='onchange'
     )
     active = fields.Boolean(
         string='Active',
-        default=True
+        default=True,
+        track_visibility='onchange'
     )
 
     # ATTACHMENTS

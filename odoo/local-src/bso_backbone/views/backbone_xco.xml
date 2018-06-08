@@ -7,35 +7,36 @@
         <field name="arch" type="xml">
             <tree string="XConnect">
                 <field name="a_side"/>
-                <field name="a_side_port_id"/>
+                <field name="a_side_port"/>
                 <field name="z_side"/>
-                <field name="z_side_port_id"/>
+                <field name="z_side_port"/>
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
-                <field name="xco_id"/>
+                <field name="xco_ref"/>
                 <field name="used"/>
                 <field name="project_code"/>
                 <field name="xco_type"/>
-                <field name="service_id"
+                <field name="service_ref"
                        attrs="{'invisible': [('xco_type', '=', 'backbone')]}"/>
-                <field name="link_id"
+                <field name="link_ref"
                        attrs="{'invisible': [('xco_type', '=', 'client')]}"/>
                 <field name="paid_by_bso"/>
                 <field name="currency_id"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="nrc" widget="monetary"
                        options="{'currency_field': 'currency_id'}"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="mrc" widget="monetary"
                        options="{'currency_field': 'currency_id'}"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="date_start"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="date_end"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="auto_renewal"
-                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="notes" invisible="1"/>
+                <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
                 <button name="action_get_attachment_view"
                         string="View Attached Documents" type="object"
@@ -62,26 +63,26 @@
                     </div>
                     <group>
                         <field name="a_side"/>
-                        <field name="a_side_port_id"/>
+                        <field name="a_side_port"/>
                         <field name="z_side"/>
-                        <field name="z_side_port_id"/>
+                        <field name="z_side_port"/>
                         <field name="supplier_id" invisible="1"
                                options="{'create': false, 'create_edit': false}"/>
                         <field name="supplier_name"/>
-                        <field name="xco_id"/>
+                        <field name="xco_ref"/>
                         <field name="used"/>
                     </group>
                     <group>
                         <field name="project_code"/>
                         <field name="xco_type"/>
-                        <field name="service_id"
+                        <field name="service_ref"
                                attrs="{'invisible': ['|', ('xco_type', '=', False), ('xco_type', '=', 'backbone')], 'required': [('xco_type', '=', 'client')]}"/>
-                        <field name="link_id"
+                        <field name="link_ref"
                                attrs="{'invisible': ['|', ('xco_type', '=', False), ('xco_type', '=', 'client')], 'required': [('xco_type', '=', 'backbone')]}"/>
                         <field name="paid_by_bso"
                                attrs="{'invisible': [('xco_type', '=', False)]}"/>
                     </group>
-                    <group attrs="{'invisible': [('paid_by_bso', '=', False)]}">
+                    <group groups="bso_backbone.group_backbone_manager">
                         <field name="currency_id"
                                attrs="{'required': [('paid_by_bso', '=', True)]}"
                                options="{'create': false, 'create_edit': false}"/>
@@ -100,7 +101,13 @@
                     <group>
                         <field name="notes"/>
                     </group>
+                    <group>
+                        <field name="active"/>
+                    </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
@@ -114,7 +121,7 @@
                 <field name="z_side"/>
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
-                <field name="xco_id"/>
+                <field name="xco_ref"/>
                 <separator/>
                 <filter string="XConnects Client"
                         domain="[('xco_type', '=', 'client')]"/>
@@ -122,6 +129,8 @@
                         domain="[('xco_type', '=', 'backbone')]"/>
                 <filter string="Paid By BSO"
                         domain="[('paid_by_bso', '=', True)]"/>
+                <separator/>
+                <filter string="Archived" domain="[('active', '=', False)]"/>
             </search>
         </field>
     </record>
