@@ -34,6 +34,9 @@ Latest (Unreleased)
 
 **Build**
 
+* Reduce docker image size by removing unused .po files
+* Upgrade docker-compose to 1.17.1
+
 **Documentation**
 
 
