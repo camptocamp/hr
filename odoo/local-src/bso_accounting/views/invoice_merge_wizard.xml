@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_invocie_merge_form_bso_accounting" model="ir.ui.view">
+        <field name="name">invoice.merge.form.bso_accounting</field>
+        <field name="model">invoice.merge</field>
+        <field name="inherit_id" ref="account_invoice_merge.view_invoice_merge"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/p" position="replace">
+                <p>
+                    Please note that:<br/><br/>
+                    Invoices will only be merged if:<br/>
+                    * Invoices are in state 'draft'.<br/>
+                    * Invoices belong to the same partner.<br/>
+                    * Invoices have the same company, partner, address,
+                    currency, journal, salesman, account, type, fiscal
+                    partner_bank, position and payment mode.<br/><br/>
+                    Lines will only be merged if:<br/>
+                    * Invoice lines are exactly the same except for the
+                    product, quantity and unit.<br/>
+                </p>
+            </xpath>
+        </field>
+    </record>
+</odoo>

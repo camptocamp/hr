@@ -26,6 +26,7 @@ Latest (Unreleased)
 * install bso_expenses_holidays_filtering
 * install bso_hr_holidays_report
 * bso_backbone: log all changes
+* BSIBSO-1058: fix several fields not getting propagated during invoice merge
 
 **Bugfixes**
 
