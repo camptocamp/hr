@@ -285,3 +285,5 @@ migration:
           - bso_expenses_holidays_filtering
           - bso_hr_holidays_report
           - bso_backbone
+          - account_invoice_merge
+          - bso_accounting

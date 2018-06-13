@@ -48,3 +48,12 @@
   shell_command_after:
     - git am ../../patches/sub_aa_renaming_odoo10.patch
     - git am ../../patches/0001-avoid-contract_template-to-be-empty-while-saving-a-s.patch
+./external-src/account-invoicing:
+  remotes:
+    oca: git@github.com:OCA/account-invoicing.git
+    camptocamp: git@github.com:camptocamp/account-invoicing.git
+  merges:
+    - oca 10.0
+    # account_invoice_merge module refactor
+    - oca refs/pull/386/head
+  target: *default_target
