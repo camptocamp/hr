@@ -21,3 +21,6 @@ pycups==1.9.73
 
 # bso_webservice tests
 responses
+
+# mailchimp
+mailchimp3==3.0.4

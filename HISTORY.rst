@@ -37,6 +37,7 @@ Latest (Unreleased)
 
 * Reduce docker image size by removing unused .po files
 * Upgrade docker-compose to 1.17.1
+* add `mailchimp3` python lib in requirements
 
 **Documentation**
 
