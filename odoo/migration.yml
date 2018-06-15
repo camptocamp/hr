@@ -287,3 +287,4 @@ migration:
           - bso_backbone
           - account_invoice_merge
           - bso_accounting
+          - base_export_manager
