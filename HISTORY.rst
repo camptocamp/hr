@@ -21,12 +21,25 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.7.0 (2018-06-15)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1055: Add `Existing customers` filter to `crm.lead` search view
 * BSIBSO-1056: Use data from SO when create subscription.
 * install bso_expenses_holidays_filtering
 * install bso_hr_holidays_report
 * bso_backbone: log all changes
 * BSIBSO-1058: fix several fields not getting propagated during invoice merge
+* install `base_export_manager`
 
 **Bugfixes**
 
