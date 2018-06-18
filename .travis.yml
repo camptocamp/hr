@@ -40,3 +40,8 @@ script:
 
 after_success:
   - travis_after_tests_success
+  
+# blocklist
+branches:
+  except:
+  - merge-branch-*
