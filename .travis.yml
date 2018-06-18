@@ -1,5 +1,9 @@
 language: python
 
+branches:
+  except:
+  - merge-branch-.*
+
 python:
   - "2.7"
 
@@ -40,8 +44,3 @@ script:
 
 after_success:
   - travis_after_tests_success
-  
-# blocklist
-branches:
-  except:
-  - merge-branch-.*
