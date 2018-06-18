@@ -44,4 +44,4 @@ after_success:
 # blocklist
 branches:
   except:
-  - merge-branch-*
+  - merge-branch-.*
