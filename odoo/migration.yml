@@ -299,3 +299,4 @@ migration:
           - base
           # local-src
           - specific_reports
+          - bso_accounting

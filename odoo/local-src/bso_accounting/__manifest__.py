@@ -14,6 +14,7 @@
     ],
     'data': [
         'views/invoice_merge_wizard.xml',
+        'views/account_analytic_account_views.xml'
     ],
     'application': True,
 }
