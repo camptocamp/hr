@@ -48,6 +48,7 @@ ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/external-src/reporting-engine, \
   /opt/odoo/external-src/odoo-cloud-platform, \
   /opt/odoo/external-src/odoo-prototype, \
+  /opt/odoo/external-src/odoo-usability, \
   /opt/odoo/external-src/social, \
   /opt/odoo/external-src/account-closing, \
   /opt/odoo/external-src/bank-payment, \

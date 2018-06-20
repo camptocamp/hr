@@ -81,6 +81,10 @@ migration:
           - partner_firstname
           # sale-workflow
           - sale_double_validation
+          #### akretion
+          # odoo-usability
+          - account_invoice_update_wizard
+          #### local-src
           - server_environment_files
           - specific_fct
           - specific_security
@@ -302,3 +306,10 @@ migration:
           - specific_reports
           - specific_crm
           - connector_exchange
+    - version: 10.9.0
+      operations:
+      addons:
+        upgrade:
+          #### akretion
+          # odoo-usability
+          - account_invoice_update_wizard

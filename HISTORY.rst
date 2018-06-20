@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1061: Install account_invoice_update_wizard
+
 **Bugfixes**
 
 **Build**

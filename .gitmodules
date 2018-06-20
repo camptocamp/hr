@@ -98,3 +98,6 @@
 	path = odoo/external-src/odoo/external-src/partner-contact
 	url = git@github.com:OCA/partner-contact.git
 	branch = 10.0
+[submodule "odoo/external-src/odoo-usability"]
+	path = odoo/external-src/odoo-usability
+	url = git@github.com:yvaucher/odoo-usability
