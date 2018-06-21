@@ -7,13 +7,12 @@
            position="replace">
       <span t-if="o.partner_id.vat">VAT Number: <span t-field="o.partner_id.vat"/></span>
     </xpath>
-    <xpath expr='//div[@name="invoice_address"]/preceding-sibling::div[1]/span[@t-if="o.partner_id.vat"]'
+    <xpath expr='//div[@class="col-xs-5 col-xs-offset-7"]/span[@t-if="o.partner_id.vat"]'
            position="replace">
       <span t-if="o.partner_id.vat">VAT Number: <span t-field="o.partner_id.vat"/></span>
     </xpath>
-    <xpath expr='//div[@name="invoice_address"]/preceding-sibling::div[1]/div/span[@t-if="o.partner_id.vat"]'
-           position="replace">
-      <span t-if="o.partner_id.vat">VAT Number: <span t-field="o.partner_id.vat"/></span>
+    <xpath expr='//span[@t-if="o.partner_shipping_id.vat"]' position="replace">
+      <span t-if="o.partner_shipping_id.vat">VAT Number: <span t-field="o.partner_shipping_id.vat"/></span>
     </xpath>
 
     <xpath expr="//p[@t-field='o.origin']/preceding-sibling::strong"

@@ -1,11 +1,11 @@
 id,name,sequence
-hr_contract.hr_contract_type_001,CDD,10
-hr_contract.hr_contract_type_002,CDI,5
-hr_contract.hr_contract_type_003,Contrat d'apprentissage,15
-hr_contract.hr_contract_type_004,Créateur,20
-hr_contract.hr_contract_type_005,Indépendant,25
-hr_contract.hr_contract_type_006,Mandataire,30
-hr_contract.hr_contract_type_007,Prestataire,35
-hr_contract.hr_contract_type_008,Stage ,40
-hr_contract.hr_contract_type_009,Contrat de professionnalisation,45
-hr_contract.hr_contract_type_010,Intérimaire,50
+BSO_hr.hr_contract_type_001,CDD,10
+BSO_hr.hr_contract_type_002,CDI,5
+BSO_hr.hr_contract_type_003,Contrat d'apprentissage,15
+BSO_hr.hr_contract_type_004,Créateur,20
+BSO_hr.hr_contract_type_005,Indépendant,25
+BSO_hr.hr_contract_type_006,Mandataire,30
+BSO_hr.hr_contract_type_007,Prestataire,35
+BSO_hr.hr_contract_type_008,Stage ,40
+BSO_hr.hr_contract_type_009,Contrat de professionnalisation,45
+BSO_hr.hr_contract_type_010,Intérimaire,50

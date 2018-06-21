@@ -21,9 +21,20 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1060: install `l10n_fr_certification`
+
 **Bugfixes**
 
+* BSIBSO-1060: fix for the template for customer invoice as it couldn't find
+  element by xpath after core upgrade
+
 **Build**
+
+* BSIBSO-1060: in short, updated odoo to get the fix for `l10n_fr_certification`
+  * upgrading this broke l10n_lu_reports from enterprise(it is auto-installed module)
+  * dropped useless pending merge for enterprise with git -am patches as they
+    were long time implemented
+  * updated enterprise submodule
 
 **Documentation**
 

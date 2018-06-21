@@ -48,6 +48,7 @@ migration:
           - hr_timesheet_sheet
           - inter_company_rules
           - l10n_fr
+          - l10n_fr_certification
           - l10n_lu
           - l10n_uk
           - l10n_us
@@ -288,3 +289,11 @@ migration:
           - account_invoice_merge
           - bso_accounting
           - base_export_manager
+    - version: 10.8.0
+      operations:
+        pre:
+          - "sh -c 'PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -f odoo/songs/upgrade/upgrade_10_8_0.sql $DB_NAME'"
+      addons:
+        upgrade:
+          - l10n_fr_certification
+          - base

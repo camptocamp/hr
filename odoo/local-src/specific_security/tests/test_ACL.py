@@ -326,6 +326,7 @@ class TestACL(common.TransactionCase):
                 user=employee.user_id).create(vals)
             self.assertTrue(expense)
             expense.sudo(user=employee.user_id.id).submit_expenses()
+            # Approve with another user (user cannot self-approve)
             user = self.melanie
             if employee.parent_id:
                 user = employee.parent_id.user_id.id
