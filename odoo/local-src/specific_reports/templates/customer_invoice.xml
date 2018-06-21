@@ -15,10 +15,20 @@
       <span t-if="o.partner_shipping_id.vat">VAT Number: <span t-field="o.partner_shipping_id.vat"/></span>
     </xpath>
 
-    <xpath expr="//p[@t-field='o.origin']/preceding-sibling::strong"
-           position="replace">
-      <strong>Ref. Source:</strong>
+    <!-- Move <div/> containing origin and rename label to Ref. Source
+         origin can contain a long list of refs after use of invoice merge.
+         We want it on a separate line.
+         -->
+    <xpath expr="//p[@t-field='o.origin']/.." position="replace"/>
+    <xpath expr="//p[@t-field='o.name']/../.." position="after">
+      <div class="row mt32 mb32">
+        <div class="col-xs-6" t-if="o.origin">
+          <strong>Ref. Source:</strong>
+          <p t-field="o.origin"/>
+        </div>
+      </div>
     </xpath>
+
   </template>
 
   <template id="report_invoice_payment_mode_inherit" inherit_id="account_payment_partner.report_invoice_payment_mode">

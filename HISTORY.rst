@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * BSIBSO-1060: install `l10n_fr_certification`
+* BSIBSO-1059: On invoice print out display "Ref. Source" on a separate line as it can contain multiple references after invoice merge.
 
 **Bugfixes**
 
