@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-  <template id="report_invoice_document_inherit_sale_specific" inherit_id="sale.report_invoice_document_inherit_sale">
+  <template id="report_invoice_document_inherit_sale_specific" inherit_id="sale.report_invoice_document_inherit_sale" priority="90">
 
     <xpath expr='//div[@name="invoice_address"]/span[@t-if="o.partner_id.vat"]'
            position="replace">
