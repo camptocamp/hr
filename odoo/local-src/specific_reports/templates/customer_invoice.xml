@@ -29,6 +29,20 @@
       </div>
     </xpath>
 
+    <!-- show start_date and end_date in invoice lines after hidden l.origin -->
+    <xpath expr="//th[@class='hidden']" position="after">
+      <th class="text-right">Start Date</th>
+      <th class="text-right">End Date</th>
+    </xpath>
+    <xpath expr="//span[@t-field='l.origin']/.." position="after">
+      <td class="text-right">
+        <p t-field="l.start_date"/>
+      </td>
+      <td class="text-right">
+        <p t-field="l.end_date"/>
+      </td>
+    </xpath>
+
   </template>
 
   <template id="report_invoice_payment_mode_inherit" inherit_id="account_payment_partner.report_invoice_payment_mode">
