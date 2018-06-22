@@ -297,3 +297,5 @@ migration:
         upgrade:
           - l10n_fr_certification
           - base
+          # local-src
+          - specific_reports

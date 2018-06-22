@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-  <template id="report_invoice_document_inherit_sale_specific" inherit_id="sale.report_invoice_document_inherit_sale">
+  <template id="report_invoice_document_inherit_sale_specific" inherit_id="sale.report_invoice_document_inherit_sale" priority="90">
 
     <xpath expr='//div[@name="invoice_address"]/span[@t-if="o.partner_id.vat"]'
            position="replace">
@@ -15,10 +15,34 @@
       <span t-if="o.partner_shipping_id.vat">VAT Number: <span t-field="o.partner_shipping_id.vat"/></span>
     </xpath>
 
-    <xpath expr="//p[@t-field='o.origin']/preceding-sibling::strong"
-           position="replace">
-      <strong>Ref. Source:</strong>
+    <!-- Move <div/> containing origin and rename label to Ref. Source
+         origin can contain a long list of refs after use of invoice merge.
+         We want it on a separate line.
+         -->
+    <xpath expr="//p[@t-field='o.origin']/.." position="replace"/>
+    <xpath expr="//p[@t-field='o.name']/../.." position="after">
+      <div class="row mt32 mb32">
+        <div class="col-xs-6" t-if="o.origin">
+          <strong>Ref. Source:</strong>
+          <p t-field="o.origin"/>
+        </div>
+      </div>
     </xpath>
+
+    <!-- show start_date and end_date in invoice lines after hidden l.origin -->
+    <xpath expr="//th[@class='hidden']" position="after">
+      <th class="text-right">Start Date</th>
+      <th class="text-right">End Date</th>
+    </xpath>
+    <xpath expr="//span[@t-field='l.origin']/.." position="after">
+      <td class="text-right">
+        <p t-field="l.start_date"/>
+      </td>
+      <td class="text-right">
+        <p t-field="l.end_date"/>
+      </td>
+    </xpath>
+
   </template>
 
   <template id="report_invoice_payment_mode_inherit" inherit_id="account_payment_partner.report_invoice_payment_mode">
