@@ -297,6 +297,7 @@ migration:
         upgrade:
           - l10n_fr_certification
           - base
+          - bso_accounting
           # local-src
           - specific_reports
-          - bso_accounting
+          - specific_crm

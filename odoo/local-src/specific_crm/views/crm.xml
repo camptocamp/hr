@@ -74,22 +74,6 @@
                         attrs="{'invisible': [('has_child_leads', '=', False)]}">
                     <span class="o_stat_value">NRC: <field name="sum_planned_revenue_nrc" widget="monetary"/> / MRC: <field name="sum_planned_revenue_mrc" widget="monetary" /></span>
                 </button>
-                <button name="action_view_quotations"
-                        string="Quotes: "
-                        type="object"
-                        class="oe_highlight oe_stat_button">
-                    <span class="o_stat_value">
-                        <field name="sum_quotes" widget="monetary"/>
-                    </span>
-                </button>
-                <button name="action_view_so"
-                        string="Sales: "
-                        type="object"
-                        class="oe_highlight oe_stat_button">
-                  <span class="o_stat_value">
-                    <field name="sum_sales" widget="monetary"/>
-                  </span>
-                </button>
             </xpath>
         </field>
     </record>
