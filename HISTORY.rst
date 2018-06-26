@@ -24,6 +24,7 @@ Latest (Unreleased)
 * BSIBSO-1060: install `l10n_fr_certification`
 * BSIBSO-1059: On invoice print out display "Ref. Source" on a separate line as it can contain multiple references after invoice merge.
 * BSIBSO-1065: On invoice print out display add start and end dates on invoice lines.
+* BSIBSO-1064: Disable creation of customers on leads.
 * BSIBSO-1063: Remove buttons on leads.
 * BSIBSO-1062: Add Old ref field to analytic account.
 
