@@ -89,3 +89,7 @@
 	path = odoo/external-src/intrastat
 	url = git@github.com:OCA/intrastat.git
 	branch = 10.0
+[submodule "odoo/external-src/connector-exchange"]
+	path = odoo/external-src/connector-exchange
+	url = git@github.com:camptocamp/connector-exchange.git
+	branch = 10.0
