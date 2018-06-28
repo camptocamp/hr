@@ -24,3 +24,8 @@ responses
 
 # mailchimp
 mailchimp3==3.0.4
+
+# connector_exchange
+git+https://github.com/yvaucher/pyews@PyEWS_Events_Management#egg=pyews
+contextlib2==0.5.4
+vcrpy==1.10.5

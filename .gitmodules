@@ -93,3 +93,7 @@
 	path = odoo/external-src/connector-exchange
 	url = git@github.com:camptocamp/connector-exchange.git
 	branch = 10.0
+[submodule "odoo/external-src/odoo/external-src/partner-contact"]
+	path = odoo/external-src/odoo/external-src/partner-contact
+	url = git@github.com:OCA/partner-contact.git
+	branch = 10.0
