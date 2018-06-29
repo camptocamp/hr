@@ -21,12 +21,25 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.8.0 (2018-06-29)
++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1060: install `l10n_fr_certification`
 * BSIBSO-1059: On invoice print out display "Ref. Source" on a separate line as it can contain multiple references after invoice merge.
 * BSIBSO-1065: On invoice print out display add start and end dates on invoice lines.
 * BSIBSO-1064: Disable creation of customers on leads.
 * BSIBSO-1063: Remove buttons on leads.
 * BSIBSO-1062: Add Old ref field to analytic account.
+* install `connector_exchange` module
 
 **Bugfixes**
 
@@ -36,10 +49,11 @@ Latest (Unreleased)
 **Build**
 
 * BSIBSO-1060: in short, updated odoo to get the fix for `l10n_fr_certification`
-  * upgrading this broke l10n_lu_reports from enterprise(it is auto-installed module)
-  * dropped useless pending merge for enterprise with git -am patches as they
-    were long time implemented
-  * updated enterprise submodule
+* upgrading this broke l10n_lu_reports from enterprise(it is auto-installed module)
+* dropped useless pending merge for enterprise with git -am patches as they
+  were long time implemented
+* updated enterprise submodule
+* add `connector-exchange` repo
 
 **Documentation**
 
