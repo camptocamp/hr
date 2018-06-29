@@ -13,6 +13,7 @@ RUN set -x; \
         libssl-dev \
         cups \
         libcups2-dev \
+        git \
         && cd /opt/odoo && pip install -r requirements.txt \
         # Install additional python packages
         && apt-get remove -y python-dev build-essential libffi-dev libssl-dev \
@@ -30,6 +31,7 @@ ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/external-src/account-financial-reporting, \
   /opt/odoo/external-src/account-invoicing, \
   /opt/odoo/external-src/connector, \
+  /opt/odoo/external-src/connector-exchange, \
   /opt/odoo/external-src/connector-jira, \
   /opt/odoo/external-src/hr, \
   /opt/odoo/external-src/hr-timesheet, \

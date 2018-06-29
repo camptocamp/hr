@@ -301,3 +301,4 @@ migration:
           # local-src
           - specific_reports
           - specific_crm
+          - connector_exchange
