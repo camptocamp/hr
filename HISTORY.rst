@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1066: Add a menu 'sources' under sales
+
 **Bugfixes**
 
 **Build**

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<odoo>
+    <menuitem
+        name="Sources"
+        parent="menu_crm_marketing"
+        action="utm.utm_source_action"
+        id="menu_crm_sources"
+        sequence="4"/>
+</odoo>

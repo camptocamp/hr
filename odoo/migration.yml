@@ -302,3 +302,7 @@ migration:
           - specific_reports
           - specific_crm
           - connector_exchange
+    - version: 10.9.0
+      addons:
+        upgrade:
+          - specific_crm
