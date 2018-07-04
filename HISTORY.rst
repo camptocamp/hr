@@ -28,6 +28,14 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.8.1 (2018-07-04)
++++++++++++++++++++
+
+**Bugfixes**
+
+* fix issue with xml_ids from l10n_lu module
+
+
 10.8.0 (2018-06-29)
 +++++++++++++++++++
 
