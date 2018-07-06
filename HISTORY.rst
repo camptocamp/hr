@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * BSIBSO-1066: Add a menu 'sources' under sales
 
+* BSIBSO-1061: Install account_invoice_update_wizard
+
 **Bugfixes**
 
 **Build**

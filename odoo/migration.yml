@@ -81,6 +81,10 @@ migration:
           - partner_firstname
           # sale-workflow
           - sale_double_validation
+          #### akretion
+          # odoo-usability
+          - account_invoice_update_wizard
+          #### local-src
           - server_environment_files
           - specific_fct
           - specific_security
@@ -307,3 +311,6 @@ migration:
       addons:
         upgrade:
           - specific_crm
+          #### akretion
+          # odoo-usability
+          - account_invoice_update_wizard
