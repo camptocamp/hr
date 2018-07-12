@@ -24,6 +24,7 @@ Latest (Unreleased)
 * BSIBSO-1066: Add a menu 'sources' under sales
 
 * BSIBSO-1061: Install account_invoice_update_wizard
+* BSIBSO-1067: Implement multicurrency in `crm.lead`
 
 **Bugfixes**
 

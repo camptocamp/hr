@@ -310,7 +310,8 @@ migration:
     - version: 10.9.0
       addons:
         upgrade:
-          - specific_crm
           #### akretion
           # odoo-usability
           - account_invoice_update_wizard
+          #### local-src
+          - specific_crm
