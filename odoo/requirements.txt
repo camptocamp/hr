@@ -29,3 +29,7 @@ mailchimp3==3.0.4
 git+https://github.com/yvaucher/pyews@PyEWS_Events_Management#egg=pyews
 contextlib2==0.5.4
 vcrpy==1.10.5
+
+#connector telephony
+phonenumbers==8.9.10
+py-Asterisk==0.5.17

@@ -32,6 +32,7 @@ ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/external-src/account-invoicing, \
   /opt/odoo/external-src/connector, \
   /opt/odoo/external-src/connector-exchange, \
+  /opt/odoo/external-src/connector-telephony, \
   /opt/odoo/external-src/connector-jira, \
   /opt/odoo/external-src/hr, \
   /opt/odoo/external-src/hr-timesheet, \

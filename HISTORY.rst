@@ -25,7 +25,7 @@ Latest (Unreleased)
 
 * BSIBSO-1061: Install account_invoice_update_wizard
 * BSIBSO-1067: Implement multicurrency in `crm.lead`
-
+* Add telephony asterisk connector
 **Bugfixes**
 
 **Build**
