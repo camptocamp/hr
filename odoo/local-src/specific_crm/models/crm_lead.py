@@ -88,19 +88,19 @@ class CrmLead(models.Model):
     # used only to display the proper one on a tree view
     display_planned_revenue = fields.Monetary(
         string='Expected Revenue',
-        compute='_compute_technical_currencies',
+        compute='_compute_display_planned_revenues',
         currency_field='currency_company_id',
         digits=(16, 2),
     )
     display_planned_revenue_nrc = fields.Monetary(
         string='Expected NRC Revenue',
-        compute='_compute_technical_currencies',
+        compute='_compute_display_planned_revenues',
         currency_field='currency_company_id',
         digits=(16, 2),
     )
     display_planned_revenue_mrc = fields.Monetary(
         string='Expected MRC Revenue',
-        compute='_compute_technical_currencies',
+        compute='_compute_display_planned_revenues',
         currency_field='currency_company_id',
         digits=(16, 2),
     )
@@ -193,6 +193,17 @@ class CrmLead(models.Model):
             'currency_eur_id': self.env.ref('base.EUR'),
             'currency_usd_id': self.env.ref('base.USD'),
         })
+
+    @api.multi
+    @api.depends(
+        'planned_revenue_usd',
+        'planned_revenue_mrc_usd',
+        'planned_revenue_nrc_usd',
+        'planned_revenue_eur',
+        'planned_revenue_mrc_eur',
+        'planned_revenue_nrc_eur',
+    )
+    def _compute_display_planned_revenues(self):
         # Purpose:
         # display values in USD if it is current user company's main currency
         # otherwise, display EUR currencies
@@ -299,10 +310,12 @@ class CrmLead(models.Model):
             ('large', 'Large'),
         ]
 
+    @api.multi
     @api.depends(
         'planned_duration',
         'planned_revenue_mrc',
         'planned_revenue_nrc',
+        'company_currency',
     )
     def _compute_planned_revenue(self):
         for rec in self:
