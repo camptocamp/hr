@@ -364,8 +364,8 @@ class CrmLead(models.Model):
                 'planned_revenue': planned_revenue,
                 'planned_revenue_currency': planned_revenue_currency,
                 'weighted_revenue': weighted_revenue,
-                'weighted_revenue_usd': weighted_revenue,
-                'weighted_revenue_eur': weighted_revenue,
+                'weighted_revenue_usd': weighted_revenue_usd,
+                'weighted_revenue_eur': weighted_revenue_eur,
             })
 
     @api.multi
