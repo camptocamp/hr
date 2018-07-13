@@ -21,18 +21,24 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
-* BSIBSO-1066: Add a menu 'sources' under sales
-
-* BSIBSO-1061: Install account_invoice_update_wizard
-* BSIBSO-1067: Implement multicurrency in `crm.lead`
-* BSIBSO-1070: Restyle stuff implemented in =BSIBSO-1067=
-* Add telephony asterisk connector
-
 **Bugfixes**
 
 **Build**
 
 **Documentation**
+
+
+10.9.0 (2018-07-13)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* BSIBSO-1066: Add a menu 'sources' under sales
+* BSIBSO-1061: Install account_invoice_update_wizard
+* BSIBSO-1067: Implement multicurrency in `crm.lead`
+* BSIBSO-1070: Restyle stuff implemented in =BSIBSO-1067=
+* Add telephony asterisk connector
+
 
 
 10.8.1 (2018-07-04)

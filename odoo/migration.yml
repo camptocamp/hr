@@ -321,3 +321,4 @@ migration:
           - asterisk_click2dial
           - base_phone
           - specific_crm
+          - bso_hr_holidays_report
