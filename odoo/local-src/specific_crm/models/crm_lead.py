@@ -39,28 +39,24 @@ class CrmLead(models.Model):
         string='Expected revenue (opportunity currency)',
         compute='_compute_converted_eur_usd_revenues',
         currency_field='currency_id',
-        digits=(16, 2),
     )
     planned_revenue_eur = fields.Monetary(
         string='Expected Revenue (EUR)',
         compute='_compute_converted_eur_usd_revenues',
         currency_field='currency_eur_id',
         store=True,
-        digits=(16, 2),
     )
     planned_revenue_nrc_eur = fields.Monetary(
         string='Expected NRC Revenue (EUR)',
         compute='_compute_converted_eur_usd_revenues',
         currency_field='currency_eur_id',
         store=True,
-        digits=(16, 2),
     )
     planned_revenue_mrc_eur = fields.Monetary(
         string='Expected MRC Revenue (EUR)',
         compute='_compute_converted_eur_usd_revenues',
         currency_field='currency_eur_id',
         store=True,
-        digits=(16, 2),
     )
 
     planned_revenue_usd = fields.Monetary(
@@ -68,21 +64,18 @@ class CrmLead(models.Model):
         compute='_compute_converted_eur_usd_revenues',
         currency_field='currency_usd_id',
         store=True,
-        digits=(16, 2),
     )
     planned_revenue_nrc_usd = fields.Monetary(
         string='Expected NRC Revenue (USD)',
         compute='_compute_converted_eur_usd_revenues',
         currency_field='currency_usd_id',
         store=True,
-        digits=(16, 2),
     )
     planned_revenue_mrc_usd = fields.Monetary(
         string='Expected MRC Revenue (USD)',
         compute='_compute_converted_eur_usd_revenues',
         currency_field='currency_usd_id',
         store=True,
-        digits=(16, 2),
     )
 
     # used only to display the proper one on a tree view
@@ -90,24 +83,27 @@ class CrmLead(models.Model):
         string='Expected Revenue',
         compute='_compute_display_planned_revenues',
         currency_field='currency_company_id',
-        digits=(16, 2),
     )
     display_planned_revenue_nrc = fields.Monetary(
         string='Expected NRC Revenue',
         compute='_compute_display_planned_revenues',
         currency_field='currency_company_id',
-        digits=(16, 2),
     )
     display_planned_revenue_mrc = fields.Monetary(
         string='Expected MRC Revenue',
         compute='_compute_display_planned_revenues',
         currency_field='currency_company_id',
-        digits=(16, 2),
     )
 
-    rate_opportunity_to_eur = fields.Float()
-    rate_opportunity_to_usd = fields.Float()
-    rate_opportunity_to_company = fields.Float()
+    rate_opportunity_to_eur = fields.Float(
+        digits=(12, 6),
+    )
+    rate_opportunity_to_usd = fields.Float(
+        digits=(12, 6),
+    )
+    rate_opportunity_to_company = fields.Float(
+        digits=(12, 6),
+    )
 
     currency_id = fields.Many2one(
         required=True,
