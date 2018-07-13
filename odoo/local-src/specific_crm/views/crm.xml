@@ -56,13 +56,13 @@
                             <field name="planned_revenue_eur" string="TCV"/>
                             <field name="planned_revenue_nrc_eur" string="NRC"/>
                             <field name="planned_revenue_mrc_eur" string="MRC"/>
-                            <field name="weighted_revenue_eur" string="MRC"/>
+                            <field name="weighted_revenue_eur" string="Adj. TCV"/>
                         </group>
                         <group name="revenues_usd" string="Revenues (USD)">
                             <field name="planned_revenue_usd" string="TCV"/>
                             <field name="planned_revenue_nrc_usd" string="NRC"/>
                             <field name="planned_revenue_mrc_usd" string="MRC"/>
-                            <field name="weighted_revenue_usd" string="MRC"/>
+                            <field name="weighted_revenue_usd" string="Adj. TCV"/>
                         </group>
                     </group>
                 </page>
