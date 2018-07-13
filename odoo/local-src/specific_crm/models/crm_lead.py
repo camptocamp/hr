@@ -25,21 +25,25 @@ class CrmLead(models.Model):
     )
 
     planned_revenue_nrc = fields.Monetary(
-        'Expected NRC Revenue',
+        string='NRC',
+        help='Expected NRC Revenue',
         track_visibility='always',
         currency_field='currency_id',
     )
     planned_revenue_mrc = fields.Monetary(
-        'Expected MRC Revenue',
+        string='MRC',
+        help='Expected MRC Revenue',
         track_visibility='always',
         currency_field='currency_id',
     )
 
     planned_revenue_currency = fields.Monetary(
-        string='Expected revenue (opportunity currency)',
+        string='TCV',
+        help='Total Contract Value',
         compute='_compute_converted_eur_usd_revenues',
         currency_field='currency_id',
     )
+
     planned_revenue_eur = fields.Monetary(
         string='Expected Revenue (EUR)',
         compute='_compute_converted_eur_usd_revenues',
@@ -85,12 +89,18 @@ class CrmLead(models.Model):
         currency_field='currency_company_id',
     )
     display_planned_revenue_nrc = fields.Monetary(
-        string='Expected NRC Revenue',
+        string='NRC',
         compute='_compute_display_planned_revenues',
         currency_field='currency_company_id',
     )
     display_planned_revenue_mrc = fields.Monetary(
-        string='Expected MRC Revenue',
+        string='MRC',
+        compute='_compute_display_planned_revenues',
+        currency_field='currency_company_id',
+        digits=(16, 2),
+    )
+    display_weighted_tcv = fields.Monetary(
+        string='Adjusted TCV',
         compute='_compute_display_planned_revenues',
         currency_field='currency_company_id',
     )
@@ -118,6 +128,21 @@ class CrmLead(models.Model):
     planned_revenue = fields.Float(
         'Expected Revenue',
         compute='_compute_planned_revenue',
+    )
+    weighted_revenue = fields.Monetary(
+        string='Adjusted TCV',
+        compute='_compute_planned_revenue',
+        currency_field='currency_id',
+    )
+    weighted_revenue_eur = fields.Monetary(
+        string='Adjusted TCV (EUR)',
+        compute='_compute_planned_revenue',
+        currency_field='currency_eur_id',
+    )
+    weighted_revenue_usd = fields.Monetary(
+        string='Adjusted TCV (USD)',
+        compute='_compute_planned_revenue',
+        currency_field='currency_usd_id',
     )
     industry_id = fields.Many2one(
         string="Industry",
@@ -198,6 +223,8 @@ class CrmLead(models.Model):
         'planned_revenue_eur',
         'planned_revenue_mrc_eur',
         'planned_revenue_nrc_eur',
+        'weighted_revenue_usd',
+        'weighted_revenue_eur',
     )
     def _compute_display_planned_revenues(self):
         # Purpose:
@@ -209,6 +236,7 @@ class CrmLead(models.Model):
                     'display_planned_revenue': opp.planned_revenue_usd,
                     'display_planned_revenue_mrc': opp.planned_revenue_mrc_usd,
                     'display_planned_revenue_nrc': opp.planned_revenue_nrc_usd,
+                    'display_weighted_tcv': opp.weighted_revenue_usd,
                 })
         else:
             for opp in self:
@@ -216,6 +244,7 @@ class CrmLead(models.Model):
                     'display_planned_revenue': opp.planned_revenue_eur,
                     'display_planned_revenue_mrc': opp.planned_revenue_mrc_eur,
                     'display_planned_revenue_nrc': opp.planned_revenue_nrc_eur,
+                    'display_weighted_tcv': opp.weighted_revenue_eur,
                 })
 
     @api.multi
@@ -312,6 +341,7 @@ class CrmLead(models.Model):
         'planned_revenue_mrc',
         'planned_revenue_nrc',
         'company_currency',
+        'probability',
     )
     def _compute_planned_revenue(self):
         for rec in self:
@@ -319,10 +349,19 @@ class CrmLead(models.Model):
                 rec.planned_revenue_nrc
                 + (rec.planned_revenue_mrc * rec.planned_duration)
             )
+            planned_revenue_currency = rec.company_currency.compute(
+                planned_revenue, rec.currency_id)
+            weighted_revenue = planned_revenue_currency * rec.probability / 100
+            weighted_revenue_eur = rec.currency_id.compute(
+                weighted_revenue, rec.currency_eur_id)
+            weighted_revenue_usd = rec.currency_id.compute(
+                weighted_revenue, rec.currency_usd_id)
             rec.update({
                 'planned_revenue': planned_revenue,
-                'planned_revenue_currency': rec.company_currency.compute(
-                    planned_revenue, rec.currency_id),
+                'planned_revenue_currency': planned_revenue_currency,
+                'weighted_revenue': weighted_revenue,
+                'weighted_revenue_usd': weighted_revenue_usd,
+                'weighted_revenue_eur': weighted_revenue_eur,
             })
 
     @api.multi
