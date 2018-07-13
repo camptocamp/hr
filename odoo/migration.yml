@@ -308,6 +308,9 @@ migration:
           - specific_crm
           - connector_exchange
     - version: 10.9.0
+      operations:
+        post:
+          - anthem songs.upgrade.upgrade_10_9_0::main
       addons:
         upgrade:
           #### akretion
