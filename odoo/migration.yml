@@ -315,3 +315,6 @@ migration:
           - account_invoice_update_wizard
           #### local-src
           - specific_crm
+          - asterisk_click2dial
+          - base_phone
+          - specific_crm
