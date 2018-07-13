@@ -12,37 +12,31 @@
             <field name="company_currency" position="after">
                 <field name="currency_id" invisible="1"/>
             </field>
-            <xpath expr="//label[@for='planned_revenue']/parent::div/parent::h2" position="before">
+            <xpath expr="//label[@for='planned_revenue']/ancestor::h2" position="before">
                 <h2 class="o_row">
-                    <div>
-                        <label for="planned_duration"/>
-                        <div class="o_row">
-                            <field name="planned_duration"/>
-                            <span>months </span>
-                        </div>
-                    </div>
-                </h2><br/>
-                <h2 class="o_row">
-                    <div>
-                        <label for="planned_revenue_nrc"/>
-                        <div class="o_row">
-                            <field name="planned_revenue_nrc"/>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="planned_revenue_mrc"/>
-                        <div class="o_row">
-                            <field name="planned_revenue_mrc"/>
-                        </div>
-                    </div>
-                </h2><br/>
-            </xpath>
-            <xpath expr="//field[@name='planned_revenue']/ancestor::h2" position="after">
-                <label for="planned_revenue_currency">Opportunity currency</label>
-                <h2 class="o_row">
+                    <span>NRC:</span>
+                    <field name="planned_revenue_nrc"/>
+                    <span>+</span>
+                    <span>MRC:</span>
+                    <field name="planned_revenue_mrc"/>
+                    <span>x</span><field name="planned_duration"/><span>months</span>
+                    <span>=</span><span>TCV:</span>
                     <field name="planned_revenue_currency" class="oe_inline"/>
-                    <field name="currency_id"/>
                 </h2>
+            </xpath>
+            <xpath expr="//label[@for='planned_revenue']/ancestor::h2" position="inside">
+                <!-- straight after the percent sign after the probability -->
+                <span>, weighted TCV:</span>
+                <field name="weighted_revenue"/>
+            </xpath>
+            <label for="planned_revenue" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </label>
+            <label for="probability" position="attributes">
+              <attribute name="invisible">1</attribute>
+            </label>
+            <xpath expr="//field[@name='planned_revenue']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Marketing" name="marketing">
@@ -60,14 +54,16 @@
                     <field name="currency_usd_id" invisible="1"/>
                     <group>
                         <group name="revenues_eur" string="Revenues (EUR)">
-                            <field name="planned_revenue_eur"/>
-                            <field name="planned_revenue_mrc_eur"/>
-                            <field name="planned_revenue_nrc_eur"/>
+                            <field name="planned_revenue_eur" string="TCV"/>
+                            <field name="planned_revenue_nrc_eur" string="NRC"/>
+                            <field name="planned_revenue_mrc_eur" string="MRC"/>
+                            <field name="weighted_revenue_eur" string="MRC"/>
                         </group>
                         <group name="revenues_usd" string="Revenues (USD)">
-                            <field name="planned_revenue_usd"/>
-                            <field name="planned_revenue_mrc_usd"/>
-                            <field name="planned_revenue_nrc_usd"/>
+                            <field name="planned_revenue_usd" string="TCV"/>
+                            <field name="planned_revenue_nrc_usd" string="NRC"/>
+                            <field name="planned_revenue_mrc_usd" string="MRC"/>
+                            <field name="weighted_revenue_usd" string="MRC"/>
                         </group>
                     </group>
                 </page>
