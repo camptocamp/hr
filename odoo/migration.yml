@@ -308,10 +308,16 @@ migration:
           - specific_crm
           - connector_exchange
     - version: 10.9.0
+      operations:
+        post:
+          - anthem songs.upgrade.upgrade_10_9_0::main
       addons:
         upgrade:
           #### akretion
           # odoo-usability
           - account_invoice_update_wizard
           #### local-src
+          - specific_crm
+          - asterisk_click2dial
+          - base_phone
           - specific_crm
