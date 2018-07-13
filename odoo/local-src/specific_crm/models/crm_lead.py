@@ -355,7 +355,7 @@ class CrmLead(models.Model):
             )
             planned_revenue_currency = rec.company_currency.compute(
                 planned_revenue, rec.currency_id)
-            weighted_revenue = planned_revenue_currency * rec.probability
+            weighted_revenue = planned_revenue_currency * rec.probability / 100
             weighted_revenue_eur = rec.currency_id.compute(
                 weighted_revenue, rec.currency_eur_id)
             weighted_revenue_usd = rec.currency_id.compute(
