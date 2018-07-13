@@ -97,13 +97,19 @@ class CrmLead(models.Model):
         digits=(16, 2),
     )
     display_planned_revenue_nrc = fields.Monetary(
-        string='Expected NRC Revenue',
+        string='NRC',
         compute='_compute_display_planned_revenues',
         currency_field='currency_company_id',
         digits=(16, 2),
     )
     display_planned_revenue_mrc = fields.Monetary(
-        string='Expected MRC Revenue',
+        string='MRC',
+        compute='_compute_display_planned_revenues',
+        currency_field='currency_company_id',
+        digits=(16, 2),
+    )
+    display_weighted_tcv = fields.Monetary(
+        string='Adjusted TCV',
         compute='_compute_display_planned_revenues',
         currency_field='currency_company_id',
         digits=(16, 2),
@@ -221,6 +227,8 @@ class CrmLead(models.Model):
         'planned_revenue_eur',
         'planned_revenue_mrc_eur',
         'planned_revenue_nrc_eur',
+        'weighted_revenue_usd',
+        'weighted_revenue_eur',
     )
     def _compute_display_planned_revenues(self):
         # Purpose:
@@ -232,6 +240,7 @@ class CrmLead(models.Model):
                     'display_planned_revenue': opp.planned_revenue_usd,
                     'display_planned_revenue_mrc': opp.planned_revenue_mrc_usd,
                     'display_planned_revenue_nrc': opp.planned_revenue_nrc_usd,
+                    'display_weighted_tcv': opp.weighted_revenue_usd,
                 })
         else:
             for opp in self:
@@ -239,6 +248,7 @@ class CrmLead(models.Model):
                     'display_planned_revenue': opp.planned_revenue_eur,
                     'display_planned_revenue_mrc': opp.planned_revenue_mrc_eur,
                     'display_planned_revenue_nrc': opp.planned_revenue_nrc_eur,
+                    'display_weighted_tcv': opp.weighted_revenue_eur,
                 })
 
     @api.multi

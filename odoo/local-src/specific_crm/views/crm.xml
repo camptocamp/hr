@@ -113,15 +113,16 @@
             </field>
             <field name="planned_revenue" position="before">
                 <field name="planned_duration"/>
-                <field name="display_planned_revenue_nrc"/>
-                <field name="display_planned_revenue_mrc"/>
+                <field name="display_planned_revenue_mrc" sum="total MRC"/>
+                <field name="display_planned_revenue_nrc" sum="Total NRC"/>
+                <field name="display_planned_revenue" sum="Total Revenue"/>
+                <field name="display_weighted_tcv" sum="Total TCV"/>
                 <field name="industry_id"/>
                 <field name="industry_subsector_id"/>
                 <field name="status"/>
                 <field name="quick_title_id"/>
                 <field name="company_type"/>
                 <field name="size"/>
-                <field name="display_planned_revenue"/>
             </field>
         </field>
     </record>
