@@ -24,97 +24,6 @@ class CrmLead(models.Model):
         help='An ugly technical field to display proper currency in a tree',
     )
 
-    planned_revenue_nrc = fields.Monetary(
-        string='NRC',
-        help='Expected NRC Revenue',
-        track_visibility='always',
-        currency_field='currency_id',
-    )
-    planned_revenue_mrc = fields.Monetary(
-        string='MRC',
-        help='Expected MRC Revenue',
-        track_visibility='always',
-        currency_field='currency_id',
-    )
-
-    planned_revenue_currency = fields.Monetary(
-        string='TCV',
-        help='Total Contract Value',
-        compute='_compute_converted_eur_usd_revenues',
-        currency_field='currency_id',
-    )
-
-    planned_revenue_eur = fields.Monetary(
-        string='Expected Revenue (EUR)',
-        compute='_compute_converted_eur_usd_revenues',
-        currency_field='currency_eur_id',
-        store=True,
-    )
-    planned_revenue_nrc_eur = fields.Monetary(
-        string='Expected NRC Revenue (EUR)',
-        compute='_compute_converted_eur_usd_revenues',
-        currency_field='currency_eur_id',
-        store=True,
-    )
-    planned_revenue_mrc_eur = fields.Monetary(
-        string='Expected MRC Revenue (EUR)',
-        compute='_compute_converted_eur_usd_revenues',
-        currency_field='currency_eur_id',
-        store=True,
-    )
-
-    planned_revenue_usd = fields.Monetary(
-        string='Expected Revenue (USD)',
-        compute='_compute_converted_eur_usd_revenues',
-        currency_field='currency_usd_id',
-        store=True,
-    )
-    planned_revenue_nrc_usd = fields.Monetary(
-        string='Expected NRC Revenue (USD)',
-        compute='_compute_converted_eur_usd_revenues',
-        currency_field='currency_usd_id',
-        store=True,
-    )
-    planned_revenue_mrc_usd = fields.Monetary(
-        string='Expected MRC Revenue (USD)',
-        compute='_compute_converted_eur_usd_revenues',
-        currency_field='currency_usd_id',
-        store=True,
-    )
-
-    # used only to display the proper one on a tree view
-    display_planned_revenue = fields.Monetary(
-        string='Expected Revenue',
-        compute='_compute_display_planned_revenues',
-        currency_field='currency_company_id',
-    )
-    display_planned_revenue_nrc = fields.Monetary(
-        string='NRC',
-        compute='_compute_display_planned_revenues',
-        currency_field='currency_company_id',
-    )
-    display_planned_revenue_mrc = fields.Monetary(
-        string='MRC',
-        compute='_compute_display_planned_revenues',
-        currency_field='currency_company_id',
-        digits=(16, 2),
-    )
-    display_weighted_tcv = fields.Monetary(
-        string='Adjusted TCV',
-        compute='_compute_display_planned_revenues',
-        currency_field='currency_company_id',
-    )
-
-    rate_opportunity_to_eur = fields.Float(
-        digits=(12, 6),
-    )
-    rate_opportunity_to_usd = fields.Float(
-        digits=(12, 6),
-    )
-    rate_opportunity_to_company = fields.Float(
-        digits=(12, 6),
-    )
-
     currency_id = fields.Many2one(
         required=True,
         comodel_name='res.currency',
@@ -125,25 +34,7 @@ class CrmLead(models.Model):
         'Duration',
         track_visibility='always',
     )
-    planned_revenue = fields.Float(
-        'Expected Revenue',
-        compute='_compute_planned_revenue',
-    )
-    weighted_revenue = fields.Monetary(
-        string='Adjusted TCV',
-        compute='_compute_planned_revenue',
-        currency_field='currency_id',
-    )
-    weighted_revenue_eur = fields.Monetary(
-        string='Adjusted TCV (EUR)',
-        compute='_compute_planned_revenue',
-        currency_field='currency_eur_id',
-    )
-    weighted_revenue_usd = fields.Monetary(
-        string='Adjusted TCV (USD)',
-        compute='_compute_planned_revenue',
-        currency_field='currency_usd_id',
-    )
+
     industry_id = fields.Many2one(
         string="Industry",
         comodel_name="crm.industry",
@@ -195,6 +86,31 @@ class CrmLead(models.Model):
         string="Has child leads",
         compute="_compute_has_child_leads",
     )
+
+    # Regular revenue fields (in the currency of opportunity)
+    planned_revenue = fields.Float(
+        string='TCV',
+        help='Total Contract Value',
+        compute='_compute_planned_revenue',
+        currency_field='currency_id',
+    )
+    planned_revenue_nrc = fields.Monetary(
+        string='NRC',
+        help='Expected NRC Revenue',
+        track_visibility='always',
+        currency_field='currency_id',
+    )
+    planned_revenue_mrc = fields.Monetary(
+        string='MRC',
+        help='Expected MRC Revenue',
+        track_visibility='always',
+        currency_field='currency_id',
+    )
+    weighted_revenue = fields.Monetary(
+        string='Adjusted TCV',
+        compute='_compute_planned_revenue',
+        currency_field='currency_id',
+    )
     sum_planned_revenue_nrc = fields.Float(
         string="Sum planned revenue nrc",
         compute="_compute_sum_nrc_mrc",
@@ -202,6 +118,87 @@ class CrmLead(models.Model):
     sum_planned_revenue_mrc = fields.Float(
         string="Sum planned revenue mrc",
         compute="_compute_sum_nrc_mrc",
+    )
+
+    # Converted fields (each is also represented in EUR and USD)
+    planned_revenue_nrc_eur = fields.Monetary(
+        string='Expected NRC Revenue (EUR)',
+        compute='_compute_planned_revenue',
+        currency_field='currency_eur_id',
+        store=True,
+    )
+    planned_revenue_nrc_usd = fields.Monetary(
+        string='Expected NRC Revenue (USD)',
+        compute='_compute_planned_revenue',
+        currency_field='currency_usd_id',
+        store=True,
+    )
+    planned_revenue_mrc_eur = fields.Monetary(
+        string='Expected MRC Revenue (EUR)',
+        compute='_compute_planned_revenue',
+        currency_field='currency_eur_id',
+        store=True,
+    )
+    planned_revenue_mrc_usd = fields.Monetary(
+        string='Expected MRC Revenue (USD)',
+        compute='_compute_planned_revenue',
+        currency_field='currency_usd_id',
+        store=True,
+    )
+    planned_revenue_eur = fields.Monetary(
+        string='Expected Revenue (EUR)',
+        compute='_compute_planned_revenue',
+        currency_field='currency_eur_id',
+        store=True,
+    )
+    planned_revenue_usd = fields.Monetary(
+        string='Expected Revenue (USD)',
+        compute='_compute_planned_revenue',
+        currency_field='currency_usd_id',
+        store=True,
+    )
+    weighted_revenue_eur = fields.Monetary(
+        string='Adjusted TCV (EUR)',
+        compute='_compute_planned_revenue',
+        currency_field='currency_eur_id',
+    )
+    weighted_revenue_usd = fields.Monetary(
+        string='Adjusted TCV (USD)',
+        compute='_compute_planned_revenue',
+        currency_field='currency_usd_id',
+    )
+
+    # Used conversion rates
+    rate_opportunity_to_eur = fields.Float(
+        digits=(12, 6),
+    )
+    rate_opportunity_to_usd = fields.Float(
+        digits=(12, 6),
+    )
+    rate_opportunity_to_company = fields.Float(
+        digits=(12, 6),
+    )
+
+    # used only to display the proper one on a tree view
+    display_planned_revenue = fields.Monetary(
+        string='Expected Revenue',
+        compute='_compute_display_planned_revenues',
+        currency_field='currency_company_id',
+    )
+    display_planned_revenue_nrc = fields.Monetary(
+        string='NRC',
+        compute='_compute_display_planned_revenues',
+        currency_field='currency_company_id',
+    )
+    display_planned_revenue_mrc = fields.Monetary(
+        string='MRC',
+        compute='_compute_display_planned_revenues',
+        currency_field='currency_company_id',
+    )
+    display_weighted_tcv = fields.Monetary(
+        string='Adjusted TCV',
+        compute='_compute_display_planned_revenues',
+        currency_field='currency_company_id',
     )
 
     def _default_currency_id(self):
@@ -228,8 +225,8 @@ class CrmLead(models.Model):
     )
     def _compute_display_planned_revenues(self):
         # Purpose:
-        # display values in USD if it is current user company's main currency
-        # otherwise, display EUR currencies
+        # display revenues in USD if it is current user company's main currency
+        # otherwise, display revenues in EUR
         if self.env.user.company_id.currency_id == self.env.ref('base.USD'):
             for opp in self:
                 opp.update({
@@ -246,54 +243,6 @@ class CrmLead(models.Model):
                     'display_planned_revenue_nrc': opp.planned_revenue_nrc_eur,
                     'display_weighted_tcv': opp.weighted_revenue_eur,
                 })
-
-    @api.multi
-    @api.depends(
-        'planned_revenue_nrc',
-        'planned_revenue_mrc',
-        'currency_id',
-        'planned_duration',
-    )
-    def _compute_converted_eur_usd_revenues(self):
-        def get_rate_to(from_curr, to_curr):
-            self.env['res.currency']._get_conversion_rate(from_curr, to_curr)
-
-        for lead in self:
-            from_nrc = lead.planned_revenue_nrc
-            nrc_amount_eur = lead.currency_id.compute(
-                from_nrc, lead.currency_eur_id)
-            nrc_amount_usd = lead.currency_id.compute(
-                from_nrc, lead.currency_usd_id)
-
-            from_mrc = lead.planned_revenue_mrc
-            mrc_amount_eur = lead.currency_id.compute(
-                from_mrc, lead.currency_eur_id)
-            mrc_amount_usd = lead.currency_id.compute(
-                from_mrc, lead.currency_usd_id)
-
-            from_total = lead.planned_revenue
-            total_amount_eur = lead.currency_id.compute(
-                from_total, lead.currency_eur_id)
-            total_amount_usd = lead.currency_id.compute(
-                from_total, lead.currency_usd_id)
-
-            lead.update({
-                'planned_revenue_eur': total_amount_eur,
-                'planned_revenue_usd': total_amount_usd,
-                # NRC
-                'planned_revenue_nrc_eur': nrc_amount_eur,
-                'planned_revenue_nrc_usd': nrc_amount_usd,
-                # MRC
-                'planned_revenue_mrc_eur': mrc_amount_eur,
-                'planned_revenue_mrc_usd': mrc_amount_usd,
-                # freeze conversion rates
-                'rate_opportunity_to_eur': get_rate_to(
-                    lead.currency_id, lead.currency_eur_id),
-                'rate_opportunity_to_usd': get_rate_to(
-                    lead.currency_id, lead.currency_usd_id),
-                'rate_opportunity_to_company': get_rate_to(
-                    lead.currency_id, lead.currency_company_id),
-            })
 
     @api.multi
     @api.depends('child_leads_ids')
@@ -341,32 +290,70 @@ class CrmLead(models.Model):
         'planned_revenue_mrc',
         'planned_revenue_nrc',
         'company_currency',
+        'currency_id',
         'probability',
     )
     def _compute_planned_revenue(self):
+        def get_rate_to(from_curr, to_curr):
+            self.env['res.currency']._get_conversion_rate(from_curr, to_curr)
+
         for rec in self:
             planned_revenue = (
                 rec.planned_revenue_nrc
                 + (rec.planned_revenue_mrc * rec.planned_duration)
             )
-            planned_revenue_currency = rec.company_currency.compute(
-                planned_revenue, rec.currency_id)
-            weighted_revenue = planned_revenue_currency * rec.probability / 100
+            weighted_revenue = planned_revenue * rec.probability / 100
             weighted_revenue_eur = rec.currency_id.compute(
                 weighted_revenue, rec.currency_eur_id)
             weighted_revenue_usd = rec.currency_id.compute(
                 weighted_revenue, rec.currency_usd_id)
             rec.update({
                 'planned_revenue': planned_revenue,
-                'planned_revenue_currency': planned_revenue_currency,
                 'weighted_revenue': weighted_revenue,
                 'weighted_revenue_usd': weighted_revenue_usd,
                 'weighted_revenue_eur': weighted_revenue_eur,
             })
 
+            from_nrc = rec.planned_revenue_nrc
+            nrc_amount_eur = rec.currency_id.compute(
+                from_nrc, rec.currency_eur_id)
+            nrc_amount_usd = rec.currency_id.compute(
+                from_nrc, rec.currency_usd_id)
+
+            from_mrc = rec.planned_revenue_mrc
+            mrc_amount_eur = rec.currency_id.compute(
+                from_mrc, rec.currency_eur_id)
+            mrc_amount_usd = rec.currency_id.compute(
+                from_mrc, rec.currency_usd_id)
+
+            from_total = rec.planned_revenue
+            total_amount_eur = rec.currency_id.compute(
+                from_total, rec.currency_eur_id)
+            total_amount_usd = rec.currency_id.compute(
+                from_total, rec.currency_usd_id)
+
+            rec.update({
+                'planned_revenue_eur': total_amount_eur,
+                'planned_revenue_usd': total_amount_usd,
+                # NRC
+                'planned_revenue_nrc_eur': nrc_amount_eur,
+                'planned_revenue_nrc_usd': nrc_amount_usd,
+                # MRC
+                'planned_revenue_mrc_eur': mrc_amount_eur,
+                'planned_revenue_mrc_usd': mrc_amount_usd,
+                # freeze conversion rates
+                'rate_opportunity_to_eur': get_rate_to(
+                    rec.currency_id, rec.currency_eur_id),
+                'rate_opportunity_to_usd': get_rate_to(
+                    rec.currency_id, rec.currency_usd_id),
+                'rate_opportunity_to_company': get_rate_to(
+                    rec.currency_id, rec.currency_company_id),
+            })
+
     @api.multi
     def action_update_rates(self):
-        self._compute_converted_eur_usd_revenues()
+        """Trigger recalculation of converted revenues manually."""
+        self._compute_planned_revenue()
 
     @api.multi
     def action_view_opportunities(self):

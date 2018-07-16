@@ -322,3 +322,7 @@ migration:
           - base_phone
           - specific_crm
           - bso_hr_holidays_report
+    - version: 10.10.0
+      addons:
+        upgrade:
+          - specific_crm

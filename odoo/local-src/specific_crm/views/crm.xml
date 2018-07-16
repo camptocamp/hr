@@ -9,33 +9,59 @@
             <header position="inside">
                 <button name="action_update_rates" string="Update Rates" type="object"/>
             </header>
-            <xpath expr="//label[@for='planned_revenue']/ancestor::h2" position="before">
-                <label for="currency_id" string="Opportunity currency"/>
-                <field name="currency_id"/><br/>
+            <xpath expr="//h2[//field[@name='probability']]" position="replace"/>
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <label for="currency_id"/>
+                <field name="currency_id"/>
+                <br/>
                 <h2 class="o_row">
-                    <span>NRC:</span>
-                    <field name="planned_revenue_nrc"/>
-                    <span>+</span>
-                    <span>MRC:</span>
-                    <field name="planned_revenue_mrc"/>
-                    <span>x</span><field name="planned_duration"/><span>months</span>
-                    <span>=</span><span>TCV:</span>
-                    <field name="planned_revenue_currency" class="oe_inline"/>
+                    <div>
+                        <strong>
+                          <span class="o_label">NRC:</span>
+                        </strong>
+                        <div class="o_row">
+                            <field name="planned_revenue_nrc" widget="monetary"/>
+                            <span>+</span>
+                        </div>
+                    </div>
+                    <div>
+                        <strong>
+                            <span class="o_label">MRC:</span>
+                        </strong>
+                        <div class="o_row">
+                            <field name="planned_revenue_mrc"/>
+                            <span>x</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="planned_duration" class="oe_edit_only"/>
+                        <div class="o_row">
+                            <field name="planned_duration" widget="integer"/>
+                            <span>months =</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="planned_revenue" class="oe_edit_only" />
+                        <div class="o_row">
+                            <field name="company_currency" invisible="1"/>
+                            <field name="planned_revenue" widget="monetary"/>
+                            <span class="oe_grey">at</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="probability" class="oe_edit_only"/>
+                        <div class="o_row">
+                            <field name="probability" widget="integer"/>
+                            <span>%% =</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="weighted_revenue" class="oe_edit_only"/>
+                        <div class="o_row">
+                            <field name="weighted_revenue" widget=""/>
+                        </div>
+                    </div>
                 </h2>
-            </xpath>
-            <xpath expr="//label[@for='planned_revenue']/ancestor::h2" position="inside">
-                <!-- straight after the percent sign after the probability -->
-                <span>, weighted TCV:</span>
-                <field name="weighted_revenue"/>
-            </xpath>
-            <label for="planned_revenue" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </label>
-            <label for="probability" position="attributes">
-              <attribute name="invisible">1</attribute>
-            </label>
-            <xpath expr="//field[@name='planned_revenue']" position="attributes">
-                <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Marketing" name="marketing">
@@ -54,15 +80,15 @@
                     <group>
                         <group name="revenues_eur" string="Revenues (EUR)">
                             <field name="planned_revenue_eur" string="TCV"/>
+                            <field name="weighted_revenue_eur" string="Adj. TCV"/>
                             <field name="planned_revenue_nrc_eur" string="NRC"/>
                             <field name="planned_revenue_mrc_eur" string="MRC"/>
-                            <field name="weighted_revenue_eur" string="Adj. TCV"/>
                         </group>
                         <group name="revenues_usd" string="Revenues (USD)">
                             <field name="planned_revenue_usd" string="TCV"/>
+                            <field name="weighted_revenue_usd" string="Adj. TCV"/>
                             <field name="planned_revenue_nrc_usd" string="NRC"/>
                             <field name="planned_revenue_mrc_usd" string="MRC"/>
-                            <field name="weighted_revenue_usd" string="Adj. TCV"/>
                         </group>
                     </group>
                 </page>
@@ -204,33 +230,33 @@
                 </div>
                 <div class="text-muted">
                     <t t-if="record.planned_revenue.raw_value">
-                      <field name="planned_revenue_currency" widget="monetary"/>
+                      <field name="planned_revenue" widget="monetary" options="{'digits': (16, 0)}"/>
                       | <field name="planned_revenue_usd" widget="monetary"
-                             options="{'currency_field': 'currency_usd_id'}"/>
+                             options="{'currency_field': 'currency_usd_id', 'digits': (16, 0)}"/>
                       <span>TCV</span>
                     </t>
                 </div>
                 <div class="text-muted">
                     <t t-if="record.weighted_revenue.raw_value">
-                      <field name="weighted_revenue" widget="monetary"/>
+                      <field name="weighted_revenue" widget="monetary" options="{'digits': (16, 0)}"/>
                       | <field name="weighted_revenue_usd" widget="monetary"
-                             options="{'currency_field': 'currency_usd_id'}"/>
+                      options="{'currency_field': 'currency_usd_id', 'digits': (16, 0)}"/>
                       <span>Adjusted TCV</span>
                     </t>
                 </div>
                 <div class="text-muted">
                     <t t-if="record.planned_revenue_nrc.raw_value">
-                        <field name="planned_revenue_nrc" widget="monetary"/>
+                        <field name="planned_revenue_nrc" widget="monetary" options="{'digits': (16, 0)}"/>
                         | <field name="planned_revenue_nrc_usd" widget="monetary"
-                                 options="{'currency_field': 'currency_usd_id'}"/>
+                        options="{'currency_field': 'currency_usd_id', 'digits': (16, 0)}"/>
                         <span>NRC</span>
                     </t>
                 </div>
                 <div class="text-muted">
                     <t t-if="record.planned_revenue_mrc.raw_value">
-                        <field name="planned_revenue_mrc" widget="monetary"/>
+                        <field name="planned_revenue_mrc" widget="monetary" options="{'digits': (16, 0)}"/>
                         | <field name="planned_revenue_mrc_usd" widget="monetary"
-                                 options="{'currency_field': 'currency_usd_id'}"/>
+                        options="{'currency_field': 'currency_usd_id', 'digits': (16, 0)}"/>
                         <span>MRC</span>
                     </t>
                 </div>

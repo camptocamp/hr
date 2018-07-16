@@ -249,6 +249,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BSIBSO-1073: Fix multicurrency flow & views in `crm.lead`
+
 **Build**
 
 **Documentation**
