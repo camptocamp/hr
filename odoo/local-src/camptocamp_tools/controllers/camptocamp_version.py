@@ -5,6 +5,7 @@
 # https://github.com/camptocamp/odoo-template instead.
 #  Copyright 2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo import http, _
 from odoo.http import request
 from odoo.exceptions import UserError
@@ -20,7 +21,7 @@ class CamptocampVersionController(http.Controller):
                 "Only users with Technical Features activated are allowed."))
         sql = """SELECT number, date_done
                  FROM marabunta_version
-                 ORDER BY number DESC;"""
+                 ORDER BY date_done DESC;"""
         request.env.cr.execute(sql)
         res = request.env.cr.dictfetchall()
         values = {'versions': res}
