@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Build**
 
+* BSIBSO-1069: Sync project and update image version.
+
 **Documentation**
 
 
