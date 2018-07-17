@@ -169,7 +169,8 @@ class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
     def _set_additional_fields(self, invoice):
-        if not self.start_date and not self.end_date:
+        if self.product_id.recurring_invoice and \
+                not self.start_date and not self.end_date:
             # test_today is used in tests to force a date
             today = self.env.context.get('test_today',
                                          fields.Date.today())

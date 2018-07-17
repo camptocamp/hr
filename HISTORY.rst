@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BSIBSO-1074: Fix invoice NRC manual before 1st delivery
+
 **Build**
 
 * BSIBSO-1069: Sync project and update image version.
