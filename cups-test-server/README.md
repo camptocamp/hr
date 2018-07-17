@@ -1,10 +1,28 @@
+<!--
+This file has been generated with 'invoke project.sync'.
+Do not modify. Any manual change will be lost.
+Please propose your modification on
+https://github.com/camptocamp/odoo-template instead.
+-->
 # CUPS Server
 
 ## Setup
 
+### CUPS container
+
 In a brand new environment when you do `docker-compose up` you get `cups-server` service automatically.
 
 In an existing environment just do `docker-compose up -d cups-server`.
+
+### Odoo container
+
+If your project relies on CUPS and `base_report_to_printer` then you should already have this.
+In any case, make sure you have these requirements in place:
+
+* install `cups` and `libcups2-dev` in `odoo/Dockerfile`
+* `/opt/odoo/external-src/report-print-send` in ADDONS_PATH
+* `git@github.com:OCA/report-print-send.git` checked out in the path above
+
 
 ## CUPS Configuration
 
