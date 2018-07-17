@@ -23,13 +23,22 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.10.0 (2018-07-17)
+++++++++++++++++++++
+
+**Bugfixes**
+
 * BSIBSO-1074: Fix invoice NRC manual before 1st delivery
+* BSIBSO-1073 Fix multicurrency flow in `crm.lead
 
 **Build**
 
 * BSIBSO-1069: Sync project and update image version.
-
-**Documentation**
 
 
 10.9.0 (2018-07-13)
