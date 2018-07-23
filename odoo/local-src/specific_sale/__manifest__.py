@@ -33,6 +33,7 @@
      'views/account_invoice.xml',
      'views/report_invoice.xml',
      'views/sale_subscription_views.xml',
+     'views/product.xml',
      'data/ir_sequence.xml'
  ],
  'test': [],

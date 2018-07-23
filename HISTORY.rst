@@ -23,6 +23,9 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BSIBSO-1081: fix regression from Odoo restricting the kind of products you
+  can use for sale subscriptions
+
 **Build**
 
 **Documentation**
