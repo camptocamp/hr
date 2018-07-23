@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1075: Move menu Lead under Marketing section
+
 **Bugfixes**
 
 **Build**
