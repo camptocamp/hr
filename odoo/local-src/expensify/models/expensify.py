@@ -1,6 +1,6 @@
 import base64
-import json
 import datetime
+import json
 
 import requests
 import yaml
@@ -119,7 +119,7 @@ class Expensify(models.TransientModel):
                 _("No reports found. Try setting an earlier date?"))
 
         expenses = [expense for report in reports for expense in
-                    report.get('expenses', [])]
+                    report.get('expenses') or []]
         if not expenses:
             raise exceptions.ValidationError(
                 _("No expenses found. Try submitting them to a report?"))
