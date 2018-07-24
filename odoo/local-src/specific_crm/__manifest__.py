@@ -17,7 +17,6 @@
      'views/crm_industry.xml',
      'views/crm_lead_quicktitle.xml',
      'views/crm_sources.xml',
-     'views/crm_leads.xml',
      'views/crm.xml',
      'security/ir.model.access.csv',
  ],
