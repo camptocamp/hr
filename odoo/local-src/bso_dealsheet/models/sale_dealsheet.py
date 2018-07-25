@@ -31,7 +31,8 @@ class SaleDealsheet(models.Model):
     )
     sale_order_state = fields.Selection(
         related='sale_order_id.state',
-        readonly=True
+        readonly=True,
+        store=True
     )
     partner_id = fields.Many2one(
         related='sale_order_id.partner_id',
@@ -50,7 +51,8 @@ class SaleDealsheet(models.Model):
     )
     seller_id = fields.Many2one(
         related='sale_order_id.user_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     presale_id = fields.Many2one(
         string='Pre-Sale',
@@ -93,42 +95,42 @@ class SaleDealsheet(models.Model):
         domain=[('is_cost', '=', True), ('is_recurring', '=', False)],
         context={'default_is_cost': True, 'default_is_recurring': False}
     )
-    nrc = fields.Float(
+    nrc = fields.Monetary(
         string='NRC',
         compute='compute_nrc',
         store=True
     )
-    nrc_delivery = fields.Float(
+    nrc_delivery = fields.Monetary(
         string='Delivery NRC',
         compute='compute_nrc_delivery',
         store=True
     )
-    nrr = fields.Float(
+    nrr = fields.Monetary(
         string='NRR',
         compute='compute_nrr',
         store=True
     )
-    nrm = fields.Float(
+    nrm = fields.Monetary(
         string='NRM (%)',
         compute='compute_nrm',
         store=True
     )
-    nrm_delivery = fields.Float(
+    nrm_delivery = fields.Monetary(
         string='Delivery NRM (%)',
         compute='compute_nrm_delivery',
         store=True
     )
-    mrc = fields.Float(
+    mrc = fields.Monetary(
         string='MRC',
         compute='compute_mrc',
         store=True
     )
-    mrc_delivery = fields.Float(
+    mrc_delivery = fields.Monetary(
         string='Delivery MRC',
         compute='compute_mrc_delivery',
         store=True
     )
-    mrr = fields.Float(
+    mrr = fields.Monetary(
         string='MRR',
         compute='compute_mrr',
         store=True
@@ -143,17 +145,17 @@ class SaleDealsheet(models.Model):
         compute='compute_mrm_delivery',
         store=True
     )
-    cost = fields.Float(
+    cost = fields.Monetary(
         string='Cost',
         compute='compute_cost',
         store=True
     )
-    cost_delivery = fields.Float(
+    cost_delivery = fields.Monetary(
         string='Delivery Cost',
         compute='compute_cost_delivery',
         store=True
     )
-    revenue = fields.Float(
+    revenue = fields.Monetary(
         string='Revenue',
         compute='compute_revenue',
         store=True

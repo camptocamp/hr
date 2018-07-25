@@ -11,7 +11,8 @@ class SaleDealsheetSummaryLine(models.Model):
     )
     currency_id = fields.Many2one(
         related='dealsheet_id.currency_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     cost_type = fields.Selection(
         selection=[
@@ -21,17 +22,17 @@ class SaleDealsheetSummaryLine(models.Model):
         ],
         required=True
     )
-    cost = fields.Float(
+    cost = fields.Monetary(
         string='Cost',
         compute='compute_values',
         store=True
     )
-    cost_delivery = fields.Float(
+    cost_delivery = fields.Monetary(
         string='Delivery Cost',
         compute='compute_values',
         store=True
     )
-    revenue = fields.Float(
+    revenue = fields.Monetary(
         string='Revenue',
         compute='compute_values',
         store=True
