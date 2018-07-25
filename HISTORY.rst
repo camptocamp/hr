@@ -45,6 +45,8 @@ Latest (Unreleased)
 **Features and Improvements**
   * Improvements in Mailchimps webhook
 
+* BSIBSO-1076: no create/update of customer in opportunity form
+
 **Bugfixes**
  * Fix in Dashboard, Backbone, Mailchimp
      PR #225 #226 #228 #229
