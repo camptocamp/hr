@@ -69,22 +69,22 @@ class BundleDetailsEPLLink(models.Model):
         readonly=True,
         store=True
     )
-    mrc = fields.Monetary(
+    mrc = fields.Float(
         string='MRC',
         compute='compute_mrc',
         store=True
     )
-    mrc_mb = fields.Monetary(
+    mrc_mb = fields.Float(
         string='MRC / Mb',
         compute='compute_mrc_mb',
         store=True
     )
-    mrr = fields.Monetary(
+    mrr = fields.Float(
         string='MRR',
         compute='compute_mrr',
         store=True
     )
-    mrr_mb = fields.Monetary(
+    mrr_mb = fields.Float(
         string='MRR / Mb',
         compute='compute_mrr_mb',
         store=True

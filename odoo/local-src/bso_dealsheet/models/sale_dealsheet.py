@@ -95,42 +95,42 @@ class SaleDealsheet(models.Model):
         domain=[('is_cost', '=', True), ('is_recurring', '=', False)],
         context={'default_is_cost': True, 'default_is_recurring': False}
     )
-    nrc = fields.Monetary(
+    nrc = fields.Float(
         string='NRC',
         compute='compute_nrc',
         store=True
     )
-    nrc_delivery = fields.Monetary(
+    nrc_delivery = fields.Float(
         string='Delivery NRC',
         compute='compute_nrc_delivery',
         store=True
     )
-    nrr = fields.Monetary(
+    nrr = fields.Float(
         string='NRR',
         compute='compute_nrr',
         store=True
     )
-    nrm = fields.Monetary(
+    nrm = fields.Float(
         string='NRM (%)',
         compute='compute_nrm',
         store=True
     )
-    nrm_delivery = fields.Monetary(
+    nrm_delivery = fields.Float(
         string='Delivery NRM (%)',
         compute='compute_nrm_delivery',
         store=True
     )
-    mrc = fields.Monetary(
+    mrc = fields.Float(
         string='MRC',
         compute='compute_mrc',
         store=True
     )
-    mrc_delivery = fields.Monetary(
+    mrc_delivery = fields.Float(
         string='Delivery MRC',
         compute='compute_mrc_delivery',
         store=True
     )
-    mrr = fields.Monetary(
+    mrr = fields.Float(
         string='MRR',
         compute='compute_mrr',
         store=True
@@ -145,17 +145,17 @@ class SaleDealsheet(models.Model):
         compute='compute_mrm_delivery',
         store=True
     )
-    cost = fields.Monetary(
+    cost = fields.Float(
         string='Cost',
         compute='compute_cost',
         store=True
     )
-    cost_delivery = fields.Monetary(
+    cost_delivery = fields.Float(
         string='Delivery Cost',
         compute='compute_cost_delivery',
         store=True
     )
-    revenue = fields.Monetary(
+    revenue = fields.Float(
         string='Revenue',
         compute='compute_revenue',
         store=True

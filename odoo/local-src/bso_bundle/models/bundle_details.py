@@ -57,17 +57,17 @@ class BundleDetails(models.Model):
         domain=[('is_epl', '=', False)],
         context={'default_is_epl': False}
     )
-    bundle_mrc = fields.Monetary(
+    bundle_mrc = fields.Float(
         string='MRC',
         compute='compute_bundle_mrc',
         store=True
     )
-    bundle_mrr = fields.Monetary(
+    bundle_mrr = fields.Float(
         string='MRR',
         compute='compute_bundle_mrr',
         store=True
     )
-    bundle_nrr = fields.Monetary(
+    bundle_nrr = fields.Float(
         string='NRR'
     )
 

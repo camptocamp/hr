@@ -97,28 +97,28 @@ class BackboneLink(models.Model):
         comodel_name='res.currency',
         track_visibility='onchange'
     )
-    nrc = fields.Monetary(
+    nrc = fields.Float(
         string='NRC',
         track_visibility='onchange'
     )
-    mrc = fields.Monetary(
+    mrc = fields.Float(
         string='MRC',
         track_visibility='onchange'
     )
-    mrc_mb = fields.Monetary(
+    mrc_mb = fields.Float(
         string='MRC / Mb',
         compute='compute_mrc_mb',
         store=True
     )
-    nrr = fields.Monetary(
+    nrr = fields.Float(
         string='NRR',
         track_visibility='onchange'
     )
-    mrr = fields.Monetary(
+    mrr = fields.Float(
         string='MRR',
         track_visibility='onchange'
     )
-    mrr_mb = fields.Monetary(
+    mrr_mb = fields.Float(
         string='MRR / Mb',
         compute='compute_mrr_mb',
         store=True

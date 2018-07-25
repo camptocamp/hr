@@ -42,33 +42,33 @@ class BundleDetailsProduct(models.Model):
         readonly=True,
         store=True
     )
-    mrc_unit = fields.Monetary(
+    mrc_unit = fields.Float(
         string='MRC / Unit',
         compute='compute_mrc_unit',
         store=True
     )
-    mrc = fields.Monetary(
+    mrc = fields.Float(
         string='MRC',
         compute='compute_mrc',
         store=True
     )
-    dflt_mrr_unit = fields.Monetary(
+    dflt_mrr_unit = fields.Float(
         string='Default MRR / Unit',
         compute='compute_dflt_mrr_unit',
         store=True
     )
-    mrr_unit = fields.Monetary(
+    mrr_unit = fields.Float(
         string='MRR / Unit'
     )
-    mrr = fields.Monetary(
+    mrr = fields.Float(
         string='MRR',
         compute='compute_mrr',
         store=True
     )
-    nrr_unit = fields.Monetary(
+    nrr_unit = fields.Float(
         string='NRR / Unit'
     )
-    nrr = fields.Monetary(
+    nrr = fields.Float(
         string='NRR',
         compute='compute_nrr',
         store=True

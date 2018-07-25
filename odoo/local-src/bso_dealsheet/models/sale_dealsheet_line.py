@@ -54,9 +54,9 @@ class SaleDealsheetLine(models.Model):
         readonly=True,
         store=True
     )
-    cost = fields.Monetary(
+    cost = fields.Float(
         string='Cost'
     )
-    cost_delivery = fields.Monetary(
+    cost_delivery = fields.Float(
         string='Delivery Cost'
     )

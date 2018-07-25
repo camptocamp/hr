@@ -44,23 +44,23 @@ class BackbonePop(models.Model):
         comodel_name='res.currency',
         track_visibility='onchange'
     )
-    kva_mrc = fields.Monetary(
+    kva_mrc = fields.Float(
         string='KVA MRC',
         track_visibility='onchange'
     )
-    rack_nrc = fields.Monetary(
+    rack_nrc = fields.Float(
         string='Rack NRC',
         track_visibility='onchange'
     )
-    rack_mrc = fields.Monetary(
+    rack_mrc = fields.Float(
         string='Rack MRC',
         track_visibility='onchange'
     )
-    xco_nrc = fields.Monetary(
+    xco_nrc = fields.Float(
         string='XCo NRC',
         track_visibility='onchange'
     )
-    xco_mrc = fields.Monetary(
+    xco_mrc = fields.Float(
         string='XCo MRC',
         track_visibility='onchange'
     )

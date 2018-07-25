@@ -22,17 +22,17 @@ class SaleDealsheetSummaryLine(models.Model):
         ],
         required=True
     )
-    cost = fields.Monetary(
+    cost = fields.Float(
         string='Cost',
         compute='compute_values',
         store=True
     )
-    cost_delivery = fields.Monetary(
+    cost_delivery = fields.Float(
         string='Delivery Cost',
         compute='compute_values',
         store=True
     )
-    revenue = fields.Monetary(
+    revenue = fields.Float(
         string='Revenue',
         compute='compute_values',
         store=True

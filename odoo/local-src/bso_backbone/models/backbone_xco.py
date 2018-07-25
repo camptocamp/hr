@@ -79,11 +79,11 @@ class BackboneXCO(models.Model):
         comodel_name='res.currency',
         track_visibility='onchange'
     )
-    nrc = fields.Monetary(
+    nrc = fields.Float(
         string='NRC',
         track_visibility='onchange'
     )
-    mrc = fields.Monetary(
+    mrc = fields.Float(
         string='MRC',
         track_visibility='onchange'
     )

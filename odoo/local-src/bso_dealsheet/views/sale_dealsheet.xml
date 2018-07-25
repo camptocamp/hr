@@ -155,9 +155,9 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="dealsheet_menu" name="Dealsheets" sequence="11"
+    <menuitem id="dealsheet_menu" name="Dealsheets"
               action="dealsheet_action"
-              parent="sales_team.menu_sales"
+              parent=""
               groups="bso_dealsheet.group_dealsheet_user"/>
 
 </odoo>

@@ -49,22 +49,22 @@ class BundleDetailsEPL(models.Model):
         compute='compute_epl_route_latency',
         store=True
     )
-    epl_route_mrc_mb = fields.Monetary(
+    epl_route_mrc_mb = fields.Float(
         string='Route MRC / Mb',
         compute='compute_epl_route_mrc_mb',
         store=True
     )
-    epl_route_mrr_mb = fields.Monetary(
+    epl_route_mrr_mb = fields.Float(
         string='Route MRR / Mb',
         compute='compute_epl_route_mrr_mb',
         store=True
     )
-    epl_route_mrc = fields.Monetary(
+    epl_route_mrc = fields.Float(
         string='Route MRC',
         compute='compute_epl_route_mrc',
         store=True
     )
-    epl_route_mrr = fields.Monetary(
+    epl_route_mrr = fields.Float(
         string='Route MRR',
         compute='compute_epl_route_mrr',
         store=True
@@ -101,22 +101,22 @@ class BundleDetailsEPL(models.Model):
         string='Backup Discount (%)',
         default=50
     )
-    epl_backup_mrc_mb = fields.Monetary(
+    epl_backup_mrc_mb = fields.Float(
         string='Backup MRC / Mb',
         compute='compute_epl_backup_mrc_mb',
         store=True
     )
-    epl_backup_mrr_mb = fields.Monetary(
+    epl_backup_mrr_mb = fields.Float(
         string='Backup MRR / Mb',
         compute='compute_epl_backup_mrr_mb',
         store=True
     )
-    epl_backup_mrc = fields.Monetary(
+    epl_backup_mrc = fields.Float(
         string='Backup MRC',
         compute='compute_epl_backup_mrc',
         store=True
     )
-    epl_backup_mrr = fields.Monetary(
+    epl_backup_mrr = fields.Float(
         string='Backup MRR',
         compute='compute_epl_backup_mrr',
         store=True
@@ -131,27 +131,27 @@ class BundleDetailsEPL(models.Model):
         domain=[('is_epl', '=', True)],
         context={'default_is_epl': True}
     )
-    epl_products_mrc = fields.Monetary(
+    epl_products_mrc = fields.Float(
         string='Products MRC',
         compute='compute_epl_products_mrc',
         store=True
     )
-    epl_products_mrr = fields.Monetary(
+    epl_products_mrr = fields.Float(
         string='Products MRR',
         compute='compute_epl_products_mrr',
         store=True
     )
-    epl_products_mrc_mb = fields.Monetary(
+    epl_products_mrc_mb = fields.Float(
         string='Products MRC / Mb',
         compute='compute_epl_products_mrc_mb',
         store=True
     )
-    epl_products_mrr_mb = fields.Monetary(
+    epl_products_mrr_mb = fields.Float(
         string='Products MRR / Mb',
         compute='compute_epl_products_mrr_mb',
         store=True
     )
-    epl_products_nrr = fields.Monetary(
+    epl_products_nrr = fields.Float(
         string='Products NRR',
         compute='compute_epl_products_nrr',
         store=True
@@ -172,35 +172,35 @@ class BundleDetailsEPL(models.Model):
 
     # EPL PRICE & COST
 
-    epl_mrc_mb = fields.Monetary(
+    epl_mrc_mb = fields.Float(
         string='MRC / Mb',
         compute='compute_epl_mrc_mb',
         help=_('(Route MRC + Backup MRC + Products MRC) / Bandwidth'),
         store=True
     )
-    epl_mrr_mb = fields.Monetary(
+    epl_mrr_mb = fields.Float(
         string='MRR / Mb',
         compute='compute_epl_mrr_mb',
         help=_('(Route MRR + Backup MRR + Products MRR) / Bandwidth'),
         store=True
     )
-    epl_mrc = fields.Monetary(
+    epl_mrc = fields.Float(
         string='MRC',
         compute='compute_epl_mrc',
         help=_('Route MRC + Backup MRC + Products MRC'),
         store=True
     )
-    dflt_epl_mrr = fields.Monetary(
+    dflt_epl_mrr = fields.Float(
         string='Default MRR',
         compute='compute_dflt_epl_mrr',
         help=_('Route MRR + Backup MRR + Products MRR'),
         store=True
     )
-    epl_mrr = fields.Monetary(
+    epl_mrr = fields.Float(
         string='MRR',
         help=_('Route MRR + Backup MRR + Products MRR')
     )
-    epl_nrr = fields.Monetary(
+    epl_nrr = fields.Float(
         string='NRR'
     )
 
