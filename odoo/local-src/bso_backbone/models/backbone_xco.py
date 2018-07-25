@@ -18,7 +18,6 @@ class BackboneXCO(models.Model):
     )
     a_side_port = fields.Char(
         string='A Side Port',
-        oldname='a_side_port_id',
         track_visibility='onchange'
     )
     z_side = fields.Char(
@@ -28,7 +27,6 @@ class BackboneXCO(models.Model):
     )
     z_side_port = fields.Char(
         string='Z Side Port',
-        oldname='z_side_port_id',
         track_visibility='onchange'
     )
     supplier_id = fields.Many2one(
@@ -44,7 +42,6 @@ class BackboneXCO(models.Model):
     )
     xco_ref = fields.Char(
         string='XConnect ID',
-        oldname='xco_id',
         required=True,
         track_visibility='onchange'
     )
@@ -67,12 +64,10 @@ class BackboneXCO(models.Model):
     )
     service_ref = fields.Char(
         string='Client Service ID',
-        oldname='service_id',
         track_visibility='onchange'
     )
     link_ref = fields.Char(
         string='Backbone Link ID',
-        oldname='link_id',
         track_visibility='onchange'
     )
     paid_by_bso = fields.Boolean(
@@ -84,11 +79,11 @@ class BackboneXCO(models.Model):
         comodel_name='res.currency',
         track_visibility='onchange'
     )
-    nrc = fields.Float(
+    nrc = fields.Monetary(
         string='NRC',
         track_visibility='onchange'
     )
-    mrc = fields.Float(
+    mrc = fields.Monetary(
         string='MRC',
         track_visibility='onchange'
     )

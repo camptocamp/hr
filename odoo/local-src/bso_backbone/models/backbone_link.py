@@ -35,7 +35,6 @@ class BackboneLink(models.Model):
     )
     circuit_ref = fields.Char(
         string='Circuit ID',
-        oldname='circuit_id',
         track_visibility='onchange'
     )
     supplier_id = fields.Many2one(
@@ -51,7 +50,6 @@ class BackboneLink(models.Model):
     )
     supplier_link_ref = fields.Char(
         string='Supplier Link ID',
-        oldname='supplier_link_id',
         track_visibility='onchange'
     )
     is_wireless = fields.Boolean(
@@ -99,28 +97,28 @@ class BackboneLink(models.Model):
         comodel_name='res.currency',
         track_visibility='onchange'
     )
-    nrc = fields.Float(
+    nrc = fields.Monetary(
         string='NRC',
         track_visibility='onchange'
     )
-    mrc = fields.Float(
+    mrc = fields.Monetary(
         string='MRC',
         track_visibility='onchange'
     )
-    mrc_mb = fields.Float(
+    mrc_mb = fields.Monetary(
         string='MRC / Mb',
         compute='compute_mrc_mb',
         store=True
     )
-    nrr = fields.Float(
+    nrr = fields.Monetary(
         string='NRR',
         track_visibility='onchange'
     )
-    mrr = fields.Float(
+    mrr = fields.Monetary(
         string='MRR',
         track_visibility='onchange'
     )
-    mrr_mb = fields.Float(
+    mrr_mb = fields.Monetary(
         string='MRR / Mb',
         compute='compute_mrr_mb',
         store=True
