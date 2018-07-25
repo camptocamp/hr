@@ -12,15 +12,18 @@ class BundleDetailsProduct(models.Model):
     )
     currency_id = fields.Many2one(
         related='bundle_details_id.currency_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     bundle_categ_id = fields.Many2one(
         related='bundle_details_id.bundle_categ_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     is_epl = fields.Boolean(
         related='bundle_details_id.is_epl',
-        readonly=True
+        readonly=True,
+        store=True
     )
     product_id = fields.Many2one(
         string='Product',
@@ -36,35 +39,36 @@ class BundleDetailsProduct(models.Model):
     )
     uom_id = fields.Many2one(
         related='product_id.uom_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
-    mrc_unit = fields.Float(
+    mrc_unit = fields.Monetary(
         string='MRC / Unit',
         compute='compute_mrc_unit',
         store=True
     )
-    mrc = fields.Float(
+    mrc = fields.Monetary(
         string='MRC',
         compute='compute_mrc',
         store=True
     )
-    dflt_mrr_unit = fields.Float(
+    dflt_mrr_unit = fields.Monetary(
         string='Default MRR / Unit',
         compute='compute_dflt_mrr_unit',
         store=True
     )
-    mrr_unit = fields.Float(
+    mrr_unit = fields.Monetary(
         string='MRR / Unit'
     )
-    mrr = fields.Float(
+    mrr = fields.Monetary(
         string='MRR',
         compute='compute_mrr',
         store=True
     )
-    nrr_unit = fields.Float(
+    nrr_unit = fields.Monetary(
         string='NRR / Unit'
     )
-    nrr = fields.Float(
+    nrr = fields.Monetary(
         string='NRR',
         compute='compute_nrr',
         store=True

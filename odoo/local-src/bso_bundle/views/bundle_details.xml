@@ -30,7 +30,7 @@
                 <!--FOOTER LAYOUT-->
                 <footer>
                     <button name="button_bundle_save"
-                            string="Save Bundle" type="object"
+                            string="Save" type="object"
                             class="oe_highlight"
                             attrs="{'invisible': [('is_epl', '=', True)]}"/>
                     <button name="button_cancel" string="Cancel"
