@@ -158,6 +158,7 @@
     <menuitem id="dealsheet_menu" name="Dealsheets"
               action="dealsheet_action"
               parent=""
+              web_icon="bso_dealsheet,static/description/icon.png"
               groups="bso_dealsheet.group_dealsheet_user"/>
 
 </odoo>
