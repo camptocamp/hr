@@ -45,6 +45,7 @@
                     <group>
                         <field name="sale_order_id"/>
                         <field name="sale_order_state" invisible="1"/>
+                        <field name="project_id" invisible="1"/>
                         <field name="partner_id"/>
                         <field name="seller_id"/>
                         <field name="duration"/>
@@ -98,6 +99,7 @@
                 <field name="create_date"/>
                 <field name="validated_date"/>
                 <field name="refused_date"/>
+                <field name="project_id" invisible="1"/>
                 <field name="partner_id"/>
                 <field name="seller_id"/>
                 <field name="presale_id"/>

@@ -15,10 +15,11 @@ class SaleDealsheetSummaryLine(models.Model):
         store=True
     )
     cost_type = fields.Selection(
+        string='Type',
         selection=[
             ('nr', 'Non Recurring'),
-            ('mr', 'Recurring'),
-            ('total', 'Total')
+            ('mr', 'Monthly Recurring'),
+            ('total', 'Total Contract')
         ],
         required=True
     )

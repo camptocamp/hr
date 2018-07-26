@@ -34,6 +34,11 @@ class SaleDealsheet(models.Model):
         readonly=True,
         store=True
     )
+    project_id = fields.Many2one(
+        related='sale_order_id.project_id',
+        readonly=True,
+        store=True
+    )
     partner_id = fields.Many2one(
         related='sale_order_id.partner_id',
         readonly=True,
