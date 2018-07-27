@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <act_window
+            id="action_bso_dashboard"
+            name="Dashboards"
+            res_model="bso.dashboard"
+            view_mode="kanban,form"/>
+
+</odoo>

@@ -1,0 +1,21 @@
+{
+    'name': 'BSO Dashboards',
+    'category': 'Extra Tools',
+    'description': 'Graph Dashboards',
+    'author': 'BSO',
+    'license': 'AGPL-3',
+    'website': 'https://www.bsonetwork.com',
+    'depends': ['base', 'web'],
+    'data': [
+        'security/bso_dashboards_security.xml',
+        'security/ir.model.access.csv',
+        'views/actions/act_window.xml',
+        'views/menus/menuitem.xml',
+        'views/assets.xml',
+        'views/bso_dashboard.xml',
+        'views/bso_dashboard_graph.xml',
+        'views/bso_dashboard_graph_filter.xml',
+        'views/bso_dashboard_graph_settings.xml',
+    ],
+    'application': True,
+}

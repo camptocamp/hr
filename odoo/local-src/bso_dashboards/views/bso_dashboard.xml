@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="bso_dashboard_kanban_view" model="ir.ui.view">
+        <field name="name">bso.dashboard.kanban</field>
+        <field name="model">bso.dashboard</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard o_bso_dashboard_kanban">
+                <field name="group_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(0)}">
+                            <t t-call="header"/>
+                            <div class="container o_kanban_card_content o_visible">
+                                <!--<field name="sum_graphs"/>-->
+                                <!--<div class="o_kanban_button">
+                                    <button name="action_open_dashboard_kanban"
+                                            class="btn btn-md btn-primary"
+                                            type="object">Open Dashboard
+                                    </button>
+                                </div>-->
+                                <button name="action_open_dashboard_graph"
+                                        class="btn btn-md btn-primary o_kanban_button"
+                                        type="object">
+                                    <span class="o_stat_value">
+                                        <field name="sum_graphs"/>
+                                        Graphs
+                                    </span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </t>
+                    <t t-name="header">
+                        <div class="o_kanban_card_header">
+                            <div class="o_kanban_card_header_title">
+                                <field name="name"/>
+                            </div>
+                            <div class="o_kanban_card_header_settings">
+                                <a name="action_open_dashboard"
+                                   type="object"
+                                   class="fa fa-cog fa-lg o_kanban_card_header_settings_button"
+                                   groups="bso_dashboards.group_dashboard_manager"/>
+                                <a type="delete"
+                                   class="fa fa-times fa-lg o_kanban_card_header_settings_button"
+                                   groups="bso_dashboards.group_dashboard_manager"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="bso_dashboard_form" model="ir.ui.view">
+        <field name="name">bso.dashboard.form</field>
+        <field name="model">bso.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard Form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="group_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

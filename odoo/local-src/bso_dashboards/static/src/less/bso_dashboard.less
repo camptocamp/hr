@@ -1,0 +1,41 @@
+.o_kanban_dashboard.o_bso_dashboard_kanban.o_kanban_view.o_kanban_ungrouped {
+    .o_kanban_record {
+        @media (min-width: @screen-sm-min) {
+            min-width: 400px;
+            min-height: 150px;
+        }
+        .o_kanban_card_content {
+            min-height: 100px;
+            font-size: medium;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .o_kanban_card_header {
+            .o_kanban_card_header_title {
+                margin: auto;
+                font-size: medium;
+                font-weight: bold;
+            }
+            .o_kanban_card_header_settings {
+                margin: auto;
+                font-size: medium;
+                font-weight: bold;
+                padding-left: 10px;
+                padding-bottom: 10px;
+                padding-top: 10px;
+                padding-right: 20px;
+                display: inherit;
+                .o_kanban_card_header_settings_button {
+                    margin-left: 15px;
+                    overflow: visible;
+                }
+            }
+        }
+    }
+
+    &.o_kanban_grouped .o_kanban_record {
+        min-width: inherit;
+    }
+}

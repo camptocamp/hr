@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bso_dashboard_user,bso.dashboard.user,model_bso_dashboard,group_dashboard_user,1,0,0,0
+access_bso_dashboard_graph_user,bso.dashboard.graph.user,model_bso_dashboard_graph,group_dashboard_user,1,0,0,0
+access_bso_dashboard_graph_filter_user,bso.dashboard.graph.filter.user,model_bso_dashboard_graph_filter,group_dashboard_user,1,0,0,0
+access_bso_dashboard_graph_settings_user,bso.dashboard.graph.settings.user.user,model_bso_dashboard_graph_settings,group_dashboard_user,1,0,0,0
+access_bso_dashboard_manager,bso.dashboard.manager,model_bso_dashboard,group_dashboard_manager,1,1,1,1
+access_bso_dashboard_graph_manager,bso.dashboard.manager.user,model_bso_dashboard_graph,group_dashboard_manager,1,1,1,1
+access_bso_dashboard_graph_filter_manager,bso.dashboard.graph.filter.manager,model_bso_dashboard_graph_filter,group_dashboard_manager,1,1,1,1
+access_bso_dashboard_graph_settings_manager,bso.dashboard.graph.settings.manager.user,model_bso_dashboard_graph_settings,group_dashboard_manager,1,1,1,1
