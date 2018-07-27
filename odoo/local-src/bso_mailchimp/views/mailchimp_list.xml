@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_crm_mailchimp_mailing_tree_bso_marketing"
+            model="ir.ui.view">
+        <field name="name">mailchimp.list.tree.bso_marketing
+        </field>
+        <field name="model">mailchimp.list</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="mailchimp_create_date"/>
+                <field name="name"/>
+                <field name="list_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_mailchimp_mailing_form_module" model="ir.ui.view">
+        <field name="name">mailchimp.list.form.bso_marketing
+        </field>
+        <field name="model">mailchimp.list</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="mailchimp_ref"/>
+                        <field name="name"/>
+                        <field name="permission_reminder"/>
+
+                    </group>
+                    <group String="Campaign defaults">
+                        <field name="from_name"/>
+                        <field name="from_email"/>
+                        <field name="subject"/>
+                        <field name="language"/>
+                    </group>
+                    <field name="lead_ids"/>
+                    <field name="opt_out_lead_ids" invisible="1"/>
+
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="view_crm_mailchimp_mailing_search_bso_marketing"
+            model="ir.ui.view">
+        <field name="name">mailchimp.list.search.bso_marketing
+        </field>
+        <field name="model">mailchimp.list</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="crm_mailchimp_mailing_action_specific"
+            model="ir.actions.act_window">
+        <field name="name">Lists</field>
+        <field name="res_model">mailchimp.list</field>
+        <field name="search_view"
+               ref="view_crm_mailchimp_mailing_search_bso_marketing"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="crm_mailchimp_mailing_menu"
+            name="Lists"
+            parent="specific_crm.sales_marketing_menu"
+            action="crm_mailchimp_mailing_action_specific"
+            groups="bso_mailchimp.group_mailchimp_user"
+            sequence="2"/>
+
+</odoo>

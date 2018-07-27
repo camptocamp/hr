@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_crm_mailchimp_campaign_form" model="ir.ui.view">
+        <field name="name">mailchimp.campaign.form</field>
+        <field name="model">mailchimp.campaign</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" nolabel="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button string="Leads" name="action_view_leads"
+                                type="object" icon="fa-bomb"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Stats" name="action_view_stats"
+                                type="object" icon="fa-truck"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Fetch" name="action_fetch"
+                                type="object" icon="fa-download"
+                                class="oe_inline oe_stat_button"/>
+                    </div>
+                    <group string="Campaign">
+                        <group>
+                            <field name="name"
+                                   attrs="{'readonly': [('state', '=', 'sent')]}"/>
+                            <field name="subject_line"
+                                   attrs="{'readonly': [('state', '=', 'sent')]}"/>
+                            <field name="list_id"
+                                   attrs="{'readonly': [('state', '=', 'sent')],
+                                           'invisible': [('segment_id', '!=', False)]}"/>
+                            <field name="list_count"
+                                   attrs="{'invisible': ['|',('list_id', '=', False),('segment_id', '!=', False)]}"/>
+                            <field name="segment_id"
+                                   attrs="{'readonly': [('state', '=', 'sent')]}"
+                                   domain="[('list_id','=',list_id)]"/>
+                            <field name="segment_count"
+                                   attrs="{'invisible': [('segment_id', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="from_name"/>
+                            <field name="reply_to"/>
+                            <field name="type"/>
+                            <field name="company_id"/>
+                            <field name="parent_id"/>
+
+                        </group>
+                        <group string="Stats"
+                               attrs="{'invisible': [('state', '=', 'save')]}">
+                            <field name="sent_count"/>
+                            <field name="bounce_count" invisible="1"/>
+                            <field name="receive_count" invisible="1"/>
+                            <field name="open_count" invisible="1"/>
+                            <field name="click_count" invisible="1"/>
+                            <field name="unsubscribe_count" invisible="1"/>
+                            <field name="receive_rate" invisible="1"/>
+                            <field name="open_rate" invisible="1"/>
+                            <field name="click_rate" invisible="1"/>
+                            <field name="unsubscribe_rate" invisible="1"/>
+                            <field name="receive_str"/>
+                            <field name="open_str"/>
+                            <field name="click_str"/>
+                            <field name="unsubscribe_str"/>
+                        </group>
+                    </group>
+                    <separator string="Child Campaigns"/>
+                    <field name="child_ids"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_crm_mailchimp_campaign_tree" model="ir.ui.view">
+        <field name="name">mailchimp.campaign.tree</field>
+        <field name="model">mailchimp.campaign</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="mailchimp_create_date"/>
+                <field name="name"/>
+                <field name="company_id" invisible="1"/>
+                <field name="parent_id" invisible="1"/>
+                <field name="sent_count"
+                       attrs="{'invisible': [('state', '=', 'save')]}"/>
+                <field name="bounce_count" invisible="1"/>
+                <field name="receive_count" invisible="1"/>
+                <field name="open_count" invisible="1"/>
+                <field name="click_count" invisible="1"/>
+                <field name="unsubscribe_count" invisible="1"/>
+                <field name="receive_rate" invisible="1"/>
+                <field name="open_rate" invisible="1"/>
+                <field name="click_rate" invisible="1"/>
+                <field name="unsubscribe_rate" invisible="1"/>
+                <field name="receive_str"
+                       attrs="{'invisible': [('state', '=', 'save')]}"/>
+                <field name="open_str"
+                       attrs="{'invisible': [('state', '=', 'save')]}"/>
+                <field name="click_str"
+                       attrs="{'invisible': [('state', '=', 'save')]}"/>
+                <field name="unsubscribe_str"
+                       attrs="{'invisible': [('state', '=', 'save')]}"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_mailchimp_campaign_search" model="ir.ui.view">
+        <field name="name">mailchimp.campaign.search.specific_mailchimp
+        </field>
+        <field name="model">mailchimp.campaign</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="company_id"/>
+                <group expand="1" string="Group By">
+                    <filter string="Company" name="company_id" domain="[]"
+                            context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="crm_mailchimp_campaign_action_specific"
+            model="ir.actions.act_window">
+        <field name="name">Campaigns</field>
+        <field name="res_model">mailchimp.campaign</field>
+        <field name="search_view" ref="view_crm_mailchimp_campaign_search"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem
+            id="crm_mailchimp_campaign_menu"
+            string="Campaigns"
+            parent="specific_crm.sales_marketing_menu"
+            action="crm_mailchimp_campaign_action_specific"
+            groups="bso_mailchimp.group_mailchimp_user"
+            sequence="1"/>
+</odoo>

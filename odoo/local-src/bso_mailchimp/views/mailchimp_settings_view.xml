@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="crm_mailchimp_settings_view_form" model="ir.ui.view">
+        <field name="name">crm mailchimp settings</field>
+        <field name="model">mailchimp.settings</field>
+        <field name="arch" type="xml">
+            <form string="Crm Mailchimp Settings"
+                  class="oe_form_configuration">
+                <header>
+                    <button string="Save" type="object"
+                            name="execute" class="oe_highlight"/>
+                    <button string="Cancel" type="object"
+                            name="cancel" class="oe_link"/>
+                    <button string="Import Lists" type="object"
+                            name="action_import_lists" class="oe_highlight"/>
+                    <button string="Import Segments" type="object"
+                            name="import_segments" class="oe_highlight"/>
+                    <button string="Import Campaigns" type="object"
+                            name="import_campaigns" class="oe_highlight"/>
+                    <button string="Fetch All" type="object"
+                            name="fetch_all" class="oe_highlight"/>
+                </header>
+                <group string="Mailchimp Credentials">
+                    <field name="api_key"/>
+                    <field name="api_user"/>
+                </group>
+                <group string="Campaign Defaults">
+                    <field name="from_name"/>
+                    <field name="from_email"/>
+                    <field name="reply_to"/>
+                    <field name="type"/>
+                    <field name="language"/>
+                    <field name="permission_reminder"/>
+                    <field name="email_type_option"/>
+                </group>
+                <group string="Company Details">
+                    <field name="company"/>
+                    <field name="address"/>
+                    <field name="city"/>
+                    <field name="state"/>
+                    <field name="zip"/>
+                    <field name="country"/>
+                </group>
+                <group>
+                    <field name="webhook_url"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="mailchimp_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">mailchimp.settings</field>
+        <field name="view_id" ref="crm_mailchimp_settings_view_form"/>
+        <field name="view_mode">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <menuitem
+            id="crm_mailchimp_settings_menu"
+            string="Settings"
+            parent="specific_crm.sales_marketing_menu"
+            action="mailchimp_settings_action"
+            sequence="4"
+            groups="bso_mailchimp.group_mailchimp_manager"/>
+</odoo>

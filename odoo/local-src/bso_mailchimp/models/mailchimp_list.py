@@ -1,0 +1,274 @@
+# -*- coding: utf-8 -*-
+
+import logging
+from datetime import datetime
+
+from mailchimp3.helpers import get_subscriber_hash
+
+from odoo import fields, models, api
+from . import mailchimp_client
+
+_logger = logging.getLogger(__name__)
+
+
+class MailchimpList(models.Model):
+    _name = "mailchimp.list"
+    _order = ' mailchimp_create_date DESC'
+
+    _sql_constraints = [
+        ('ref_unique', 'UNIQUE (mailchimp_ref)', 'List already exists')
+    ]
+
+    def _default_from_name(self):
+        conf = self.env['ir.config_parameter']
+        return conf.get_param('mailchimp.from_name')
+
+    def _default_from_email(self):
+        conf = self.env['ir.config_parameter']
+        return conf.get_param('mailchimp.from_email')
+
+    def _default_permission_reminder(self):
+        conf = self.env['ir.config_parameter']
+        return conf.get_param('mailchimp.permission_reminder')
+
+    def _default_language(self):
+        conf = self.env['ir.config_parameter']
+        return conf.get_param('mailchimp.language')
+
+    def _default_email_type_option(self):
+        conf = self.env['ir.config_parameter']
+        return conf.get_param('mailchimp.email_type_option')
+
+    mailchimp_create_date = fields.Datetime(
+        string='Create Date',
+        default=datetime.utcnow(),
+        readonly=True
+    )
+    name = fields.Char(
+        string="Name",
+        required=True,
+    )
+    from_email = fields.Char(
+        default=lambda self: self._default_from_email(),
+        string="From Email",
+        required=True,
+        help="The default from email for campaigns sent to this list."
+    )
+    from_name = fields.Char(
+        default=lambda self: self._default_from_name(),
+        string="From Name",
+        required=True,
+        help="The default from name for campaigns sent to this list."
+    )
+    permission_reminder = fields.Char(
+        default=lambda self: self._default_permission_reminder(),
+        string="Permission reminder",
+        required=True,
+        help="The permission reminder for the list."
+    )
+    subject = fields.Char(
+        string="Subject",
+        required=True,
+        help="The default subject line for campaigns sent to this list."
+    )
+    language = fields.Char(
+        default=lambda self: self._default_language(),
+        string="Language",
+        required=True,
+        help="The default language for this lists’s forms."
+    )
+    email_type_option = fields.Boolean(
+        default=lambda self: self._default_email_type_option(),
+        string="Email type option",
+        required=True,
+        help="Whether the list supports multiple formats for emails."
+    )
+    mailchimp_ref = fields.Char(
+        string="Mailchimp ID ",
+        readonly=True
+    )
+    opt_out_lead_ids = fields.Many2many(
+        string="Opt-Out Leads",
+        relation='opt_out_list_rel',
+        comodel_name="crm.lead",
+    )
+    lead_ids = fields.Many2many(
+        string="Leads",
+        relation='lead_list_rel',
+        comodel_name="crm.lead",
+        domain="[('opt_out','=',False),\
+        ('id','not in',opt_out_lead_ids and opt_out_lead_ids[0][2] or False)]"
+    )
+    list_count = fields.Integer(
+        string='Total Audience',
+        compute='compute_list_count',
+        store=True,
+        readonly=1
+    )
+
+    @api.depends('lead_ids')
+    def compute_list_count(self):
+        for rec in self:
+            rec.update({
+                'list_count': len(rec.lead_ids)
+            })
+
+    def action_view_leads(self):
+        self.ensure_one()
+        action = self.env.ref('crm.crm_lead_all_leads').read()[0]
+        action['domain'] = [('list_ids', '=', self.id)]
+        self._update_action_window_context()
+        return action
+
+    def _update_action_window_context(self):
+        rec = self.env['ir.actions.act_window'].search(
+            [('name', '=', 'Create Segment')],
+            limit=1)
+        rec.update({'context': {'default_list_id': self.id}})
+
+    @api.model
+    def create(self, values):
+        record = super(MailchimpList, self).create(values)
+        if 'mailchimp_ref' not in values:
+            client = self.env['mailchimp.client'].get_client()
+            mailchimp_ref = record._create_list(client)
+            record._create_webhook(mailchimp_ref, client)
+            record.write({'mailchimp_ref': mailchimp_ref})
+        return record
+
+    def _create_list(self, client):
+        conf = self.env['ir.config_parameter']
+        data = {
+            "name": self.name,
+            "contact":
+                {
+                    "company": conf.get_param('mailchimp.company'),
+                    "address1": conf.get_param('mailchimp.address'),
+                    "city": conf.get_param('mailchimp.city'),
+                    "state": conf.get_param('mailchimp.state'),
+                    "zip": conf.get_param('mailchimp.zip'),
+                    "country": conf.get_param('mailchimp.country')
+                },
+            "permission_reminder": self.permission_reminder,
+            "campaign_defaults":
+                {
+                    "from_name": self.from_name,
+                    "from_email": self.from_email,
+                    "subject": self.subject,
+                    "language": self.language
+                },
+            "email_type_option": self.email_type_option,
+        }
+        return client.lists.create(data).get('id')
+
+    def _create_webhook(self, mailchimp_ref, client):
+        conf = self.env['ir.config_parameter']
+        url = conf.get_param('mailchimp.webhook_url')
+        if not url:
+            return False
+        data = {
+            "url": url,
+            "events": {
+                "subscribe": True,
+                "unsubscribe": True,
+                "campaign": True,
+            },
+            "sources": {
+                "user": True,
+                "admin": True,
+                "api": False}
+        }
+        client.lists.webhooks.create(mailchimp_ref, data)
+
+    @api.multi
+    def write(self, values):
+        self.ensure_one()
+        client = self.env['mailchimp.client'].get_client()
+        saved_leads = self.lead_ids
+        record = super(MailchimpList, self).write(values)
+        fields_content = ['name', 'from_email', 'from_name',
+                          'permission_reminder', 'language', 'subject']
+        if any(key in values for key in fields_content):
+            self._update_content(client)
+        if 'lead_ids' in values:
+            remaining_lead_ids = values['lead_ids'][0][2]
+            remaining_leads = self.env["crm.lead"].browse(remaining_lead_ids)
+            added_leads = remaining_leads - saved_leads
+            unlinked_leads = saved_leads - remaining_leads
+            for lead in unlinked_leads:
+                email = self.env['mailchimp.client'].get_lead_email(lead)
+                subscriber_hash = get_subscriber_hash(email)
+                self.delete_mailchimp_list_member(client, subscriber_hash)
+            if added_leads:
+                self._create_update_members(client)
+        if 'mailchimp_ref' in values:
+            self._create_update_members(client)
+        return record
+
+    @mailchimp_client.handle_list_exceptions
+    def delete_mailchimp_list_member(self, client, subscriber_hash):
+        return client.lists.members.delete(list_id=self.mailchimp_ref,
+                                           subscriber_hash=subscriber_hash)
+
+    def _update_content(self, client):
+        conf = self.env['ir.config_parameter']
+        data = {
+            "name": self.name,
+            "contact":
+                {
+                    "company": conf.get_param('mailchimp.company'),
+                    "address1": conf.get_param('mailchimp.address'),
+                    "city": conf.get_param('mailchimp.city'),
+                    "state": conf.get_param('mailchimp.state'),
+                    "zip": conf.get_param('mailchimp.zip'),
+                    "country": conf.get_param('mailchimp.country')
+                },
+            "permission_reminder": self.permission_reminder,
+            "campaign_defaults":
+                {
+                    "from_name": self.from_name,
+                    "from_email": self.from_email,
+                    "subject": self.subject,
+                    "language": self.language
+                },
+            "email_type_option": self.email_type_option,
+        }
+        return client.lists.update(self.mailchimp_ref, data)
+
+    def _create_update_members(self, client):
+        members = []
+        for lead in self.lead_ids:
+            email_from = self.env['mailchimp.client'].get_lead_email(lead)
+            member = {
+                "email_address": email_from,
+                "status": 'subscribed',
+                "status_if_new": 'subscribed',
+            }
+            members.append(member)
+        data = {
+            "members": members,
+            "update_existing": True
+        }
+        client.lists.update_members(self.mailchimp_ref, data)
+
+    def subscribe_lead(self, request, email):
+        env = request.env
+        email_formatted = self.env['mailchimp.client'].format_email(email)
+        lead = env['crm.lead'].search([
+            ('email_from', '=', email_formatted)], limit=1)
+        if not lead:
+            lead = env['crm.lead'].create({'email_from': email_formatted})
+        self.write(
+            {'opt_out_lead_ids': [(3, lead.id)],  # delete
+             'lead_ids': [(4, lead.id)]})  # add
+
+    def unsubscribe_lead(self, request,  email):
+        env = request.env
+        email_formatted = env['mailchimp.client'].format_email(email)
+        lead = env['crm.lead'].search([
+            ('email_from', '=', email_formatted)], limit=1)
+        if not lead:
+            lead = env['crm.lead'].create({'email_from': email_formatted})
+        self.write(
+            {'opt_out_lead_ids': [(4, lead.id)],  # delete
+             'lead_ids': [(3, lead.id)]})  # add

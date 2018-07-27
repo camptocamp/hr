@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_crm_mailchimp_list_segment_tree_bso_marketing"
+            model="ir.ui.view">
+        <field name="name">mailchimp.list.segment.tree.bso.marketing
+        </field>
+        <field name="model">mailchimp.list.segment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="mailchimp_create_date"/>
+                <field name="name"/>
+                <field name="segment_count"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_mailchimp_list_segment_form_bso_marketing"
+            model="ir.ui.view">
+        <field name="name">mailchimp.list.segment.form.bso.marketing
+        </field>
+        <field name="model">mailchimp.list.segment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="list_id"
+                               attrs="{'readonly':[('mailchimp_ref','!=',0)]}"/>
+                        <field name="name"/>
+                        <field name="mailchimp_ref"/>
+                    </group>
+                    <field name="lead_ids"
+                           domain="[('list_ids', 'in', [list_id])]"
+                           attrs="{'invisible':[('list_id','=',False)]}"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_crm_mailchimp_list_segment_search_bso_marketing"
+            model="ir.ui.view">
+        <field name="name">mailchimp.list.segment.search.bso.marketing
+        </field>
+        <field name="model">mailchimp.list.segment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="crm_mailchimp_list_segment_action_marketing"
+            model="ir.actions.act_window">
+        <field name="name">Segments</field>
+        <field name="res_model">mailchimp.list.segment</field>
+        <field name="search_view"
+               ref="view_crm_mailchimp_list_segment_search_bso_marketing"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="crm_mailchimp_segment_menu"
+            name="Segments"
+            parent="specific_crm.sales_marketing_menu"
+            action="crm_mailchimp_list_segment_action_marketing"
+            groups="bso_mailchimp.group_mailchimp_user"
+            sequence="3"/>
+
+</odoo>
