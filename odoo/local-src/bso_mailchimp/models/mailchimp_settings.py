@@ -242,8 +242,8 @@ class MailchimpSettings(models.TransientModel):
 
     def _get_mailchimp_id(self, model_name, list_ref):
         record = self.env[model_name].search([
-            ('mailchimp_ref', '=', list_ref)]
-            , limit=1)
+            ('mailchimp_ref', '=', list_ref)
+        ], limit=1)
         if record:
             return record.id
 

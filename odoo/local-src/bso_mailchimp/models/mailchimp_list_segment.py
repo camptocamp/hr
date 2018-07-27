@@ -3,6 +3,7 @@ import logging
 from datetime import datetime
 
 from odoo import fields, models, api
+
 from . import mailchimp_client
 
 _logger = logging.getLogger(__name__)
@@ -79,8 +80,8 @@ class MailchimpListSegment(models.Model):
             "name": self.name,
             "static_segment": []
         }
-        return client.lists.segments.create \
-            (self.list_id.mailchimp_ref, data).get('id')
+        return client.lists.segments.create(self.list_id.mailchimp_ref,
+                                            data).get('id')
 
     @api.multi
     def write(self, values):
@@ -127,4 +128,3 @@ class MailchimpListSegment(models.Model):
         return client.lists.segments.update_members(self.list_id.mailchimp_ref,
                                                     self.mailchimp_ref,
                                                     data)
-
