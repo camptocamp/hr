@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BIZ-2081: Fix new lead creation by displaying `currency_id` on the form
+
 **Build**
 
 **Documentation**

@@ -293,4 +293,14 @@
         id="menu_crm_marketing_lead"
         sequence="0"/>
 
+    <record model="ir.ui.view" id="view_create_opportunity_simplified">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_create_opportunity_simplified"/>
+        <field name="arch" type="xml">
+            <field name="function" position="after">
+                <field name="currency_id" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
 </odoo>
