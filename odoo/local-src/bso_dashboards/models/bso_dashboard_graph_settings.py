@@ -19,8 +19,9 @@ class BSODashboardGraphSettings(models.Model):
         readonly=True,
         required=True
     )
-    type = fields.Selection(
-        related='graph_id.type',
+    graph_type = fields.Selection(
+        related='graph_id.graph_type',
+        required=True,
         store=True
     )
 

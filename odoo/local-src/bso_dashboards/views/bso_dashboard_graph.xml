@@ -37,7 +37,7 @@
                         <field name="sequence"
                                attrs="{'invisible': [('graph', '=', False)]}"/>
                         <field name="name"/>
-                        <field name="type"/>
+                        <field name="graph_type"/>
                         <field name="settings_id"
                                attrs="{'invisible': [('graph', '=', False)]}"/>
                         <field name="graph" invisible="1"/>
@@ -67,8 +67,7 @@
                             <div class="container o_kanban_card_content o_visible">
                                 <div class="o_kanban_total" id="sum"></div>
                                 <div class="o_kanban_graph_section">
-                                    <field name="graph"
-                                           widget="graph"/>
+                                    <field name="graph" widget="bso_graph"/>
                                 </div>
                             </div>
                         </div>

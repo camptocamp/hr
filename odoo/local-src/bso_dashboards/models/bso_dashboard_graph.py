@@ -16,7 +16,7 @@ class OrderedDefaultDict(OrderedDict, defaultdict):
 
 class BSODashboardGraph(models.Model):
     _name = 'bso.dashboard.graph'
-    _order = 'dashboard_id ASC,sequence ASC,id ASC'
+    _order = 'dashboard_id ASC, sequence ASC, id ASC'
 
     def _default_dashboard_id(self):
         return self.env.context.get('active_id', False)
@@ -101,7 +101,7 @@ class BSODashboardGraph(models.Model):
         string='Title',
         required=True
     )
-    type = fields.Selection(
+    graph_type = fields.Selection(
         string='Type',
         selection=[
             ('bar', 'Bar'),
@@ -116,7 +116,7 @@ class BSODashboardGraph(models.Model):
         readonly=True
     )
     graph = fields.Text(
-        string='Preview',
+        string='Graph',
         compute='compute_graph'
     )
 
@@ -135,28 +135,21 @@ class BSODashboardGraph(models.Model):
     def compute_model_field_ids(self):
         for rec in self:
             if not rec.model_id:
-                return
-            valid_fields = self.env[rec.model_id.model].search_read(limit=1)
-            if not valid_fields:
-                return
+                continue
+            valid_field_names = self.env[rec.model_id.model].fields_get_keys()
             valid_field_ids = self.env['ir.model.fields'].search([
                 ('model_id', '=', rec.model_id.id),
-                ('name', 'in', valid_fields[0].keys())
+                ('name', 'in', valid_field_names)
             ])
-            rec.update({
-                'model_field_ids': valid_field_ids.ids
-            })
+            rec.model_field_ids = valid_field_ids.ids
 
     @api.depends('measure_id')
     def compute_measure_key(self):
         for rec in self:
             if rec.measure_id.name == 'id':
-                measure_key = '__count'
+                rec.measure_key = '__count'
             else:
-                measure_key = rec.measure_id.name
-            rec.update({
-                'measure_key': measure_key
-            })
+                rec.measure_key = rec.measure_id.name
 
     @api.depends('groupby_id', 'groupby_interval')
     def compute_groupby_key(self):
@@ -164,9 +157,7 @@ class BSODashboardGraph(models.Model):
             groupby_key = rec.groupby_id.name
             if rec.groupby_interval:
                 groupby_key += ":" + rec.groupby_interval
-            rec.update({
-                'groupby_key': groupby_key
-            })
+            rec.groupby_key = groupby_key
 
     @api.depends('model_id', 'measure_key', 'groupby_key', 'settings_id',
                  'measure_currency_id', 'measure_consolidate_id', 'filter_ids')
@@ -176,11 +167,9 @@ class BSODashboardGraph(models.Model):
                         rec.settings_id)):
                 continue
             data = rec.get_graph_data()
-            rec.update({
-                'graph': json.dumps({
-                    'data': rec.get_graph_format(data),
-                    'settings': rec.settings_id.read()[0]
-                })
+            rec.graph = json.dumps({
+                'data': rec.get_graph_format(data),
+                'settings': rec.settings_id.read()[0]
             })
 
     def get_graph_data(self):
@@ -195,7 +184,7 @@ class BSODashboardGraph(models.Model):
         )
 
     def get_search_domain(self):
-        domain = []  # [(self.groupby_id.name, '!=', False)]
+        domain = []
         for fltr in self.filter_ids:
             domain_executed = self._domain_exec(fltr.domain)
             domain.append(json.loads(domain_executed))
@@ -229,11 +218,11 @@ class BSODashboardGraph(models.Model):
             return
         if self.measure_currency_id and self.measure_consolidate_id:
             data = self._consolidate(data)
-        if self.type == 'bar':
+        if self.graph_type == 'bar':
             return self._graph_format_bar(data)
-        if self.type == 'line':
+        if self.graph_type == 'line':
             return self._graph_format_line(data)
-        if self.type == 'pie':
+        if self.graph_type == 'pie':
             return self._graph_format_pie(data)
 
     def _consolidate(self, data):

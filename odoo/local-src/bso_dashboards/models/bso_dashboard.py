@@ -29,11 +29,13 @@ class BSODashboard(models.Model):
     def _compute_sum_graphs(self):
         graph_model = self.env['bso.dashboard.graph']
         for record in self:
-            record.sum_graphs = len(graph_model.search([
-                ('dashboard_id', '=', record.id)]))
+            record.sum_graphs = graph_model.search_count([
+                ('dashboard_id', '=', record.id)
+            ])
 
     @api.multi
     def action_open_dashboard_graph(self):
+        self.ensure_one()
         return {
             "name": self.name,
             "type": "ir.actions.act_window",
@@ -47,6 +49,7 @@ class BSODashboard(models.Model):
 
     @api.multi
     def action_open_dashboard(self):
+        self.ensure_one()
         return {
             "name": self.name,
             "type": "ir.actions.act_window",

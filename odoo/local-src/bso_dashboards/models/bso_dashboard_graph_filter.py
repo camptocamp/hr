@@ -7,7 +7,7 @@ from odoo import models, fields, api
 
 class BSODashboardGraphFilter(models.Model):
     _name = 'bso.dashboard.graph.filter'
-    _order = 'graph_id ASC,sequence ASC,id ASC'
+    _order = 'graph_id ASC, sequence ASC, id ASC'
     _rec_name = 'domain'
 
     graph_id = fields.Many2one(
@@ -84,6 +84,4 @@ class BSODashboardGraphFilter(models.Model):
         value_str = self.value or self.date_picker or self.datetime_picker
         value_str = value_str or self.date_dynamic or 'value'
         domain = '["%s", "%s", "%s"]' % (field_str, condition_str, value_str)
-        self.update({
-            'domain': domain
-        })
+        self.domain = domain

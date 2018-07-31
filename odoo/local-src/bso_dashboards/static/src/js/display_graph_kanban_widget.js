@@ -9,7 +9,7 @@ var BSODashboardGraph = kanban_widgets.AbstractField.extend({
         this.data = this.graph.data;
         if (this.data){
             this.settings = this.graph.settings;
-            this.graph_type = this.settings.type;
+            this.graph_type = this.settings.graph_type;
             this.display_graph();
         }
         return this._super();
@@ -28,7 +28,6 @@ var BSODashboardGraph = kanban_widgets.AbstractField.extend({
 
                     self.chart = nv.models.lineChart()
                         .showLegend(false)
-                        //.legendPosition(self.settings.legend_position)
                         .showXAxis(self.settings.show_x_axis)
                         .showYAxis(self.settings.show_y_axis)
                         .rightAlignYAxis(self.settings.right_align_y_axis)
@@ -60,11 +59,8 @@ var BSODashboardGraph = kanban_widgets.AbstractField.extend({
 
                     self.chart = nv.models.discreteBarChart()
                         .showLegend(false)
-                        //.legendPosition(self.settings.legend_position)
-                        .x(function(d) {
-                         return d.label })
-                        .y(function(d) {
-                        return d.value })
+                        .x(function(d) { return d.label })
+                        .y(function(d) { return d.value })
                         .showValues(self.settings.show_values)
                         .showYAxis(self.settings.show_y_axis)
                         .showXAxis(self.settings.show_x_axis)
@@ -93,10 +89,8 @@ var BSODashboardGraph = kanban_widgets.AbstractField.extend({
                         .labelType(self.settings.label_type)
                         .donut(self.settings.donut)
                         .labelSunbeamLayout(self.settings.label_sunbeam_layout)
-                        .x(function(d) {
-                         return d.key })
-                        .y(function(d) {
-                        return d.value })
+                        .x(function(d) { return d.key })
+                        .y(function(d) { return d.value })
                         .margin({
                             'left': self.settings.margin_left,
                             'right': self.settings.margin_right,
@@ -122,7 +116,9 @@ var BSODashboardGraph = kanban_widgets.AbstractField.extend({
                 .transition().duration(1200)
                 .call(self.chart);
 
-            if (self.settings.show_sum) self.display_sum();
+            if (self.settings.show_sum) {
+                self.display_sum();
+            }
             self.customize_chart();
 
             nv.utils.windowResize(self.on_resize);
@@ -137,7 +133,7 @@ var BSODashboardGraph = kanban_widgets.AbstractField.extend({
     display_sum: function(){
         var self = this;
         var sum = d3.nest()
-            .rollup(function(v) { return d3.sum(v, self.chart.y())})
+            .rollup(function(v) { return d3.sum(v, self.chart.y()) })
             .entries(self.graph_type == "pie" ? self.data : self.data[0].values);
         var div = this.getParent().$el.find("#sum")[0];
         div.textContent = "Total: " + d3.format(',.2f')(sum);
@@ -162,7 +158,7 @@ var BSODashboardGraph = kanban_widgets.AbstractField.extend({
     },
 });
 
-kanban_widgets.registry.add('graph', BSODashboardGraph);
+kanban_widgets.registry.add('bso_graph', BSODashboardGraph);
 
 
 });

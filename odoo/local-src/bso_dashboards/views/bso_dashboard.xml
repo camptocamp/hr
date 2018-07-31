@@ -12,13 +12,6 @@
                         <div t-attf-class="#{kanban_color(0)}">
                             <t t-call="header"/>
                             <div class="container o_kanban_card_content o_visible">
-                                <!--<field name="sum_graphs"/>-->
-                                <!--<div class="o_kanban_button">
-                                    <button name="action_open_dashboard_kanban"
-                                            class="btn btn-md btn-primary"
-                                            type="object">Open Dashboard
-                                    </button>
-                                </div>-->
                                 <button name="action_open_dashboard_graph"
                                         class="btn btn-md btn-primary o_kanban_button"
                                         type="object">
