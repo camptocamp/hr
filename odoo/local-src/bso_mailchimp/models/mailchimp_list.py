@@ -4,8 +4,8 @@ import logging
 from datetime import datetime
 
 from mailchimp3.helpers import get_subscriber_hash
-
 from odoo import fields, models, api
+
 from . import mailchimp_client
 
 _logger = logging.getLogger(__name__)
@@ -129,11 +129,15 @@ class MailchimpList(models.Model):
     @api.model
     def create(self, values):
         record = super(MailchimpList, self).create(values)
-        if 'mailchimp_ref' not in values:
-            client = self.env['mailchimp.client'].get_client()
-            mailchimp_ref = record._create_list(client)
-            record._create_webhook(mailchimp_ref, client)
-            record.write({'mailchimp_ref': mailchimp_ref})
+        if 'mailchimp_ref' in values:
+            return record  # Values are coming from Mailchimp -> Don't update
+
+        client = self.env['mailchimp.client'].get_client()
+        mailchimp_ref = record._create_list(client)
+        record._create_webhook(mailchimp_ref, client)
+        record.write({'mailchimp_ref': mailchimp_ref})
+        record._create_update_members(client)
+
         return record
 
     def _create_list(self, client):
@@ -182,27 +186,30 @@ class MailchimpList(models.Model):
 
     @api.multi
     def write(self, values):
-        self.ensure_one()
-        client = self.env['mailchimp.client'].get_client()
-        saved_leads = self.lead_ids
         record = super(MailchimpList, self).write(values)
-        fields_content = ['name', 'from_email', 'from_name',
-                          'permission_reminder', 'language', 'subject']
-        if any(key in values for key in fields_content):
-            self._update_content(client)
-        if 'lead_ids' in values:
-            remaining_lead_ids = values['lead_ids'][0][2]
-            remaining_leads = self.env["crm.lead"].browse(remaining_lead_ids)
-            added_leads = remaining_leads - saved_leads
-            unlinked_leads = saved_leads - remaining_leads
-            for lead in unlinked_leads:
-                email = self.env['mailchimp.client'].get_lead_email(lead)
-                subscriber_hash = get_subscriber_hash(email)
-                self.delete_mailchimp_list_member(client, subscriber_hash)
-            if added_leads:
-                self._create_update_members(client)
         if 'mailchimp_ref' in values:
-            self._create_update_members(client)
+            return record  # Values are coming from Mailchimp -> Don't update
+
+        client = self.env['mailchimp.client'].get_client()
+        for rec in self:
+            saved_leads = rec.lead_ids
+            fields_content = ['name', 'from_email', 'from_name',
+                              'permission_reminder', 'language', 'subject']
+            if any(key in values for key in fields_content):
+                rec._update_content(client)
+            if 'lead_ids' in values:
+                remaining_lead_ids = values['lead_ids'][0][2]
+                remaining_leads = self.env["crm.lead"].browse(
+                    remaining_lead_ids)
+                added_leads = remaining_leads - saved_leads
+                unlinked_leads = saved_leads - remaining_leads
+                for lead in unlinked_leads:
+                    email = self.env['mailchimp.client'].get_lead_email(lead)
+                    subscriber_hash = get_subscriber_hash(email)
+                    rec.delete_mailchimp_list_member(client, subscriber_hash)
+                if added_leads:
+                    rec._create_update_members(client)
+
         return record
 
     @mailchimp_client.handle_list_exceptions
@@ -245,30 +252,15 @@ class MailchimpList(models.Model):
                 "status_if_new": 'subscribed',
             }
             members.append(member)
-        data = {
-            "members": members,
-            "update_existing": True
-        }
-        client.lists.update_members(self.mailchimp_ref, data)
 
-    def subscribe_lead(self, request, email):
-        env = request.env
-        email_formatted = self.env['mailchimp.client'].format_email(email)
-        lead = env['crm.lead'].search([
-            ('email_from', '=', email_formatted)], limit=1)
-        if not lead:
-            lead = env['crm.lead'].create({'email_from': email_formatted})
-        self.write(
-            {'opt_out_lead_ids': [(3, lead.id)],  # delete
-             'lead_ids': [(4, lead.id)]})  # add
-
-    def unsubscribe_lead(self, request,  email):
-        env = request.env
-        email_formatted = env['mailchimp.client'].format_email(email)
-        lead = env['crm.lead'].search([
-            ('email_from', '=', email_formatted)], limit=1)
-        if not lead:
-            lead = env['crm.lead'].create({'email_from': email_formatted})
-        self.write(
-            {'opt_out_lead_ids': [(4, lead.id)],  # delete
-             'lead_ids': [(3, lead.id)]})  # add
+        max_members = 500  # Mailchimp API max array
+        iterations = len(members) / max_members + 1
+        for i in xrange(iterations):
+            lower = i * max_members
+            upper = (i + 1) * max_members
+            cur_members = members[lower:upper]
+            data = {
+                "members": cur_members,
+                "update_existing": True
+            }
+            client.lists.update_members(self.mailchimp_ref, data)

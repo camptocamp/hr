@@ -3,7 +3,6 @@
 from datetime import datetime
 
 import dateutil.parser
-
 from odoo import models, fields, api
 
 
@@ -190,10 +189,13 @@ class MailchimpCampaign(models.Model):
     @api.model
     def create(self, values):
         record = super(MailchimpCampaign, self).create(values)
+        if 'mailchimp_ref' in values:
+            return record  # Values are coming from Mailchimp -> Don't update
+
         client = self.env['mailchimp.client'].get_client()
-        if 'mailchimp_ref' not in values:
-            mailchimp_ref = record._create_campaign(client)
-            record.write({'mailchimp_ref': mailchimp_ref})
+        mailchimp_ref = record._create_campaign(client)
+        record.write({'mailchimp_ref': mailchimp_ref})
+
         return record
 
     def _create_campaign(self, client):
@@ -220,16 +222,20 @@ class MailchimpCampaign(models.Model):
 
     @api.multi
     def write(self, values):
-        self.ensure_one()
         record = super(MailchimpCampaign, self).write(values)
+        if 'mailchimp_ref' in values:
+            return record  # Values are coming from Mailchimp -> Don't update
+
         client = self.env['mailchimp.client'].get_client()
-        if any(key in values for key in
-               ['name', 'subject_line', 'from_name', 'reply_to']):
-            self._update_content(client)
-        if 'list_id' in values:
-            self._update_list(client)
-        if 'segment_id' in values:
-            self._update_segment(client)
+        for rec in self:
+            if any(key in values for key in
+                   ['name', 'subject_line', 'from_name', 'reply_to']):
+                rec._update_content(client)
+            if 'list_id' in values:
+                rec._update_list(client)
+            if 'segment_id' in values:
+                rec._update_segment(client)
+
         return record
 
     def _update_content(self, client):

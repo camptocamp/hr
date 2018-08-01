@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from mailchimp3 import MailChimp
-from odoo.exceptions import ValidationError
-
 from odoo import models
+from odoo.exceptions import ValidationError
 
 
 class MailchimpClient(models.TransientModel):
@@ -32,18 +31,15 @@ def handle_segment_exceptions(f):
         except Exception:
             segment = args[0]
             client = args[1]
+            model_settings = segment.env['mailchimp.settings']
             # Import List
             mailchimp_list = client.lists.get(segment.list_id.mailchimp_ref)
-            segment.env['mailchimp.settings']._import_list(
-                client,
-                mailchimp_list)
+            model_settings._import_list(client, mailchimp_list)
             # Import Segment
             mailchimp_segment = client.lists.segments.get(
                 segment.list_id.mailchimp_ref, segment.mailchimp_ref)
-            segment.env['mailchimp.settings']._import_segment(
-                client,
-                mailchimp_segment,
-                segment.list_id.mailchimp_ref)
+            model_settings._import_segment(client, mailchimp_segment,
+                                           segment.list_id.mailchimp_ref)
 
     return wrapper
 
@@ -55,8 +51,8 @@ def handle_list_exceptions(f):
         except Exception:
             odoo_list = args[0]
             client = args[1]
+            model_settings = odoo_list.env['mailchimp.settings']
             mailchimp_list = client.lists.get(odoo_list.mailchimp_ref)
-            odoo_list.env['mailchimp.settings']._import_list(client,
-                                                             mailchimp_list)
+            model_settings._import_list(client, mailchimp_list)
 
     return wrapper

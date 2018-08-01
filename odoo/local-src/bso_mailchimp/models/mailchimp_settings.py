@@ -156,18 +156,19 @@ class MailchimpSettings(models.TransientModel):
         settings = list.get('campaign_defaults', {})
         create_time = list.get('date_created')
         lead_ids, opt_out_lead_ids = self._get_list_leads(client, list)
-        values = {'name': list.get('name'),
-                  'mailchimp_ref': list.get('id'),
-                  'lead_ids': [(6, 0, lead_ids)],
-                  'opt_out_lead_ids': [(6, 0, opt_out_lead_ids)],
-                  'from_name': settings.get('from_name'),
-                  'from_email': settings.get('from_email'),
-                  'subject': settings.get('subject'),
-                  'language': settings.get('language'),
-                  'permission_reminder': list.get('permission_reminder'),
-                  'email_type_option': list.get('email_type_option'),
-                  'mailchimp_create_date': dateutil.parser.parse(create_time)
-                  }
+        values = {
+            'name': list.get('name'),
+            'mailchimp_ref': list.get('id'),
+            'lead_ids': [(6, 0, lead_ids)],
+            'opt_out_lead_ids': [(6, 0, opt_out_lead_ids)],
+            'from_name': settings.get('from_name'),
+            'from_email': settings.get('from_email'),
+            'subject': settings.get('subject'),
+            'language': settings.get('language'),
+            'permission_reminder': list.get('permission_reminder'),
+            'email_type_option': list.get('email_type_option'),
+            'mailchimp_create_date': dateutil.parser.parse(create_time)
+        }
         return values
 
     def _get_list_leads(self, client, list):
@@ -228,8 +229,8 @@ class MailchimpSettings(models.TransientModel):
         create_time = segment.get('created_at')
         lead_ids = self._get_segment_leads(client, list_ref, segment.get('id'))
         values = {'name': segment.get('name'),
-                  'list_id': self._get_mailchimp_id(
-                      'mailchimp.list', list_ref),
+                  'list_id': self._get_mailchimp_id('mailchimp.list',
+                                                    list_ref),
                   'mailchimp_ref': segment.get('id'),
                   'lead_ids': [(6, 0, lead_ids)],
                   'mailchimp_create_date': dateutil.parser.parse(create_time)}

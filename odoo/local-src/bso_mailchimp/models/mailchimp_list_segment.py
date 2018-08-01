@@ -49,7 +49,7 @@ class MailchimpListSegment(models.Model):
         string='Total Audience',
         compute='compute_segment_count',
         store=True,
-        readonly=1
+        readonly=True
 
     )
 
@@ -69,10 +69,15 @@ class MailchimpListSegment(models.Model):
     @api.model
     def create(self, values):
         record = super(MailchimpListSegment, self).create(values)
+        if 'mailchimp_ref' in values:
+            return record  # Values are coming from Mailchimp -> Don't update
+
         client = self.env['mailchimp.client'].get_client()
-        if 'mailchimp_ref' not in values:
-            mailchimp_ref = record._create_segment(client)
-            record.write({'mailchimp_ref': mailchimp_ref})
+        mailchimp_ref = record._create_segment(client)
+        record.write({'mailchimp_ref': mailchimp_ref})
+        members_to_add = record.get_members(record.lead_ids)
+        record._update_members(client, members_to_add, [])
+
         return record
 
     def _create_segment(self, client):
@@ -85,32 +90,33 @@ class MailchimpListSegment(models.Model):
 
     @api.multi
     def write(self, values):
-        self.ensure_one()
-        client = self.env['mailchimp.client'].get_client()
-        saved_leads = self.lead_ids
         record = super(MailchimpListSegment, self).write(values)
-        if 'lead_ids' in values:
-            remaining_lead_ids = values['lead_ids'][0][2]
-            remaining_leads = self.env["crm.lead"].browse(remaining_lead_ids)
-            unlinked_leads = saved_leads - remaining_leads
-            members_to_remove = self.get_members(unlinked_leads)
-            added_leads = remaining_leads - saved_leads
-            members_to_add = self.get_members(added_leads)
-            self._update_members(client, members_to_add, members_to_remove)
         if 'mailchimp_ref' in values:
-            members_to_add = self.get_members(self.lead_ids)
-            self._update_members(client, members_to_add, [])
-        if 'name' in values:
-            self._update_name(client)
+            return record  # Values are coming from Mailchimp -> Don't update
+
+        client = self.env['mailchimp.client'].get_client()
+        for rec in self:
+            if 'lead_ids' in values:
+                saved_leads = rec.lead_ids
+                remaining_lead_ids = values['lead_ids'][0][2]
+                remaining_leads = self.env["crm.lead"].browse(
+                    remaining_lead_ids)
+                unlinked_leads = saved_leads - remaining_leads
+                members_to_remove = rec.get_members(unlinked_leads)
+                added_leads = remaining_leads - saved_leads
+                members_to_add = rec.get_members(added_leads)
+                rec._update_members(client, members_to_add, members_to_remove)
+            if 'name' in values:
+                rec._update_name(client)
+
         return record
 
     def _update_name(self, client):
         data = {
             "name": self.name,
         }
-        return client.lists.segments.update(self.list_id.mailchimp_ref,
-                                            self.mailchimp_ref,
-                                            data)
+        return client.lists.segments.update(
+            self.list_id.mailchimp_ref, self.mailchimp_ref, data)
 
     def get_members(self, lead_ids):
         members = []
@@ -121,10 +127,17 @@ class MailchimpListSegment(models.Model):
 
     @mailchimp_client.handle_segment_exceptions
     def _update_members(self, client, members_to_add, members_to_remove):
-        data = {
-            "members_to_remove": members_to_remove,
-            "members_to_add": members_to_add,
-        }
-        return client.lists.segments.update_members(self.list_id.mailchimp_ref,
-                                                    self.mailchimp_ref,
-                                                    data)
+        max_members = 500  # Mailchimp API max array
+        len_members = max(len(members_to_add), len(members_to_remove))
+        iterations = len_members / max_members + 1
+        for i in xrange(iterations):
+            lower = i * max_members
+            upper = (i + 1) * max_members
+            cur_members_to_add = members_to_add[lower:upper]
+            cur_members_to_remove = members_to_remove[lower:upper]
+            data = {
+                "members_to_add": cur_members_to_add,
+                "members_to_remove": cur_members_to_remove,
+            }
+            client.lists.segments.update_members(
+                self.list_id.mailchimp_ref, self.mailchimp_ref, data)
