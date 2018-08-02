@@ -19,6 +19,7 @@
                 <field name="latency"/>
                 <field name="latency_sla"/>
                 <field name="latency_live"/>
+                <field name="date_latency_live"/>
                 <field name="bandwidth"/>
                 <field name="bearer"/>
                 <field name="cable_system"/>
@@ -98,6 +99,7 @@
                         <field name="latency"/>
                         <field name="latency_sla"/>
                         <field name="latency_live"/>
+                        <field name="date_latency_live"/>
                         <field name="bandwidth"/>
                         <field name="bearer"/>
                         <field name="cable_system"/>

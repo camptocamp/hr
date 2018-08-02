@@ -71,6 +71,10 @@ class BackboneLink(models.Model):
         digits=(7, 3),
         readonly=True
     )
+    date_latency_live = fields.Datetime(
+        string='Latency Updated At',
+        readonly=True
+    )
     bandwidth = fields.Integer(
         string='Bandwidth (Mbps)',
         track_visibility='onchange'
@@ -175,6 +179,17 @@ class BackboneLink(models.Model):
         res['context'] = {'default_res_model': self._name,
                           'default_res_id': self.id}
         return res
+
+    # OVERRIDES
+
+    @api.multi
+    def write(self, values):
+        record = super(BackboneLink, self).write(values)
+        if 'latency_live' in values:
+            now = fields.Datetime.now()
+            for rec in self:
+                rec.date_latency_live = now
+        return record
 
     # COMPUTES
 
