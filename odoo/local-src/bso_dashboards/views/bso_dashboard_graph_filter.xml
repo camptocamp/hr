@@ -31,6 +31,9 @@
                     <field name="condition"/>
                     <field name="value"
                            attrs="{'invisible': [('field_ttype', 'in', ('date', 'datetime'))]}"/>
+                    <field name="value_dynamic_input"
+                           attrs="{'invisible': [('field_ttype', 'in', ('date', 'datetime'))]}"/>
+                    <field name="value_dynamic" invisible="1"/>
                     <field name="date_picker"
                            attrs="{'invisible': [('field_ttype', 'not in', ('date',))]}"/>
                     <field name="datetime_picker"

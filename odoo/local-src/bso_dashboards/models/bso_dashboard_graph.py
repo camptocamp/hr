@@ -6,6 +6,7 @@ import json
 from collections import OrderedDict, defaultdict
 
 from odoo import models, fields, api
+from odoo.tools.safe_eval import safe_eval
 
 
 class OrderedDefaultDict(OrderedDict, defaultdict):
@@ -186,20 +187,21 @@ class BSODashboardGraph(models.Model):
     def get_search_domain(self):
         domain = []
         for fltr in self.filter_ids:
-            domain_executed = self._domain_exec(fltr.domain)
-            domain.append(json.loads(domain_executed))
+            domain_evaluated = self._domain_eval(fltr.domain)
+            domain.append(json.loads(domain_evaluated))
         return domain
 
-    def _domain_exec(self, domain):
-        start_tag, end_tag = "<exec>", "</exec>"
+    def _domain_eval(self, domain):
+        start_tag, end_tag = "<eval>", "</eval>"
         start_idx, end_idx = domain.find(start_tag), domain.find(end_tag)
         if -1 in (start_idx, end_idx):
             return domain
-        exec_tag = domain[start_idx:end_idx + len(end_tag)]
-        exec_cmd = exec_tag[len(start_tag):-len(end_tag)]
-        exec_val = False
-        exec ('exec_val=%s' % exec_cmd)
-        return domain.replace(exec_tag, str(exec_val))
+        eval_tag = domain[start_idx:end_idx + len(end_tag)]
+        eval_cmd = eval_tag[len(start_tag):-len(end_tag)]
+        eval_val = safe_eval(eval_cmd, dict(env=self.env,
+                                            date=fields.Date,
+                                            datetime=fields.Datetime))
+        return domain.replace(eval_tag, str(eval_val))
 
     def get_search_fields(self):
         fields = [self.measure_id.name, self.groupby_id.name]
