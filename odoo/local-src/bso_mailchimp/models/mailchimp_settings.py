@@ -109,27 +109,28 @@ class MailchimpSettings(models.TransientModel):
             'webhook_url': conf.get_param('mailchimp.webhook_url'),
         }
 
-    @api.one
+    @api.multi
     def set_values(self):
-        conf = self.env['ir.config_parameter']
-        conf.set_param('mailchimp.company', self.company)
-        conf.set_param('mailchimp.address', self.address)
-        conf.set_param('mailchimp.city', self.city)
-        conf.set_param('mailchimp.state', self.state)
-        conf.set_param('mailchimp.zip', self.zip)
-        conf.set_param('mailchimp.country', self.country)
-        conf.set_param('mailchimp.from_name', self.from_name)
-        conf.set_param('mailchimp.from_email', self.from_email)
-        conf.set_param('mailchimp.subject', self.subject)
-        conf.set_param('mailchimp.language', self.language)
-        conf.set_param('mailchimp.email_type_option', self.email_type_option)
-        conf.set_param('mailchimp.reply_to', self.reply_to)
-        conf.set_param('mailchimp.type', self.type)
-        conf.set_param('mailchimp.permission_reminder',
-                       self.permission_reminder)
-        conf.set_param('mailchimp.api_key', self.api_key)
-        conf.set_param('mailchimp.api_user', self.api_user)
-        conf.set_param('mailchimp.webhook_url', self.webhook_url)
+        for rec in self:
+            conf = rec.env['ir.config_parameter']
+            conf.set_param('mailchimp.company', rec.company)
+            conf.set_param('mailchimp.address', rec.address)
+            conf.set_param('mailchimp.city', rec.city)
+            conf.set_param('mailchimp.state', rec.state)
+            conf.set_param('mailchimp.zip', rec.zip)
+            conf.set_param('mailchimp.country', rec.country)
+            conf.set_param('mailchimp.from_name', rec.from_name)
+            conf.set_param('mailchimp.from_email', rec.from_email)
+            conf.set_param('mailchimp.subject', rec.subject)
+            conf.set_param('mailchimp.language', rec.language)
+            conf.set_param('mailchimp.email_type_option', rec.email_type_option)
+            conf.set_param('mailchimp.reply_to', rec.reply_to)
+            conf.set_param('mailchimp.type', rec.type)
+            conf.set_param('mailchimp.permission_reminder',
+                           rec.permission_reminder)
+            conf.set_param('mailchimp.api_key', rec.api_key)
+            conf.set_param('mailchimp.api_user', rec.api_user)
+            conf.set_param('mailchimp.webhook_url', rec.webhook_url)
 
     @api.multi
     def action_import_lists(self):

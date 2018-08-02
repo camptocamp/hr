@@ -11,11 +11,11 @@ class WebhookController(http.Controller):
                 auth='none', method=['POST'], csrf=False)
     def webhooks(self, **post):
         ensure_db()
+
         if post.get('type') in ['unsubscribe', 'subscribe']:
-            return self._webhook_lead(post)
+            self._webhook_lead(post)
         if post.get('type') == 'campaign':
-            return self._webhook_campaign(post)
-        return False
+            self._webhook_campaign(post)
 
     def _webhook_lead(self, post):
         request.uid = odoo.SUPERUSER_ID
@@ -26,7 +26,7 @@ class WebhookController(http.Controller):
             ('mailchimp_ref', '=', mailchimp_list_ref)
         ], limit=1)
         if not mailchimp_list:
-            return False
+            return
 
         email = post.get('data[email]')
         email_formatted = env['mailchimp.client'].format_email(email)
@@ -42,7 +42,7 @@ class WebhookController(http.Controller):
                 'opt_out_lead_ids': [(4, lead.id)],  # Add
                 'lead_ids': [(3, lead.id)]  # Remove
             })
-            odoo_segments = env['mailchimp.segment'].search([
+            odoo_segments = env['mailchimp.list.segment'].search([
                 ('list_id', '=', mailchimp_list.id),
                 ('lead_ids', 'in', [lead.id])])
             for odoo_segment in odoo_segments:
@@ -56,7 +56,6 @@ class WebhookController(http.Controller):
                 'opt_out_lead_ids': [(3, lead.id)],  # Remove
                 'lead_ids': [(4, lead.id)]  # Add
             })
-        return True
 
     def _webhook_campaign(self, post):
         request.uid = odoo.SUPERUSER_ID
@@ -67,7 +66,7 @@ class WebhookController(http.Controller):
             ('mailchimp_ref', '=', mailchimp_list_ref)
         ], limit=1)
         if not mailchimp_list:
-            return False
+            return
 
         subject = post.get('data[subject]')
         mailchimp_campaign = env['mailchimp.campaign'].search([
@@ -75,9 +74,9 @@ class WebhookController(http.Controller):
             ('list_id', '=', mailchimp_list.id)
         ])
         if not mailchimp_campaign or len(mailchimp_campaign) > 1:
-            return False
+            return
 
-        return mailchimp_campaign.write({
+        mailchimp_campaign.write({
             'mailchimp_ref': mailchimp_campaign.mailchimp_ref,  # !update MC
             'state': 'sent'
         })
