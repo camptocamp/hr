@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bso_dashboard_graph_filter_tree" model="ir.ui.view">
+        <field name="name">bso.dashboard.graph.filter.tree</field>
+        <field name="model">bso.dashboard.graph.filter</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="domain"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bso_dashboard_graph_filter_form" model="ir.ui.view">
+        <field name="name">bso.dashboard.graph.filter.form</field>
+        <field name="model">bso.dashboard.graph.filter</field>
+        <field name="arch" type="xml">
+            <form string="Filter Form">
+                <group>
+                    <field name="graph_id" invisible="1"/>
+                    <field name="model_id" invisible="1"/>
+                    <field name="model_field_ids" invisible="1">
+                        <tree>
+                            <field name="id"/>
+                        </tree>
+                    </field>
+                    <field name="field_id"
+                           domain="[('id', 'in', model_field_ids[0][2])]"/>
+                    <field name="field_ttype" invisible="1"/>
+                    <field name="condition"/>
+                    <field name="value"
+                           attrs="{'invisible': [('field_ttype', 'in', ('date', 'datetime'))]}"/>
+                    <field name="value_dynamic_input"
+                           attrs="{'invisible': [('field_ttype', 'in', ('date', 'datetime'))]}"/>
+                    <field name="value_dynamic" invisible="1"/>
+                    <field name="date_picker"
+                           attrs="{'invisible': [('field_ttype', 'not in', ('date',))]}"/>
+                    <field name="datetime_picker"
+                           attrs="{'invisible': [('field_ttype', 'not in', ('datetime',))]}"/>
+                    <field name="date_dynamic"
+                           attrs="{'invisible': [('field_ttype', 'not in', ('date', 'datetime'))]}"/>
+                </group>
+                <group>
+                    <field name="sequence" invisible="1"/>
+                    <field name="domain"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>

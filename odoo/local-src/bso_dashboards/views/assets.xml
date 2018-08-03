@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="assets_backend" name="bso_dashboards_assets"
+              inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/bso_dashboards/static/src/js/display_graph_kanban_widget.js"/>
+            <link rel="stylesheet"
+                  href="/bso_dashboards/static/src/less/bso_dashboard_graph.less"/>
+            <link rel="stylesheet"
+                  href="/bso_dashboards/static/src/less/bso_dashboard.less"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bso_dashboard_graph_form" model="ir.ui.view">
+        <field name="name">bso.dashboard.graph.form</field>
+        <field name="model">bso.dashboard.graph</field>
+        <field name="arch" type="xml">
+            <form string="Graph Form">
+                <sheet>
+                    <group>
+                        <field name="dashboard_id" invisible="1"/>
+                        <field name="model_id"/>
+                        <field name="model_field_ids" invisible="1">
+                            <tree>
+                                <field name="id"/>
+                            </tree>
+                        </field>
+                        <field name="measure_id"
+                               domain="[('id', 'in', model_field_ids[0][2]), ('store', '=', True), ('ttype', 'in', ('float', 'integer', 'monetary'))]"/>
+                        <field name="measure_ttype" invisible="1"/>
+                        <field name="measure_currency_id"
+                               domain="[('id', 'in', model_field_ids[0][2]), ('store', '=', True), ('relation', '=', 'res.currency')]"
+                               attrs="{'required': [('measure_consolidate_id', '!=', False)]}"/>
+                        <field name="measure_consolidate_id"
+                               attrs="{'required': [('measure_currency_id', '!=', False)]}"/>
+                        <field name="measure_key" invisible="1"/>
+                        <field name="groupby_id"
+                               domain="[('id', 'in', model_field_ids[0][2]), ('name', '!=', 'id'), ('store', '=', True), ('ttype', 'not in', ('one2many', 'many2many'))]"/>
+                        <field name="groupby_ttype" invisible="1"/>
+                        <field name="groupby_interval"
+                               attrs="{'invisible': [('groupby_ttype', 'not in', ('date', 'datetime'))]}"/>
+                        <field name="groupby_key" invisible="1"/>
+                        <field name="filter_ids"/>
+                    </group>
+                    <hr/>
+                    <group>
+                        <field name="sequence"
+                               attrs="{'invisible': [('graph', '=', False)]}"/>
+                        <field name="name"/>
+                        <field name="graph_type"/>
+                        <field name="settings_id"
+                               attrs="{'invisible': [('graph', '=', False)]}"/>
+                        <field name="graph" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="open_dashboard_graph" model="ir.actions.act_window">
+        <field name="name">Open Dashboard Graph</field>
+        <field name="res_model">bso.dashboard.graph</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="bso_dashboard_graph_kanban_view" model="ir.ui.view">
+        <field name="name">bso.dashboard.graph.kanban</field>
+        <field name="model">bso.dashboard.graph</field>
+        <field name="arch" type="xml">
+            <kanban default_order="sequence"
+                    class="oe_background_grey o_kanban_dashboard o_bso_dashboard_graph_kanban">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(0)}">
+                            <t t-call="header"/>
+                            <div class="container o_kanban_card_content o_visible">
+                                <div class="o_kanban_total" id="sum"></div>
+                                <div class="o_kanban_graph_section">
+                                    <field name="graph" widget="bso_graph"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-name="header">
+                        <div class="o_kanban_card_header">
+                            <div class="o_kanban_card_header_title">
+                                <field name="name"/>
+                            </div>
+                            <div class="o_kanban_card_header_settings">
+                                <a name="action_open_dashboard_graph_settings"
+                                   type="object"
+                                   groups="bso_dashboards.group_dashboard_manager"
+                                   class="fa fa-pie-chart o_kanban_card_header_settings_button"/>
+                                <a name="action_open_dashboard_graph"
+                                   type="object"
+                                   groups="bso_dashboards.group_dashboard_manager"
+                                   class="fa fa-database o_kanban_card_header_settings_button"/>
+                                <a type="delete"
+                                   groups="bso_dashboards.group_dashboard_manager"
+                                   class="fa fa-times fa-lg o_kanban_card_header_settings_button"/>
+                            </div>
+
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+</odoo>

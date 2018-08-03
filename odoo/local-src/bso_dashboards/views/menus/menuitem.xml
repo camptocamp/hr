@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+            id="menu_dashboards"
+            name="Dashboards"
+            action="action_bso_dashboard"
+            parent=""
+            web_icon="bso_dashboards,static/description/icon.png"/>
+
+    <menuitem
+            id="menu_bso_dashboard"
+            name="Dashboards"
+            action="action_bso_dashboard"
+            parent="menu_dashboards"
+            sequence="0"/>
+
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bso_dashboard_graph_settings_form" model="ir.ui.view">
+        <field name="name">bso.dashboard.graph.settings.form</field>
+        <field name="model">bso.dashboard.graph.settings</field>
+        <field name="arch" type="xml">
+            <form string="Settings Form">
+                <group>
+                    <field name="name" invisible="1"/>
+                    <field name="graph_id" invisible="1"/>
+                    <field name="graph_type"/>
+                </group>
+                <group attrs="{'invisible': [('graph_type', '=', False)]}">
+                    <field name="height"/>
+                    <field name="width"/>
+                </group>
+                <group attrs="{'invisible': [('graph_type', '=', False)]}">
+                    <field name="margin_left"/>
+                    <field name="margin_right"/>
+                    <field name="margin_top"/>
+                    <field name="margin_bottom"/>
+                </group>
+                <group>
+                    <field name="show_sum"/>
+                </group>
+                <group attrs="{'invisible': [('graph_type', 'not in', ('bar', 'line'))]}">
+                    <field name="show_x_axis"/>
+                    <field name="show_y_axis"/>
+                    <field name="right_align_y_axis"
+                           attrs="{'invisible': [('show_y_axis', '=', False)]}"/>
+                </group>
+                <group attrs="{'invisible': [('graph_type', 'not in', ('bar',))]}">
+                    <field name="show_values"/>
+                </group>
+                <group attrs="{'invisible': [('graph_type', 'not in', ('line',))]}">
+                    <field name="area"/>
+                </group>
+                <group attrs="{'invisible': [('graph_type', 'not in', ('pie',))]}">
+                    <field name="donut"/>
+                </group>
+                <group attrs="{'invisible': [('graph_type', 'not in', ('pie',))]}">
+                    <field name="show_legend"/>
+                    <field name="legend_position"
+                           attrs="{'invisible': [('show_legend', '=', False)]}"/>
+                </group>
+                <group attrs="{'invisible': [('graph_type', 'not in', ('pie',))]}">
+                    <field name="show_labels"/>
+                    <field name="labels_outside"
+                           attrs="{'invisible': [('show_labels', '=', False)]}"/>
+                    <field name="label_type"
+                           attrs="{'invisible': [('show_labels', '=', False)]}"/>
+                    <field name="label_sunbeam_layout"
+                           attrs="{'invisible': [('show_labels', '=', False)]}"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>
