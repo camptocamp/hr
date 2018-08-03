@@ -184,12 +184,9 @@ class BackboneLink(models.Model):
 
     @api.multi
     def write(self, values):
-        record = super(BackboneLink, self).write(values)
         if 'latency_live' in values:
-            now = fields.Datetime.now()
-            for rec in self:
-                rec.date_latency_live = now
-        return record
+            values['date_latency_live'] = fields.Datetime.now()
+        return super(BackboneLink, self).write(values)
 
     # COMPUTES
 
