@@ -97,7 +97,8 @@ class BSODashboardGraphFilter(models.Model):
     def onchange_inputs(self):
         field_str = self.field_id.name or 'field'
         condition_str = self.condition or 'condition'
-        value_str = self.value or self.value_dynamic or self.date_picker \
-                    or self.datetime_picker or self.date_dynamic or 'value'
+        value_str = self.value or self.value_dynamic or self.date_picker
+        value_str = value_str or self.datetime_picker or self.date_dynamic
+        value_str = value_str or 'value'
         domain = '["%s", "%s", "%s"]' % (field_str, condition_str, value_str)
         self.domain = domain
