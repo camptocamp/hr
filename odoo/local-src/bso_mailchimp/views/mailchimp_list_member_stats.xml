@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_crm_mailchimp_mailing_member_stats_tree"
+            model="ir.ui.view">
+        <field name="name">
+            mailchimp.mailing.member.stats.tree.specific_mailchimp
+        </field>
+        <field name="model">mailchimp.list.member.stats</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="campaign_id" invisible="1"/>
+                <field name="lead_id"/>
+                <field name="sent" invisible="1"/>
+                <field name="opened"/>
+                <field name="bounced"/>
+                <field name="clicked"/>
+                <field name="unsubscribed"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_mailchimp_mailing_member_stats_search"
+            model="ir.ui.view">
+        <field name="name">
+            mailchimp.mailing.member.stats.search.specific_mailchimp
+        </field>
+        <field name="model">mailchimp.list.member.stats</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="lead_id"/>
+                <field name="campaign_id"/>
+                <field name="sent"/>
+                <field name="opened"/>
+                <filter string="Sent" name="sent"
+                        domain="[('sent', '!=', False),]"/>
+                <filter string=" opened" name=" opened"
+                        domain="[(' opened', '!=', False),]"/>
+                <filter string="Bounced" name="bounced"
+                        domain="[('bounced', '!=', False),]"/>
+                <filter string="Clicked" name="clicked"
+                        domain="[('clicked', '!=', False),]"/>
+                <filter string="Unsubscribed" name="unsubscribed"
+                        domain="[('unsubscribed', '!=', False),]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Segment" name="segment_id" domain="[]"
+                            context="{'group_by': 'segment_id'}"/>
+                    <filter string="Lead" name="lead_id" domain="[]"
+                            context="{'group_by': 'lead_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_crm_mailchimp_mailing_member_stats_pivot"
+            model="ir.ui.view">
+        <field name="name">
+            mailchimp.mailing.member.stats.pivot.specific_mailchimp
+        </field>
+        <field name="model">mailchimp.list.member.stats</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="name"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="crm_mailchimp_mailing_member_stats_action_specific"
+            model="ir.actions.act_window">
+        <field name="name">Mailchimp Member Stats</field>
+        <field name="res_model">mailchimp.list.member.stats</field>
+        <field name="search_view"
+               ref="view_crm_mailchimp_mailing_member_stats_search"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,pivot</field>
+    </record>
+
+</odoo>

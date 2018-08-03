@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="crm_form_view_leads_campaigns" model="ir.ui.view">
+        <field name="name">crm.lead.form.campaigns</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']/button[@name='toggle_active']"
+                   position="before">
+                <button name="action_view_campaigns"
+                        type="object"
+                        string="Campaigns: "
+                        class="oe_highlight oe_stat_button">
+                    <span class="o_stat_value">
+                        <field name="sum_campaigns"/>
+                    </span>
+                </button>
+
+            </xpath>
+            <field name="type" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_filter_bso_mailchimp" model="ir.ui.view">
+        <field name="name">crm.lead.search</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id"
+               ref="specific_crm.view_crm_case_leads_filter_bso"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="segment_ids"
+                       filter_domain="[('segment_ids.campaign_ids.name','ilike',self)]"
+                       string="Campaign"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="specific_crm.action_window_crm_marketing_lead"
+            model="ir.actions.act_window">
+        <field name="domain">[]</field>
+    </record>
+
+</odoo>
