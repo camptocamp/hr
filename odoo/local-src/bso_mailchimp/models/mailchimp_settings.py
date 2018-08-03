@@ -123,7 +123,8 @@ class MailchimpSettings(models.TransientModel):
             conf.set_param('mailchimp.from_email', rec.from_email)
             conf.set_param('mailchimp.subject', rec.subject)
             conf.set_param('mailchimp.language', rec.language)
-            conf.set_param('mailchimp.email_type_option', rec.email_type_option)
+            conf.set_param('mailchimp.email_type_option',
+                           rec.email_type_option)
             conf.set_param('mailchimp.reply_to', rec.reply_to)
             conf.set_param('mailchimp.type', rec.type)
             conf.set_param('mailchimp.permission_reminder',
