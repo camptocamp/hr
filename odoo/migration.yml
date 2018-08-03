@@ -335,3 +335,6 @@ migration:
         upgrade:
           #### local-src
           - specific_crm
+          - bso_mailchimp
+          - bso_dashboards
+          - bso_mailchimp

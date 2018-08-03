@@ -23,6 +23,21 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.12.0 (2018-08-03)
+++++++++++++++++++++
+
+**Features and Improvements**
+
+  * Add custom mailchimp addon
+  * Add custom dashboard addon
+
+**Bugfixes**
+
 * BIZ-2081: Fix new lead creation by displaying `currency_id` on the form
 
 **Build**
