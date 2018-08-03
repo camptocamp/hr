@@ -1,6 +1,6 @@
 import base64
-import json
 import datetime
+import json
 
 import requests
 import yaml
@@ -31,7 +31,7 @@ class Expensify(models.TransientModel):
     deduct_surcharge = fields.Boolean(
         readonly=True
     )
-    null_tax_foreign_currency = fields.Boolean(
+    null_tax = fields.Boolean(
         readonly=True
     )
 
@@ -119,7 +119,7 @@ class Expensify(models.TransientModel):
                 _("No reports found. Try setting an earlier date?"))
 
         expenses = [expense for report in reports for expense in
-                    report.get('expenses', [])]
+                    report.get('expenses') or []]
         if not expenses:
             raise exceptions.ValidationError(
                 _("No expenses found. Try submitting them to a report?"))
@@ -164,9 +164,7 @@ class Expensify(models.TransientModel):
             if self.deduct_surcharge:
                 amount /= (1 + surcharge_rate)
 
-            # Set non refundable tax if null_tax_foreign_currency
-            if expense_currency != self.currency_id.name \
-                    and self.null_tax_foreign_currency:
+            if self.null_tax:  # Set non refundable tax
                 tax_id = self.get_tax_id(0)
             else:
                 tax_id = False  # TODO: Get tax from taxRate if home country
