@@ -11,13 +11,15 @@ class SaleDealsheetSummaryLine(models.Model):
     )
     currency_id = fields.Many2one(
         related='dealsheet_id.currency_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     cost_type = fields.Selection(
+        string='Type',
         selection=[
             ('nr', 'Non Recurring'),
-            ('mr', 'Recurring'),
-            ('total', 'Total')
+            ('mr', 'Monthly Recurring'),
+            ('total', 'Total Contract')
         ],
         required=True
     )

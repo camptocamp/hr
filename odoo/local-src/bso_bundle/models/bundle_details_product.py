@@ -12,15 +12,18 @@ class BundleDetailsProduct(models.Model):
     )
     currency_id = fields.Many2one(
         related='bundle_details_id.currency_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     bundle_categ_id = fields.Many2one(
         related='bundle_details_id.bundle_categ_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     is_epl = fields.Boolean(
         related='bundle_details_id.is_epl',
-        readonly=True
+        readonly=True,
+        store=True
     )
     product_id = fields.Many2one(
         string='Product',
@@ -36,7 +39,8 @@ class BundleDetailsProduct(models.Model):
     )
     uom_id = fields.Many2one(
         related='product_id.uom_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     mrc_unit = fields.Float(
         string='MRC / Unit',

@@ -11,7 +11,8 @@ class SaleDealsheetLine(models.Model):
     )
     dealsheet_state = fields.Selection(
         related='dealsheet_id.state',
-        track_visibility=False
+        track_visibility=False,
+        store=True
     )
     is_cost = fields.Boolean(
         string='Is Cost'
@@ -21,7 +22,8 @@ class SaleDealsheetLine(models.Model):
     )
     currency_id = fields.Many2one(
         related='dealsheet_id.currency_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     sale_order_line_id = fields.Many2one(
         string='Sale Order Line',
@@ -34,6 +36,12 @@ class SaleDealsheetLine(models.Model):
         domain=['|', ('sale_ok', '=', True), ('purchase_ok', '=', True)],
         required=True
     )
+    product_categ_id = fields.Many2one(
+        string='Product Category',
+        related='product_id.categ_id',
+        readonly=True,
+        store=True
+    )
     description = fields.Char(
         string='Description'
     )
@@ -43,7 +51,8 @@ class SaleDealsheetLine(models.Model):
     )
     uom_id = fields.Many2one(
         related='product_id.uom_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     cost = fields.Float(
         string='Cost'

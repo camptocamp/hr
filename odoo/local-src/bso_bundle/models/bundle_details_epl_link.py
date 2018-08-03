@@ -15,7 +15,8 @@ class BundleDetailsEPLLink(models.Model):
     )
     currency_id = fields.Many2one(
         related='bundle_details_id.currency_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     is_epl_backup = fields.Boolean(
         string='Is EPL Backup'
@@ -45,23 +46,28 @@ class BundleDetailsEPLLink(models.Model):
     )
     is_wireless = fields.Boolean(
         related='link_id.is_wireless',
-        readonly=True
+        readonly=True,
+        store=True
     )
     latency = fields.Float(
         related='link_id.latency',
-        readonly=True
+        readonly=True,
+        store=True
     )
     bandwidth = fields.Integer(
         related='link_id.bandwidth',
-        readonly=True
+        readonly=True,
+        store=True
     )
     cable_system = fields.Char(
         related='link_id.cable_system',
-        readonly=True
+        readonly=True,
+        store=True
     )
     is_protected = fields.Boolean(
         related='link_id.is_protected',
-        readonly=True
+        readonly=True,
+        store=True
     )
     mrc = fields.Float(
         string='MRC',

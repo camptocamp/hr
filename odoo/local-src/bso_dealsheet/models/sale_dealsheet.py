@@ -31,7 +31,13 @@ class SaleDealsheet(models.Model):
     )
     sale_order_state = fields.Selection(
         related='sale_order_id.state',
-        readonly=True
+        readonly=True,
+        store=True
+    )
+    project_id = fields.Many2one(
+        related='sale_order_id.project_id',
+        readonly=True,
+        store=True
     )
     partner_id = fields.Many2one(
         related='sale_order_id.partner_id',
@@ -50,7 +56,8 @@ class SaleDealsheet(models.Model):
     )
     seller_id = fields.Many2one(
         related='sale_order_id.user_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     presale_id = fields.Many2one(
         string='Pre-Sale',

@@ -45,6 +45,7 @@
                     <group>
                         <field name="sale_order_id"/>
                         <field name="sale_order_state" invisible="1"/>
+                        <field name="project_id" invisible="1"/>
                         <field name="partner_id"/>
                         <field name="seller_id"/>
                         <field name="duration"/>
@@ -98,6 +99,7 @@
                 <field name="create_date"/>
                 <field name="validated_date"/>
                 <field name="refused_date"/>
+                <field name="project_id" invisible="1"/>
                 <field name="partner_id"/>
                 <field name="seller_id"/>
                 <field name="presale_id"/>
@@ -155,9 +157,10 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="dealsheet_menu" name="Dealsheets" sequence="11"
+    <menuitem id="dealsheet_menu" name="Dealsheets"
               action="dealsheet_action"
-              parent="sales_team.menu_sales"
+              parent=""
+              web_icon="bso_dealsheet,static/description/icon.png"
               groups="bso_dealsheet.group_dealsheet_user"/>
 
 </odoo>

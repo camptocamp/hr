@@ -35,7 +35,6 @@ class BackboneLink(models.Model):
     )
     circuit_ref = fields.Char(
         string='Circuit ID',
-        oldname='circuit_id',
         track_visibility='onchange'
     )
     supplier_id = fields.Many2one(
@@ -51,7 +50,6 @@ class BackboneLink(models.Model):
     )
     supplier_link_ref = fields.Char(
         string='Supplier Link ID',
-        oldname='supplier_link_id',
         track_visibility='onchange'
     )
     is_wireless = fields.Boolean(
@@ -71,6 +69,10 @@ class BackboneLink(models.Model):
     latency_live = fields.Float(
         string='Latency Live (ms)',
         digits=(7, 3),
+        readonly=True
+    )
+    date_latency_live = fields.Datetime(
+        string='Latency Updated At',
         readonly=True
     )
     bandwidth = fields.Integer(
@@ -177,6 +179,17 @@ class BackboneLink(models.Model):
         res['context'] = {'default_res_model': self._name,
                           'default_res_id': self.id}
         return res
+
+    # OVERRIDES
+
+    @api.multi
+    def write(self, values):
+        record = super(BackboneLink, self).write(values)
+        if 'latency_live' in values:
+            now = fields.Datetime.now()
+            for rec in self:
+                rec.date_latency_live = now
+        return record
 
     # COMPUTES
 

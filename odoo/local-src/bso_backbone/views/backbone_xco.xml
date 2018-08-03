@@ -22,19 +22,19 @@
                        attrs="{'invisible': [('xco_type', '=', 'client')]}"/>
                 <field name="paid_by_bso"/>
                 <field name="currency_id"
-                       groups="bso_backbone.group_backbone_manager"/>
+                       groups="bso_backbone.group_backbone_officer"/>
                 <field name="nrc" widget="monetary"
                        options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"/>
+                       groups="bso_backbone.group_backbone_officer"/>
                 <field name="mrc" widget="monetary"
                        options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"/>
+                       groups="bso_backbone.group_backbone_officer"/>
                 <field name="date_start"
-                       groups="bso_backbone.group_backbone_manager"/>
+                       groups="bso_backbone.group_backbone_officer"/>
                 <field name="date_end"
-                       groups="bso_backbone.group_backbone_manager"/>
+                       groups="bso_backbone.group_backbone_officer"/>
                 <field name="auto_renewal"
-                       groups="bso_backbone.group_backbone_manager"/>
+                       groups="bso_backbone.group_backbone_officer"/>
                 <field name="notes" invisible="1"/>
                 <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
@@ -82,21 +82,22 @@
                         <field name="paid_by_bso"
                                attrs="{'invisible': [('xco_type', '=', False)]}"/>
                     </group>
-                    <group groups="bso_backbone.group_backbone_manager">
+                    <group groups="bso_backbone.group_backbone_officer">
                         <field name="currency_id"
-                               attrs="{'required': [('paid_by_bso', '=', True)]}"
+                               attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"
                                options="{'create': false, 'create_edit': false}"/>
                         <field name="nrc" widget="monetary"
-                               attrs="{'required': [('paid_by_bso', '=', True)]}"
+                               attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"
                                options="{'currency_field': 'currency_id'}"/>
                         <field name="mrc" widget="monetary"
-                               attrs="{'required': [('paid_by_bso', '=', True)]}"
+                               attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"
                                options="{'currency_field': 'currency_id'}"/>
                         <field name="date_start"
-                               attrs="{'required': [('paid_by_bso', '=', True)]}"/>
+                               attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"/>
                         <field name="date_end"
-                               attrs="{'required': [('paid_by_bso', '=', True)]}"/>
-                        <field name="auto_renewal"/>
+                               attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"/>
+                        <field name="auto_renewal"
+                               attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
                     </group>
                     <group>
                         <field name="notes"/>

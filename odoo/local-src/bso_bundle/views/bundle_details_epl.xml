@@ -123,7 +123,7 @@
             <xpath expr="//form/footer/button[@name='button_cancel']"
                    position="before">
                 <button name="button_epl_save"
-                        string="Save EPL" type="object"
+                        string="Save" type="object"
                         class="oe_highlight"
                         attrs="{'invisible': [('is_epl', '=', False)]}"/>
             </xpath>

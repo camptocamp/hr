@@ -13,7 +13,8 @@ class BundleDetails(models.Model):
     )
     currency_id = fields.Many2one(
         related='sale_order_id.currency_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     sale_order_line_id_mrc = fields.Many2one(
         string='Sale Order Line MRC',
@@ -31,11 +32,13 @@ class BundleDetails(models.Model):
     )
     bundle_categ_id = fields.Many2one(
         related='bundle_id.categ_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     is_epl = fields.Boolean(
         related='bundle_id.is_epl',
-        readonly=True
+        readonly=True,
+        store=True
     )
     bundle_name = fields.Char(
         string='Name',
