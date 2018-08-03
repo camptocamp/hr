@@ -338,3 +338,6 @@ migration:
           - bso_mailchimp
           - bso_dashboards
           - bso_mailchimp
+          - expensify
+          - bso_bundle
+          - bso_dealsheet

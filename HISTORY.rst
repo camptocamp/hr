@@ -34,11 +34,18 @@ Latest (Unreleased)
 **Features and Improvements**
 
   * Add custom mailchimp addon
+    * #224 BSO Mailchimp
   * Add custom dashboard addon
+    * #223 BSO Dashboards
+  * integrate bso_dealsheet and bso_bundle minor change
+    * #217 BSO backbone bundle dealsheet update
+
 
 **Bugfixes**
 
 * BIZ-2081: Fix new lead creation by displaying `currency_id` on the form
+* integrtate bso expensify fix
+  * #215 Expensify fix
 
 **Build**
 
