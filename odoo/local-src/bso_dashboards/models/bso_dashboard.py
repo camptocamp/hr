@@ -9,7 +9,7 @@ class BSODashboard(models.Model):
     _name = 'bso.dashboard'
 
     def _default_group_id(self):
-        return self.env.ref('bso_dashboards.group_dashboard_manager').id
+        return self.env.ref('bso_dashboards.group_dashboard_manager', False)
 
     name = fields.Char(
         string='Title',

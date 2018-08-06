@@ -9,7 +9,7 @@
                 <group>
                     <field name="name" invisible="1"/>
                     <field name="graph_id" invisible="1"/>
-                    <field name="graph_type"/>
+                    <field name="graph_type" required="1"/>
                 </group>
                 <group attrs="{'invisible': [('graph_type', '=', False)]}">
                     <field name="height"/>
