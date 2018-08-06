@@ -129,10 +129,10 @@ class MailchimpList(models.Model):
     @api.model
     def create(self, values):
         record = super(MailchimpList, self).create(values)
-        client = self.env['mailchimp.client'].get_client()
         if 'mailchimp_ref' in values:
             return record  # Values are coming from Mailchimp -> Don't update
 
+        client = self.env['mailchimp.client'].get_client()
         mailchimp_ref = record._create_list(client)
         record.write({'mailchimp_ref': mailchimp_ref})
         record._create_update_members(client)
