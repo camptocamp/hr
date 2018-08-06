@@ -18,8 +18,10 @@
                             name="import_segments" class="oe_highlight"/>
                     <button string="Import Campaigns" type="object"
                             name="import_campaigns" class="oe_highlight"/>
-                    <button string="Fetch All" type="object"
-                            name="fetch_all" class="oe_highlight"/>
+                    <button string="Update Counts" type="object"
+                            name="update_counts" class="oe_highlight"/>
+                    <button string="Set Webhooks" type="object"
+                            name="set_webhooks" class="oe_highlight"/>
                 </header>
                 <group string="Mailchimp Credentials">
                     <field name="api_key"/>
