@@ -297,9 +297,35 @@ class MailchimpSettings(models.TransientModel):
         return status
 
     @api.multi
-    def fetch_all(self):
+    def update_counts(self):
         client = self.env['mailchimp.client'].get_client()
         for campaign in self.env['mailchimp.campaign'].search([]):
             if not campaign.is_campaign_sent(client):
                 continue
             campaign._update_counts(client)
+
+    @api.multi
+    def set_webhooks(self):
+        conf = self.env['ir.config_parameter']
+        webhook_url = conf.get_param('mailchimp.webhook_url')
+        if not webhook_url:
+            return
+        client = self.env['mailchimp.client'].get_client()
+        for list_id in self.env['mailchimp.list'].search([]):
+            self._create_webhook(webhook_url, list_id.mailchimp_ref, client)
+
+    def _create_webhook(self, webhook_url, list_ref, client):
+        data = {
+            "url": webhook_url,
+            "events": {
+                "subscribe": True,
+                "unsubscribe": True,
+                "campaign": True,
+            },
+            "sources": {
+                "user": True,
+                "admin": True,
+                "api": False
+            }
+        }
+        client.lists.webhooks.create(list_ref, data)

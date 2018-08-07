@@ -134,7 +134,6 @@ class MailchimpList(models.Model):
 
         client = self.env['mailchimp.client'].get_client()
         mailchimp_ref = record._create_list(client)
-        record._create_webhook(mailchimp_ref, client)
         record.write({'mailchimp_ref': mailchimp_ref})
         record._create_update_members(client)
 
@@ -164,25 +163,6 @@ class MailchimpList(models.Model):
             "email_type_option": self.email_type_option,
         }
         return client.lists.create(data).get('id')
-
-    def _create_webhook(self, mailchimp_ref, client):
-        conf = self.env['ir.config_parameter']
-        url = conf.get_param('mailchimp.webhook_url')
-        if not url:
-            return False
-        data = {
-            "url": url,
-            "events": {
-                "subscribe": True,
-                "unsubscribe": True,
-                "campaign": True,
-            },
-            "sources": {
-                "user": True,
-                "admin": True,
-                "api": False}
-        }
-        client.lists.webhooks.create(mailchimp_ref, data)
 
     @api.multi
     def write(self, values):
