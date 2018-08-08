@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * BSIBSO-1075: Move menu Lead under Marketing section
 * BSIBSO-1083: Reclaim `Dial` button on `phone` widget
+* BSIBSO-1076: no create/update of customer in opportunity form
+* BSIBSO-1078: change the propagation of client_order_ref
 
 **Bugfixes**
 
@@ -44,8 +46,6 @@ Latest (Unreleased)
 
 **Features and Improvements**
   * Improvements in Mailchimps webhook
-
-* BSIBSO-1076: no create/update of customer in opportunity form
 
 **Bugfixes**
  * Fix in Dashboard, Backbone, Mailchimp
