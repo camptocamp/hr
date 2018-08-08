@@ -46,7 +46,6 @@ class CrmLead(models.Model):
 
     @api.multi
     def write(self, values):
-        self.ensure_one()
         if values.get('email_from'):
             values['email_from'] = values['email_from'].lower().strip()
         return super(CrmLead, self).write(values)
