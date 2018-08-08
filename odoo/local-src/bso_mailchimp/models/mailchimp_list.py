@@ -4,8 +4,8 @@ import logging
 from datetime import datetime
 
 from mailchimp3.helpers import get_subscriber_hash
-from odoo import fields, models, api
 
+from odoo import fields, models, api
 from . import mailchimp_client
 
 _logger = logging.getLogger(__name__)
@@ -129,13 +129,15 @@ class MailchimpList(models.Model):
     @api.model
     def create(self, values):
         record = super(MailchimpList, self).create(values)
+        client = self.env['mailchimp.client'].get_client()
         if 'mailchimp_ref' in values:
+            record._create_webhook(client)
             return record  # Values are coming from Mailchimp -> Don't update
 
-        client = self.env['mailchimp.client'].get_client()
         mailchimp_ref = record._create_list(client)
         record.write({'mailchimp_ref': mailchimp_ref})
         record._create_update_members(client)
+        record._create_webhook(client)
 
         return record
 
@@ -244,3 +246,26 @@ class MailchimpList(models.Model):
                 "update_existing": True
             }
             client.lists.update_members(self.mailchimp_ref, data)
+
+    def _create_webhook(self, client):
+        conf = self.env['ir.config_parameter']
+        webhook_url = conf.get_param('mailchimp.webhook_url')
+        if not webhook_url:
+            return
+        webhooks = client.lists.webhooks.all(list_id=self.mailchimp_ref)
+        if webhook_url in [w.get('url') for w in webhooks.get('webhooks', [])]:
+            return
+        data = {
+            "url": webhook_url,
+            "events": {
+                "subscribe": True,
+                "unsubscribe": True,
+                "campaign": True,
+            },
+            "sources": {
+                "user": True,
+                "admin": True,
+                "api": False
+            }
+        }
+        client.lists.webhooks.create(self.mailchimp_ref, data)
