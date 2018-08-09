@@ -1,0 +1,1 @@
+This module disable automatic addition of partner & lead as follower
