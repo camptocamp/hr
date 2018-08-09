@@ -28,6 +28,14 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.13.1 (2018-08-09)
+++++++++++++++++++++
+
+**Bugfixes**
+
+* Remove self.ensure_one in method write in bso_mailchimp
+
+
 10.13.0 (2018-08-09)
 ++++++++++++++++++++
 
