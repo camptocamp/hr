@@ -28,6 +28,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BIZ-2106: Fix "editing a partner kill relations with opportunities"
+
 **Build**
 
 **Documentation**
