@@ -341,3 +341,13 @@ migration:
           - expensify
           - bso_bundle
           - bso_dealsheet
+    - version: 10.13.0
+      addons:
+        upgrade:
+          #### local-src
+          - specific_crm
+          - bso_mailchimp
+          - bso_dashboards
+          - bso_bundle
+          - bso_dealsheet
+          - bso_backbone

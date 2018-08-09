@@ -28,6 +28,21 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.13.0 (2018-08-09)
+++++++++++++++++++++
+
+**Features and Improvements**
+  * Improvements in Mailchimps webhook
+
+**Bugfixes**
+ * Fix in Dashboard, Backbone, Mailchimp
+     PR #225 #226 #228 #229
+
+**Build**
+
+**Documentation**
+
+
 10.12.0 (2018-08-03)
 ++++++++++++++++++++
 
