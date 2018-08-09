@@ -353,4 +353,7 @@ migration:
           - bso_backbone
     - version: 10.13.1
     - version: 10.14.0
+      addons:
+        upgrade:
+          #### local-src
           - specific_crm
