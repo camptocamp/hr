@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * BSIBSO-1075: Move menu Lead under Marketing section
+* BSIBSO-1083: Reclaim `Dial` button on `phone` widget
 
 **Bugfixes**
 
