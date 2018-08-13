@@ -22,7 +22,6 @@ class ResPartner(models.Model):
             'name': self.name,
             'partner_id': self.id,
             'user_id': self.env.user.id,
-            'type': 'lead',
             'email_from': self.email,
             'street': self.street,
             'street2': self.street2,
@@ -37,6 +36,7 @@ class ResPartner(models.Model):
             'partner_name': self.parent_id.name,
         }
         if not lead:
+            values['type'] = "lead"
             self.env['crm.lead'].create(values)
         else:
             lead.update(values)
