@@ -357,3 +357,5 @@ migration:
         upgrade:
           #### local-src
           - specific_crm
+          - specific_sale
+          - specific_reports

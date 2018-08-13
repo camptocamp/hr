@@ -17,8 +17,10 @@ class SaleSubscription(models.Model):
 
     duration = fields.Integer()
     recurring_total = fields.Monetary(
-            compute='_compute_recurring_total',
-            store=True, track_visibility='onchange', string='Monthly Total')
+        compute='_compute_recurring_total',
+        store=True, track_visibility='onchange',
+        string='Monthly Total'
+    )
     period_total = fields.Monetary(
         string='Period Total',
         compute='_compute_period_total',
@@ -54,6 +56,46 @@ class SaleSubscription(models.Model):
     def _compute_period_total(self):
         for sub in self:
             sub.period_total = sub.recurring_total * sub.recurring_interval
+
+    def _compute_invoice_count(self):
+        super(SaleSubscription, self)._compute_invoice_count()
+        orders = self.env['sale.order'].search_read(
+            domain=[('subscription_id', 'in', self.ids)],
+            fields=['name'],
+        )
+        order_names = [order['name'] for order in orders]
+        invoice_line_data = self.env['account.invoice.line'].read_group(
+            domain=[
+                ('account_analytic_id', 'in', self.mapped(
+                    'analytic_account_id',
+                ).ids),
+                ('invoice_id.name', 'in', self.mapped('code') + order_names),
+                ('invoice_id.state', 'in', ['draft', 'open', 'paid'])
+            ],
+            fields=["account_analytic_id", "invoice_id"],
+            groupby=["account_analytic_id", "invoice_id"],
+            lazy=False
+        )
+        for sub in self:
+            sub.invoice_count = len(invoice_line_data.filtered(
+                lambda d: d['account_analytic_id'][0] ==
+                sub.analytic_account_id.id,
+            ))
+
+    @api.multi
+    def action_subscription_invoice(self):
+        res = super(SaleSubscription, self).action_subscription_invoice()
+        analytic_ids = [sub.analytic_account_id.id for sub in self]
+        orders = self.env['sale.order'].search_read(domain=[
+            ('subscription_id', 'in', self.ids)
+        ], fields=['name'])
+        order_names = [order['name'] for order in orders]
+        invoices = self.env['account.invoice'].search([
+            ('invoice_line_ids.account_analytic_id', 'in', analytic_ids),
+            ('name', 'in', self.mapped('code') + order_names)
+        ])
+        res['domain'] = [["id", "in", invoices.ids]]
+        return res
 
     @api.returns('account.invoice')
     def _recurring_create_invoice(self, automatic=False):
@@ -207,4 +249,5 @@ class SaleSubscription(models.Model):
 
         res['date'] = fields.Date.today()
         res['date_invoice'] = fields.Date.today()
+        res['name'] = res.pop('origin', False)
         return res
