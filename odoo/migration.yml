@@ -359,3 +359,9 @@ migration:
           - specific_crm
           - specific_sale
           - specific_reports
+    - version: 10.14.1
+      addons:
+        upgrade:
+          #### akretion
+          # odoo-usability
+          - account_invoice_update_wizard
