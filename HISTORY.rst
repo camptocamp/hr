@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.14.0 (2018-08-13)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1075: Move menu Lead under Marketing section
 * BSIBSO-1083: Reclaim `Dial` button on `phone` widget
 * BSIBSO-1076: no create/update of customer in opportunity form
@@ -29,10 +41,6 @@ Latest (Unreleased)
 **Bugfixes**
 
 * BIZ-2106: Fix "editing a partner kill relations with opportunities"
-
-**Build**
-
-**Documentation**
 
 
 10.13.1 (2018-08-09)
