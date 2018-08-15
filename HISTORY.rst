@@ -19,6 +19,18 @@ Release History
 Latest (Unreleased)
 +++++++++++++++++++
 
+**Features and Improvements**
+
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.14.1 (2018-08-15)
+++++++++++++++++++++
+
 **Bugfixes**
 
 * BSIBSO-1072: Fix invoice update wizard not updating analytic account
