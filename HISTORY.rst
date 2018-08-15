@@ -19,15 +19,10 @@ Release History
 Latest (Unreleased)
 +++++++++++++++++++
 
-**Features and Improvements**
-
 **Bugfixes**
 
+* BSIBSO-1072: Fix invoice update wizard not updating analytic account
 * biz-2139: Set name of lead only at creation of customer
-
-**Build**
-
-**Documentation**
 
 
 10.14.0 (2018-08-13)
