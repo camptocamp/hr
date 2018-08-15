@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* biz-2139: Set name of lead only at creation of customer
+
 **Build**
 
 **Documentation**

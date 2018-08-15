@@ -19,7 +19,6 @@ class ResPartner(models.Model):
             return
         lead = self.env['crm.lead'].search([('partner_id', '=', self.id)])
         values = {
-            'name': self.name,
             'partner_id': self.id,
             'user_id': self.env.user.id,
             'email_from': self.email,
@@ -37,6 +36,7 @@ class ResPartner(models.Model):
         }
         if not lead:
             values['type'] = "lead"
+            values['name'] = self.name
             self.env['crm.lead'].create(values)
         else:
             lead.update(values)
