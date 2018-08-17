@@ -17,7 +17,10 @@ class ResPartner(models.Model):
         self.ensure_one()
         if not self.id:
             return
-        lead = self.env['crm.lead'].search([('partner_id', '=', self.id)])
+        lead = self.env['crm.lead'].search(
+            [('partner_id', '=', self.id),
+             ('type', '=', 'lead')]
+        )
         values = {
             'partner_id': self.id,
             'user_id': self.env.user.id,
@@ -25,6 +28,7 @@ class ResPartner(models.Model):
             'street': self.street,
             'street2': self.street2,
             'zip': self.zip,
+            'city': self.city,
             'state_id': self.state_id.id,
             'country_id': self.country_id.id,
             'phone': self.phone,

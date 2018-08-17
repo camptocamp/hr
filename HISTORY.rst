@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* don't update opportunities when partner is updated, only leads
+
 **Build**
 
 **Documentation**
