@@ -17,6 +17,7 @@ class TestCrmLead(TransactionCase):
                   'street2': 'street2',
                   'zip': 'zipcode',
                   'country_id': country_france.id,
+                  'generate_lead': True,
                   }
         self.partner1 = Partner.create(values)
         values.update({'name': 'Test Supplier',

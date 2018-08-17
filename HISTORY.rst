@@ -21,6 +21,9 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1087: add a boolean field to pilot lead generation from a partner. If
+  the field is unset, the lead is deleted.
+
 **Bugfixes**
 
 * don't update opportunities when partner is updated, only leads

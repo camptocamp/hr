@@ -10,7 +10,22 @@ class ResPartner(models.Model):
         string="Connected lead",
         comodel_name="crm.lead",
         inverse_name="partner_id",
+        domain=[('type', '=', 'lead')]
     )
+    generate_lead = fields.Boolean('Generate Lead')
+
+    @api.onchange('type', 'is_company', 'lead_id')
+    def onchange_type(self):
+        if self.lead_id:
+            self.generate_lead = True
+            return
+        if self.is_company:
+            self.generate_lead = False
+        else:
+            if self.type == 'contact':
+                self.generate_lead = True
+            else:
+                self.generate_lead = False
 
     @api.multi
     def _create_or_update_lead(self):
@@ -39,11 +54,15 @@ class ResPartner(models.Model):
             'partner_name': self.parent_id.name,
         }
         if not lead:
-            values['type'] = "lead"
-            values['name'] = self.name
-            self.env['crm.lead'].create(values)
+            if self.generate_lead:
+                values['type'] = "lead"
+                values['name'] = self.name
+                self.env['crm.lead'].create(values)
         else:
-            lead.update(values)
+            if self.generate_lead:
+                lead.update(values)
+            else:
+                lead.unlink()
 
     @api.model
     def create(self, vals):
