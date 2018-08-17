@@ -3,7 +3,6 @@ import logging
 from datetime import datetime
 
 from odoo import fields, models, api
-
 from . import mailchimp_client
 
 _logger = logging.getLogger(__name__)
@@ -90,14 +89,15 @@ class MailchimpListSegment(models.Model):
 
     @api.multi
     def write(self, values):
-        record = super(MailchimpListSegment, self).write(values)
-        if 'mailchimp_ref' in values:
-            return record  # Values are coming from Mailchimp -> Don't update
-
         client = self.env['mailchimp.client'].get_client()
         for rec in self:
+            saved_leads = rec.lead_ids
+            record = super(MailchimpListSegment, self).write(values)
+            if 'mailchimp_ref' in values:
+                return record  # Values are coming from Mailchimp
+                # -> Don't update
+
             if 'lead_ids' in values:
-                saved_leads = rec.lead_ids
                 remaining_lead_ids = values['lead_ids'][0][2]
                 remaining_leads = self.env["crm.lead"].browse(
                     remaining_lead_ids)

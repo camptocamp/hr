@@ -168,29 +168,32 @@ class MailchimpList(models.Model):
 
     @api.multi
     def write(self, values):
-        record = super(MailchimpList, self).write(values)
-        if 'mailchimp_ref' in values:
-            return record  # Values are coming from Mailchimp -> Don't update
-
         client = self.env['mailchimp.client'].get_client()
         for rec in self:
             saved_leads = rec.lead_ids
-            fields_content = ['name', 'from_email', 'from_name',
-                              'permission_reminder', 'language', 'subject']
-            if any(key in values for key in fields_content):
-                rec._update_content(client)
-            if 'lead_ids' in values:
-                remaining_lead_ids = values['lead_ids'][0][2]
-                remaining_leads = self.env["crm.lead"].browse(
-                    remaining_lead_ids)
-                added_leads = remaining_leads - saved_leads
-                unlinked_leads = saved_leads - remaining_leads
-                for lead in unlinked_leads:
-                    email = self.env['mailchimp.client'].get_lead_email(lead)
-                    subscriber_hash = get_subscriber_hash(email)
-                    rec.delete_mailchimp_list_member(client, subscriber_hash)
-                if added_leads:
-                    rec._create_update_members(client)
+            record = super(MailchimpList, self).write(values)
+            if 'mailchimp_ref' in values:
+                return record
+                # Values are coming from Mailchimp -> Don't update
+            for rec in self:
+                fields_content = ['name', 'from_email', 'from_name',
+                                  'permission_reminder', 'language', 'subject']
+                if any(key in values for key in fields_content):
+                    rec._update_content(client)
+                if 'lead_ids' in values:
+                    remaining_lead_ids = values['lead_ids'][0][2]
+                    remaining_leads = self.env["crm.lead"].browse(
+                        remaining_lead_ids)
+                    added_leads = remaining_leads - saved_leads
+                    unlinked_leads = saved_leads - remaining_leads
+                    for lead in unlinked_leads:
+                        email = self.env['mailchimp.client'].get_lead_email(
+                            lead)
+                        subscriber_hash = get_subscriber_hash(email)
+                        rec.delete_mailchimp_list_member(client,
+                                                         subscriber_hash)
+                    if added_leads:
+                        rec._create_update_members(client)
 
         return record
 
