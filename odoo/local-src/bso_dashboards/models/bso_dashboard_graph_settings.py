@@ -25,13 +25,20 @@ class BSODashboardGraphSettings(models.Model):
     )
 
     # BAR, LINE & PIE SETTINGS
-    height = fields.Integer(
-        string='Height',
-        default=250
+    width = fields.Selection(
+        string='Width (%)',
+        selection=[
+            ('99%', '100%'),
+            ('49%', '50%'),
+            ('32%', '33%'),
+        ],
+        default='99%',
+        required=True
     )
-    width = fields.Integer(
-        string='Width',
-        default=450
+    height = fields.Integer(
+        string='Height (px)',
+        default=300,
+        required=True
     )
     margin_left = fields.Integer(
         string='Margin Left',
