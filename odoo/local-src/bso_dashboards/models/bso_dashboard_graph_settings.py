@@ -26,11 +26,11 @@ class BSODashboardGraphSettings(models.Model):
 
     # BAR, LINE & PIE SETTINGS
     width = fields.Selection(
-        string='Width (%)',
+        string='Width (row)',
         selection=[
-            ('99%', '100%'),
-            ('49%', '50%'),
-            ('32%', '33%'),
+            ('99%', 'Full row'),
+            ('49%', '1/2 row'),
+            ('32%', '1/3 row'),
         ],
         default='99%',
         required=True
