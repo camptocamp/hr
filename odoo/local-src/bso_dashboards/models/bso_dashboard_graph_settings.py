@@ -29,8 +29,10 @@ class BSODashboardGraphSettings(models.Model):
         string='Width (row)',
         selection=[
             ('99%', 'Full row'),
+            ('65%', '2/3 row'),
             ('49%', '1/2 row'),
             ('32%', '1/3 row'),
+            ('24%', '1/4 row')
         ],
         default='99%',
         required=True
@@ -41,19 +43,19 @@ class BSODashboardGraphSettings(models.Model):
         required=True
     )
     margin_left = fields.Integer(
-        string='Margin Left',
+        string='Margin Left (px)',
         default=0
     )
     margin_right = fields.Integer(
-        string='Margin Right',
+        string='Margin Right (px)',
         default=0
     )
     margin_top = fields.Integer(
-        string='Margin Top',
+        string='Margin Top (px)',
         default=10
     )
     margin_bottom = fields.Integer(
-        string='Margin Bottom',
+        string='Margin Bottom (px)',
         default=20
     )
     show_sum = fields.Boolean(
