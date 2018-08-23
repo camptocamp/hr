@@ -20,6 +20,7 @@
      'views/crm_lead_quicktitle.xml',
      'views/crm_sources.xml',
      'views/crm.xml',
+     'views/res_partner.xml',
      'security/ir.model.access.csv',
  ],
  'installable': True,

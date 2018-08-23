@@ -39,9 +39,4 @@
         </field>
     </record>
 
-    <record id="specific_crm.action_window_crm_marketing_lead"
-            model="ir.actions.act_window">
-        <field name="domain">[]</field>
-    </record>
-
 </odoo>

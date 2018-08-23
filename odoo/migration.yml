@@ -365,3 +365,11 @@ migration:
           #### akretion
           # odoo-usability
           - account_invoice_update_wizard
+    - version: 10.15.0
+      addons:
+        upgrade:
+          #### local-src
+          - specific_crm
+      operations:
+        post:
+          - anthem songs.upgrade.upgrade_10_15_0::main

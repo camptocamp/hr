@@ -1,16 +1,29 @@
 # -*- coding: utf-8 -*-
 # Copyright 2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
+import logging
+
+import psycopg2
 
 from odoo import api, models, fields
+
+
+_logger = logging.getLogger(__name__)
 
 
 class CrmLead(models.Model):
     _inherit = "crm.lead"
 
-    _sql_constraints = [
-        ('email_unique', 'UNIQUE (email_from)', 'Email already exists')
-    ]
+    @api.model_cr
+    def init(self):
+        super(CrmLead, self).init()
+        try:
+            self.env.cr.execute(
+                "CREATE UNIQUE INDEX IF NOT EXISTS unique_email "
+                "ON crm_lead (email_from) WHERE type='lead';"
+            )
+        except psycopg2.Error:
+            _logger.exception('Error creating unique index on lead emails')
 
     list_ids = fields.Many2many(
         string="Lists",
