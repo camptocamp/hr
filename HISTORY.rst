@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.15.0 (2018-08-23)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1087: add a boolean field to pilot lead generation from a partner. If
   the field is unset, the lead is deleted.
 * BSIBSO-1086: fix "can't set the sale pricelist to GBP"
@@ -31,10 +43,6 @@ Latest (Unreleased)
 * fix the way a unique index is generated for lead emails.
   CAUTION: no index is generated until duplicates are cleaned. Once this is
   done, restart odoo to get the unicity enforced in the future.
-
-**Build**
-
-**Documentation**
 
 
 10.14.1 (2018-08-15)
