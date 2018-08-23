@@ -38,7 +38,6 @@ class ResPartner(models.Model):
         )
         values = {
             'partner_id': self.id,
-            'user_id': self.env.user.id,
             'email_from': self.email,
             'street': self.street,
             'street2': self.street2,
@@ -57,6 +56,7 @@ class ResPartner(models.Model):
             if self.generate_lead:
                 values['type'] = "lead"
                 values['name'] = self.name
+                values['user_id'] = self.env.user.id
                 self.env['crm.lead'].create(values)
         else:
             if self.generate_lead:
