@@ -23,6 +23,7 @@ Latest (Unreleased)
 
 * BSIBSO-1087: add a boolean field to pilot lead generation from a partner. If
   the field is unset, the lead is deleted.
+* BSIBSO-1086: fix "can't set the sale pricelist to GBP"
 
 **Bugfixes**
 
