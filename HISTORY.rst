@@ -27,6 +27,9 @@ Latest (Unreleased)
 **Bugfixes**
 
 * don't update opportunities when partner is updated, only leads
+* fix the way a unique index is generated for lead emails.
+  CAUTION: no index is generated until duplicates are cleaned. Once this is
+  done, restart odoo to get the unicity enforced in the future.
 
 **Build**
 
