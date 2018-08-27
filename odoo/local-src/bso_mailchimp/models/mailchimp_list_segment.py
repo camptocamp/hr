@@ -91,29 +91,25 @@ class MailchimpListSegment(models.Model):
     def write(self, values):
         client = self.env['mailchimp.client'].get_client()
         for rec in self:
-            saved_leads = rec.lead_ids
-            record = super(MailchimpListSegment, self).write(values)
             if 'mailchimp_ref' in values:
-                return record  # Values are coming from Mailchimp
+                continue  # Values are coming from Mailchimp
                 # -> Don't update
-
             if 'lead_ids' in values:
-                remaining_lead_ids = values['lead_ids'][0][2]
-                remaining_leads = self.env["crm.lead"].browse(
-                    remaining_lead_ids)
+                edited_segment = self.new(values)
+                remaining_leads = edited_segment.lead_ids
+                saved_leads = rec.lead_ids
                 unlinked_leads = saved_leads - remaining_leads
-                members_to_remove = rec.get_members(unlinked_leads)
                 added_leads = remaining_leads - saved_leads
+                members_to_remove = rec.get_members(unlinked_leads)
                 members_to_add = rec.get_members(added_leads)
                 rec._update_members(client, members_to_add, members_to_remove)
             if 'name' in values:
-                rec._update_name(client)
+                rec._update_name(client, values)
+        return super(MailchimpListSegment, self).write(values)
 
-        return record
-
-    def _update_name(self, client):
+    def _update_name(self, client, values):
         data = {
-            "name": self.name,
+            "name": values.get('name', self.name),
         }
         return client.lists.segments.update(
             self.list_id.mailchimp_ref, self.mailchimp_ref, data)

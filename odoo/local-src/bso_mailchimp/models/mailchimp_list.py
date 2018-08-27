@@ -136,7 +136,7 @@ class MailchimpList(models.Model):
 
         mailchimp_ref = record._create_list(client)
         record.write({'mailchimp_ref': mailchimp_ref})
-        record._create_update_members(client)
+        record._create_update_members(client, external_leads=False)
         record._create_webhook(client)
 
         return record
@@ -170,42 +170,38 @@ class MailchimpList(models.Model):
     def write(self, values):
         client = self.env['mailchimp.client'].get_client()
         for rec in self:
-            saved_leads = rec.lead_ids
-            record = super(MailchimpList, self).write(values)
             if 'mailchimp_ref' in values:
-                return record
+                continue
                 # Values are coming from Mailchimp -> Don't update
-            for rec in self:
-                fields_content = ['name', 'from_email', 'from_name',
-                                  'permission_reminder', 'language', 'subject']
-                if any(key in values for key in fields_content):
-                    rec._update_content(client)
-                if 'lead_ids' in values:
-                    remaining_lead_ids = values['lead_ids'][0][2]
-                    remaining_leads = self.env["crm.lead"].browse(
-                        remaining_lead_ids)
-                    added_leads = remaining_leads - saved_leads
-                    unlinked_leads = saved_leads - remaining_leads
-                    for lead in unlinked_leads:
-                        email = self.env['mailchimp.client'].get_lead_email(
-                            lead)
-                        subscriber_hash = get_subscriber_hash(email)
-                        rec.delete_mailchimp_list_member(client,
-                                                         subscriber_hash)
-                    if added_leads:
-                        rec._create_update_members(client)
-
-        return record
+            fields_content = ['name', 'from_email', 'from_name',
+                              'permission_reminder', 'language', 'subject']
+            if any(key in values for key in fields_content):
+                rec._update_content(client, values)
+            if 'lead_ids' in values:
+                edited_list = self.new(values)
+                remaining_leads = edited_list.lead_ids
+                saved_leads = rec.lead_ids
+                added_leads = remaining_leads - rec.lead_ids
+                unlinked_leads = saved_leads - remaining_leads
+                for lead in unlinked_leads:
+                    email = self.env['mailchimp.client'].get_lead_email(
+                        lead)
+                    subscriber_hash = get_subscriber_hash(email)
+                    rec.delete_mailchimp_list_member(client,
+                                                     subscriber_hash)
+                if added_leads:
+                    rec._create_update_members(client, added_leads)
+        return super(MailchimpList, self).write(values)
 
     @mailchimp_client.handle_list_exceptions
     def delete_mailchimp_list_member(self, client, subscriber_hash):
         return client.lists.members.delete(list_id=self.mailchimp_ref,
                                            subscriber_hash=subscriber_hash)
 
-    def _update_content(self, client):
+    def _update_content(self, client, values):
         conf = self.env['ir.config_parameter']
         data = {
-            "name": self.name,
+            "name": values.get('name', self.name),
             "contact":
                 {
                     "company": conf.get_param('mailchimp.company'),
@@ -215,21 +211,27 @@ class MailchimpList(models.Model):
                     "zip": conf.get_param('mailchimp.zip'),
                     "country": conf.get_param('mailchimp.country')
                 },
-            "permission_reminder": self.permission_reminder,
+            "permission_reminder": values.get('permission_reminder',
+                                              self.permission_reminder),
             "campaign_defaults":
                 {
-                    "from_name": self.from_name,
-                    "from_email": self.from_email,
-                    "subject": self.subject,
-                    "language": self.language
+                    "from_name": values.get('from_name', self.from_name),
+                    "from_email": values.get('from_email', self.from_email),
+                    "subject": values.get('subject', self.subject),
+                    "language": values.get('language', self.language)
                 },
-            "email_type_option": self.email_type_option,
+            "email_type_option": values.get('email_type_option',
+                                            self.email_type_option),
         }
         return client.lists.update(self.mailchimp_ref, data)
 
-    def _create_update_members(self, client):
+    def _create_update_members(self, client, external_leads):
         members = []
-        for lead in self.lead_ids:
+        if external_leads:
+            lead_ids = external_leads
+        else:
+            lead_ids = self.lead_ids
+        for lead in lead_ids:
             email_from = self.env['mailchimp.client'].get_lead_email(lead)
             member = {
                 "email_address": email_from,

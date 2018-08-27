@@ -28,6 +28,7 @@ class MailchimpCampaign(models.Model):
     )
     subject_line = fields.Char(
         string="Subject line",
+	required=True,
     )
     from_name = fields.Char(
         string="From Name",
