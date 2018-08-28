@@ -376,4 +376,6 @@ migration:
     - version: 10.16.0
       addons:
         upgrade:
+          #### local-src
           - bso_dashboards
+          - specific_payment_mode

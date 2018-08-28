@@ -20,7 +20,9 @@ Latest (Unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
+
 * BSO Dashboards update (PR 242)
+* BSIBSO-1090: Add ACL for Manager on account.payment.mode
 
 **Bugfixes**
 
