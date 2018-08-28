@@ -373,3 +373,7 @@ migration:
       operations:
         post:
           - anthem songs.upgrade.upgrade_10_15_0::main
+    - version: 10.16.0
+      addons:
+        upgrade:
+          - bso_dashboards

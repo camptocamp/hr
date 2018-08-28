@@ -20,6 +20,7 @@ Latest (Unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
+* BSO Dashboards update (PR 242)
 
 **Bugfixes**
 
