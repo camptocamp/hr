@@ -12,6 +12,7 @@
         'account_payment_sale',
         'specific_sale',
         'hr',
+        'account_payment_order',
     ],
     'website': 'www.camptocamp.com',
     'data': [
