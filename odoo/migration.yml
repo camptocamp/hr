@@ -376,6 +376,8 @@ migration:
     - version: 10.16.0
       addons:
         upgrade:
+          #### local-src
           - bso_dashboards
           - bso_disable_autofollowing_partner_lead
           - bso_mailchimp
+          - specific_payment_mode

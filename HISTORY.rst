@@ -20,10 +20,12 @@ Latest (Unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
+
 * BSO Dashboards update (PR 242)
 * disable automatic addition of partner & lead as follower on crm.lead and
   res.partner
 * mailchimp integration update
+* BSIBSO-1090: Add ACL for Manager on account.payment.mode
 
 **Bugfixes**
 
