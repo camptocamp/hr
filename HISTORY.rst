@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 * BSO Dashboards update (PR 242)
+* disable automatic addition of partner & lead as follower on crm.lead and
+  res.partner
 
 **Bugfixes**
 

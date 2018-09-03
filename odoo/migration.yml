@@ -377,3 +377,4 @@ migration:
       addons:
         upgrade:
           - bso_dashboards
+          - bso_disable_autofollowing_partner_lead
