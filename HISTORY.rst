@@ -23,6 +23,7 @@ Latest (Unreleased)
 * BSO Dashboards update (PR 242)
 * disable automatic addition of partner & lead as follower on crm.lead and
   res.partner
+* mailchimp integration update
 
 **Bugfixes**
 

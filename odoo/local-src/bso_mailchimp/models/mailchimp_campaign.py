@@ -3,6 +3,7 @@
 from datetime import datetime
 
 import dateutil.parser
+
 from odoo import models, fields, api
 
 
@@ -28,6 +29,7 @@ class MailchimpCampaign(models.Model):
     )
     subject_line = fields.Char(
         string="Subject line",
+        required=True
     )
     from_name = fields.Char(
         string="From Name",

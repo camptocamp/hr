@@ -378,3 +378,4 @@ migration:
         upgrade:
           - bso_dashboards
           - bso_disable_autofollowing_partner_lead
+          - bso_mailchimp

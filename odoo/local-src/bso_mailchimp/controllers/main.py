@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import odoo
-from odoo import http
+import re
+
 from odoo.addons.web.controllers.main import ensure_db
 from odoo.http import request
+
+import odoo
+from odoo import http
 
 
 class WebhookController(http.Controller):
@@ -29,12 +32,20 @@ class WebhookController(http.Controller):
             return
 
         email = post.get('data[email]')
+        fname = post.get('data[merges][FNAME]')
+        lname = post.get('data[merges][LNAME]')
+        if not fname and not lname:
+            email_split = email.split('@')[0]
+            name = " ".join(re.findall("[a-zA-Z]+", email_split))
+        else:
+            name = "%s %s" % (fname, lname)
         email_formatted = env['mailchimp.client'].format_email(email)
         lead = env['crm.lead'].search([
             ('email_from', '=', email_formatted)
         ], limit=1)
         if not lead:
-            lead = env['crm.lead'].create({'email_from': email_formatted})
+            lead = env['crm.lead'].create({'email_from': email_formatted,
+                                           'name': name})
 
         if post.get('data[action]') == 'unsub':
             mailchimp_list.write({
