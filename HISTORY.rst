@@ -29,6 +29,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BSIBSO-1078_fix: reverting last minute change that was breaking the thing
+
 **Build**
 
 **Documentation**

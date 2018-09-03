@@ -77,9 +77,10 @@ class SaleSubscription(models.Model):
             lazy=False
         )
         for sub in self:
-            sub.invoice_count = len(invoice_line_data.filtered(
+            sub.invoice_count = len(filter(
                 lambda d: d['account_analytic_id'][0] ==
                 sub.analytic_account_id.id,
+                invoice_line_data,
             ))
 
     @api.multi
