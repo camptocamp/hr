@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.16.0 (2018-09-03)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSO Dashboards update (PR 242)
 * disable automatic addition of partner & lead as follower on crm.lead and
   res.partner
@@ -30,10 +42,6 @@ Latest (Unreleased)
 **Bugfixes**
 
 * BSIBSO-1078_fix: reverting last minute change that was breaking the thing
-
-**Build**
-
-**Documentation**
 
 
 10.15.0 (2018-08-23)
