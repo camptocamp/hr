@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2018 Camptocamp SA
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 {
     "name": "BSO Telephony",
     "summary": "BSO specific telephony",
@@ -8,12 +8,14 @@
     "category": "Phone",
     "website": "https://www.camptocamp.com",
     "author": "Camptocamp",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "installable": True,
     "depends": [
         "asterisk_click2dial",
+        "web_enterprise",
     ],
     "data": [
+        "templates/assets.xml",
         "views/res_users.xml",
     ],
 }

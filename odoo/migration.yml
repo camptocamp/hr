@@ -387,3 +387,4 @@ migration:
         upgrade:
           #### local-src
           - bso_telephony
+          - specific_crm

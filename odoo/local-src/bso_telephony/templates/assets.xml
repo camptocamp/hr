@@ -8,7 +8,7 @@
     <script type="text/javascript"
             src="/web_enterprise/static/src/js/views/form_widgets.js"
             position="attributes">
-      <attribute name="src">/specific_crm/static/src/js/patched_form_widgets.js</attribute>
+      <attribute name="src">/bso_telephony/static/src/js/patched_form_widgets.js</attribute>
     </script>
   </template>
 </odoo>
