@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1093: Install module bso_telephony
+
 **Bugfixes**
 
 **Build**

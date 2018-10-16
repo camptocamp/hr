@@ -382,3 +382,8 @@ migration:
           - bso_disable_autofollowing_partner_lead
           - bso_mailchimp
           - specific_payment_mode
+    - version: 10.17.0
+      addons:
+        upgrade:
+          #### local-src
+          - bso_telephony
