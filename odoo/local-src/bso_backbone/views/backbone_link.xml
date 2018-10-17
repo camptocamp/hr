@@ -7,11 +7,11 @@
         <field name="arch" type="xml">
             <tree string="Link">
                 <field name="name" invisible="1"/>
+                <field name="cympa_id"/>
                 <field name="a_device_id"/>
                 <field name="a_xco_id"/>
                 <field name="z_device_id"/>
                 <field name="z_xco_id"/>
-                <field name="circuit_ref"/>
                 <field name="supplier_id" invisible="1"/>
                 <field name="supplier_name"/>
                 <field name="supplier_link_ref"/>
@@ -84,13 +84,13 @@
                     </div>
                     <group>
                         <field name="name" invisible="1"/>
+                        <field name="cympa_id" domain="[('a_device_id', 'in',(a_device_id,z_device_id)),('z_device_id', 'in',(a_device_id,z_device_id)),('link_id', '=',False)]"/>
                         <field name="a_device_id"/>
                         <field name="a_xco_id"/>
                         <field name="z_device_id"/>
                         <field name="z_xco_id"/>
                     </group>
                     <group>
-                        <field name="circuit_ref"/>
                         <field name="supplier_id" invisible="1"
                                options="{'create': false, 'create_edit': false}"/>
                         <field name="supplier_name"/>
@@ -148,6 +148,7 @@
         <field name="arch" type="xml">
             <search string="Link">
                 <field name="name"/>
+                <field name="cympa_id"/>
                 <field name="a_device_id"/>
                 <field name="z_device_id"/>
                 <field name="supplier_id" invisible="1"/>

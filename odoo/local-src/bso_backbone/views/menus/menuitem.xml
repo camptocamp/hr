@@ -41,4 +41,20 @@
             groups="group_backbone_user"
             sequence="4"/>
 
+    <menuitem
+            id="menu_cympa_link"
+            name="CYMPA Links"
+            action="action_cympa_link"
+            parent="menu_backbone"
+            groups="group_backbone_manager"
+            sequence="5"/>
+
+    <menuitem
+            id="menu_setting"
+            name="Settings"
+            action="action_settings"
+            parent="menu_backbone"
+            groups="base.group_no_one"
+            sequence="6"/>
+
 </odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="cympa_link_tree" model="ir.ui.view">
+        <field name="name">backbone.cympa.link.tree</field>
+        <field name="model">backbone.cympa.link</field>
+        <field name="arch" type="xml">
+            <tree string="Link">
+                <field name="ref"/>
+                <field name="link_id"/>
+                <field name="a_device_id"/>
+                <field name="z_device_id"/>
+                <field name="latency_live"/>
+                <field name="speed"/>
+                <field name="status"/>
+                <field name="administrative_status"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="cympa_link_form" model="ir.ui.view">
+        <field name="name">backbone.cympa.link.form</field>
+        <field name="model">backbone.cympa.link</field>
+        <field name="arch" type="xml">
+            <form string="Link">
+                <sheet>
+                    <group>
+                        <field name="ref"/>
+                        <field name="link_id"
+                               domain="[('a_device_id', 'in',(a_device_id,z_device_id)),('z_device_id', 'in',(a_device_id,z_device_id)),('cympa_id', '=',False)]"/>
+                    </group>
+                    <group>
+                        <field name="a_device_id"/>
+                        <field name="z_device_id"/>
+                    </group>
+                    <group>
+                        <field name="latency_live"/>
+                        <field name="speed"/>
+                    </group>
+                    <group>
+                        <field name="status"/>
+                        <field name="administrative_status"/>
+                    </group>
+                    <group>
+                        <field name="active"/>
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="cympa_link_search" model="ir.ui.view">
+        <field name="name">backbone.cympa.link.search</field>
+        <field name="model">backbone.cympa.link</field>
+        <field name="arch" type="xml">
+            <search string="Link">
+                <field name="ref"/>
+                <field name="a_device_id"/>
+                <field name="z_device_id"/>
+                <field name="link_id"/>
+
+                <separator/>
+                <filter string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>
