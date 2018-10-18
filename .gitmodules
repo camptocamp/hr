@@ -10,7 +10,7 @@
 	branch = 10.0
 [submodule "odoo/src"]
 	path = odoo/src
-	url = git@github.com:OCA/OCB.git
+	url = git@github.com:camptocamp/odoo.git
 [submodule "odoo/external-src/product-variant"]
 	path = odoo/external-src/product-variant
 	url = git@github.com:OCA/product-variant.git

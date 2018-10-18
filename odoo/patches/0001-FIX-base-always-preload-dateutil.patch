@@ -1,0 +1,92 @@
+From ef017ab1ab7bc5988ad30ab92a445079e245cf03 Mon Sep 17 00:00:00 2001
+From: Olivier Dony <odo@odoo.com>
+Date: Mon, 23 Jul 2018 16:15:10 +0200
+Subject: [PATCH] [FIX] base: always preload dateutil
+
+The dateutil package uses lazy import to selectively expose its
+features: `parser`, `relativedelta`, `rrule`, `tz`.
+
+Depending on installed modules and order of initialization, there was no
+guarantee that a given feature was already loaded during the preparation
+of the action context.
+
+This patch ensures that we always preload the feature set we need, and
+only that feature set. This way we have a consistent `dateutil` lib in
+the action context at all times.
+---
+ odoo/addons/base/ir/ir_actions.py | 12 +++++++++++-
+ odoo/tools/misc.py                | 21 +++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 1 deletion(-)
+
+diff --git a/odoo/addons/base/ir/ir_actions.py b/odoo/addons/base/ir/ir_actions.py
+index 9f29a15..76f2c44 100644
+--- a/odoo/addons/base/ir/ir_actions.py
++++ b/odoo/addons/base/ir/ir_actions.py
+@@ -2,7 +2,6 @@
+ # Part of Odoo. See LICENSE file for full copyright and licensing details.
+ 
+ import datetime
+-import dateutil
+ import logging
+ import os
+ import time
+@@ -13,9 +12,20 @@ from odoo import api, fields, models, tools, workflow, _
+ from odoo.exceptions import MissingError, UserError, ValidationError
+ from odoo.report.report_sxw import report_sxw, report_rml
+ from odoo.tools.safe_eval import safe_eval, test_python_expr
++from odoo.tools.misc import wrap_module
+ 
+ _logger = logging.getLogger(__name__)
+ 
++# build dateutil helper, starting with the relevant *lazy* imports
++import dateutil
++import dateutil.parser
++import dateutil.relativedelta
++import dateutil.rrule
++import dateutil.tz
++mods = {'parser', 'relativedelta', 'rrule', 'tz'}
++attribs = {atr for m in mods for atr in getattr(dateutil, m).__all__}
++dateutil = wrap_module(dateutil, mods | attribs)
++
+ 
+ class IrActions(models.Model):
+     _name = 'ir.actions.actions'
+diff --git a/odoo/tools/misc.py b/odoo/tools/misc.py
+index 6233f45..18a92b5 100644
+--- a/odoo/tools/misc.py
++++ b/odoo/tools/misc.py
+@@ -19,6 +19,7 @@ import socket
+ import sys
+ import threading
+ import time
++import types
+ import werkzeug.utils
+ import zipfile
+ from cStringIO import StringIO
+@@ -1217,3 +1218,23 @@ class Pickle(object):
+     dump = cPickle.dump
+ 
+ pickle = Pickle
++
++def wrap_module(module, attr_list):
++    """Helper for wrapping a package/module to expose selected attributes
++
++       :param Module module: the actual package/module to wrap, as returned by ``import <module>``
++       :param iterable attr_list: a global list of attributes to expose, usually the top-level
++            attributes and their own main attributes. No support for hiding attributes in case
++            of name collision at different levels.
++    """
++    attr_list = set(attr_list)
++    class WrappedModule(object):
++        def __getattr__(self, attrib):
++            if attrib in attr_list:
++                target = getattr(module, attrib)
++                if isinstance(target, types.ModuleType):
++                    return wrap_module(target, attr_list)
++                return target
++            raise AttributeError(attrib)
++    # module and attr_list are in the closure
++    return WrappedModule()
+-- 
+2.7.4
+

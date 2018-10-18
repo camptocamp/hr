@@ -28,6 +28,8 @@ Latest (Unreleased)
 
 **Build**
 
+* Applying security advisory 2018-08-07
+
 **Documentation**
 
 

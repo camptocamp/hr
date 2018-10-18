@@ -1,0 +1,79 @@
+From 7501691da9a9dae832b7d6e78c6a5f57fc983b5c Mon Sep 17 00:00:00 2001
+From: Nicolas Martinelli <nim@odoo.com>
+Date: Mon, 16 Jul 2018 14:35:20 +0200
+Subject: [PATCH] [IMP] auth_signup: hide unusable field from users
+
+The token field is a technical data that the other users are not able to use.
+It may be confusing for users to see token on the user interface.
+Still show it to administrator for debug reasons.
+---
+ addons/auth_signup/models/res_partner.py | 12 +++++++-----
+ addons/auth_signup/models/res_users.py   | 12 +++++++++++-
+ 2 files changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/addons/auth_signup/models/res_partner.py b/addons/auth_signup/models/res_partner.py
+index cb25355..2e40558 100644
+--- a/addons/auth_signup/models/res_partner.py
++++ b/addons/auth_signup/models/res_partner.py
+@@ -26,9 +26,9 @@ def now(**kwargs):
+ class ResPartner(models.Model):
+     _inherit = 'res.partner'
+ 
+-    signup_token = fields.Char(copy=False)
+-    signup_type = fields.Char(string='Signup Token Type', copy=False)
+-    signup_expiration = fields.Datetime(copy=False)
++    signup_token = fields.Char(copy=False, groups="base.group_erp_manager")
++    signup_type = fields.Char(string='Signup Token Type', copy=False, groups="base.group_erp_manager")
++    signup_expiration = fields.Datetime(copy=False, groups="base.group_erp_manager")
+     signup_valid = fields.Boolean(compute='_compute_signup_valid', string='Signup Token is Valid')
+     signup_url = fields.Char(compute='_compute_signup_url', string='Signup URL')
+ 
+@@ -36,15 +36,17 @@ class ResPartner(models.Model):
+     @api.depends('signup_token', 'signup_expiration')
+     def _compute_signup_valid(self):
+         dt = now()
+-        for partner in self:
++        for partner in self.sudo():
+             partner.signup_valid = bool(partner.signup_token) and \
+             (not partner.signup_expiration or dt <= partner.signup_expiration)
+ 
+     @api.multi
+     def _compute_signup_url(self):
+         """ proxy for function field towards actual implementation """
+-        result = self._get_signup_url_for_action()
++        result = self.sudo()._get_signup_url_for_action()
+         for partner in self:
++            if any(u.has_group('base.group_user') for u in partner.user_ids if u != self.env.user):
++                self.env['res.users'].check_access_rights('write')
+             partner.signup_url = result.get(partner.id, False)
+ 
+     @api.multi
+diff --git a/addons/auth_signup/models/res_users.py b/addons/auth_signup/models/res_users.py
+index f348df3..780aa43 100644
+--- a/addons/auth_signup/models/res_users.py
++++ b/addons/auth_signup/models/res_users.py
+@@ -132,10 +132,20 @@ class ResUsers(models.Model):
+             template = self.env.ref('auth_signup.reset_password_email')
+         assert template._name == 'mail.template'
+ 
++        template_values = {
++            'email_to': '${object.email|safe}',
++            'email_cc': False,
++            'auto_delete': True,
++            'partner_to': False,
++            'scheduled_date': False,
++        }
++        template.write(template_values)
++
+         for user in self:
+             if not user.email:
+                 raise UserError(_("Cannot send email: user %s has no email address.") % user.name)
+-            template.with_context(lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
++            with self.env.cr.savepoint():
++                template.with_context(lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
+             _logger.info("Password reset email sent for user <%s> to <%s>", user.login, user.email)
+ 
+     @api.model
+-- 
+2.7.4
+

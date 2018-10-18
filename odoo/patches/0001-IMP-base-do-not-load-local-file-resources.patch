@@ -1,0 +1,26 @@
+From 4c7e74f5e93a4832db8b8e15beb70a4aa90b2eee Mon Sep 17 00:00:00 2001
+From: Martin Trigaux <mat@odoo.com>
+Date: Sat, 28 Jul 2018 11:25:24 +0200
+Subject: [PATCH] [IMP] base: do not load local file resources
+
+The generation of the manifest should not be platform dependent, its content
+should be the same whatever local files are present on the filesystem
+---
+ odoo/addons/base/module/module.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/odoo/addons/base/module/module.py b/odoo/addons/base/module/module.py
+index 5208f0c..55cbb2d 100644
+--- a/odoo/addons/base/module/module.py
++++ b/odoo/addons/base/module/module.py
+@@ -169,6 +169,7 @@ class Module(models.Model):
+                     'doctitle_xform': False,
+                     'output_encoding': 'unicode',
+                     'xml_declaration': False,
++                    'file_insertion_enabled': False,
+                 }
+                 output = publish_string(source=module.description or '', settings_overrides=overrides, writer=MyWriter())
+                 module.description_html = tools.html_sanitize(output)
+-- 
+2.7.4
+

@@ -1,0 +1,128 @@
+From 19ac9fba0d4be4e30d6103e6ebd49b466adb74b5 Mon Sep 17 00:00:00 2001
+From: Simon Lejeune <sle@odoo.com>
+Date: Sun, 29 Jul 2018 14:10:42 +0100
+Subject: [PATCH] [FIX] base: strengthen ir.attachment access rights
+
+An ir.attachment record can be served as a request's reponse if:
+  - a request triggers a 404
+  - the ir.attachment record has its url field matching the url of
+    the failed and is of binary type
+
+Following rev[1], portal users have the right to create these kind of
+records, and it is a security concern.
+
+This patch restrict the ability to create and write on the ir.attachment
+records that may be served through the dispatch's exception mechanism to
+settings users.
+
+As the asset bundles files are served through the use of these special
+ir.attachment, we make sure to retrieve only ir.attachment records
+created by the superuser in the `get_attachment` method.
+
+As website administrators often need to play with these special
+ir.attachment, we also let to this group the permission to manage them.
+
+[1] 61065b6d04248aa496765e1035c4c90cbdc38de7
+---
+ addons/website/models/ir_attachment.py      |  6 +++++-
+ odoo/addons/base/ir/ir_attachment.py        | 21 ++++++++++++++++++++-
+ odoo/addons/base/ir/ir_qweb/assetsbundle.py |  7 ++++---
+ 3 files changed, 29 insertions(+), 5 deletions(-)
+
+diff --git a/addons/website/models/ir_attachment.py b/addons/website/models/ir_attachment.py
+index 215b182..eb81cd6 100644
+--- a/addons/website/models/ir_attachment.py
++++ b/addons/website/models/ir_attachment.py
+@@ -1,7 +1,7 @@
+ # -*- coding: utf-8 -*-
+ # Part of Odoo. See LICENSE file for full copyright and licensing details.
+ 
+-from odoo import fields, models
++from odoo import api, fields, models
+ 
+ 
+ class Attachment(models.Model):
+@@ -10,3 +10,7 @@ class Attachment(models.Model):
+ 
+     # related for backward compatibility with saas-6
+     website_url = fields.Char(string="Attachment URL", related='local_url', deprecated=True)
++
++    @api.model
++    def get_serving_groups(self):
++        return super(Attachment, self).get_serving_groups() + ['website.group_website_designer']
+diff --git a/odoo/addons/base/ir/ir_attachment.py b/odoo/addons/base/ir/ir_attachment.py
+index 954fda6..c3fa524 100644
+--- a/odoo/addons/base/ir/ir_attachment.py
++++ b/odoo/addons/base/ir/ir_attachment.py
+@@ -10,7 +10,7 @@ import re
+ from collections import defaultdict
+ 
+ from odoo import api, fields, models, tools, SUPERUSER_ID, _
+-from odoo.exceptions import AccessError
++from odoo.exceptions import AccessError, ValidationError
+ from odoo.tools import config, human_size, ustr, html_escape
+ from odoo.tools.mimetypes import guess_mimetype
+ 
+@@ -262,6 +262,15 @@ class IrAttachment(models.Model):
+                 index_content = ustr("\n".join(words))
+         return index_content
+ 
++    @api.model
++    def get_serving_groups(self):
++        """ An ir.attachment record may be used as a fallback in the
++        http dispatch if its type field is set to "binary" and its url
++        field is set as the request's url. Only the groups returned by
++        this method are allowed to create and write on such records.
++        """
++        return ['base.group_system']
++
+     name = fields.Char('Attachment Name', required=True)
+     datas_fname = fields.Char('File Name')
+     description = fields.Text('Description')
+@@ -297,6 +306,16 @@ class IrAttachment(models.Model):
+             self._cr.commit()
+         return res
+ 
++    @api.one
++    @api.constrains('type', 'url')
++    def _check_serving_attachments(self):
++        # restrict writing on attachments that could be served by the
++        # ir.http's dispatch exception handling
++        if self.type == 'binary' and self.url:
++            has_group = self.env.user.has_group
++            if not any([has_group(g) for g in self.get_serving_groups()]):
++                raise ValidationError("Sorry, you are not allowed to write on this document")
++
+     @api.model
+     def check(self, mode, values=None):
+         """Restricts the access to an ir.attachment, according to referred model
+diff --git a/odoo/addons/base/ir/ir_qweb/assetsbundle.py b/odoo/addons/base/ir/ir_qweb/assetsbundle.py
+index 28708f1..c6e627c 100644
+--- a/odoo/addons/base/ir/ir_qweb/assetsbundle.py
++++ b/odoo/addons/base/ir/ir_qweb/assetsbundle.py
+@@ -8,7 +8,7 @@ import textwrap
+ import uuid
+ from datetime import datetime
+ from subprocess import Popen, PIPE
+-from odoo import fields, tools
++from odoo import fields, tools, SUPERUSER_ID
+ from odoo.http import request
+ from odoo.modules.module import get_resource_path
+ import psycopg2
+@@ -191,10 +191,11 @@ class AssetsBundle(object):
+         self.env.cr.execute("""
+              SELECT max(id)
+                FROM ir_attachment
+-              WHERE url like %s
++              WHERE create_uid = %s
++                AND url like %s
+            GROUP BY datas_fname
+            ORDER BY datas_fname
+-         """, [url_pattern])
++         """, [SUPERUSER_ID, url_pattern])
+         attachment_ids = [r[0] for r in self.env.cr.fetchall()]
+         return self.env['ir.attachment'].sudo().browse(attachment_ids)
+ 
+-- 
+2.7.4
+
