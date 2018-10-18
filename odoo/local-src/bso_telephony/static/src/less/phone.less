@@ -1,0 +1,15 @@
+/* This file is used to replace the Dial button (added by base_phone module
+and used by asterisk_click2dial to bind the action to call using asterisk),
+by a simple phone html icon. */
+
+// Set the Dial text as transparent so we don't see it
+a#click2dial {
+    color: transparent;
+}
+// Add the phone icon from HTML entities
+a#click2dial::before {
+    content: '\2706';
+    display: inline-block;
+    color: @odoo-brand-optional;
+    font-size: 2em;
+}

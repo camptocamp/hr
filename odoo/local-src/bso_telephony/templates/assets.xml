@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="assets_backend" name="Prevent `phone` widget definition in web_enterprise"
+  <template id="web_enterprise_assets_backend" name="Prevent `phone` widget definition in web_enterprise"
             inherit_id="web_enterprise.assets_backend">
     <!-- exclude phone widget from enterprise assets
          actually, replaces the original JS source w/ the same file w/o `phone`
@@ -10,5 +10,10 @@
             position="attributes">
       <attribute name="src">/bso_telephony/static/src/js/patched_form_widgets.js</attribute>
     </script>
+  </template>
+  <template id="assets_backend_inherit" inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+      <link rel="stylesheet" type="text/less" href="/bso_telephony/static/src/less/phone.less"/>
+    </xpath>
   </template>
 </odoo>
