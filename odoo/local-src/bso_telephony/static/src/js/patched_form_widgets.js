@@ -2,7 +2,7 @@
 // actually, it's the same file w/o `phone` widget definition
 // - just as if it was never present in here
 // https://github.com/odoo/enterprise/blob/f5df970/web_enterprise/static/src/js/views/form_widgets.js
-odoo.define('specific_crm.patched_form_widgets', function (require) {
+odoo.define('bso_telephony.patched_form_widgets', function (require) {
 "use strict";
 
 var config = require('web.config');
