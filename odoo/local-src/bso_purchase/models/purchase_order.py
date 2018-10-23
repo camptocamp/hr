@@ -63,7 +63,7 @@ class PurchaseLine(models.Model):
                 super(PurchaseLine, line)._compute_qty_received()
                 continue
             moves = self.env['stock.move'].search([
-                ('purchase_line_id', 'in', self.ids),
+                ('purchase_line_id', 'in', line.ids),
                 ('state', '=', 'done')])
             subscr_date_end = fields.Datetime.from_string(
                 line.order_id.subscr_date_end)
