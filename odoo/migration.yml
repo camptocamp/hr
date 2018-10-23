@@ -389,3 +389,4 @@ migration:
           - bso_telephony
           - bso_purchase
           - specific_crm
+          - web_enterprise
