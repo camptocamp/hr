@@ -44,6 +44,19 @@ class Purchase(models.Model):
                         self.subscr_date_start) + (
                         relativedelta(months=self.subscr_duration))
 
+    @api.model
+    def update_qty_received(self):
+        today = fields.Date.today()
+        po_lines = self.env['purchase.order.line'].search(
+            [('product_id.recurring_invoice', '=', True),
+             ('move_ids', '!=', False),
+             '|',
+             ('order_id.subscr_date_end', '=', False),
+             ('order_id.subscr_date_end', '>=', today)
+             ]
+        )
+        po_lines._compute_qty_received()
+
 
 class PurchaseLine(models.Model):
     _inherit = 'purchase.order.line'
