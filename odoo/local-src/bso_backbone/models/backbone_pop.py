@@ -111,7 +111,7 @@ class BackbonePop(models.Model):
         settings = self.env['backbone.settings'].get()
         for rec in self:
             if not bool(re.findall(
-                    '^' + settings.regex_city + '-' + settings.regex_pop + '$',
+                    '^%s-%s$' % (settings.regex_city, settings.regex_pop),
                     rec.name)):
                 raise exceptions.ValidationError(
                     _('%s does not respect the naming convention') % rec.name
@@ -124,7 +124,7 @@ class BackbonePop(models.Model):
             if not rec.code:
                 continue
             if not bool(
-                    re.findall('^' + settings.regex_pop_code + '$', rec.code)):
+                    re.findall('^%s$' % settings.regex_pop_code, rec.code)):
                 raise exceptions.ValidationError(
                     _('%s does not respect the naming convention') % rec.code
                 )

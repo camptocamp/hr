@@ -199,7 +199,6 @@ class BackboneLink(models.Model):
                 rec.cympa_id.sudo().write({'link_id': rec.id})
         return record
 
-    @api.model
     def break_link(self, exclude_link_id):
         self.cympa_id.search([
             ('link_id', '=', self.id),

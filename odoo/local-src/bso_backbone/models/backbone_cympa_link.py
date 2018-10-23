@@ -89,73 +89,21 @@ class BackboneCympaLink(models.Model):
         string='Device A location',
     )
 
-    @api.model
     def get_cympa_links(self):
         settings = self.env['backbone.settings'].get()
         cympa_links = self.get_cympa_data(settings)
         if not cympa_links:
             return
         for cympa_ref, cympa_link_dict in cympa_links.iteritems():
-            speed = self.convert_cympa_value(cympa_link_dict.get('speed'))
-            latency_live = self.convert_cympa_value(
-                cympa_link_dict.get('latency'))
-            source = cympa_link_dict.get('source_ne')
-            destination = cympa_link_dict.get('destination_ne')
-            status = cympa_link_dict.get('status')
-            administrative_status = cympa_link_dict.get(
-                'administrative_status')
-            operational_status = cympa_link_dict.get(
-                'operational_status')
-            bandwidth_in = self.convert_cympa_value(
-                cympa_link_dict.get('bandwidth_in'))
-            bandwidth_out = self.convert_cympa_value(
-                cympa_link_dict.get('bandwidth_out'))
-            destination_ne_latitude = cympa_link_dict.get(
-                'destination_ne_latitude')
-            destination_ne_longitude = cympa_link_dict.get(
-                'destination_ne_longitude')
-            destination_ne_location = cympa_link_dict.get(
-                'destination_ne_location')
-            source_ne_latitude = cympa_link_dict.get('source_ne_latitude')
-            source_ne_longitude = cympa_link_dict.get('source_ne_longitude')
-            source_ne_location = cympa_link_dict.get(
-                'source_ne_location')
-            entries = cympa_link_dict.get('entries')
-            jitter = self.convert_cympa_value(
-                cympa_link_dict.get('jitter'))
-
+            link_dict = self.get_link_data(cympa_ref, cympa_link_dict,
+                                           settings)
             backbone_cympa_link = self.search(
                 [('ref', '=', cympa_ref),
                  '|', ('active', '=', False), ('active', '=', True)])
             if not backbone_cympa_link:
-                self.create({
-                    'ref': cympa_ref,
-                    'speed': speed,
-                    'latency_live': latency_live,
-                    'a_device_id': self.get_device_id(source, settings),
-                    'z_device_id': self.get_device_id(destination, settings),
-                    'status': status,
-                    'administrative_status': administrative_status,
-                    'operational_status': operational_status,
-                    'bandwidth_in': bandwidth_in,
-                    'bandwidth_out': bandwidth_out,
-                    'destination_ne_latitude': destination_ne_latitude,
-                    'destination_ne_longitude': destination_ne_longitude,
-                    'destination_ne_location': destination_ne_location,
-                    'source_ne_latitude': source_ne_latitude,
-                    'source_ne_longitude': source_ne_longitude,
-                    'source_ne_location': source_ne_location,
-                    'entries': entries,
-                    'jitter': jitter,
-                })
+                self.create(link_dict)
                 continue
-            backbone_cympa_link.update_backbone_cympa_link(
-                latency_live, speed, status, administrative_status, source,
-                destination, operational_status, bandwidth_in, bandwidth_out,
-                destination_ne_latitude, destination_ne_longitude,
-                destination_ne_location, source_ne_latitude,
-                source_ne_longitude, source_ne_location, entries, jitter,
-                settings)
+            backbone_cympa_link.update_backbone_cympa_link(link_dict)
         self.archive_links(cympa_links)
         self.create_links(settings)
 
@@ -170,14 +118,57 @@ class BackboneCympaLink(models.Model):
             _logger.error("Cannot connect to CYMPA API: %s", e)
             return
 
+    def get_link_data(self, cympa_ref, cympa_link_dict, settings):
+        source = cympa_link_dict.get('source_ne')
+        destination = cympa_link_dict.get('destination_ne')
+        a_device = self.get_device_id(source, settings)
+        z_device = self.get_device_id(destination, settings)
+        if a_device:
+            a_device = a_device.id
+        if z_device:
+            z_device = z_device.id
+        return {
+            'ref': cympa_ref,
+            'speed': self.convert_cympa_value(cympa_link_dict.get('speed')),
+            'latency_live': self.convert_cympa_value(
+                cympa_link_dict.get('latency')),
+            'a_device_id': a_device,
+            'z_device_id': z_device,
+            'status': cympa_link_dict.get('status'),
+            'administrative_status': cympa_link_dict.get(
+                'administrative_status'),
+            'operational_status': cympa_link_dict.get(
+                'operational_status'),
+            'bandwidth_in': self.convert_cympa_value(
+                cympa_link_dict.get('bandwidth_in')),
+            'bandwidth_out': self.convert_cympa_value(
+                cympa_link_dict.get('bandwidth_out')),
+            'destination_ne_latitude': cympa_link_dict.get(
+                'destination_ne_latitude'),
+            'destination_ne_longitude': cympa_link_dict.get(
+                'destination_ne_longitude'),
+            'destination_ne_location': cympa_link_dict.get(
+                'destination_ne_location'),
+            'source_ne_latitude': cympa_link_dict.get('source_ne_latitude'),
+            'source_ne_longitude': cympa_link_dict.get('source_ne_longitude'),
+            'source_ne_location': cympa_link_dict.get(
+                'source_ne_location'),
+            'entries': cympa_link_dict.get('entries'),
+            'jitter': self.convert_cympa_value(
+                cympa_link_dict.get('jitter')),
+        }
+
     @api.model
     def convert_cympa_value(self, value):
         # function to rename
         if not value:
             return
-        return float(value) / 1000000
+        try:
+            return float(value) / 1000000
+        except ValueError as err:
+            _logger.error("ValueError: %s", err)
+            return
 
-    @api.model
     def get_device_id(self, device_name, settings):
         if not device_name:
             return
@@ -186,9 +177,8 @@ class BackboneCympaLink(models.Model):
             [('name', '=', device_name)], limit=1)
         if not device and settings.is_creation_enabled:
             return self.create_device(device_name, settings)
-        return device.id
+        return device
 
-    @api.model
     def create_device(self, device_name, settings):
         if not self.is_device_name_valid(device_name, settings):
             _logger.error("%s does not respect naming convention",
@@ -196,15 +186,15 @@ class BackboneCympaLink(models.Model):
             return False
         pop_id = self.get_pop_id(device_name, settings)
         return self.env['backbone.device'].create({'name': device_name,
-                                                   'pop_id': pop_id}).id
+                                                   'pop_id': pop_id})
 
     @api.model
     def is_device_name_valid(self, device_name, settings):
-        return bool(re.findall(
-            '^' + settings.regex_city + '-' + settings.regex_pop + '-' +
-            settings.regex_device + '$', device_name))
+        return bool(re.findall('^%s-%s-%s$'
+                               % (settings.regex_city,
+                                  settings.regex_pop,
+                                  settings.regex_device), device_name))
 
-    @api.model
     def get_pop_id(self, device_name, settings):
         pop_name = self._extract_pop_name(device_name, settings)
         pop = self.env['backbone.pop'].search([('name', '=', pop_name)])
@@ -214,70 +204,65 @@ class BackboneCympaLink(models.Model):
 
     @api.model
     def _extract_pop_name(self, device_name, settings):
-        m = re.search('^' + settings.regex_city + '-' + settings.regex_pop,
+        m = re.search('^%s-%s' % (settings.regex_city, settings.regex_pop),
                       device_name)
         if not m:
             return
         return m.group(0)
 
-    @api.model
-    def update_backbone_cympa_link(self, latency_live, speed, status,
-                                   administrative_status, source,
-                                   destination, operational_status,
-                                   bandwidth_in, bandwidth_out,
-                                   destination_ne_latitude,
-                                   destination_ne_longitude,
-                                   destination_ne_location,
-                                   source_ne_latitude,
-                                   source_ne_longitude, source_ne_location,
-                                   entries, jitter,
-                                   settings):
+    def update_backbone_cympa_link(self, link_dict):
         data = {
-            'latency_live': latency_live,
+            'latency_live': link_dict.get('latency_live'),
         }
-        if self.speed != speed:
-            data['speed'] = speed
-        if self.status != status:
-            data['status'] = status
-        if self.administrative_status != administrative_status:
-            data['administrative_status'] = administrative_status
-        if self.operational_status != operational_status:
-            data['operational_status'] = operational_status
-        if self.bandwidth_in != bandwidth_in:
-            data['bandwidth_in'] = bandwidth_in
-        if self.bandwidth_out != bandwidth_out:
-            data['bandwidth_out'] = bandwidth_out
-        if self.destination_ne_latitude != destination_ne_latitude:
-            data['destination_ne_latitude'] = destination_ne_latitude
-        if self.destination_ne_longitude != destination_ne_longitude:
-            data['destination_ne_longitude'] = destination_ne_longitude
-        if self.destination_ne_location != destination_ne_location:
-            data['destination_ne_location'] = destination_ne_location
-        if self.source_ne_latitude != source_ne_latitude:
-            data['source_ne_latitude'] = source_ne_latitude
-        if self.source_ne_longitude != source_ne_longitude:
-            data['source_ne_longitude'] = source_ne_longitude
-        if self.source_ne_location != source_ne_location:
-            data['source_ne_location'] = source_ne_location
-        if self.entries != entries:
-            data['entries'] = entries
-        if self.jitter != jitter:
-            data['jitter'] = jitter
+        if self.speed != link_dict.get('speed'):
+            data['speed'] = link_dict.get('speed')
+        if self.status != link_dict.get('status'):
+            data['status'] = link_dict.get('status')
+        if self.administrative_status != link_dict.get(
+                'administrative_status'):
+            data['administrative_status'] = link_dict.get(
+                'administrative_status')
+        if self.operational_status != link_dict.get('operational_status'):
+            data['operational_status'] = link_dict.get('operational_status')
+        if self.bandwidth_in != link_dict.get('bandwidth_in'):
+            data['bandwidth_in'] = link_dict.get('bandwidth_in')
+        if self.bandwidth_out != link_dict.get('bandwidth_out'):
+            data['bandwidth_out'] = link_dict.get('bandwidth_out')
+        if self.destination_ne_latitude != link_dict.get(
+                'destination_ne_latitude'):
+            data['destination_ne_latitude'] = link_dict.get(
+                'destination_ne_latitude')
+        if self.destination_ne_longitude != link_dict.get(
+                'destination_ne_longitude'):
+            data['destination_ne_longitude'] = link_dict.get(
+                'destination_ne_longitude')
+        if self.destination_ne_location != link_dict.get(
+                'destination_ne_location'):
+            data['destination_ne_location'] = link_dict.get(
+                'destination_ne_location')
+        if self.source_ne_latitude != link_dict.get('source_ne_latitude'):
+            data['source_ne_latitude'] = link_dict.get('source_ne_latitude')
+        if self.source_ne_longitude != link_dict.get('source_ne_longitude'):
+            data['source_ne_longitude'] = link_dict.get('source_ne_longitude')
+        if self.source_ne_location != link_dict.get('source_ne_location'):
+            data['source_ne_location'] = link_dict.get('source_ne_location')
+        if self.entries != link_dict.get('entries'):
+            data['entries'] = link_dict.get('entries')
+        if self.jitter != link_dict.get('jitter'):
+            data['jitter'] = link_dict.get('jitter')
         if not self.active:
             data['active'] = True
         if not self.a_device_id:
-            data['a_device_id'] = self.get_device_id(source, settings)
+            data['a_device_id'] = link_dict.get('a_device_id')
         if not self.z_device_id:
-            data['z_device_id'] = self.get_device_id(destination, settings)
+            data['z_device_id'] = link_dict.get('a_device_id')
         self.write(data)
 
-    @api.model
     def archive_links(self, cympa_links):
         disabled_links = self.search(
             [('ref', 'not in', cympa_links.keys())])
         disabled_links.write({'active': False})
 
-    @api.model
     def create_links(self, settings):
         cympa_links = self.get_cympa_links_to_match()
         for cympa_link in cympa_links:
@@ -290,7 +275,6 @@ class BackboneCympaLink(models.Model):
             elif len(backbone_links) == 1:
                 backbone_links.write({'cympa_id': cympa_link.id})
 
-    @api.model
     def get_cympa_links_to_match(self):
         return self.search([
             ('link_id', '=', False),
@@ -298,7 +282,6 @@ class BackboneCympaLink(models.Model):
             ('z_device_id', '!=', False)
         ])
 
-    @api.model
     def get_corresponding_backbone_links(self):
         return self.env['backbone.link'].search([
             ('a_device_id', 'in',
@@ -329,7 +312,6 @@ class BackboneCympaLink(models.Model):
             rec.link_id.write(data)
         return record
 
-    @api.model
     def break_link(self, exclude_link_id):
         self.link_id.search([
             ('cympa_id', '=', self.id),
