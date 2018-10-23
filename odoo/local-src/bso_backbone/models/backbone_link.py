@@ -187,17 +187,26 @@ class BackboneLink(models.Model):
 
     # OVERRIDES
 
+    @api.model
+    def create(self, values):
+        record = super(BackboneLink, self).create(values)
+        record.check_cympa_link(values)
+        return record
+
     @api.multi
     def write(self, values):
         if 'latency_live' in values:
             values['date_latency_live'] = fields.Datetime.now()
         record = super(BackboneLink, self).write(values)
         for rec in self:
-            if 'cympa_id' in values:
-                rec.break_link(values['cympa_id'])
-            if rec.id != rec.cympa_id.link_id.id:
-                rec.cympa_id.sudo().write({'link_id': rec.id})
+            rec.check_cympa_link(values)
         return record
+
+    def check_cympa_link(self, values):
+        if 'cympa_id' in values:
+            self.break_link(values['cympa_id'])
+        if self.id != self.cympa_id.link_id.id:
+            self.cympa_id.sudo().write({'link_id': self.id})
 
     def break_link(self, exclude_link_id):
         self.cympa_id.search([

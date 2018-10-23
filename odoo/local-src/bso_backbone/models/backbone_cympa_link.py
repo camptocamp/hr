@@ -268,10 +268,10 @@ class BackboneCympaLink(models.Model):
         for cympa_link in cympa_links:
             backbone_links = cympa_link.get_corresponding_backbone_links()
             if not backbone_links and settings.is_creation_enabled:
-                new_link = self.env['backbone.link'].create(
+                self.env['backbone.link'].create(
                     {'a_device_id': cympa_link.a_device_id.id,
-                     'z_device_id': cympa_link.z_device_id.id})
-                new_link.write({'cympa_id': cympa_link.id})
+                     'z_device_id': cympa_link.z_device_id.id,
+                     'cympa_id': cympa_link.id})
             elif len(backbone_links) == 1:
                 backbone_links.write({'cympa_id': cympa_link.id})
 
