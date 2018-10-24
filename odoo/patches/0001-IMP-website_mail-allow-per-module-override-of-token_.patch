@@ -1,0 +1,50 @@
+From e00370e194ffa0c527bb4669401949cc6a15f55f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Thibault=20Delavall=C3=A9e?= <tde@odoo.com>
+Date: Sun, 8 Jul 2018 09:04:42 +0200
+Subject: [PATCH] [IMP] website_mail: allow per-module override of token_field
+
+Instead of forcing a token field through an override, set it at the class level
+to be changed in other model inheriting from the MailThread
+---
+ addons/website_mail/controllers/main.py    | 3 ++-
+ addons/website_mail/models/mail_message.py | 6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/addons/website_mail/controllers/main.py b/addons/website_mail/controllers/main.py
+index 4e85c24..cdf3863 100644
+--- a/addons/website_mail/controllers/main.py
++++ b/addons/website_mail/controllers/main.py
+@@ -49,7 +49,7 @@ def _message_post_helper(res_model='', res_id=None, message='', token='', token_
+     """
+     record = request.env[res_model].browse(res_id)
+     author_id = request.env.user.partner_id.id if request.env.user.partner_id else False
+-    if token and record and token == getattr(record.sudo(), token_field, None):
++    if token and record and token == getattr(record.sudo(), record._mail_post_token_field, None):
+         record = record.sudo()
+         if request.env.user == request.env.ref('base.public_user'):
+             author_id = record.partner_id.id if hasattr(record, 'partner_id') else author_id
+@@ -57,6 +57,7 @@ def _message_post_helper(res_model='', res_id=None, message='', token='', token_
+             if not author_id:
+                 raise NotFound()
+     kw.pop('csrf_token', None)
++    kw.pop('attachment_ids', None)
+     return record.with_context(mail_create_nosubscribe=nosubscribe).message_post(body=message,
+                                                                                    message_type=kw.pop('message_type', "comment"),
+                                                                                    subtype=kw.pop('subtype', "mt_comment"),
+diff --git a/addons/website_mail/models/mail_message.py b/addons/website_mail/models/mail_message.py
+index d5e12e4..e60392f 100644
+--- a/addons/website_mail/models/mail_message.py
++++ b/addons/website_mail/models/mail_message.py
+@@ -56,3 +56,9 @@ class MailMessage(models.Model):
+             if self.env.cr.fetchall():
+                 raise AccessError(_('The requested operation cannot be completed due to security restrictions. Please contact your system administrator.\n\n(Document type: %s, Operation: %s)') % (self._description, operation))
+         return super(MailMessage, self).check_access_rule(operation=operation)
++
++
++class MailThread(models.AbstractModel):
++    _inherit = 'mail.thread'
++
++    _mail_post_token_field = 'access_token' # token field for external posts, to be overridden
+-- 
+2.7.4
+

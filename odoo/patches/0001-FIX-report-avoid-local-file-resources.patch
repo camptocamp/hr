@@ -1,0 +1,28 @@
+From dae282279947e1f9cccad5ec0244ee654132509b Mon Sep 17 00:00:00 2001
+From: Simon Lejeune <sle@odoo.com>
+Date: Tue, 3 Jul 2018 10:53:42 +0200
+Subject: [PATCH] [FIX] report: avoid local file resources
+
+Make sure building reports using local resources are disabled.
+This avoids get different report result based on the system if the
+given resources are or not present (e.g. custom style)
+---
+ addons/report/models/report.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/addons/report/models/report.py b/addons/report/models/report.py
+index 3c3310e..771cd3a 100644
+--- a/addons/report/models/report.py
++++ b/addons/report/models/report.py
+@@ -511,7 +511,7 @@ class Report(models.Model):
+         :specific_paperformat_args: a dict containing prioritized wkhtmltopdf arguments
+         :returns: list of string representing the wkhtmltopdf arguments
+         """
+-        command_args = []
++        command_args = ['--disable-local-file-access']
+         if paperformat.format and paperformat.format != 'custom':
+             command_args.extend(['--page-size', paperformat.format])
+ 
+-- 
+2.7.4
+

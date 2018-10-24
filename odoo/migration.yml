@@ -388,3 +388,5 @@ migration:
           #### local-src
           - bso_telephony
           - specific_crm
+          # core
+          - mail
