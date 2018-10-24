@@ -80,12 +80,3 @@ class BackboneDevice(models.Model):
                         rec.name)):
                 raise exceptions.ValidationError(
                     _('%s does not respect the naming convention') % rec.name)
-
-    # @api.multi
-    # def remove_space_from_device_name(self):
-    #     devices = self.search([])
-    #     if not devices:
-    #         return
-    #     for device in devices:
-    #         device.write({'name': device.name.strip()})
-    #
