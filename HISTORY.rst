@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.17.0 (2018-10-25)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1093: Install module bso_telephony
 * BSIBSO-1093: Replace Dial button by a phone icon
 * purchase order: add a cron to recompute the received qty each day
@@ -34,8 +46,6 @@ Latest (Unreleased)
 
 * Applying security advisory 2018-08-07
 * remove DJ and compilations
-
-**Documentation**
 
 
 10.16.0 (2018-09-03)
