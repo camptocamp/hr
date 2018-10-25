@@ -1,10 +1,17 @@
-from odoo import models, fields, api
+# -*- coding: utf-8 -*-
+import re
+
+from odoo import models, fields, api, exceptions, _
 
 
 class BackboneDevice(models.Model):
     _name = 'backbone.device'
     _inherit = ['mail.thread']
     _order = "name ASC"
+
+    _sql_constraints = [
+        ('name_unique', 'UNIQUE (name)', 'Name already exists'),
+    ]
 
     name = fields.Char(
         required=True,
@@ -60,3 +67,16 @@ class BackboneDevice(models.Model):
         res['context'] = {'default_res_model': self._name,
                           'default_res_id': self.id}
         return res
+
+    @api.constrains('name')
+    def check_name(self):
+        settings = self.env['backbone.settings'].get()
+        for rec in self:
+            if not rec.pop_id:
+                continue
+            if not bool(
+                    re.findall(
+                        "^%s-%s$" % (rec.pop_id.name, settings.regex_device),
+                        rec.name)):
+                raise exceptions.ValidationError(
+                    _('%s does not respect the naming convention') % rec.name)

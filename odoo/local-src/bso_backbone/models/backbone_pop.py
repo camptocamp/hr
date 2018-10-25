@@ -1,10 +1,18 @@
-from odoo import models, fields, api
+# -*- coding: utf-8 -*-
+import re
+
+from odoo import models, fields, api, exceptions, _
 
 
 class BackbonePop(models.Model):
     _name = 'backbone.pop'
     _inherit = ['mail.thread']
     _order = "name ASC"
+
+    _sql_constraints = [
+        ('name_unique', 'UNIQUE (name)', 'Name already exists'),
+        ('code_unique', 'UNIQUE (code)', 'Code already exists')
+    ]
 
     name = fields.Char(
         required=True,
@@ -97,3 +105,26 @@ class BackbonePop(models.Model):
         res['context'] = {'default_res_model': self._name,
                           'default_res_id': self.id}
         return res
+
+    @api.constrains('name')
+    def check_name(self):
+        settings = self.env['backbone.settings'].get()
+        for rec in self:
+            if not bool(re.findall(
+                    '^%s-%s$' % (settings.regex_city, settings.regex_pop),
+                    rec.name)):
+                raise exceptions.ValidationError(
+                    _('%s does not respect the naming convention') % rec.name
+                )
+
+    @api.constrains('code')
+    def check_code(self):
+        settings = self.env['backbone.settings'].get()
+        for rec in self:
+            if not rec.code:
+                continue
+            if not bool(
+                    re.findall('^%s$' % settings.regex_pop_code, rec.code)):
+                raise exceptions.ValidationError(
+                    _('%s does not respect the naming convention') % rec.code
+                )

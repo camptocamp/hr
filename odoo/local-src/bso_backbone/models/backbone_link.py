@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
 
@@ -6,10 +7,19 @@ class BackboneLink(models.Model):
     _inherit = ['mail.thread']
     _order = "name ASC"
 
+    _sql_constraints = [
+        ('cympa_id_unique', 'UNIQUE (cympa_id)', 'Cympa_id already exists')
+    ]
+
     name = fields.Char(
         string='Name',
         compute='compute_name',
         store=True
+    )
+    cympa_id = fields.Many2one(
+        string='Circuit ID',
+        comodel_name='backbone.cympa.link',
+        track_visibility='onchange',
     )
     a_device_id = fields.Many2one(
         string='Device A',
@@ -33,10 +43,6 @@ class BackboneLink(models.Model):
         comodel_name='backbone.xco',
         track_visibility='onchange'
     )
-    circuit_ref = fields.Char(
-        string='Circuit ID',
-        track_visibility='onchange'
-    )
     supplier_id = fields.Many2one(
         string='Supplier',
         comodel_name='res.partner',
@@ -57,7 +63,7 @@ class BackboneLink(models.Model):
         track_visibility='onchange'
     )
     latency = fields.Float(
-        string='Latency (ms)',
+        string='Latency Exp. (ms)',
         digits=(7, 3),
         track_visibility='onchange'
     )
@@ -81,7 +87,7 @@ class BackboneLink(models.Model):
     )
     bearer = fields.Integer(
         string='Bearer (Mbps)',
-        track_visibility='onchange'
+        track_visibility='onchange',
     )
     cable_system = fields.Char(
         string='Cable System',
@@ -151,7 +157,6 @@ class BackboneLink(models.Model):
         default=True,
         track_visibility='onchange'
     )
-
     # ATTACHMENTS
 
     attachment_number = fields.Integer(
@@ -182,11 +187,32 @@ class BackboneLink(models.Model):
 
     # OVERRIDES
 
+    @api.model
+    def create(self, values):
+        record = super(BackboneLink, self).create(values)
+        record.check_cympa_link(values)
+        return record
+
     @api.multi
     def write(self, values):
         if 'latency_live' in values:
             values['date_latency_live'] = fields.Datetime.now()
-        return super(BackboneLink, self).write(values)
+        record = super(BackboneLink, self).write(values)
+        for rec in self:
+            rec.check_cympa_link(values)
+        return record
+
+    def check_cympa_link(self, values):
+        if 'cympa_id' in values:
+            self.break_link(values['cympa_id'])
+        if self.id != self.cympa_id.link_id.id:
+            self.cympa_id.sudo().write({'link_id': self.id})
+
+    def break_link(self, exclude_link_id):
+        self.cympa_id.search([
+            ('link_id', '=', self.id),
+            ('id', '!=', exclude_link_id)
+        ]).sudo().write({'link_id': False})
 
     # COMPUTES
 

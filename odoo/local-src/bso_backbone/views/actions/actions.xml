@@ -25,4 +25,19 @@
             res_model="backbone.xco"
             view_mode="tree,form,graph,pivot"/>
 
+    <act_window
+            id="action_cympa_link"
+            name="CYMPA Links"
+            res_model="backbone.cympa.link"
+            view_mode="tree,form,graph,pivot"/>
+
+    <record model="ir.actions.server" id="action_settings">
+        <field name="name">backbone settings</field>
+        <field name="model_id" ref="model_backbone_settings"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_settings()
+        </field>
+    </record>
+
 </odoo>
