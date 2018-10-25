@@ -23,6 +23,7 @@ Latest (Unreleased)
 
 * BSIBSO-1093: Install module bso_telephony
 * BSIBSO-1093: Replace Dial button by a phone icon
+* BSIBSO-1097: Install mass_editing
 
 **Bugfixes**
 
