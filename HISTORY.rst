@@ -33,6 +33,7 @@ Latest (Unreleased)
 **Build**
 
 * Applying security advisory 2018-08-07
+* remove DJ and compilations
 
 **Documentation**
 

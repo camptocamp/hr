@@ -123,8 +123,6 @@ migration:
     - version: 10.1.6
       addons:
         upgrade:
-          - dj_compilation_account
-          - dj_compilation_stock
           - web_environment_ribbon
           - server_environment_ir_config_parameter
     - version: 10.1.7
@@ -396,3 +394,6 @@ migration:
           - web_enterprise
           # server-tools
           - mass_editing
+      operations:
+        post:
+          - anthem songs.upgrade.upgrade_10_17_0::main
