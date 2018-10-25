@@ -13,4 +13,16 @@
       <field name="numbercall">-1</field>
     </record>
 
+
+    <record model='ir.cron' id="cron_po_auto_invoice">
+      <field name="name">Update Purchase Qty Received</field>
+      <field name="interval_number" eval="1"/>
+      <field name="active" eval="True" />
+      <field name="interval_type">days</field>
+      <field name="model">purchase.order</field>
+      <field name="function">update_qty_received</field>
+      <field name="args">()</field>
+      <field name="numbercall">-1</field>
+    </record>
+
 </odoo>
