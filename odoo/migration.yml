@@ -69,6 +69,7 @@ migration:
           - connector_jira
           - queue_job
           - server_env_connector_jira
+          - mass_editing
           # hr
           - hr_family
           - hr_timesheet_attendance
@@ -393,3 +394,5 @@ migration:
           # core
           - mail
           - web_enterprise
+          # server-tools
+          - mass_editing

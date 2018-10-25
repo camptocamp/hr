@@ -25,6 +25,7 @@ Latest (Unreleased)
 * BSIBSO-1093: Replace Dial button by a phone icon
 * purchase order: add a cron to recompute the received qty each day
 * update bso_backbone: cympa sychronization
+* BSIBSO-1097: Install mass_editing
 
 **Bugfixes**
 * purchase order invoicing: fix the received quantity computation
