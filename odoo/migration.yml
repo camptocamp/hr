@@ -385,6 +385,7 @@ migration:
       addons:
         upgrade:
           #### local-src
+          - bso_dealsheet
           - bso_backbone
           - bso_telephony
           - bso_purchase
