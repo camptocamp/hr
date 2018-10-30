@@ -397,3 +397,5 @@ migration:
       operations:
         post:
           - anthem songs.upgrade.upgrade_10_17_0::main
+        pre:
+          - anthem songs.upgrade.upgrade_10_17_0::pre

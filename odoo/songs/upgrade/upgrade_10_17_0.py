@@ -19,3 +19,15 @@ def uninstall_base_dj(ctx):
 @anthem.log
 def main(ctx):
     uninstall_base_dj(ctx)
+
+
+@anthem.log
+def pre(ctx):
+    drop_specific_crm_assets_view(ctx)
+
+
+@anthem.log
+def drop_specific_crm_assets_view(ctx):
+    view = ctx.env.ref('specific_crm.assets_backend', raise_if_not_found=False)
+    if view:
+        view.unlink()
