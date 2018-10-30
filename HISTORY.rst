@@ -23,11 +23,17 @@ Latest (Unreleased)
 
 **Bugfixes**
 
-* BSIBSO-1102: Force the drop of specific_crm.assets_backend view after its move to bso_telephony module
-
 **Build**
 
 **Documentation**
+
+
+10.17.1 (2018-10-30)
+++++++++++++++++++++
+
+**Bugfixes**
+
+* BSIBSO-1102: Force the drop of specific_crm.assets_backend view after its move to bso_telephony module
 
 
 10.17.0 (2018-10-25)
