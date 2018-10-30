@@ -24,10 +24,21 @@ def main(ctx):
 @anthem.log
 def pre(ctx):
     drop_specific_crm_assets_view(ctx)
+    drop_sale_order_line_view(ctx)
 
 
 @anthem.log
 def drop_specific_crm_assets_view(ctx):
     view = ctx.env.ref('specific_crm.assets_backend', raise_if_not_found=False)
+    if view:
+        view.unlink()
+
+
+@anthem.log
+def drop_sale_order_line_view(ctx):
+    view = ctx.env.ref(
+        'bso_dealsheet.sale_order_line_add_cost_margin',
+        raise_if_not_found=False
+    )
     if view:
         view.unlink()
