@@ -100,7 +100,7 @@
 	branch = 10.0
 [submodule "odoo/external-src/odoo-usability"]
 	path = odoo/external-src/odoo-usability
-	url = git@github.com:yvaucher/odoo-usability
+	url = git@github.com:camptocamp/odoo-usability
 [submodule "odoo/external-src/connector-telephony"]
 	path = odoo/external-src/connector-telephony
 	url = git@github.com:OCA/connector-telephony
