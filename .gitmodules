@@ -52,10 +52,6 @@
 	path = odoo/external-src/margin-analysis
 	url = git@github.com:OCA/margin-analysis.git
 	branch = 10.0
-[submodule "odoo/external-src/odoo-prototype"]
-	path = odoo/external-src/odoo-prototype
-	url = git@github.com:camptocamp/odoo-prototype.git
-	branch = 10.0
 [submodule "odoo/external-src/account-financial-reporting"]
 	path = odoo/external-src/account-financial-reporting
 	url = https://github.com/OCA/account-financial-reporting
