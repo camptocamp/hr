@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Build**
 
+* BS-233: Remove submodule odoo-prototype
+
 **Documentation**
 
 
