@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import api, fields, models
-from datetime import datetime
+import datetime as dt
 from dateutil.relativedelta import relativedelta
 
 
@@ -110,15 +110,47 @@ class SaleOrder(models.Model):
         todo = self.filtered(lambda s: s.state != 'refused')
         return super(SaleOrder, todo).action_draft()
 
+    def _get_first_of_month(self, some_date):
+        """return some_date if some_date is the 1st of month,
+        or the 1st of next month as a datetime.date object"""
+        if some_date.day == 1:
+            return some_date
+        else:
+            return some_date.replace(day=1) + relativedelta(months=1)
+
     @api.multi
     def action_invoicing(self):
         """ Select the wizard to call depending of the products in the order"""
         self.ensure_one()
+        today = dt.date.today()
         if self.has_mrc_product:
             wizard_form = self.env.ref('specific_sale.mrp_invoicing_form')
-            first_day_month = datetime.now().replace(day=1)
+            first_day_year = dt.datetime.now().replace(month=1, day=1).date()
+            if self.all_mrc_delivered():
+                # all MRC were delivered, we are going to create a contract,
+                # therefore we need to invoice all until the date of the
+                # next contract invoice
+                if self.template_id.contract_template:
+                    contract_tmpl = self.template_id.contract_template
+                    ref_date = first_day_year
+                    periods = {'daily': 'days',
+                               'weekly': 'weeks',
+                               'monthly': 'months',
+                               'yearly': 'years',
+                               }
+                    rule = contract_tmpl.recurring_rule_type
+                    interval = contract_tmpl.recurring_interval
+                    while ref_date < today:
+                        # code borrowed from sale_contract,
+                        # in _recurring_create_invoice
+                        ref_date += relativedelta(**{periods[rule]: interval})
+                else:
+                    ref_date = self._get_first_of_month(today)
+            else:
+                ref_date = self._get_first_of_month(today)
+            ref_date = dt.datetime.combine(ref_date, dt.time(12))
             model = self.env['wizard.mrp.invoicing'].create(
-                    {'ref_date': fields.Datetime.to_string(first_day_month)})
+                    {'ref_date': fields.Datetime.to_string(ref_date)})
             return {
                 'name': 'Select a reference date for invoicing',
                 'type': 'ir.actions.act_window',
@@ -183,11 +215,27 @@ class SaleOrder(models.Model):
             contract_tmp = self.contract_template
         advance_invoice_date = contract_tmp.advance_invoice_date
         date_next_period = (
-            fields.Date.from_string(res['recurring_next_date']) +
-            relativedelta(months=advance_invoice_date)
+            fields.Date.from_string(res['recurring_next_date'])
         )
-        date_next_str = fields.Date.to_string(date_next_period)
+        if advance_invoice_date == 0:
+            # the contract is invoicing at the end of the period. The last
+            # invoice we just created covers the period ending on
+            # recurring_next_date -> we need to move recurring next date by 1
+            # period
+            periods = {'daily': 'days',
+                       'weekly': 'weeks',
+                       'monthly': 'months',
+                       'yearly': 'years'}
+            rule = contract_tmp.recurring_rule_type
+            interval = contract_tmp.recurring_interval
+            recurring_next_date = date_next_period + relativedelta(
+                **{periods[rule]: interval}
+            )
+            res['recurring_next_date'] = fields.Date.to_string(
+                recurring_next_date
+            )
+        date_next_period_str = fields.Date.to_string(date_next_period)
         res.update(automatic_renewal=contract_tmp.automatic_renewal,
                    customer_prior_notice=contract_tmp.customer_prior_notice,
-                   date_next_invoice_period_start=date_next_str)
+                   date_next_invoice_period_start=date_next_period_str)
         return res
