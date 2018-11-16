@@ -20,6 +20,8 @@ Latest (Unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
+* BSIBSO-1079: generate recurring invoices 10d in advance (delay can be
+  adjusted in the cron parameters)
 
 **Bugfixes**
 
