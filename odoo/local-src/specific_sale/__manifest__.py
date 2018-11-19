@@ -27,6 +27,7 @@
  'data': [
      'wizard/sale_refusal_view.xml',
      'wizard/mrp_invoicing_view.xml',
+     'wizard/picking_update_delivery_date.xml',
      'views/partner.xml',
      'views/sale.xml',
      'views/sale_order_line.xml',
@@ -34,6 +35,7 @@
      'views/report_invoice.xml',
      'views/sale_subscription_views.xml',
      'views/product.xml',
+     'views/stock_picking.xml',
      'data/ir_sequence.xml'
  ],
  'test': [],
