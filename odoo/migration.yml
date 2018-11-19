@@ -61,6 +61,10 @@ migration:
           - website_contract
           - website_quote
           #### OCA
+          # account-closing
+          - account_cutoff_prepaid
+          - account_invoice_start_end_dates
+          - account_multicurrency_revaluation
           # server-tools
           - base_technical_features
           - mail_environment
@@ -400,4 +404,14 @@ migration:
           - anthem songs.upgrade.upgrade_10_17_0::main
         pre:
           - anthem songs.upgrade.upgrade_10_17_0::pre
-    - version: 10.17.1
+    # - version: 10.17.1
+    - version: 10.18.0
+      addons:
+        upgrade:
+          #### OCA
+          ## account-closing
+          - account_cutoff_prepaid
+          - account_invoice_start_end_dates
+          - account_multicurrency_revaluation
+          ## account-financial-reporting
+          - account_financial_report_qweb

@@ -26,6 +26,9 @@ Latest (Unreleased)
 **Build**
 
 * BS-233: Remove submodule odoo-prototype
+* BSIBSO-1105: update OCA module
+    - account-closing
+    - account-financial-reporting
 
 **Documentation**
 
