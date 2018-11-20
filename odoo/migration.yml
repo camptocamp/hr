@@ -432,3 +432,4 @@ migration:
           #### local-src
           - specific_security
           - specific_sale
+          - connector_exchange
