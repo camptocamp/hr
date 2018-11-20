@@ -27,6 +27,7 @@ RUN chmod +x odoo/before-migrate-entrypoint.d/* \
 
 ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
   /opt/odoo/src/addons, \
+  /opt/odoo/external-src/account-analytic, \
   /opt/odoo/external-src/account-financial-tools, \
   /opt/odoo/external-src/account-financial-reporting, \
   /opt/odoo/external-src/account-invoicing, \

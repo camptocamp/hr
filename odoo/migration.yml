@@ -65,6 +65,10 @@ migration:
           - account_cutoff_prepaid
           - account_invoice_start_end_dates
           - account_multicurrency_revaluation
+          ## account-analytic
+          - analytic_tag_dimension
+          - analytic_tag_dimension_purchase_warning
+          - analytic_tag_dimension_sale_warning
           # server-tools
           - base_technical_features
           - mail_environment
@@ -85,6 +89,8 @@ migration:
           - partner_address_street3
           - partner_multi_relation
           - partner_firstname
+          ## reporting-engine
+          - report_xlsx_helper
           # sale-workflow
           - sale_double_validation
           #### akretion
@@ -415,3 +421,9 @@ migration:
           - account_multicurrency_revaluation
           ## account-financial-reporting
           - account_financial_report_qweb
+          ## account-analytic
+          - analytic_tag_dimension
+          - analytic_tag_dimension_purchase_warning
+          - analytic_tag_dimension_sale_warning
+          ## reporting-engine
+          - report_xlsx_helper
