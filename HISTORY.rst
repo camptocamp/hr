@@ -26,6 +26,7 @@ Latest (Unreleased)
 * BSIBSO-1107: Change the delivery date of a picking
 * BSIBSO-1103 Connector-exchange: add flag on res.users to filter for Odoo events
 * BSIBSO-1103 Connector-exchange: add parameter to search with a max horizon
+* BSIBSO-1106: Recurring supplier invoices
 
 **Bugfixes**
 * BSIBSO-1092: fix invoicing of sales with MRC

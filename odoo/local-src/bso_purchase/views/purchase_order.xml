@@ -18,6 +18,10 @@
             </group>
           </group>
         </xpath>
+        <field name="incoterm_id" position="after">
+          <field name="supplier_invoicing_period"/>
+          <field name="supplier_invoicing_mode"/>
+        </field>
       </field>
     </record>
 </odoo>

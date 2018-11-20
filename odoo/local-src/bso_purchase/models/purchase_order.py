@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Camptocamp SA
+# Copyright 2017-2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import api, models, fields
@@ -25,6 +25,20 @@ class Purchase(models.Model):
         compute='_compute_has_subscription',
         readonly=True
     )
+    supplier_invoicing_period = fields.Selection(
+        [('monthly', u"Monthly"),
+         ('quarterly', u"Quarterly"),
+         ],
+        string=u"Supplier invoicing period",
+        states={'cancel': [('readonly', True)]},
+        default='monthly')
+    supplier_invoicing_mode = fields.Selection(
+        [('end_of_term', u"End of term"),
+         ('start_of_term', u"Start of term"),
+         ],
+        string=u"Supplier invoicing mode",
+        states={'cancel': [('readonly', True)]},
+        default='end_of_term')
 
     @api.depends('order_line.product_id')
     def _compute_has_subscription(self):
@@ -33,6 +47,17 @@ class Purchase(models.Model):
         for item in self:
             item.has_subscription = bool(line_model.search(
                 domain[:] + [('order_id', '=', item.id)]))
+
+    @api.onchange('partner_id', 'company_id')
+    def onchange_partner_id(self):
+        res = super(Purchase, self).onchange_partner_id()
+        field_names = ['supplier_invoicing_period', 'supplier_invoicing_mode']
+        values = self.default_get(field_names)
+        if self.partner_id:
+            values.update(self.partner_id.read(field_names)[0])
+            values.pop('id', None)
+        self.update(values)
+        return res
 
     @api.onchange('subscr_date_start',
                   'subscr_duration',
@@ -45,33 +70,31 @@ class Purchase(models.Model):
                         relativedelta(months=self.subscr_duration))
 
     @api.model
-    def update_qty_received(self):
-        today = fields.Date.today()
+    def update_qty_received(self, ref_date=None):
         po_lines = self.env['purchase.order.line'].search(
             [('product_id.recurring_invoice', '=', True),
              ('move_ids', '!=', False),
              '|',
              ('order_id.subscr_date_end', '=', False),
-             ('order_id.subscr_date_end', '>=', today)
+             ('order_id.subscr_date_end', '>=',
+              ref_date or fields.Date.today()),
              ]
         )
-        po_lines._compute_qty_received()
+        po_lines._compute_qty_received(ref_date)
 
 
 class PurchaseLine(models.Model):
     _inherit = 'purchase.order.line'
 
     @api.depends('order_id.state', 'move_ids.state')
-    def _compute_qty_received(self, reference_date=False):
+    def _compute_qty_received(self, ref_date=None):
+        if ref_date:
+            ref_date = fields.Datetime.from_string(ref_date)
+        else:
+            ref_date = datetime.now()
         UtilsDuration = self.env['utils.duration']
         for line in self:
             qty = 0
-            # Coming from wizard or var in signature ?
-            ref_date = self.env.context.get('ref_date_mrc_delivery')
-            if ref_date:
-                ref_date = fields.Datetime.from_string(ref_date)
-            else:
-                ref_date = datetime.now()
             if not line.product_uom.recurring:
                 super(PurchaseLine, line)._compute_qty_received()
                 continue
