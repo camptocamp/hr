@@ -432,4 +432,8 @@ migration:
           #### local-src
           - specific_security
           - specific_sale
+          # OCA/connector
+          - component
+          - component_event
+          # camptocamp/connector-exchange
           - connector_exchange

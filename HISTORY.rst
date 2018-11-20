@@ -43,6 +43,7 @@ Latest (Unreleased)
     - analytic_tag_dimension_purchase_warning
     - analytic_tag_dimension_sale_warning
 
+* BSIBSO-1103 Update OCA/connector repository
 
 **Documentation**
 

@@ -33,3 +33,7 @@ vcrpy==1.10.5
 #connector telephony
 phonenumbers==8.9.10
 py-Asterisk==0.5.17
+
+# OCA base connector
+cachetools>=2.0.1,<3.0.0
+unittest2
