@@ -401,3 +401,8 @@ migration:
         pre:
           - anthem songs.upgrade.upgrade_10_17_0::pre
     - version: 10.17.1
+    - version: 10.17.2
+      addons:
+        upgrade:
+          #### local-src
+          - specific_security

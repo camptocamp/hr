@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BSIBSO-1108: Replace record rule for multicompany on stock.picking.type to 1=1
+
 **Build**
 
 **Documentation**
