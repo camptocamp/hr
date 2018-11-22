@@ -28,6 +28,14 @@ Latest (Unreleased)
 **Build**
 
 * BS-233: Remove submodule odoo-prototype
+* BSIBSO-1105: update OCA repos
+    - account-closing
+    - account-financial-reporting
+* BSIBSO-1105: Install OCA repos from account-analytic
+    - analytic_tag_dimension
+    - analytic_tag_dimension_purchase_warning
+    - analytic_tag_dimension_sale_warning
+
 
 **Documentation**
 

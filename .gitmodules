@@ -101,3 +101,7 @@
 	path = odoo/external-src/connector-telephony
 	url = git@github.com:OCA/connector-telephony
 	branch = 10.0
+[submodule "odoo/external-src/account-analytic"]
+	path = odoo/external-src/account-analytic
+	url = git@github.com:OCA/account-analytic.git
+	branch = 10.0
