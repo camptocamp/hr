@@ -26,6 +26,8 @@ Latest (Unreleased)
 **Bugfixes**
 * BSIBSO-1092: fix invoicing of sales with MRC
 
+* BSIBSO-1108: Replace record rule for multicompany on stock.picking.type to 1=1
+
 **Build**
 
 * BS-233: Remove submodule odoo-prototype

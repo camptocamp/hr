@@ -12,6 +12,9 @@
   !python {model: ir.rule, id: project_timesheet_currency.analytic_line_comp_rule} : |
       self.domain_force = "[(1, '=', 1)]"
 -
+  !python {model: ir.rule, id: stock.stock_picking_type_rule} : |
+      self.domain_force = "[(1, '=', 1)]"
+-
   !python {model: ir.rule, id: project_timesheet_currency.project_comp_rule} : |
       self.perm_read = False
 -

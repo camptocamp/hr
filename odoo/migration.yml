@@ -410,7 +410,8 @@ migration:
           - anthem songs.upgrade.upgrade_10_17_0::main
         pre:
           - anthem songs.upgrade.upgrade_10_17_0::pre
-    # - version: 10.17.1
+    - version: 10.17.1
+    - version: 10.17.2
     - version: 10.18.0
       addons:
         upgrade:
@@ -427,3 +428,5 @@ migration:
           - analytic_tag_dimension_sale_warning
           ## reporting-engine
           - report_xlsx_helper
+          #### local-src
+          - specific_security

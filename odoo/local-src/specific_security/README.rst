@@ -7,4 +7,5 @@ BSO security
 * change security rules to use the company_ids of the user (not company_id) for
   holidays, analytic lines, project tasks, users, sale orders, warehouses,
   stock locations, timesheets, expenses
-* add group "Technical Management" to manage sale order approval. 
+* add group "Technical Management" to manage sale order approval.
+* change Stock Picking Type multi-company domain to 1=1
