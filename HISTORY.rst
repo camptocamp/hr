@@ -24,6 +24,7 @@ Latest (Unreleased)
   adjusted in the cron parameters)
 
 **Bugfixes**
+* BSIBSO-1092: fix invoicing of sales with MRC
 
 **Build**
 
