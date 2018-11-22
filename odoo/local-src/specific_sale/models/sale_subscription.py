@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import models, fields, api, _
+import datetime
 from dateutil.relativedelta import relativedelta
 
 
@@ -97,6 +98,15 @@ class SaleSubscription(models.Model):
         ])
         res['domain'] = [["id", "in", invoices.ids]]
         return res
+
+    @api.model
+    def _cron_recurring_create_invoice(self, nb_days=10):
+        today = datetime.date.today()
+        some_day_soon = today + datetime.timedelta(nb_days)
+        exp_date = fields.Date.to_string(some_day_soon)
+        subscriptions = self.search([('recurring_next_date', '<=', exp_date),
+                                     ('state', '=', 'open')])
+        return subscriptions._recurring_create_invoice(automatic=True)
 
     @api.returns('account.invoice')
     def _recurring_create_invoice(self, automatic=False):
@@ -248,7 +258,7 @@ class SaleSubscription(models.Model):
              format_date(fields.Date.to_string(end_date), {}))
         )
 
-        res['date'] = fields.Date.today()
-        res['date_invoice'] = fields.Date.today()
+        res['date'] = self.recurring_next_date
+        res['date_invoice'] = self.recurring_next_date
         res['name'] = res.pop('origin', False)
         return res
