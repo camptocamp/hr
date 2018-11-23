@@ -417,6 +417,7 @@ migration:
         upgrade:
           #### OCA
           ## account-closing
+          - account_cutoff_base
           - account_cutoff_prepaid
           - account_invoice_start_end_dates
           - account_multicurrency_revaluation
