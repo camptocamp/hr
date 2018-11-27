@@ -23,6 +23,8 @@ Latest (Unreleased)
 * BSIBSO-1079: generate recurring invoices 10d in advance (delay can be
   adjusted in the cron parameters)
 
+* BSIBSO-1107: Change the delivery date of a picking
+
 **Bugfixes**
 * BSIBSO-1092: fix invoicing of sales with MRC
 

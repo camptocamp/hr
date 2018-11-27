@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Camptocamp SA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+<record id="wizard_picking_update_delivery_date_form" model="ir.ui.view">
+    <field name="name">wizard.picking.update.delivery.date.form</field>
+    <field name="model">wizard.picking.update.delivery_date</field>
+    <field name="arch" type="xml">
+        <form string="Update the delivery_date">
+            <sheet>
+                <group name="info">
+                    <field name="picking_id"/>
+                    <field name="delivery_date"/>
+                </group>
+            </sheet>
+            <footer>
+                <button name="validate" type="object"
+                    string="Validate" class="btn-primary"/>
+                <button special="cancel" string="Cancel" class="btn-default"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+</odoo>
