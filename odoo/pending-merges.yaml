@@ -54,6 +54,7 @@
     - camptocamp 10.0
     # [10.0][ADD] Find Events : odoo category filtering + max horizon
     - camptocamp refs/pull/14/head
+    - camptocamp refs/pull/15/head
   target: *default_target
 ./src:
   remotes:
