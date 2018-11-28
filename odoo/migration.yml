@@ -429,11 +429,11 @@ migration:
           - analytic_tag_dimension_sale_warning
           ## reporting-engine
           - report_xlsx_helper
+          ## OCA/connector
+          - component
+          - component_event
+          ## camptocamp/connector-exchange
+          - connector_exchange
           #### local-src
           - specific_security
           - specific_sale
-          # OCA/connector
-          - component
-          - component_event
-          # camptocamp/connector-exchange
-          - connector_exchange
