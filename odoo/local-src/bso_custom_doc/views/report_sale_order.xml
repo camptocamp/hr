@@ -239,14 +239,6 @@
         <xpath expr="//table[@class='table table-condensed']/tbody//t[@t-foreach='page']//t[2]/tr/td[5]"
                position="replace">
         </xpath>
-        <xpath expr="//table[@class='table table-condensed']/tbody//t[@t-foreach='page']//t[2]/tr/td/span[@t-field='l.price_subtotal']"
-               position="replace">
-            <span t-esc="'{:,.0f}'.format(l.price_subtotal)"/>
-        </xpath>
-        <xpath expr="//table[@class='table table-condensed']/tbody//t[@t-foreach='page']//t[2]/tr/td/span[@t-field='l.price_unit']"
-               position="replace">
-            <span t-esc="'{:,.0f}'.format(l.price_unit)"/>
-        </xpath>
         <xpath expr="//table[@class='table table-condensed']/tbody//t[@t-foreach='page']//t[2]/tr/td/span[@t-field='l.product_uom_qty']"
                position="replace">
             <span t-esc="'{:,.2f}'.format(l.product_uom_qty)"/>
