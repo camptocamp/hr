@@ -9,6 +9,8 @@
         <xpath expr="//field[@name='property_purchase_currency_id']" position="before">
           <field name="automatic_supplier_invoicing"/>
           <field name="group_supplier_invoice"/>
+          <field name="supplier_invoicing_period"/>
+          <field name="supplier_invoicing_mode"/>
         </xpath>
       </field>
     </record>

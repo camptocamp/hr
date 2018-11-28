@@ -2,19 +2,52 @@
 <odoo> <!-- Add noupdate -->
 
     <!-- Automatic Invoice of PO -->
-    <record model='ir.cron' id="cron_po_auto_invoice">
-      <field name="name">Purchase Order Auto Invoice</field>
+
+    <record model="ir.cron" id="cron_po_auto_invoice_monthly_end_of_term">
+      <field name="name">Purchase Order Auto Invoice (monthly, end of term)</field>
       <field name="interval_number" eval="1"/>
       <field name="active" eval="False" /> <!-- To activate later -->
       <field name="interval_type">months</field>
       <field name="model">account.invoice</field>
-      <field name="function">po_auto_invoice</field>
-      <field name="args">(1,)</field>
+      <field name="function">cron_po_auto_invoice</field>
+      <field name="args">('monthly', 'end_of_term')</field>
       <field name="numbercall">-1</field>
     </record>
 
+    <record model="ir.cron" id="cron_po_auto_invoice_monthly_start_of_term">
+      <field name="name">Purchase Order Auto Invoice (monthly, start of term)</field>
+      <field name="interval_number" eval="1"/>
+      <field name="active" eval="False" /> <!-- To activate later -->
+      <field name="interval_type">months</field>
+      <field name="model">account.invoice</field>
+      <field name="function">cron_po_auto_invoice</field>
+      <field name="args">('monthly', 'start_of_term')</field>
+      <field name="numbercall">-1</field>
+    </record>
 
-    <record model='ir.cron' id="cron_po_auto_invoice">
+    <record model="ir.cron" id="cron_po_auto_invoice_quarterly_end_of_term">
+      <field name="name">Purchase Order Auto Invoice (quarterly, end of term)</field>
+      <field name="interval_number" eval="3"/>
+      <field name="active" eval="False" /> <!-- To activate later -->
+      <field name="interval_type">months</field>
+      <field name="model">account.invoice</field>
+      <field name="function">cron_po_auto_invoice</field>
+      <field name="args">('quarterly', 'start_of_term')</field>
+      <field name="numbercall">-1</field>
+    </record>
+
+    <record model="ir.cron" id="cron_po_auto_invoice_quarterly_start_of_term">
+      <field name="name">Purchase Order Auto Invoice (quarterly, start of term)</field>
+      <field name="interval_number" eval="3"/>
+      <field name="active" eval="False" /> <!-- To activate later -->
+      <field name="interval_type">months</field>
+      <field name="model">account.invoice</field>
+      <field name="function">cron_po_auto_invoice</field>
+      <field name="args">('quarterly', 'start_of_term')</field>
+      <field name="numbercall">-1</field>
+    </record>
+
+    <record model="ir.cron" id="cron_po_update_qty_received">
       <field name="name">Update Purchase Qty Received</field>
       <field name="interval_number" eval="1"/>
       <field name="active" eval="True" />

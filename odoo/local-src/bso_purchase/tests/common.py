@@ -9,6 +9,9 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 import odoo.tests.common as common
 
+MOD_PATH = 'odoo.addons.bso_purchase'
+CURRENT_PATH = MOD_PATH + '.tests.test_purchase'
+
 
 class TestBsoPurchaseCommon(common.SavepointCase):
 
