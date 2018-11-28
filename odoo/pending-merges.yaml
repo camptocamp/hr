@@ -47,6 +47,15 @@
     # account_invoice_merge module refactor
     - oca refs/pull/386/head
   target: *default_target
+./external-src/connector-exchange:
+  remotes:
+    camptocamp: git@github.com:camptocamp/connector-exchange.git
+  merges:
+    - camptocamp 10.0
+    # [10.0][ADD] Find Events : odoo category filtering + max horizon
+    - camptocamp refs/pull/14/head
+    - camptocamp refs/pull/15/head
+  target: *default_target
 ./src:
   remotes:
     oca: git@github.com:OCA/OCB.git

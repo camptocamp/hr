@@ -26,10 +26,14 @@ responses
 mailchimp3==3.0.4
 
 # connector_exchange
-git+https://github.com/yvaucher/pyews@PyEWS_Events_Management#egg=pyews
+git+https://github.com/camptocamp/pyews@PyEWS_Events_Management#egg=pyews
 contextlib2==0.5.4
 vcrpy==1.10.5
 
 #connector telephony
 phonenumbers==8.9.10
 py-Asterisk==0.5.17
+
+# OCA base connector
+cachetools>=2.0.1,<3.0.0
+unittest2
