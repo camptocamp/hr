@@ -49,28 +49,32 @@ class TestInvoiceUtils(common.SavepointCase):
     def test_auto_invoice_ref_date_monthly_end_of_term(self):
         period, mode = 'monthly', 'end_of_term'
         fake_today = "2018-06-15"
+        expected = "2018-06-01"
         ref_date = self.env[
             'account.invoice'].get_po_auto_invoice_ref_date(
                 period, mode, fake_today)
-        self.assertEqual(fake_today, ref_date)
+        self.assertEqual(expected, ref_date)
         fake_today = "2018-07-02"
+        expected = "2018-07-01"
         ref_date = self.env[
             'account.invoice'].get_po_auto_invoice_ref_date(
                 period, mode, fake_today)
-        self.assertEqual(fake_today, ref_date)
+        self.assertEqual(expected, ref_date)
 
     def test_auto_invoice_ref_date_quarterly_end_of_term(self):
         period, mode = 'quarterly', 'end_of_term'
         fake_today = "2018-06-15"
+        expected = "2018-04-01"
         ref_date = self.env[
             'account.invoice'].get_po_auto_invoice_ref_date(
                 period, mode, fake_today)
-        self.assertEqual(fake_today, ref_date)
+        self.assertEqual(expected, ref_date)
         fake_today = "2018-07-02"
+        expected = "2018-07-01"
         ref_date = self.env[
             'account.invoice'].get_po_auto_invoice_ref_date(
                 period, mode, fake_today)
-        self.assertEqual(fake_today, ref_date)
+        self.assertEqual(expected, ref_date)
 
     def test_auto_invoice_ref_date_monthly_start_of_term(self):
         period, mode = 'monthly', 'start_of_term'

@@ -31,7 +31,7 @@ class TestPurchase(TestBsoPurchaseCommon):
         expected_inv_bill_date = fake_today_cron
         expected_inv_start_date = fake_today_po
         expected_inv_end_date = "2018-06-30"
-        expected_inv_quantity = 0.5 * 10
+        expected_inv_quantity = 0.53 * 10
 
         self.run_test_auto_invoicing(
             period, mode, group_supplier_invoice,
@@ -65,7 +65,7 @@ class TestPurchase(TestBsoPurchaseCommon):
         expected_inv_bill_date = fake_today_cron
         expected_inv_start_date = fake_today_po     # Delivery date
         expected_inv_end_date = "2018-07-31"
-        expected_inv_quantity = (1 + 0.5) * 10
+        expected_inv_quantity = (1 + 0.53) * 10
 
         self.run_test_auto_invoicing(
             period, mode, group_supplier_invoice,
@@ -99,7 +99,7 @@ class TestPurchase(TestBsoPurchaseCommon):
         expected_inv_bill_date = fake_today_cron
         expected_inv_start_date = fake_today_po
         expected_inv_end_date = "2018-06-30"
-        expected_inv_quantity = 0.5 * 10
+        expected_inv_quantity = 0.53 * 10
 
         self.run_test_auto_invoicing(
             period, mode, group_supplier_invoice,
@@ -133,7 +133,7 @@ class TestPurchase(TestBsoPurchaseCommon):
         expected_inv_bill_date = fake_today_cron
         expected_inv_start_date = fake_today_po     # Delivery date
         expected_inv_end_date = "2018-09-30"
-        expected_inv_quantity = (3 + 0.5) * 10
+        expected_inv_quantity = (3 + 0.53) * 10
 
         self.run_test_auto_invoicing(
             period, mode, group_supplier_invoice,
@@ -169,7 +169,7 @@ class TestPurchase(TestBsoPurchaseCommon):
         expected_inv_bill_date = fake_today_cron
         expected_inv_start_date = fake_today_po
         expected_inv_end_date = "2018-06-30"
-        expected_inv_quantity = 0.5 * 10
+        expected_inv_quantity = 0.53 * 10
 
         self.run_test_auto_invoicing(
             period, mode, group_supplier_invoice,
@@ -205,7 +205,7 @@ class TestPurchase(TestBsoPurchaseCommon):
         expected_inv_bill_date = fake_today_cron
         expected_inv_start_date = fake_today_po     # Delivery date
         expected_inv_end_date = "2018-07-31"
-        expected_inv_quantity = (1 + 0.5) * 10
+        expected_inv_quantity = (1 + 0.53) * 10
 
         self.run_test_auto_invoicing(
             period, mode, group_supplier_invoice,
@@ -241,7 +241,7 @@ class TestPurchase(TestBsoPurchaseCommon):
         expected_inv_bill_date = fake_today_cron
         expected_inv_start_date = fake_today_po
         expected_inv_end_date = "2018-06-30"
-        expected_inv_quantity = 0.5 * 10
+        expected_inv_quantity = 0.53 * 10
 
         self.run_test_auto_invoicing(
             period, mode, group_supplier_invoice,
@@ -277,7 +277,7 @@ class TestPurchase(TestBsoPurchaseCommon):
         expected_inv_bill_date = fake_today_cron
         expected_inv_start_date = fake_today_po     # Delivery date
         expected_inv_end_date = "2018-09-30"
-        expected_inv_quantity = (3 + 0.5) * 10
+        expected_inv_quantity = (3 + 0.53) * 10
 
         self.run_test_auto_invoicing(
             period, mode, group_supplier_invoice,

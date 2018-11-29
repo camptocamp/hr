@@ -17,7 +17,7 @@ class UtilsDuration(models.AbstractModel):
         """ Return the timedelta in month between ref_date and delivery_date"""
         months = 0
         start_date = delivery_date
-        while True:
+        while start_date <= ref_date:
             # Calculating each month in the given period separately
             if (ref_date.month == start_date.month and
                ref_date.year == start_date.year):

@@ -86,7 +86,7 @@ class Purchase(models.Model):
 class PurchaseLine(models.Model):
     _inherit = 'purchase.order.line'
 
-    @api.depends('order_id.state', 'move_ids.state')
+    @api.depends('order_id.state', 'move_ids.state', 'move_ids.date')
     def _compute_qty_received(self, ref_date=None):
         if ref_date:
             ref_date = fields.Datetime.from_string(ref_date)
@@ -98,13 +98,22 @@ class PurchaseLine(models.Model):
             if not line.product_uom.recurring:
                 super(PurchaseLine, line)._compute_qty_received()
                 continue
-            moves = self.env['stock.move'].search([
-                ('purchase_line_id', 'in', line.ids),
-                ('state', '=', 'done')])
             subscr_date_end = fields.Datetime.from_string(
                 line.order_id.subscr_date_end)
+            # if the ref date is after the end of the purchased subscription
+            # we use the end date of the subscription
             calc_date = (min(ref_date, subscr_date_end)
                          if subscr_date_end else ref_date)
+            # for each move linked to the current purchase line,
+            # add to the current delivered qty:
+            # moved qty * (number of months between the move done date
+            #              and the calc date)
+            moves = self.env['stock.move'].search([
+                ('purchase_line_id', '=', line.id),
+                ('state', '=', 'done'),
+                ('date', '<', fields.Datetime.to_string(calc_date)),
+                ]
+            )
             for move in moves:
                 month_ratio = UtilsDuration.get_month_delta_for_mrc(
                     calc_date, fields.Datetime.from_string(move.date))

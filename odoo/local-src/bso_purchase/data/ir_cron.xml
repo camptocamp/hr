@@ -32,7 +32,7 @@
       <field name="interval_type">months</field>
       <field name="model">account.invoice</field>
       <field name="function">cron_po_auto_invoice</field>
-      <field name="args">('quarterly', 'start_of_term')</field>
+      <field name="args">('quarterly', 'end_of_term')</field>
       <field name="numbercall">-1</field>
     </record>
 

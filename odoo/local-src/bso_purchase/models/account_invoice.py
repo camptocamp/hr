@@ -6,6 +6,9 @@ from odoo import api, models, fields
 from dateutil.relativedelta import relativedelta
 import datetime
 from calendar import monthrange
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountInvoice(models.Model):
@@ -69,11 +72,11 @@ class AccountInvoice(models.Model):
         Assuming we are the 2018-11-22:
 
             >>> self.get_po_auto_invoice_ref_date('monthly', 'end_of_term')
-            '2018-11-22'
+            '2018-11-01'
             >>> self.get_po_auto_invoice_ref_date('monthly', 'start_of_term')
             '2018-12-01'
             >>> self.get_po_auto_invoice_ref_date('quarterly', 'end_of_term')
-            '2018-11-22'
+            '2018-10-01'
             >>> self.get_po_auto_invoice_ref_date('quarterly', 'start_of_term')
             '2019-01-01'
 
@@ -85,10 +88,10 @@ class AccountInvoice(models.Model):
         """
         # Default: if end_of_term, ref_date = today
         ref_date = today
+        ref_date_dt = fields.Date.from_string(ref_date)
         if invoicing_mode == 'start_of_term':
             # monthly:      ref_date = first day of next month
             if invoicing_period == 'monthly':
-                ref_date_dt = fields.Date.from_string(ref_date)
                 next_month_first_day = (
                     ref_date_dt + relativedelta(months=1, day=1))
                 ref_date = fields.Date.to_string(next_month_first_day)
@@ -96,9 +99,16 @@ class AccountInvoice(models.Model):
             elif invoicing_period == 'quarterly':
                 quarter_end_date = self.get_quarter_dates(ref_date)[1]
                 quarter_end_date_dt = fields.Date.from_string(quarter_end_date)
-                next_quarter_first_day = (
+                ref_date = fields.Date.to_string(
                     quarter_end_date_dt + relativedelta(days=1))
-                ref_date = fields.Date.to_string(next_quarter_first_day)
+        else:  # end of term
+            if invoicing_period == 'monthly':
+                # first day of current month
+                ref_date_dt = ref_date_dt.replace(day=1)
+                ref_date = fields.Date.to_string(ref_date_dt)
+            elif invoicing_period == 'quarterly':
+                # first day of current quarter
+                ref_date = self.get_quarter_dates(ref_date)[0]
         return ref_date
 
     @api.model
@@ -124,6 +134,8 @@ class AccountInvoice(models.Model):
         today = today or fields.Date.today()
         ref_date = self.get_po_auto_invoice_ref_date(
             invoicing_period, invoicing_mode, today)
+        _logger.info('Start cron PO auto invoice %s %s %s. Ref date is %s',
+                     invoicing_period, invoicing_mode, today, ref_date)
         # = Collect the purchase orders to invoice =
         vendors = self.env['res.partner'].browse()
         invoices = self.env['account.invoice'].browse()
@@ -154,6 +166,7 @@ class AccountInvoice(models.Model):
 
         # = Invoice the purchase orders =
         for vendor in vendors:
+            _logger.info('invoicing vendor %s', vendor.name)
             if vendor.group_supplier_invoice:
                 # Group all PO in one invoice
                 for comp, vendor_dict in data_dict.iteritems():
@@ -171,6 +184,7 @@ class AccountInvoice(models.Model):
                                      'currency_id': curr.id})
                             inv._onchange_partner_id()
                             for po in po_list:
+                                _logger.info(' -> PO %s', po.name)
                                 inv.write({'purchase_id': po.id})
                                 # Force the onchange trigger
                                 inv.purchase_order_change()
@@ -178,6 +192,7 @@ class AccountInvoice(models.Model):
             else:
                 # Create one INV per PO
                 for po in purchases.filtered(lambda r: r.partner_id == vendor):
+                    _logger.info(' -> PO %s', po.name)
                     inv = self.with_context(
                         force_company=po.company_id.id,
                         default_company_id=po.company_id.id,
@@ -198,6 +213,7 @@ class AccountInvoice(models.Model):
 
         # Reset the quantity received on all PO lines
         purchases.mapped('order_line')._compute_qty_received()
+        _logger.info('Generated %d invoices', len(invoices))
         return invoices.ids
 
     @api.model
@@ -223,61 +239,42 @@ class AccountInvoice(models.Model):
         the reference date.
         """
         dates = {'start_date': False, 'end_date': False}
-        if invoicing_mode == 'end_of_term':
-            # NOTE: ref_date == today, assuming it is right after the month
-            # (or quarter) to invoice (probably the 1st of the month)
-            if invoicing_period == 'monthly':
-                today = fields.Date.from_string(ref_date)
-                start_date_dt = today - relativedelta(months=1, day=1)
-                end_date_dt = (
-                    start_date_dt +
-                    relativedelta(months=1, day=1) -
-                    relativedelta(days=1))
-                dates['start_date'] = fields.Date.to_string(start_date_dt)
-                dates['end_date'] = fields.Date.to_string(end_date_dt)
-            elif invoicing_period == 'quarterly':
-                today = fields.Date.from_string(ref_date)
-                previous_month_dt = today - relativedelta(months=1)
-                previous_month = fields.Date.to_string(previous_month_dt)
-                quarter_dates = self.get_quarter_dates(previous_month)
-                dates['start_date'] = quarter_dates[0]
-                dates['end_date'] = quarter_dates[1]
-        elif invoicing_mode == 'start_of_term':
-            # NOTE: ref_date == first day of the next month
-            # so the start/end dates are the ones from the previous month
-            if invoicing_period == 'monthly':
-                first_day = (
-                    fields.Date.from_string(ref_date) -
-                    relativedelta(months=1, day=1))
-                last_day = (
-                    first_day +
-                    relativedelta(months=1, day=1) -
-                    relativedelta(days=1))
-                dates['start_date'] = fields.Date.to_string(first_day)
-                dates['end_date'] = fields.Date.to_string(last_day)
-            # NOTE: ref_date == first day of the next quarter
-            # so the start/end dates are the ones from the previous quarter
-            elif invoicing_period == 'quarterly':
-                current_quarter_dt = (
-                    fields.Date.from_string(ref_date) -
-                    relativedelta(months=1))
-                current_quarter = fields.Date.to_string(current_quarter_dt)
-                quarter_dates = self.get_quarter_dates(current_quarter)
-                dates['start_date'] = quarter_dates[0]
-                dates['end_date'] = quarter_dates[1]
+        ref_date_dt = fields.Date.from_string(ref_date)
+        if invoicing_period == 'monthly':
+            # return start and end dates of previous month of ref_date
+            start_date_dt = ref_date_dt - relativedelta(months=1, day=1)
+            end_date_dt = (
+                start_date_dt +
+                relativedelta(months=1, day=1) -
+                relativedelta(days=1))
+            dates['start_date'] = fields.Date.to_string(start_date_dt)
+            dates['end_date'] = fields.Date.to_string(end_date_dt)
+        elif invoicing_period == 'quarterly':
+            # return start and end of previous quarter of ref_date
+            quarter_start_date = self.get_quarter_dates(ref_date)[0]
+            quarter_start_date_dt = fields.Date.from_string(
+                quarter_start_date)
+            previous_quarter_dt = (
+                quarter_start_date_dt - relativedelta(days=1))
+            previous_quarter = fields.Date.to_string(previous_quarter_dt)
+            previous_quarter_dates = self.get_quarter_dates(
+                previous_quarter)
+            dates['start_date'] = previous_quarter_dates[0]
+            dates['end_date'] = previous_quarter_dates[1]
         # Special case: if the PO line is invoiced for the first time , the
         # start date is the earliest delivery date
-        if invoicing_period and invoicing_mode:
-            already_invoiced = self.env['account.invoice.line'].search(
-                [('purchase_line_id', '=', po_line.id)])
-            if not already_invoiced:
-                moves = self.env['stock.move'].search([
-                    ('purchase_line_id', '=', po_line.id),
-                    ('state', '=', 'done')])
-                if moves:
-                    sorted_moves = moves.sorted('date')
-                    delivery_date = sorted_moves[0].date
-                    dates['start_date'] = delivery_date
+        already_invoiced = self.env['account.invoice.line'].search(
+            [('purchase_line_id', '=', po_line.id)]
+        )
+        if not already_invoiced:
+            first_move = self.env['stock.move'].search(
+                [('purchase_line_id', '=', po_line.id),
+                 ('state', '=', 'done'),
+                 ('date', '<=', dates['end_date']),
+                 ],
+                order='date', limit=1)
+            if first_move:
+                dates['start_date'] = first_move.date
         return dates
 
     def _prepare_invoice_line_from_po_line(self, line):
@@ -298,8 +295,7 @@ class AccountInvoice(models.Model):
                 ref_date, line)
             # Compute the right quantity received (to invoice)
             # before calling 'super()'
-            # FIXME ref_date or end_date?
-            line._compute_qty_received(dates['end_date'])
+            line._compute_qty_received(ref_date)
         res = super(
             AccountInvoice, self)._prepare_invoice_line_from_po_line(line)
         # Update start+end dates
