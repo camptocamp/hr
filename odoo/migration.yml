@@ -438,3 +438,4 @@ migration:
           - specific_security
           - specific_sale
           - bso_purchase
+          - bso_custom_doc
