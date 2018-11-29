@@ -20,6 +20,18 @@ Latest (Unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
+
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.18.0 (2018-11-29)
+++++++++++++++++++++
+
+**Features and Improvements**
 * BSIBSO-1079: generate recurring invoices 10d in advance (delay can be
   adjusted in the cron parameters)
 
@@ -46,8 +58,6 @@ Latest (Unreleased)
     - analytic_tag_dimension_sale_warning
 
 * BSIBSO-1103 Update OCA/connector repository
-
-**Documentation**
 
 
 10.17.1 (2018-10-30)
