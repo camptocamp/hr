@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="external_layout_header_custom_first_page">
+        <div class="header">
+            <div class="col-xs-4">
+                <img t-if="doc.company_id.logo"
+                     t-att-src="'data:image/png;base64,%s' % doc.company_id.logo"
+                     style="max-height: 1500px;"/>
+            </div>
+            <div class="col-xs-3 box light pull-right">
+                <span t-field="doc.company_id.partner_id"
+                      t-field-options='{"widget": "contact", "fields": ["name", "address"], "no_marker": true}'/>
+                <div t-if="doc.company_id.vat">VAT
+                    <span t-field="doc.company_id.vat"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="external_layout_footer_custom_first_page">
+        <div class="footer">
+            <div class="row" style="border-top: 1px solid black;">
+                <div class="col-xs-1">
+                    <img src="/bso_custom_doc/static/description/bulle.png"
+                         style="max-height:50px;margin-top:5px"/>
+                </div>
+                <div class="col-xs-11 footer-text">
+                    <p>
+                        Please return signed order form to
+                        <span t-field="doc.user_id.partner_id.email"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </template>
+    <!--Header/Footer first part of SO-->
+    <template id="external_layout_custom_first_page">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="bso_custom_doc.external_layout_header_custom_first_page"/>
+        <t t-raw="0"/>
+        <t t-call="bso_custom_doc.external_layout_footer_custom_first_page"/>
+    </template>
+
+
+    <template id="external_layout_header_custom_second_page">
+        <div class="header">
+        </div>
+    </template>
+
+    <template id="external_layout_footer_custom_second_page">
+        <div class="footer">
+            <div class="row" style="border-top: 1px solid black;">
+                <div class="col-xs-4">
+                </div>
+                <div class="col-xs-8 footer-text">
+                    <p>For more information <br></br> contact
+                        <span t-field="doc.company_id.email"></span>
+                    </p>
+                </div>
+                <img t-if="doc.company_id.logo"
+                     t-att-src="'data:image/png;base64,%s' % doc.company_id.logo"
+                     style="max-height:70px; position: absolute; right:0;"/>
+            </div>
+        </div>
+    </template>
+    <!--Header/Footer second part of SO-->
+    <template id="external_layout_custom_second_page">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="bso_custom_doc.external_layout_header_custom_second_page"/>
+        <t t-raw="0"/>
+        <t t-call="bso_custom_doc.external_layout_footer_custom_second_page"/>
+    </template>
+
+
+</odoo>
