@@ -3,7 +3,7 @@
     'description': 'restrict access to attachments based on group users',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
-    'depends': ['base'],
+    'depends': ['base', 'hr'],
     'data': [
         'security/ir.model.access.csv',
         'security/attachment_security.xml'
