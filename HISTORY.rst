@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* fix bso_backbone (pr#269)
+
 **Build**
 
 **Documentation**
