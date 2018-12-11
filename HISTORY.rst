@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* access right issue when creating a refund
+
 **Build**
 
 **Documentation**

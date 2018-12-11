@@ -212,7 +212,8 @@ class AccountInvoiceTax(models.Model):
     amount_currency = fields.Monetary('Amount (company currency)',
                                       currency_field='company_currency_id',
                                       compute='_compute_amount_currency')
-    company_currency_id = fields.Many2one(related='company_id.currency_id')
+    company_currency_id = fields.Many2one(related='company_id.currency_id',
+                                          readonly=True)
     exchange_rate = fields.Float('Exchange rate',
                                  compute='_compute_exchange_rate')
 
