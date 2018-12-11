@@ -23,12 +23,18 @@ Latest (Unreleased)
 
 **Bugfixes**
 
-* fix bso_backbone (pr#269)
-* access right issue when creating a refund
-
 **Build**
 
 **Documentation**
+
+
+10.18.1 (2018-12-11)
+++++++++++++++++++++
+
+**Bugfixes**
+
+* fix bso_backbone (pr#269)
+* access right issue when creating a refund
 
 
 10.18.0 (2018-11-29)
