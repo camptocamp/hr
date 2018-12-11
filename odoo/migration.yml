@@ -439,3 +439,4 @@ migration:
           - specific_sale
           - bso_purchase
           - bso_custom_doc
+    - version: 10.18.1

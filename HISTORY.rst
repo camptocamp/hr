@@ -24,6 +24,7 @@ Latest (Unreleased)
 **Bugfixes**
 
 * fix bso_backbone (pr#269)
+* access right issue when creating a refund
 
 **Build**
 
