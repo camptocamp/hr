@@ -36,7 +36,6 @@
      'views/sale_subscription_views.xml',
      'views/product.xml',
      'views/stock_picking.xml',
-     'data/ir_sequence.xml'
  ],
  'test': [],
  'installable': True,

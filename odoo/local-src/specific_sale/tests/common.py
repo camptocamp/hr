@@ -12,6 +12,8 @@ class BaseCase(SingleTransactionCase):
         super(BaseCase, cls).setUpClass()
         cls.partner = cls.env.ref('base.res_partner_1')
         cls.partner.ref = '12345'
+        cls.partner2 = cls.env.ref('base.res_partner_2')
+        cls.partner2.ref = '34567'
         cls.products = {
             'prod_order': cls.env.ref('product.product_order_01'),
             'prod_del': cls.env.ref('product.product_delivery_01'),

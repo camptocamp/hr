@@ -35,9 +35,6 @@ class AccountAnalyticAccount(models.Model):
         company_country_code = self.company_id.partner_id.country_id.code
         ref_partner = self.company_id.partner_id.ref
         ref_commercial_partner = self.partner_id.commercial_partner_id.ref
-        glob_sec_share_by_companies = self.env['ir.sequence'].next_by_code(
-            'end.name.account.analytic.account'
-        )
         if not company_country_code:
             raise ValidationError(
                 _('No country defined for partner %s') %
@@ -53,13 +50,31 @@ class AccountAnalyticAccount(models.Model):
                 _('No internal reference specified on partner %s') %
                 self.partner_id.commercial_partner_id.name
             )
-        if not glob_sec_share_by_companies:
-            raise ValidationError(_(
-                'Sequence undefined: End name of Account analytic account'
-            ))
+
+        # lock to avoid race condition in the creation of the sequence
+        self.env.cr.execute(
+            'SELECT id FROM res_partner WHERE id=%s FOR UPDATE',
+            (self.partner_id.commercial_partner_id.id,)
+        )
+        sequence_code = 'analytic.account.name.%s' % ref_commercial_partner
+        account_chrono = self.env['ir.sequence'].next_by_code(
+            sequence_code
+        )
+        if not account_chrono:
+            self.env['ir.sequence'].sudo().create(
+                {'company_id': False,
+                 'name': 'Chrono for analytic account name',
+                 'padding': 6,
+                 'code': sequence_code,
+                 }
+            )
+            account_chrono = self.env['ir.sequence'].next_by_code(
+                sequence_code
+            )
+
         self.name = "%s%s/%s/%s" % (
             company_country_code,
             ref_partner[-3:],
             ref_commercial_partner,
-            glob_sec_share_by_companies
+            account_chrono
         )
