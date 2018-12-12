@@ -39,6 +39,10 @@ class Purchase(models.Model):
         string=u"Supplier invoicing mode",
         states={'cancel': [('readonly', True)]},
         default='end_of_term')
+    active = fields.Boolean(
+        string=u"Active",
+        default=True
+    )
 
     @api.depends('order_line.product_id')
     def _compute_has_subscription(self):

@@ -20,6 +20,7 @@ Latest (Unreleased)
 +++++++++++++++++++
 
 **Features and Improvements**
+* BSIBSO-1121: Active field in 'purchase.order', filter into view
 
 **Bugfixes**
 
