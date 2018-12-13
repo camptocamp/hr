@@ -440,7 +440,7 @@ migration:
           - bso_purchase
           - bso_custom_doc
     - version: 10.18.1
-    - version: 10.18.2
+    - version: 10.19.0
       addons:
         upgrade:
           #### local-src
