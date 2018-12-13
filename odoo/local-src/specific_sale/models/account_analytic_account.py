@@ -56,7 +56,10 @@ class AccountAnalyticAccount(models.Model):
             'SELECT id FROM res_partner WHERE id=%s FOR UPDATE',
             (self.partner_id.commercial_partner_id.id,)
         )
-        sequence_code = 'analytic.account.name.%s' % ref_commercial_partner
+        sequence_code = 'analytic.account.name.%s.%s' % (
+            ref_partner[-3:],
+            ref_commercial_partner
+        )
         account_chrono = self.env['ir.sequence'].next_by_code(
             sequence_code
         )
