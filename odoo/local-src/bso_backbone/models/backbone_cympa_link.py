@@ -255,7 +255,7 @@ class BackboneCympaLink(models.Model):
         if not self.a_device_id:
             data['a_device_id'] = link_dict.get('a_device_id')
         if not self.z_device_id:
-            data['z_device_id'] = link_dict.get('a_device_id')
+            data['z_device_id'] = link_dict.get('z_device_id')
         self.write(data)
 
     def archive_links(self, cympa_links):
