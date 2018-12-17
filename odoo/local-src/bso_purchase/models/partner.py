@@ -10,7 +10,7 @@ class Partner(models.Model):
 
     group_supplier_invoice = fields.Boolean(
         string='Group Supplier Invoice',
-        help='Group supplier invoices monthly or quarterly'
+        help='Group supplier invoices monthly / quarterly / yearly'
     )
     automatic_supplier_invoicing = fields.Boolean(
         string='Automatic Supplier Invoicing',
@@ -19,6 +19,7 @@ class Partner(models.Model):
     supplier_invoicing_period = fields.Selection(
         [('monthly', u"Monthly"),
          ('quarterly', u"Quarterly"),
+         ('yearly', u"Yearly"),
          ],
         string=u"Supplier invoicing period",
         default='monthly')

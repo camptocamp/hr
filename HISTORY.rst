@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 * BSIBSO-1121: Active field in 'purchase.order', filter into view
 * BSIBSO-1117: have a customer dependent numbering for analytic accounts
+* BSIBSO-1120: Recurring supplier invoices, add "yearly" option
 
 **Bugfixes**
 
