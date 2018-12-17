@@ -301,3 +301,16 @@ class AccountInvoice(models.Model):
         # Update start+end dates
         res.update(dates)
         return res
+
+    @api.onchange('state', 'partner_id', 'invoice_line_ids', 'currency_id')
+    def _onchange_allowed_purchase_ids(self):
+        '''
+        To just have purchase order proposition with the same currency as bill
+        '''
+        result = super(AccountInvoice, self)._onchange_allowed_purchase_ids()
+
+        result['domain']['purchase_id'].append(
+            ('currency_id', '=', self.currency_id.id)
+        )
+
+        return result
