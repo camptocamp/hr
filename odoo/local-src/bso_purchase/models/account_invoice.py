@@ -159,6 +159,10 @@ class AccountInvoice(models.Model):
              ('supplier_invoicing_period', '=', invoicing_period),
              ('supplier_invoicing_mode', '=', invoicing_mode),
              ('subscr_date_end', '>', ref_date)])
+        purchases_continue_after_end = self.env['purchase.order'].search([
+            ('continue_after_end', '=', True),
+        ])
+        purchases |= purchases_continue_after_end
         data_dict = {}
         purchases = self._check_po_in_invoice(purchases)
         for purchase in purchases:

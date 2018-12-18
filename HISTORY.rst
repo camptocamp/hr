@@ -23,6 +23,7 @@ Latest (Unreleased)
 
 * BSIBSO-1125: Modification of the purchase_id domain in the supplier invoice
   to have only purchase orders in the currency of the invoice
+* BSIBSO-1122: Add new field in purchase order `Continue after end`
 * BSIBSO-1121: Active field in 'purchase.order', filter into view
 * BSIBSO-1117: have a customer dependent numbering for analytic accounts
 * bso_backbone: change the visibility of some fields in the views

@@ -44,6 +44,10 @@ class Purchase(models.Model):
         string=u"Active",
         default=True
     )
+    continue_after_end = fields.Boolean(
+        string=u"Continue after end",
+        default=False
+    )
 
     @api.depends('order_line.product_id')
     def _compute_has_subscription(self):
