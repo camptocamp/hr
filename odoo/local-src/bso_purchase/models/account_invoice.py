@@ -96,7 +96,7 @@ class AccountInvoice(models.Model):
             # monthly:      ref_date = first day of next month
             if invoicing_period == 'monthly':
                 next_month_first_day = (
-                    ref_date_dt + relativedelta(months=1, day=1))
+                    ref_date_dt + relativedelta(months=1)).replace(day=1)
                 ref_date = fields.Date.to_string(next_month_first_day)
             # quarterly:    ref_date = first day of next quarter
             elif invoicing_period == 'quarterly':
@@ -107,7 +107,8 @@ class AccountInvoice(models.Model):
             # yearly:       ref_date = first day of next year
             elif invoicing_period == 'yearly':
                 next_year_first_day = (
-                    ref_date_dt + relativedelta(years=1, month=1, day=1))
+                    ref_date_dt + relativedelta(years=1)).replace(
+                        month=1, day=1)
                 ref_date = fields.Date.to_string(next_year_first_day)
         else:  # end of term
             if invoicing_period == 'monthly':
@@ -256,10 +257,10 @@ class AccountInvoice(models.Model):
         ref_date_dt = fields.Date.from_string(ref_date)
         if invoicing_period == 'monthly':
             # return start and end dates of previous month of ref_date
-            start_date_dt = ref_date_dt - relativedelta(months=1, day=1)
+            start_date_dt = (
+                ref_date_dt - relativedelta(months=1)).replace(day=1)
             end_date_dt = (
-                start_date_dt +
-                relativedelta(months=1, day=1) -
+                (start_date_dt + relativedelta(months=1)).replace(day=1) -
                 relativedelta(days=1))
             dates['start_date'] = fields.Date.to_string(start_date_dt)
             dates['end_date'] = fields.Date.to_string(end_date_dt)
@@ -279,10 +280,10 @@ class AccountInvoice(models.Model):
             # return start and end of previous year of ref_date
             start_date_dt = (
                 ref_date_dt -
-                relativedelta(years=1, month=1, day=1))
+                relativedelta(years=1)).replace(month=1, day=1)
             end_date_dt = (
-                start_date_dt +
-                relativedelta(years=1, month=1, day=1) -
+                (start_date_dt + relativedelta(years=1)).replace(
+                    month=1, day=1) -
                 relativedelta(days=1))
             dates['start_date'] = fields.Date.to_string(start_date_dt)
             dates['end_date'] = fields.Date.to_string(end_date_dt)
