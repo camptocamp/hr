@@ -156,6 +156,74 @@ class TestPurchase(TestBsoPurchaseCommon):
             expected_inv_start_date, expected_inv_end_date,
             expected_inv_quantity)
 
+    def test_auto_invoicing_group_yearly_end_of_term(self):
+        """Auto invoicing grouping PO by vendor + yearly + end of term."""
+        group_supplier_invoice = True
+        period, mode = 'yearly', 'end_of_term'
+        expected_nb_invoices = 1
+        # First time we invoice the PO line
+        fake_today_po = "2018-06-15"
+        fake_today_cron = "2019-01-02"
+        expected_inv_bill_date = fake_today_cron
+        expected_inv_start_date = fake_today_po
+        expected_inv_end_date = "2018-12-31"
+        expected_inv_quantity = (6 + 0.53) * 10
+
+        self.run_test_auto_invoicing(
+            period, mode, group_supplier_invoice,
+            expected_nb_invoices, fake_today_po, fake_today_cron,
+            expected_inv_bill_date,
+            expected_inv_start_date, expected_inv_end_date,
+            expected_inv_quantity)
+
+        # Second time we invoice the PO line
+        fake_today_cron = "2020-01-02"
+        expected_inv_bill_date = fake_today_cron
+        expected_inv_start_date = "2019-01-01"
+        expected_inv_end_date = "2019-12-31"
+        expected_inv_quantity = 12 * 10
+
+        self.run_test_auto_invoicing(
+            period, mode, group_supplier_invoice,
+            expected_nb_invoices, fake_today_po, fake_today_cron,
+            expected_inv_bill_date,
+            expected_inv_start_date, expected_inv_end_date,
+            expected_inv_quantity)
+
+    def test_auto_invoicing_group_yearly_start_of_term(self):
+        """Auto invoicing grouping PO by vendor + yearly + start of term."""
+        group_supplier_invoice = True
+        period, mode = 'yearly', 'start_of_term'
+        expected_nb_invoices = 1
+        # First time we invoice the PO line
+        fake_today_po = "2018-06-15"
+        fake_today_cron = "2019-01-02"
+        expected_inv_bill_date = fake_today_cron
+        expected_inv_start_date = fake_today_po     # Delivery date
+        expected_inv_end_date = "2019-12-31"
+        expected_inv_quantity = (0.53 + 6 + 12) * 10
+
+        self.run_test_auto_invoicing(
+            period, mode, group_supplier_invoice,
+            expected_nb_invoices, fake_today_po, fake_today_cron,
+            expected_inv_bill_date,
+            expected_inv_start_date, expected_inv_end_date,
+            expected_inv_quantity)
+
+        # Second time we invoice the PO line
+        fake_today_cron = "2020-01-02"
+        expected_inv_bill_date = fake_today_cron
+        expected_inv_start_date = "2020-01-01"
+        expected_inv_end_date = "2020-12-31"
+        expected_inv_quantity = 12 * 10
+
+        self.run_test_auto_invoicing(
+            period, mode, group_supplier_invoice,
+            expected_nb_invoices, fake_today_po, fake_today_cron,
+            expected_inv_bill_date,
+            expected_inv_start_date, expected_inv_end_date,
+            expected_inv_quantity)
+
     def test_auto_invoicing_no_group_monthly_end_of_term(self):
         """Auto invoicing without grouping PO by vendor
         + monthly + end of term.
@@ -300,6 +368,74 @@ class TestPurchase(TestBsoPurchaseCommon):
             expected_inv_start_date, expected_inv_end_date,
             expected_inv_quantity)
 
+    def test_auto_invoicing_no_group_yearly_end_of_term(self):
+        """Auto invoicing grouping PO by vendor + yearly + end of term."""
+        group_supplier_invoice = False
+        period, mode = 'yearly', 'end_of_term'
+        expected_nb_invoices = 2
+        # First time we invoice the PO line
+        fake_today_po = "2018-06-15"
+        fake_today_cron = "2019-01-02"
+        expected_inv_bill_date = fake_today_cron
+        expected_inv_start_date = fake_today_po
+        expected_inv_end_date = "2018-12-31"
+        expected_inv_quantity = (6 + 0.53) * 10
+
+        self.run_test_auto_invoicing(
+            period, mode, group_supplier_invoice,
+            expected_nb_invoices, fake_today_po, fake_today_cron,
+            expected_inv_bill_date,
+            expected_inv_start_date, expected_inv_end_date,
+            expected_inv_quantity)
+
+        # Second time we invoice the PO line
+        fake_today_cron = "2020-01-02"
+        expected_inv_bill_date = fake_today_cron
+        expected_inv_start_date = "2019-01-01"
+        expected_inv_end_date = "2019-12-31"
+        expected_inv_quantity = 12 * 10
+
+        self.run_test_auto_invoicing(
+            period, mode, group_supplier_invoice,
+            expected_nb_invoices, fake_today_po, fake_today_cron,
+            expected_inv_bill_date,
+            expected_inv_start_date, expected_inv_end_date,
+            expected_inv_quantity)
+
+    def test_auto_invoicing_no_group_yearly_start_of_term(self):
+        """Auto invoicing grouping PO by vendor + yearly + start of term."""
+        group_supplier_invoice = False
+        period, mode = 'yearly', 'start_of_term'
+        expected_nb_invoices = 2
+        # First time we invoice the PO line
+        fake_today_po = "2018-06-15"
+        fake_today_cron = "2019-01-02"
+        expected_inv_bill_date = fake_today_cron
+        expected_inv_start_date = fake_today_po     # Delivery date
+        expected_inv_end_date = "2019-12-31"
+        expected_inv_quantity = (0.53 + 6 + 12) * 10
+
+        self.run_test_auto_invoicing(
+            period, mode, group_supplier_invoice,
+            expected_nb_invoices, fake_today_po, fake_today_cron,
+            expected_inv_bill_date,
+            expected_inv_start_date, expected_inv_end_date,
+            expected_inv_quantity)
+
+        # Second time we invoice the PO line
+        fake_today_cron = "2020-01-02"
+        expected_inv_bill_date = fake_today_cron
+        expected_inv_start_date = "2020-01-01"
+        expected_inv_end_date = "2020-12-31"
+        expected_inv_quantity = 12 * 10
+
+        self.run_test_auto_invoicing(
+            period, mode, group_supplier_invoice,
+            expected_nb_invoices, fake_today_po, fake_today_cron,
+            expected_inv_bill_date,
+            expected_inv_start_date, expected_inv_end_date,
+            expected_inv_quantity)
+
     def run_test_auto_invoicing(
             self, period, mode, group_supplier_invoice,
             expected_nb_invoices, fake_today_po, fake_today_cron,
@@ -318,9 +454,15 @@ class TestPurchase(TestBsoPurchaseCommon):
         with mock.patch(CURRENT_PATH + '.fields.Date.today') as fnct_today:
             fnct_today.return_value = fake_today_po
             today_date = fields.Date.from_string(fields.Date.today())
-        end = today_date + relativedelta(months=12)
+        end = today_date + relativedelta(months=36)
         self.po.subscr_date_start = self.po2.subscr_date_start = fake_today_po
-        self.po.subscr_duration = self.po2.subscr_duration = 12
+        # To be sure that the 'yearly' related tests can be run, we create
+        # a subscription of 3 years (36 months) as we generate two invoices
+        # from the same subscription, separated by one month/quarter/year
+        # depending of the test.
+        # A 1 year subscription is OK to tests this process with a montly or
+        # quarterly period, but for yearly it's not enough.
+        self.po.subscr_duration = self.po2.subscr_duration = 36
         self.po.subscr_date_end = self.po2.subscr_date_end = end
         if self.po.state == self.po2.state != 'purchase':
             self.po.button_confirm()

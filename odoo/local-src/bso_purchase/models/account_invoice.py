@@ -66,8 +66,8 @@ class AccountInvoice(models.Model):
         """Get reference date used to fetch the PO to invoice.
 
         Look up for purchase.order based on the current date, the
-        `invoicing_period` (monthly / quarterly) and the `invoicing_mode`
-        (end of term / start of term).
+        `invoicing_period` (monthly / quarterly / yearly) and the
+        `invoicing_mode` (end of term / start of term).
 
         Assuming we are the 2018-11-22:
 
@@ -79,6 +79,10 @@ class AccountInvoice(models.Model):
             '2018-10-01'
             >>> self.get_po_auto_invoice_ref_date('quarterly', 'start_of_term')
             '2019-01-01'
+            >>> self.get_po_auto_invoice_ref_date('yearly', 'end_of_term')
+            '2018-01-01'
+            >>> self.get_po_auto_invoice_ref_date('yearly', 'start_of_term')
+            '2019-01-01'
 
         :param invoicing_period: 'monthly' or 'quarterly'
         :param invoicing_mode: 'start_of_term' or 'end_of_term'
@@ -86,14 +90,13 @@ class AccountInvoice(models.Model):
             on dev/integration environments (for test purpose only).
         :return: date as string
         """
-        # Default: if end_of_term, ref_date = today
         ref_date = today
         ref_date_dt = fields.Date.from_string(ref_date)
         if invoicing_mode == 'start_of_term':
             # monthly:      ref_date = first day of next month
             if invoicing_period == 'monthly':
                 next_month_first_day = (
-                    ref_date_dt + relativedelta(months=1, day=1))
+                    ref_date_dt + relativedelta(months=1)).replace(day=1)
                 ref_date = fields.Date.to_string(next_month_first_day)
             # quarterly:    ref_date = first day of next quarter
             elif invoicing_period == 'quarterly':
@@ -101,6 +104,12 @@ class AccountInvoice(models.Model):
                 quarter_end_date_dt = fields.Date.from_string(quarter_end_date)
                 ref_date = fields.Date.to_string(
                     quarter_end_date_dt + relativedelta(days=1))
+            # yearly:       ref_date = first day of next year
+            elif invoicing_period == 'yearly':
+                next_year_first_day = (
+                    ref_date_dt + relativedelta(years=1)).replace(
+                        month=1, day=1)
+                ref_date = fields.Date.to_string(next_year_first_day)
         else:  # end of term
             if invoicing_period == 'monthly':
                 # first day of current month
@@ -109,6 +118,10 @@ class AccountInvoice(models.Model):
             elif invoicing_period == 'quarterly':
                 # first day of current quarter
                 ref_date = self.get_quarter_dates(ref_date)[0]
+            elif invoicing_period == 'yearly':
+                # first day of current year
+                ref_date_dt = ref_date_dt.replace(month=1, day=1)
+                ref_date = fields.Date.to_string(ref_date_dt)
         return ref_date
 
     @api.model
@@ -117,15 +130,17 @@ class AccountInvoice(models.Model):
         """Generate supplier invoices from purchase orders.
 
         Invoices are generated following several criteria:
-            - monthly, end of term (ref. date = today)
-            - monthly, start of term (ref. date = first day of the month)
-            - quarterly, end of term (ref. date = today)
-            - quarterly, start of term (ref. date = first day of quarter)
+            - monthly, end of term (ref. date = first day of current month)
+            - monthly, start of term (ref. date = first day of next month)
+            - quarterly, end of term (ref. date = first day of current quarter)
+            - quarterly, start of term (ref. date = first day of next quarter)
+            - yearly, end of term (ref. date = first day of current year)
+            - yearly, start of term (ref. date = first day of next year)
         The reference date is computed based on the selected combination.
         Purchase orders can also be grouped in one invoice if the supplier
         is configured as such.
 
-        :param invoicing_period: 'monthly' or 'quarterly'
+        :param invoicing_period: 'monthly', 'quarterly' or 'yearly'
         :param invoicing_mode: 'end_of_term' or 'start_of_term'
         :param today: the date of 'today' to use to fake the system
             on dev/integration environments (for test purpose only)
@@ -242,10 +257,10 @@ class AccountInvoice(models.Model):
         ref_date_dt = fields.Date.from_string(ref_date)
         if invoicing_period == 'monthly':
             # return start and end dates of previous month of ref_date
-            start_date_dt = ref_date_dt - relativedelta(months=1, day=1)
+            start_date_dt = (
+                ref_date_dt - relativedelta(months=1)).replace(day=1)
             end_date_dt = (
-                start_date_dt +
-                relativedelta(months=1, day=1) -
+                (start_date_dt + relativedelta(months=1)).replace(day=1) -
                 relativedelta(days=1))
             dates['start_date'] = fields.Date.to_string(start_date_dt)
             dates['end_date'] = fields.Date.to_string(end_date_dt)
@@ -261,6 +276,17 @@ class AccountInvoice(models.Model):
                 previous_quarter)
             dates['start_date'] = previous_quarter_dates[0]
             dates['end_date'] = previous_quarter_dates[1]
+        elif invoicing_period == 'yearly':
+            # return start and end of previous year of ref_date
+            start_date_dt = (
+                ref_date_dt -
+                relativedelta(years=1)).replace(month=1, day=1)
+            end_date_dt = (
+                (start_date_dt + relativedelta(years=1)).replace(
+                    month=1, day=1) -
+                relativedelta(days=1))
+            dates['start_date'] = fields.Date.to_string(start_date_dt)
+            dates['end_date'] = fields.Date.to_string(end_date_dt)
         # Special case: if the PO line is invoiced for the first time , the
         # start date is the earliest delivery date
         already_invoiced = self.env['account.invoice.line'].search(

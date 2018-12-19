@@ -28,6 +28,7 @@ Latest (Unreleased)
 * bso_backbone: change the visibility of some fields in the views
 * bso_custom_doc: update
 * bso_report_saleorder: custom Sale Order Report for Website quote
+* BSIBSO-1120: Recurring supplier invoices, add "yearly" option
 
 **Bugfixes**
 

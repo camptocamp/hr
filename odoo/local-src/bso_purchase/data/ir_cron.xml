@@ -47,6 +47,28 @@
       <field name="numbercall">-1</field>
     </record>
 
+    <record model="ir.cron" id="cron_po_auto_invoice_yearly_end_of_term">
+      <field name="name">Purchase Order Auto Invoice (yearly, end of term)</field>
+      <field name="interval_number" eval="12"/>
+      <field name="active" eval="False" /> <!-- To activate later -->
+      <field name="interval_type">months</field>
+      <field name="model">account.invoice</field>
+      <field name="function">cron_po_auto_invoice</field>
+      <field name="args">('yearly', 'end_of_term')</field>
+      <field name="numbercall">-1</field>
+    </record>
+
+    <record model="ir.cron" id="cron_po_auto_invoice_yearly_start_of_term">
+      <field name="name">Purchase Order Auto Invoice (yearly, start of term)</field>
+      <field name="interval_number" eval="12"/>
+      <field name="active" eval="False" /> <!-- To activate later -->
+      <field name="interval_type">months</field>
+      <field name="model">account.invoice</field>
+      <field name="function">cron_po_auto_invoice</field>
+      <field name="args">('yearly', 'start_of_term')</field>
+      <field name="numbercall">-1</field>
+    </record>
+
     <record model="ir.cron" id="cron_po_update_qty_received">
       <field name="name">Update Purchase Qty Received</field>
       <field name="interval_number" eval="1"/>

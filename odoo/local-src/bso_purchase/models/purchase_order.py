@@ -28,6 +28,7 @@ class Purchase(models.Model):
     supplier_invoicing_period = fields.Selection(
         [('monthly', u"Monthly"),
          ('quarterly', u"Quarterly"),
+         ('yearly', u"Yearly"),
          ],
         string=u"Supplier invoicing period",
         states={'cancel': [('readonly', True)]},

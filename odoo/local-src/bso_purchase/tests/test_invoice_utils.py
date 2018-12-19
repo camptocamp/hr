@@ -76,6 +76,21 @@ class TestInvoiceUtils(common.SavepointCase):
                 period, mode, fake_today)
         self.assertEqual(expected, ref_date)
 
+    def test_auto_invoice_ref_date_yearly_end_of_term(self):
+        period, mode = 'yearly', 'end_of_term'
+        fake_today = "2018-06-15"
+        expected = "2018-01-01"
+        ref_date = self.env[
+            'account.invoice'].get_po_auto_invoice_ref_date(
+                period, mode, fake_today)
+        self.assertEqual(expected, ref_date)
+        fake_today = "2018-07-02"
+        expected = "2018-01-01"
+        ref_date = self.env[
+            'account.invoice'].get_po_auto_invoice_ref_date(
+                period, mode, fake_today)
+        self.assertEqual(expected, ref_date)
+
     def test_auto_invoice_ref_date_monthly_start_of_term(self):
         period, mode = 'monthly', 'start_of_term'
         fake_today = "2018-06-15"
@@ -101,6 +116,21 @@ class TestInvoiceUtils(common.SavepointCase):
         self.assertEqual(expected_ref_date, ref_date)
         fake_today = "2018-07-02"
         expected_ref_date = "2018-10-01"
+        ref_date = self.env[
+            'account.invoice'].get_po_auto_invoice_ref_date(
+                period, mode, fake_today)
+        self.assertEqual(expected_ref_date, ref_date)
+
+    def test_auto_invoice_ref_date_yearly_start_of_term(self):
+        period, mode = 'yearly', 'start_of_term'
+        fake_today = "2018-06-15"
+        expected_ref_date = "2019-01-01"
+        ref_date = self.env[
+            'account.invoice'].get_po_auto_invoice_ref_date(
+                period, mode, fake_today)
+        self.assertEqual(expected_ref_date, ref_date)
+        fake_today = "2019-07-02"
+        expected_ref_date = "2020-01-01"
         ref_date = self.env[
             'account.invoice'].get_po_auto_invoice_ref_date(
                 period, mode, fake_today)
