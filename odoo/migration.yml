@@ -445,3 +445,4 @@ migration:
         upgrade:
           #### local-src
           - bso_purchase
+          - bso_backbone
