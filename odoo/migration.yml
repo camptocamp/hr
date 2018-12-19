@@ -448,3 +448,4 @@ migration:
           - bso_backbone
           - bso_custom_doc
           - bso_report_saleorder
+          - bso_restrict_attachments_visibility

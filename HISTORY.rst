@@ -29,6 +29,7 @@ Latest (Unreleased)
 * bso_custom_doc: update
 * bso_report_saleorder: custom Sale Order Report for Website quote
 * BSIBSO-1120: Recurring supplier invoices, add "yearly" option
+* bso_restrict_attachments_visibility installation
 
 **Bugfixes**
 
