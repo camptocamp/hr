@@ -30,6 +30,8 @@ Latest (Unreleased)
 
 **Build**
 
+* BSIBSO-1114: Change test admin password
+
 **Documentation**
 
 
