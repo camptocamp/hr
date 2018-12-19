@@ -37,7 +37,7 @@
                         <span t-field="doc.product_category_id.terms_text"/>
                     </div>
                 </t>
-                <div class="box light">
+                <div class="box">
                     <h3>Notes:</h3>
                     <h5 t-if="doc.validity_date">Expiration date:
                         <span t-field="doc.validity_date"/>
@@ -88,7 +88,7 @@
     <template id="report_saleorder_validity_date_bso"
               inherit_id="website_quote.report_saleorder_validity_date">
         <xpath expr="//div[@id='informations']" position="replace">
-            <div class="box light">
+            <div class="box">
                 <div class="row">
                     <div class="col-xs-12">
                         <h3>
@@ -148,7 +148,7 @@
         </xpath>
         <xpath expr="//div[@class='row']" position="replace">
             <div class="container">
-                <div class="col-xs-5 box light pull-left">
+                <div class="col-xs-5 box pull-left">
                     <h3 t-if="doc.partner_invoice_id">
                         Customer:
                     </h3>
@@ -160,7 +160,7 @@
                 </div>
                 <div class="col-xs-2">
                 </div>
-                <div class="col-xs-5 pull-right box light">
+                <div class="col-xs-5 pull-right box">
                     <h3 t-if="doc.partner_shipping_id">
                         Invoicing Address:
                     </h3>
@@ -187,7 +187,7 @@
         </xpath>
         <xpath expr="//div[@name='total']"
                position="after">
-            <div class="box dark">
+            <div class="box">
                 <div class="row">
                     <div class="col-xs-12">
                         <h3>
@@ -245,13 +245,13 @@
         </xpath>
         <xpath expr="//table[@class='table table-condensed']"
                position="after">
-            <div class="row box-total light">
+            <div class="row box-total">
                 <div class="col-xs-9 custom-padding">
                     <strong>Taxes Not included</strong>
                 </div>
                 <div class="col-xs-3 custom-padding pull-right">
-                    <table class="table">
-                        <tr align="right" class="double-border">
+                    <table class="table box-nrc-mrc">
+                        <tr align="right">
                             <td>
                                 <strong>NRC:</strong>
                             </td>
@@ -275,7 +275,7 @@
         </xpath>
         <xpath expr="//table[@class='table table-condensed']"
                position="attributes">
-            <attribute name="class">table light</attribute>
+            <attribute name="class">table table-condensed services</attribute>
         </xpath>
         <xpath expr="//p[@t-field='doc.note']" position="replace">
         </xpath>

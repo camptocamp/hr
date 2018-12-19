@@ -1,10 +1,12 @@
 .box{
-    margin-right:3px;
-    margin-left:3px;
     margin-top:10px;
-    padding:20px;
     border-radius: 20px;
     page-break-inside: avoid;
+    border: 1px solid black;
+    padding-right:5px;
+    padding-left:5px;
+    padding-top:20px;
+    padding-bottom:20px;
 }
 .box-total{
     border-top-right-radius: 0;
@@ -13,30 +15,36 @@
     border-bottom-right-radius: 20px;
     margin:0;
     padding:0;
+    padding-top:20px;
+    border: 1px solid black;
+    border-top: 0;
+}
+table.box-nrc-mrc tbody tr td{
+    padding-right: 5px;
+}
+table.box-nrc-mrc{
+    border-top: 5px double black;
+    border-radius:0;
 }
 .custom-padding{
-    padding:5px;
+    padding-right:0;
+    padding-left:5px;
 }
-.dark{
-    background-color: #A6A6A6;
-    color: #FFFFFF;
+table{
+    border-collapse: separate;
+    border-radius: 20px;
 }
-.light{
-    background-color: #D9D9D9;
+.table > tbody > tr > td {
+    border-top:0;
 }
-.table {
-    color: #000000;
+table.services {
     font-size: 15px;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
     margin-top:10px;
     margin-bottom:0;
-}
-.double-border{
-     border-top-style: double;
-     border-top-width: 5px;
+    border: 1px solid black;
+    border-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 h3{
     color:#7131A1;
@@ -57,6 +65,8 @@ h1{
 }
 hr.dashed-line {
     border-style: dashed;
+}
+hr{
     border-color: black;
 }
 .terms-text{

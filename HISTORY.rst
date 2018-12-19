@@ -26,6 +26,7 @@ Latest (Unreleased)
 * BSIBSO-1121: Active field in 'purchase.order', filter into view
 * BSIBSO-1117: have a customer dependent numbering for analytic accounts
 * bso_backbone: change the visibility of some fields in the views
+* bso_custom_doc: update
 
 **Bugfixes**
 
