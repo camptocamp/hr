@@ -456,6 +456,12 @@ class TestPurchase(TestBsoPurchaseCommon):
             today_date = fields.Date.from_string(fields.Date.today())
         end = today_date + relativedelta(months=36)
         self.po.subscr_date_start = self.po2.subscr_date_start = fake_today_po
+        # To be sure that the 'yearly' related tests can be run, we create
+        # a subscription of 3 years (36 months) as we generate two invoices
+        # from the same subscription, separated by one month/quarter/year
+        # depending of the test.
+        # A 1 year subscription is OK to tests this process with a montly or
+        # quarterly period, but for yearly it's not enough.
         self.po.subscr_duration = self.po2.subscr_duration = 36
         self.po.subscr_date_end = self.po2.subscr_date_end = end
         if self.po.state == self.po2.state != 'purchase':
