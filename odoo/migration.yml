@@ -447,3 +447,4 @@ migration:
           - bso_purchase
           - bso_backbone
           - bso_custom_doc
+          - bso_report_saleorder

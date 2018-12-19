@@ -27,6 +27,7 @@ Latest (Unreleased)
 * BSIBSO-1117: have a customer dependent numbering for analytic accounts
 * bso_backbone: change the visibility of some fields in the views
 * bso_custom_doc: update
+* bso_report_saleorder: custom Sale Order Report for Website quote
 
 **Bugfixes**
 

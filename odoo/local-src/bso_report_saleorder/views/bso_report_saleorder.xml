@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="bso_report_saleorder"
+              inherit_id="sale.report_saleorder">
+        <xpath expr="//t[@t-foreach='docs']" position="replace">
+            <t t-set="data_report_margin_top" t-value="45"/>
+            <t t-set="data_report_header_spacing" t-value="40"/>
+            <t t-set="from_bso_report_saleorder" t-value="1"/>
+            <t t-call="report.external_layout">
+                <t t-set="o" t-value="docs[0]"/>
+                <t t-foreach="docs" t-as="quotation">
+                    <div class="page">
+                        <t t-call="website_quote.so_quotation_content"/>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="report_saleorder_bso_so_quotation_content"
+              inherit_id="website_quote.so_quotation_content">
+        <xpath expr="//div[@class='page-header mt16']" position="attributes">
+            <attribute name="t-att-style">
+                'color:#7131A1;' if from_bso_report_saleorder else ''
+            </attribute>
+        </xpath>
+
+        <xpath expr="//small[@t-field='quotation.state']" position="replace"/>
+
+        <xpath expr="//div[@t-if='quotation.client_order_ref']"
+               position="after">
+            <div class="clearfix"/>
+            <div t-if="quotation.partner_id.ref">
+                <label class="col-sm-5 col-xs-5 text-right">Governing MSA:
+                </label>
+                <div class="col-sm-7 col-xs-7">
+                    <span t-field="quotation.partner_id.ref"/>
+                </div>
+            </div>
+            <div class="clearfix"/>
+            <div t-if="quotation.duration">
+                <label class="col-sm-5 col-xs-5 text-right">Duration:
+                </label>
+                <div class="col-sm-7 col-xs-7">
+                    <span t-field="quotation.duration"/>
+                </div>
+            </div>
+            <div class="clearfix"/>
+            <div t-if="quotation.payment_term_id">
+                <label class="col-sm-5 col-xs-5 text-right">Payment Terms:
+                </label>
+                <div class="col-sm-7 col-xs-7">
+                    <span t-field="quotation.payment_term_id"/>
+                </div>
+            </div>
+            <div class="clearfix"/>
+            <div t-if="quotation.currency_id">
+                <label class="col-sm-5 col-xs-5 text-right">Currency:
+                </label>
+                <div class="col-sm-7 col-xs-7">
+                    <span t-field="quotation.currency_id"/>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@t-field='quotation.website_description']"
+               position="attributes">
+            <attribute name="t-att-class">
+                'hidden' if from_bso_report_saleorder else ''
+            </attribute>
+        </xpath>
+
+    </template>
+
+    <template id="report_saleorder_bso_pricing"
+              inherit_id="website_quote.pricing">
+        <xpath expr="//h1[@class='page-header']" position="attributes">
+            <attribute name="t-att-style">
+                'color:#7131A1;' if from_bso_report_saleorder else ''
+            </attribute>
+        </xpath>
+
+        <xpath expr="//h2[@class='page-header']" position="attributes">
+            <attribute name="t-att-style">
+                'color:#7131A1;' if from_bso_report_saleorder else ''
+            </attribute>
+        </xpath>
+
+        <xpath expr="//section[@id='terms']" position="before">
+            <section id="signatures" t-if="from_bso_report_saleorder"
+                     style="page-break-inside: avoid;">
+                <h1 class="page-header" style="color:#7131A1;">Signatures:</h1>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h5>
+                            <span t-field="quotation.partner_id"></span>
+                        </h5>
+                    </div>
+                    <div class="col-xs-6">
+                        <h5>BSO</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <h5>Signature:</h5>
+                        <h5>Printed name:</h5>
+                        <h5>Date:</h5>
+                        <h5>Title:</h5>
+                    </div>
+                    <div class="col-xs-4">
+                        <hr></hr>
+                        <hr></hr>
+                        <hr></hr>
+                        <hr></hr>
+                    </div>
+                    <div class="col-xs-2">
+                        <h5>Signature:</h5>
+                        <h5>Printed name:</h5>
+                        <h5>Date:</h5>
+                        <h5>Title:</h5>
+                    </div>
+                    <div class="col-xs-4">
+                        <hr></hr>
+                        <hr></hr>
+                        <hr></hr>
+                        <hr></hr>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+
+    </template>
+</odoo>
