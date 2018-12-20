@@ -441,6 +441,9 @@ migration:
           - bso_custom_doc
     - version: 10.18.1
     - version: 10.19.0
+      operations:
+        post:
+         - anthem songs.upgrade.upgrade_10_19_0::post
       addons:
         upgrade:
           #### local-src
