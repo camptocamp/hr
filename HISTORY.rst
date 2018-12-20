@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.19.0 (2018-12-20)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1125: Modification of the purchase_id domain in the supplier invoice
   to have only purchase orders in the currency of the invoice
 * BSIBSO-1121: Active field in 'purchase.order', filter into view
@@ -31,13 +43,9 @@ Latest (Unreleased)
 * BSIBSO-1120: Recurring supplier invoices, add "yearly" option
 * bso_restrict_attachments_visibility installation
 
-**Bugfixes**
-
 **Build**
 
 * BSIBSO-1114: Change test admin password
-
-**Documentation**
 
 
 10.18.1 (2018-12-11)
