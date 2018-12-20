@@ -93,6 +93,8 @@ migration:
           - report_xlsx_helper
           # sale-workflow
           - sale_double_validation
+          # web
+          - web_sheet_full_width
           #### akretion
           # odoo-usability
           - account_invoice_update_wizard
@@ -446,6 +448,8 @@ migration:
          - anthem songs.upgrade.upgrade_10_19_0::post
       addons:
         upgrade:
+          #### oca/web
+          - web_sheet_full_width
           #### local-src
           - bso_purchase
           - bso_backbone
