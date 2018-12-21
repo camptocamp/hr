@@ -33,6 +33,7 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1125: Add from oca/web module web_sheet_full_width
 * BSIBSO-1125: Modification of the purchase_id domain in the supplier invoice
   to have only purchase orders in the currency of the invoice
 * BSIBSO-1121: Active field in 'purchase.order', filter into view
