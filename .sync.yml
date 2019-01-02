@@ -4,6 +4,7 @@ sync:
     - ./.cookiecutter.context.yml
     - ./tasks/*
     - ./docs/*
+    - ./travis/docker-compose.yml
     - ./travis/git_submodule_update.py
     - ./travis/minion-client.py
     - ./travis/publish.sh
