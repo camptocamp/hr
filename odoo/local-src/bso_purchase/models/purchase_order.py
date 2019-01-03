@@ -44,6 +44,10 @@ class Purchase(models.Model):
         string=u"Active",
         default=True
     )
+    continue_after_end = fields.Boolean(
+        string=u"Continue after end",
+        default=False
+    )
 
     @api.depends('order_line.product_id')
     def _compute_has_subscription(self):
@@ -107,6 +111,8 @@ class PurchaseLine(models.Model):
                 line.order_id.subscr_date_end)
             # if the ref date is after the end of the purchased subscription
             # we use the end date of the subscription
+            if line.order_id.continue_after_end:
+                subscr_date_end = False
             calc_date = (min(ref_date, subscr_date_end)
                          if subscr_date_end else ref_date)
             # for each move linked to the current purchase line,

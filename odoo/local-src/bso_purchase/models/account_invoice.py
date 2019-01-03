@@ -159,6 +159,13 @@ class AccountInvoice(models.Model):
              ('supplier_invoicing_period', '=', invoicing_period),
              ('supplier_invoicing_mode', '=', invoicing_mode),
              ('subscr_date_end', '>', ref_date)])
+        if invoicing_period == 'monthly':
+            purchases_continue_after_end = self.env['purchase.order'].search([
+                ('state', '=', 'purchase'),
+                ('supplier_invoicing_mode', '=', invoicing_mode),
+                ('continue_after_end', '=', True),
+                ])
+            purchases |= purchases_continue_after_end
         data_dict = {}
         purchases = self._check_po_in_invoice(purchases)
         for purchase in purchases:
@@ -315,8 +322,11 @@ class AccountInvoice(models.Model):
         ref_date = self.env.context.get('po_auto_invoice_ref_date')
         dates = {}
         if line.product_id.recurring_invoice and ref_date:
+            period = line.order_id.supplier_invoicing_period
+            if line.order_id.continue_after_end:
+                period = 'monthly'
             dates = self.get_line_dates(
-                line.order_id.supplier_invoicing_period,
+                period,
                 line.order_id.supplier_invoicing_mode,
                 ref_date, line)
             # Compute the right quantity received (to invoice)

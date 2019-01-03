@@ -17,6 +17,7 @@
             <group>
               <field name="subscr_date_start"/>
               <field name="subscr_date_end" />
+              <field name="continue_after_end"/>
             </group>
             <group>
               <field name="subscr_duration" />
