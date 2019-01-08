@@ -69,6 +69,8 @@ migration:
           - analytic_tag_dimension
           - analytic_tag_dimension_purchase_warning
           - analytic_tag_dimension_sale_warning
+          ## currency
+          - currency_monthly_rate
           # server-tools
           - base_technical_features
           - mail_environment
@@ -450,6 +452,8 @@ migration:
         upgrade:
           #### oca/web
           - web_sheet_full_width
+          #### oca/currency
+          - currency_monthly_rate
           #### local-src
           - bso_purchase
           - bso_backbone

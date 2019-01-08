@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * BSIBSO-1127: Add oca/currency repository
+* BSIBSO-1127: Add from oca/currency the module currency_monthly_rate
 
 **Bugfixes**
 
