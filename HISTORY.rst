@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1127: Add oca/currency repository
+
 **Bugfixes**
 
 **Build**

@@ -105,3 +105,7 @@
 	path = odoo/external-src/account-analytic
 	url = git@github.com:OCA/account-analytic.git
 	branch = 10.0
+[submodule "odoo/external-src/currency"]
+	path = odoo/external-src/currency
+	url = git@github.com:OCA/currency.git
+	branch = 10.0
