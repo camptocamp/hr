@@ -456,3 +456,4 @@ migration:
           - bso_custom_doc
           - bso_report_saleorder
           - bso_restrict_attachments_visibility
+    - version: 10.20.0
