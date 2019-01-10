@@ -65,3 +65,6 @@ rancher/*/rancher.env
 
 # Pycharm IDE
 .idea
+
+# local dev composition
+docker-compose.override.yml

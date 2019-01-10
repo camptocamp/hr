@@ -1,7 +1,14 @@
-FROM camptocamp/odoo-project:10.0-2.6.1
+FROM camptocamp/odoo-project:10.0-3.1.0
 MAINTAINER Camptocamp
 
-COPY ./requirements.txt /opt/odoo
+# Steps are grouped by dependency
+# and ordered by compromizing cost and frequency
+
+## Base requirements (Libs and packages)
+# frequency: rarely
+# cost:      high
+
+COPY ./*requirements.txt /odoo/
 
 # Install additional debian packages
 RUN set -x; \
@@ -14,49 +21,84 @@ RUN set -x; \
         cups \
         libcups2-dev \
         git \
-        && cd /opt/odoo && pip install -r requirements.txt \
+        && cd /odoo && pip install -r requirements.txt \
         # Install additional python packages
         && apt-get remove -y python-dev build-essential libffi-dev libssl-dev \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
-COPY ./before-migrate-entrypoint.d/* odoo/before-migrate-entrypoint.d/
-COPY ./start-entrypoint.d/* odoo/start-entrypoint.d/
-RUN chmod +x odoo/before-migrate-entrypoint.d/* \
-    && chmod +x odoo/start-entrypoint.d/*
+## Tools of odoo-template
+# frequency: seldom
+# cost:      light
 
-ENV ADDONS_PATH="/opt/odoo/external-src/enterprise, \
-  /opt/odoo/src/addons, \
-  /opt/odoo/external-src/account-analytic, \
-  /opt/odoo/external-src/account-financial-tools, \
-  /opt/odoo/external-src/account-financial-reporting, \
-  /opt/odoo/external-src/account-invoicing, \
-  /opt/odoo/external-src/connector, \
-  /opt/odoo/external-src/connector-exchange, \
-  /opt/odoo/external-src/connector-telephony, \
-  /opt/odoo/external-src/connector-jira, \
-  /opt/odoo/external-src/hr, \
-  /opt/odoo/external-src/hr-timesheet, \
-  /opt/odoo/external-src/margin-analysis, \
-  /opt/odoo/external-src/partner-contact, \
-  /opt/odoo/external-src/product-variant, \
-  /opt/odoo/external-src/purchase-workflow, \
-  /opt/odoo/external-src/report-print-send, \
-  /opt/odoo/external-src/sale-workflow, \
-  /opt/odoo/external-src/server-tools, \
-  /opt/odoo/external-src/queue, \
-  /opt/odoo/external-src/project, \
-  /opt/odoo/external-src/web, \
-  /opt/odoo/external-src/reporting-engine, \
-  /opt/odoo/external-src/odoo-cloud-platform, \
-  /opt/odoo/external-src/odoo-usability, \
-  /opt/odoo/external-src/social, \
-  /opt/odoo/external-src/account-closing, \
-  /opt/odoo/external-src/bank-payment, \
-  /opt/odoo/external-src/l10n-france, \
-  /opt/odoo/external-src/intrastat, \
-  /opt/odoo/local-src," \
+# Entrypoints
+COPY ./before-migrate-entrypoint.d/* /before-migrate-entrypoint.d/
+COPY ./start-entrypoint.d/* /start-entrypoint.d/
+RUN chmod +x /before-migrate-entrypoint.d/* \
+    && chmod +x /start-entrypoint.d/*
+# CSV Loader
+# `parallel` + `importer.sh` are needed to load heavy files
+COPY ./bin/importer.sh /odoo-bin/
+
+## Prepare pip install
+# frequency: never
+# cost     : very light
+COPY ./setup.py /odoo/
+
+## Main activity
+# frequency: always
+# costs:     very high to very light
+COPY ./src /odoo/src
+COPY ./external-src /odoo/external-src
+COPY ./local-src /odoo/local-src
+COPY ./data /odoo/data
+COPY ./songs /odoo/songs
+COPY ./VERSION /odoo/
+COPY ./migration.yml /odoo/
+
+# depends on ./setup.py ./src, ./songs and ./VERSION
+RUN cd /odoo && pip install -r src_requirements.txt
+
+
+## PLATFORM: Add this line to ADDONS_PATH if hosting is on cloud platform
+# /odoo/external-src/odoo-cloud-platform, \
+
+## Environment
+# frequency: sometimes
+# cost:      very light
+ENV ADDONS_PATH="/odoo/external-src/enterprise, \
+  /odoo/src/addons, \
+  /odoo/external-src/account-analytic, \
+  /odoo/external-src/account-financial-tools, \
+  /odoo/external-src/account-financial-reporting, \
+  /odoo/external-src/account-invoicing, \
+  /odoo/external-src/connector, \
+  /odoo/external-src/connector-exchange, \
+  /odoo/external-src/connector-telephony, \
+  /odoo/external-src/connector-jira, \
+  /odoo/external-src/hr, \
+  /odoo/external-src/hr-timesheet, \
+  /odoo/external-src/margin-analysis, \
+  /odoo/external-src/partner-contact, \
+  /odoo/external-src/product-variant, \
+  /odoo/external-src/purchase-workflow, \
+  /odoo/external-src/report-print-send, \
+  /odoo/external-src/sale-workflow, \
+  /odoo/external-src/server-tools, \
+  /odoo/external-src/queue, \
+  /odoo/external-src/project, \
+  /odoo/external-src/web, \
+  /odoo/external-src/reporting-engine, \
+  /odoo/external-src/odoo-cloud-platform, \
+  /odoo/external-src/odoo-usability, \
+  /odoo/external-src/social, \
+  /odoo/external-src/account-closing, \
+  /odoo/external-src/bank-payment, \
+  /odoo/external-src/l10n-france, \
+  /odoo/external-src/intrastat, \
+  /odoo/local-src" \
   LIMIT_TIME_CPU=86400 \
   LIMIT_TIME_REAL=86400 \
   LIMIT_MEMORY_SOFT=1342177280 \
-  LIMIT_MEMORY_HARD=1610612736
+  LIMIT_MEMORY_HARD=1610612736 \
+  ODOO_DATA_PATH=/odoo/data

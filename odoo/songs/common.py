@@ -69,7 +69,7 @@ def load_csv_parallel(ctx, model, csv_path,
 
     Then in `migration.yml`::
 
-        - importer.sh songs.install.inventory::setup_locations /opt/odoo/data/install/stock.location.csv
+        - importer.sh songs.install.inventory::setup_locations /odoo/data/install/stock.location.csv
         # if defer_parent_computation=True
         - anthem songs.install.inventory::location_compute_parents
 

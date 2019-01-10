@@ -2,7 +2,7 @@ migration:
   options:
     install_command: odoo
   versions:
-    - version: 10.0.0
+    - version: setup
       operations:
         pre:
           - anthem songs.install.pre::main
@@ -456,3 +456,4 @@ migration:
           - bso_custom_doc
           - bso_report_saleorder
           - bso_restrict_attachments_visibility
+    - version: 10.20.0

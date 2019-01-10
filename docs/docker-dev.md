@@ -139,7 +139,7 @@ can be handy to inspect files, check something, ...
 
 ```bash
 # show odoo configuration file (the container name is found using 'docker ps')
-docker-compose exec odoo cat /opt/odoo/etc/odoo.cfg
+docker-compose exec odoo cat /etc/odoo.cfg
 # run bash in the running odoo container
 docker exec odoo bash
 ```
@@ -230,54 +230,26 @@ dood --load=web,connector
 
 ### Working with several databases
 
-The Docker image only starts on one database and does not allow switching
-databases at runtime. However, you can and should use several databases on your
-postgres container for enabling databases for different usages or development.
+This section has been moved to : [working-with-several-databases](docker-and-databases.md#working-with-several-databases).
 
-This can be very well combined with [restoration of databases from
-dumps](how-to-backup-and-restore-volumes.md#backup-and-restore-with-dumps).
 
-The default database name will be the one configured in the variable `DB_NAME`
-in `docker-compose.yml` (usually `odoodb`).
+### Extra dev docker composition
 
-So if you just start a new odoo container:
+You might want to customize your docker composition like adding a container or setting specific ports.
+For this use `docker-compose.override.yml` file which will always be loaded unless `-f` option of docker-compose
+is used.
 
-```
-docker-compose run --rm odoo
-```
-
-You will work on `odoodb`. Now let's say you want to work on a database with odoo demo data and no marabunta migration:
+Example:
 
 ```
-docker-compose run --rm -e MIGRATE=False -e DB_NAME=odoo_demo odoo
-```
+# content of docker-compose.override.yml
+version: '2'
 
-And then you restore a dump in a `prod` database. You can start it with:
-
+services:
+  odoo:
+    environment:
+      WORKERS=0
 ```
-docker-compose run --rm -e DB_NAME=prod odoo
-```
-
-If you inspect the databases, you should find your 3 databases:
-
-```
-$ docker-compose run --rm odoo psql -l
-[...]
-                                 List of databases
-   Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
------------+----------+----------+------------+------------+-----------------------
- odoo      | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
- odoodb    | odoo     | UTF8     | en_US.utf8 | en_US.utf8 |
- prod      | odoo     | UTF8     | en_US.utf8 | en_US.utf8 |
- odoo_demo | odoo     | UTF8     | en_US.utf8 | en_US.utf8 |
- postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
- template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-           |          |          |            |            | postgres=CTc/postgres
- template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-           |          |          |            |            | postgres=CTc/postgres
-```
-
-And you can work as you want on any of them by changing the `DB_NAME`.
 
 
 ### Extra dev packages
@@ -291,9 +263,7 @@ doco build odoo
 ```
 
 
-
 ### Troubleshooting
-
 
 ```
 pkg_resources.DistributionNotFound: The 'odoo==10.0' distribution was not found and is required by the application

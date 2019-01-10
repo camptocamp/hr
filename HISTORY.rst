@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Build**
 
+* BSIBSO-1111: Migrate project to docker image 3.1
+
 **Documentation**
 
 
