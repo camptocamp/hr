@@ -30,6 +30,15 @@
     # [10.0][ADD] Module account_tag_category
     - oca refs/pull/535/head
   target: *default_target
+./external-src/account-closing:
+  remotes:
+    oca: git@github.com:OCA/account-closing.git
+    camptocamp: git@github.com:camptocamp/account-closing.git
+  merges:
+    - oca 10.0
+    # [IMP][10][account_multicurrency_revaluation] add rate_type
+    - oca refs/pull/98/head
+  target: *default_target
 ./external-src/hr:
   remotes:
     oca: git@github.com:OCA/hr.git

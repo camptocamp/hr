@@ -76,7 +76,7 @@ ENV ADDONS_PATH="/odoo/external-src/enterprise, \
   /odoo/external-src/connector-exchange, \
   /odoo/external-src/connector-telephony, \
   /odoo/external-src/connector-jira, \
-  /opt/odoo/external-src/currency, \
+  /odoo/external-src/currency, \
   /odoo/external-src/hr, \
   /odoo/external-src/hr-timesheet, \
   /odoo/external-src/margin-analysis, \

@@ -452,8 +452,6 @@ migration:
         upgrade:
           #### oca/web
           - web_sheet_full_width
-          #### oca/currency
-          - currency_monthly_rate
           #### local-src
           - bso_purchase
           - bso_backbone
@@ -461,3 +459,9 @@ migration:
           - bso_report_saleorder
           - bso_restrict_attachments_visibility
     - version: 10.20.0
+      addons:
+        upgrade:
+          #### oca/currency
+          - currency_monthly_rate
+          #### oca/account-closing
+          - account_multicurrency_revaluation
