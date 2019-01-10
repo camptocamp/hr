@@ -12,7 +12,7 @@ To avoid access rights errors, only group system can delete the action.
  2 files changed, 11 insertions(+), 8 deletions(-)
 
 diff --git a/addons/mail/models/mail_template.py b/addons/mail/models/mail_template.py
-index 3721582..f602252 100644
+index 37215829bb8..f6022522b2a 100644
 --- a/addons/mail/models/mail_template.py
 +++ b/addons/mail/models/mail_template.py
 @@ -262,22 +262,22 @@ class MailTemplate(models.Model):
@@ -53,7 +53,7 @@ index 3721582..f602252 100644
                  'model': src_obj,
                  'key2': 'client_action_multi',
 diff --git a/addons/mail/views/mail_template_views.xml b/addons/mail/views/mail_template_views.xml
-index 483c80a..4306f1f 100644
+index 483c80ae394..4306f1fe8d1 100644
 --- a/addons/mail/views/mail_template_views.xml
 +++ b/addons/mail/views/mail_template_views.xml
 @@ -9,7 +9,9 @@
@@ -78,5 +78,5 @@ index 483c80a..4306f1f 100644
                                      attrs="{'invisible':[('ref_ir_act_window','=',False)]}"
                                      help="Remove the contextual action to use this template on related documents" widget="statinfo">
 -- 
-2.7.4
+2.17.1
 

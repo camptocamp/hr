@@ -56,10 +56,24 @@
     - camptocamp refs/pull/14/head
     - camptocamp refs/pull/15/head
   target: *default_target
+./external-src/enterprise:
+  remotes:
+    odoo: git@github.com:odoo/enterprise.git
+    camptocamp: git@github.com:camptocamp/enterprise.git
+  fetch_all:
+    odoo
+  merges:
+    - odoo 6e7140a39e6f8073142a5a40b0db7f1c700f8fcc
+  shell_command_after:
+    # security patch ODOO-SA-2018-11-28-1
+    - git am "$(git format-patch -1 410e038dd4e561143d741862203e7f3ed69f326a -o ../../patches)"
+  target: *default_target
 ./src:
   remotes:
     oca: git@github.com:OCA/OCB.git
     camptocamp: git@github.com:camptocamp/odoo.git
+  fetch_all:
+    oca
   merges:
     - oca 144402c7cb62324ec103e8aec8198a6f27a65cd9
   target: *default_target
@@ -76,3 +90,6 @@
     - git am "$(git format-patch -1 0dbed816b90db5be06c60bf0e4a74411c9cf962e -o ../patches)"
     - git am "$(git format-patch -1 2c9c7e770addb152f6d424c3ea0f6ac9bcc25a56 -o ../patches)"
     - git am "$(git format-patch -1 e93fa785629500e997330731d84853eb2edac299 -o ../patches)"
+    # Security advisors 2018-11-28
+    - git am "$(git format-patch -1 5472bbded51056a2322a24304db62e1d65dca464 -o ../patches)"
+    - git am "$(git format-patch -1 9043305fa01fc21dc8a7dd996aa20765dbc7d93c -o ../patches)"

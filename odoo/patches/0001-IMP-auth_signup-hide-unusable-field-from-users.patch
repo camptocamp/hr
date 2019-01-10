@@ -12,7 +12,7 @@ Still show it to administrator for debug reasons.
  2 files changed, 18 insertions(+), 6 deletions(-)
 
 diff --git a/addons/auth_signup/models/res_partner.py b/addons/auth_signup/models/res_partner.py
-index cb25355..2e40558 100644
+index cb253555a45..2e40558617a 100644
 --- a/addons/auth_signup/models/res_partner.py
 +++ b/addons/auth_signup/models/res_partner.py
 @@ -26,9 +26,9 @@ def now(**kwargs):
@@ -49,7 +49,7 @@ index cb25355..2e40558 100644
  
      @api.multi
 diff --git a/addons/auth_signup/models/res_users.py b/addons/auth_signup/models/res_users.py
-index f348df3..780aa43 100644
+index f348df3c49b..780aa435b71 100644
 --- a/addons/auth_signup/models/res_users.py
 +++ b/addons/auth_signup/models/res_users.py
 @@ -132,10 +132,20 @@ class ResUsers(models.Model):
@@ -75,5 +75,5 @@ index f348df3..780aa43 100644
  
      @api.model
 -- 
-2.7.4
+2.17.1
 

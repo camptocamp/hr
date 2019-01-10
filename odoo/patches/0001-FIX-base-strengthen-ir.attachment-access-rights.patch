@@ -30,7 +30,7 @@ ir.attachment, we also let to this group the permission to manage them.
  3 files changed, 29 insertions(+), 5 deletions(-)
 
 diff --git a/addons/website/models/ir_attachment.py b/addons/website/models/ir_attachment.py
-index 215b182..eb81cd6 100644
+index 215b182bfb8..eb81cd6702c 100644
 --- a/addons/website/models/ir_attachment.py
 +++ b/addons/website/models/ir_attachment.py
 @@ -1,7 +1,7 @@
@@ -51,7 +51,7 @@ index 215b182..eb81cd6 100644
 +    def get_serving_groups(self):
 +        return super(Attachment, self).get_serving_groups() + ['website.group_website_designer']
 diff --git a/odoo/addons/base/ir/ir_attachment.py b/odoo/addons/base/ir/ir_attachment.py
-index 954fda6..c3fa524 100644
+index 954fda6f038..c3fa524e4a9 100644
 --- a/odoo/addons/base/ir/ir_attachment.py
 +++ b/odoo/addons/base/ir/ir_attachment.py
 @@ -10,7 +10,7 @@ import re
@@ -97,7 +97,7 @@ index 954fda6..c3fa524 100644
      def check(self, mode, values=None):
          """Restricts the access to an ir.attachment, according to referred model
 diff --git a/odoo/addons/base/ir/ir_qweb/assetsbundle.py b/odoo/addons/base/ir/ir_qweb/assetsbundle.py
-index 28708f1..c6e627c 100644
+index 28708f19ecb..c6e627c7bb8 100644
 --- a/odoo/addons/base/ir/ir_qweb/assetsbundle.py
 +++ b/odoo/addons/base/ir/ir_qweb/assetsbundle.py
 @@ -8,7 +8,7 @@ import textwrap
@@ -124,5 +124,5 @@ index 28708f1..c6e627c 100644
          return self.env['ir.attachment'].sudo().browse(attachment_ids)
  
 -- 
-2.7.4
+2.17.1
 

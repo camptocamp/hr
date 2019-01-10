@@ -26,6 +26,7 @@ Latest (Unreleased)
 **Build**
 
 * BSIBSO-1111: Migrate project to docker image 3.1
+* BSIBSO-1118: Apply patches for ODOO-SA-2018-11-28
 
 **Documentation**
 
