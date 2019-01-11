@@ -8,7 +8,7 @@ Subject: [PATCH] [FIX] base: access rights on transient models
  1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/odoo/models.py b/odoo/models.py
-index 9f69ec6..abd4af6 100644
+index 9f69ec62d58..abd4af6ce05 100644
 --- a/odoo/models.py
 +++ b/odoo/models.py
 @@ -4088,6 +4088,15 @@ class BaseModel(object):
@@ -39,5 +39,5 @@ index 9f69ec6..abd4af6 100644
          self._apply_ir_rules(query, 'read')
          order_by = self._generate_order_by(order, query)
 -- 
-2.7.4
+2.17.1
 

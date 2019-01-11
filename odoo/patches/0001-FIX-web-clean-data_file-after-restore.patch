@@ -9,7 +9,7 @@ The file used for the restoration was not properly removed
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/addons/web/controllers/main.py b/addons/web/controllers/main.py
-index 5408b9f..62373cf 100644
+index 5408b9f159e..62373cffacb 100644
 --- a/addons/web/controllers/main.py
 +++ b/addons/web/controllers/main.py
 @@ -706,6 +706,8 @@ class Database(http.Controller):
@@ -32,5 +32,5 @@ index 5408b9f..62373cf 100644
      @http.route('/web/database/change_password', type='http', auth="none", methods=['POST'], csrf=False)
      def change_password(self, master_pwd, master_pwd_new):
 -- 
-2.7.4
+2.17.1
 

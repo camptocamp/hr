@@ -19,7 +19,7 @@ the action context at all times.
  2 files changed, 32 insertions(+), 1 deletion(-)
 
 diff --git a/odoo/addons/base/ir/ir_actions.py b/odoo/addons/base/ir/ir_actions.py
-index 9f29a15..76f2c44 100644
+index 9f29a15dd8b..76f2c446eb3 100644
 --- a/odoo/addons/base/ir/ir_actions.py
 +++ b/odoo/addons/base/ir/ir_actions.py
 @@ -2,7 +2,6 @@
@@ -52,7 +52,7 @@ index 9f29a15..76f2c44 100644
  class IrActions(models.Model):
      _name = 'ir.actions.actions'
 diff --git a/odoo/tools/misc.py b/odoo/tools/misc.py
-index 6233f45..18a92b5 100644
+index 6233f4572b1..18a92b5fd9d 100644
 --- a/odoo/tools/misc.py
 +++ b/odoo/tools/misc.py
 @@ -19,6 +19,7 @@ import socket
@@ -88,5 +88,5 @@ index 6233f45..18a92b5 100644
 +    # module and attr_list are in the closure
 +    return WrappedModule()
 -- 
-2.7.4
+2.17.1
 

@@ -10,7 +10,7 @@ should be the same whatever local files are present on the filesystem
  1 file changed, 1 insertion(+)
 
 diff --git a/odoo/addons/base/module/module.py b/odoo/addons/base/module/module.py
-index 5208f0c..55cbb2d 100644
+index 5208f0c4e35..55cbb2d4be0 100644
 --- a/odoo/addons/base/module/module.py
 +++ b/odoo/addons/base/module/module.py
 @@ -169,6 +169,7 @@ class Module(models.Model):
@@ -22,5 +22,5 @@ index 5208f0c..55cbb2d 100644
                  output = publish_string(source=module.description or '', settings_overrides=overrides, writer=MyWriter())
                  module.description_html = tools.html_sanitize(output)
 -- 
-2.7.4
+2.17.1
 
