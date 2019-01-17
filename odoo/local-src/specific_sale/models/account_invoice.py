@@ -38,7 +38,7 @@ class AccountInvoice(models.Model):
             sale_orders = (invoice.invoice_line_ids.mapped('sale_line_ids')
                                                    .mapped('order_id'))
             for so in sale_orders:
-                if so.all_mrc_delivered():
+                if so.all_mrc_delivered() and not so.subscription_id:
                     so.subscription_id = so.create_contract()
         return res
 

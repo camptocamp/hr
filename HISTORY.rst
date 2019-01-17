@@ -28,6 +28,12 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BSIBSO-1129: fix the computation of qty_delivered on sales line in the case
+  where the sale order has a contract (in that case, we want to force this to
+  the qty invoiced for MRC products)
+* BSIBSO-1129: make sure we don't create multiple sale subscriptions for the
+  same sale order.
+
 **Build**
 
 * BSIBSO-1111: Migrate project to docker image 3.1

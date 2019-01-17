@@ -465,3 +465,6 @@ migration:
           - currency_monthly_rate
           #### oca/account-closing
           - account_multicurrency_revaluation
+      operations:
+        post:
+         - anthem songs.upgrade.upgrade_10_20_0::post
