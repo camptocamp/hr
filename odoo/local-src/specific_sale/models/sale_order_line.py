@@ -10,12 +10,20 @@ from odoo import api, models, fields
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    @api.depends('product_uom.recurring')
+    @api.depends('product_uom.recurring',
+                 'order_id.subscription_id',
+                 'qty_invoiced')
     def _compute_qty_delivered_calculated(self):
         """ Used in the view, and to update the qty_delivered regularly """
         for record in self:
             if record.product_uom.recurring:
-                qty = record._get_delivered_qty()
+                if record.order_id.subscription_id:
+                    # the subscription is created when all the the lines are
+                    # delivered and invoiced -> in that case the qty delivered
+                    # calculated is the qty invoiced
+                    qty = record.qty_invoiced
+                else:
+                    qty = record._get_delivered_qty()
                 record.qty_delivered_calculated = qty
                 record.write({'qty_delivered': qty})
             else:
