@@ -469,6 +469,8 @@ migration:
           - bso_bundle
           - bso_dealsheet
           - dealsheet_purchase_sourcing
+          #### oca/account_financial_reporting
+          - account_financial_report_qweb
       operations:
         post:
          - anthem songs.upgrade.upgrade_10_20_0::post

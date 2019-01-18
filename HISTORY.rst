@@ -26,6 +26,7 @@ Latest (Unreleased)
 * BSIBSO-1127: Update oca account_multicurrency_revaluation to add rate_type
   like that the currency revaluation is doing by days or with monthly average rate
 * Dealsheet improvements by Gapard Coudurier (PR #286)
+* BSIBSO-1116: a batch of improvements in account_financial_report_qweb
 
 **Bugfixes**
 
