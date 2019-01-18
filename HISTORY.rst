@@ -21,6 +21,11 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1127: Add oca/currency repository
+* BSIBSO-1127: Add from oca/currency the module currency_monthly_rate
+* BSIBSO-1127: Update oca account_multicurrency_revaluation to add rate_type
+  like that the currency revaluation is doing by days or with monthly average rate
+
 **Bugfixes**
 
 **Build**

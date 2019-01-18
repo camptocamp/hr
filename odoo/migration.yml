@@ -69,6 +69,8 @@ migration:
           - analytic_tag_dimension
           - analytic_tag_dimension_purchase_warning
           - analytic_tag_dimension_sale_warning
+          ## currency
+          - currency_monthly_rate
           # server-tools
           - base_technical_features
           - mail_environment
@@ -457,3 +459,9 @@ migration:
           - bso_report_saleorder
           - bso_restrict_attachments_visibility
     - version: 10.20.0
+      addons:
+        upgrade:
+          #### oca/currency
+          - currency_monthly_rate
+          #### oca/account-closing
+          - account_multicurrency_revaluation
