@@ -8,26 +8,76 @@
             <tree editable="bottom">
                 <field name="dealsheet_id" invisible="1"/>
                 <field name="dealsheet_state" invisible="1"/>
+                <field name="is_locked" invisible="1"/>
                 <field name="is_cost" invisible="1"/>
                 <field name="is_recurring" invisible="1"/>
                 <field name="currency_id" invisible="1"/>
                 <field name="sale_order_line_id" invisible="1"/>
                 <field name="product_id"
-                       attrs="{'readonly': ['|', ('dealsheet_state', 'not in', ('draft', 'confirmed')), ('sale_order_line_id', '!=', False)]}"
-                       options="{'create': false, 'create_edit': false}"/>
+                       attrs="{'readonly': [('is_locked', '=', True)]}"
+                       domain="[('recurring_invoice', '=', is_recurring), '|', ('sale_ok', '=', True), ('purchase_ok', '=', True)]"/>
                 <field name="description"
-                       attrs="{'readonly': [('dealsheet_state', 'not in', ('draft', 'confirmed'))]}"/>
+                       attrs="{'readonly': [('is_locked', '=', True)]}"/>
                 <field name="quantity"
-                       attrs="{'readonly': ['|', ('dealsheet_state', 'not in', ('draft', 'confirmed')), ('sale_order_line_id', '!=', False)]}"/>
+                       attrs="{'readonly': [('is_locked', '=', True)]}"/>
                 <field name="uom_id"/>
-                <field name="cost" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       attrs="{'readonly': [('dealsheet_state', 'not in', ('draft', 'confirmed'))]}"/>
-                <field name="cost_delivery" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       attrs="{'readonly': [('dealsheet_state', 'not in', ('validated'))]}"
-                       invisible="1"/>
+                <field name="cost"
+                       attrs="{'readonly': [('dealsheet_state', 'in', ('validated', 'refused'))]}"
+                       groups="bso_dealsheet.group_dealsheet_manager"/>
+                <field name="total_cost"
+                       groups="bso_dealsheet.group_dealsheet_manager"/>
+                <field name="cost_delivery"
+                       attrs="{'readonly': True}"
+                       groups="bso_dealsheet.group_dealsheet_manager"/>
+                <field name="total_cost_delivery"
+                       groups="bso_dealsheet.group_dealsheet_manager"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="sale_dealsheet_line_tree_group_delivery" model="ir.ui.view">
+        <field name="name">sale.dealsheet.line.tree.group_delivery</field>
+        <field name="model">sale.dealsheet.line</field>
+        <field name="inherit_id" ref="bso_dealsheet.sale_dealsheet_line_tree"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_dealsheet.group_dealsheet_role_delivery')])]"/>
+        <field name="arch" type="xml">
+            <field name="cost_delivery" position="attributes">
+                <attribute name="attrs">
+                    {'readonly': [('dealsheet_state', 'not in',
+                    ('validated'))]}
+                </attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="sale_dealsheet_line_form" model="ir.ui.view">
+        <field name="name">sale.dealsheet.line.form</field>
+        <field name="model">sale.dealsheet.line</field>
+        <field name="arch" type="xml">
+            <form string="Dealsheet Line">
+                <group>
+                    <field name="dealsheet_id" invisible="1"/>
+                    <field name="dealsheet_state" invisible="1"/>
+                    <field name="is_locked" invisible="1"/>
+                    <field name="is_cost" invisible="1"/>
+                    <field name="is_recurring" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="sale_order_line_id" invisible="1"/>
+                    <field name="product_id" readonly="1"/>
+                    <field name="description" readonly="1"/>
+                    <field name="quantity" readonly="1"/>
+                    <field name="uom_id" readonly="1"/>
+                    <field name="cost" readonly="1"
+                           groups="bso_dealsheet.group_dealsheet_manager"/>
+                    <field name="total_cost" readonly="1"
+                           groups="bso_dealsheet.group_dealsheet_manager"/>
+                    <field name="cost_delivery" readonly="1"
+                           groups="bso_dealsheet.group_dealsheet_manager"/>
+                    <field name="total_cost_delivery" readonly="1"
+                           groups="bso_dealsheet.group_dealsheet_manager"/>
+                </group>
+            </form>
         </field>
     </record>
 

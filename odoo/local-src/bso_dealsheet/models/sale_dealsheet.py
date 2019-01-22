@@ -31,33 +31,27 @@ class SaleDealsheet(models.Model):
     )
     sale_order_state = fields.Selection(
         related='sale_order_id.state',
-        readonly=True,
-        store=True
+        readonly=True
     )
     project_id = fields.Many2one(
         related='sale_order_id.project_id',
-        readonly=True,
-        store=True
+        readonly=True
     )
     partner_id = fields.Many2one(
         related='sale_order_id.partner_id',
-        readonly=True,
-        store=True
+        readonly=True
     )
     duration = fields.Integer(
         related='sale_order_id.duration',
-        readonly=True,
-        store=True
+        readonly=True
     )
     currency_id = fields.Many2one(
         related='sale_order_id.currency_id',
-        readonly=True,
-        store=True
+        readonly=True
     )
-    seller_id = fields.Many2one(
+    user_id = fields.Many2one(
         related='sale_order_id.user_id',
-        readonly=True,
-        store=True
+        readonly=True
     )
     presale_id = fields.Many2one(
         string='Pre-Sale',
@@ -91,27 +85,32 @@ class SaleDealsheet(models.Model):
         comodel_name='sale.dealsheet.line',
         inverse_name='dealsheet_id',
         domain=[('is_cost', '=', True), ('is_recurring', '=', True)],
-        context={'default_is_cost': True, 'default_is_recurring': True}
+        context={'default_is_cost': True, 'default_is_recurring': True},
+        copy=True
     )
     nrc_lines = fields.One2many(
         string='NRCs',
         comodel_name='sale.dealsheet.line',
         inverse_name='dealsheet_id',
         domain=[('is_cost', '=', True), ('is_recurring', '=', False)],
-        context={'default_is_cost': True, 'default_is_recurring': False}
+        context={'default_is_cost': True, 'default_is_recurring': False},
+        copy=True
     )
-    nrc = fields.Float(
+    nrc = fields.Monetary(
         string='NRC',
+        currency_field='currency_id',
         compute='compute_nrc',
         store=True
     )
-    nrc_delivery = fields.Float(
+    nrc_delivery = fields.Monetary(
         string='Delivery NRC',
+        currency_field='currency_id',
         compute='compute_nrc_delivery',
         store=True
     )
-    nrr = fields.Float(
+    nrr = fields.Monetary(
         string='NRR',
+        currency_field='currency_id',
         compute='compute_nrr',
         store=True
     )
@@ -125,18 +124,21 @@ class SaleDealsheet(models.Model):
         compute='compute_nrm_delivery',
         store=True
     )
-    mrc = fields.Float(
+    mrc = fields.Monetary(
         string='MRC',
+        currency_field='currency_id',
         compute='compute_mrc',
         store=True
     )
-    mrc_delivery = fields.Float(
+    mrc_delivery = fields.Monetary(
         string='Delivery MRC',
+        currency_field='currency_id',
         compute='compute_mrc_delivery',
         store=True
     )
-    mrr = fields.Float(
+    mrr = fields.Monetary(
         string='MRR',
+        currency_field='currency_id',
         compute='compute_mrr',
         store=True
     )
@@ -150,18 +152,21 @@ class SaleDealsheet(models.Model):
         compute='compute_mrm_delivery',
         store=True
     )
-    cost = fields.Float(
+    cost = fields.Monetary(
         string='Cost',
+        currency_field='currency_id',
         compute='compute_cost',
         store=True
     )
-    cost_delivery = fields.Float(
+    cost_delivery = fields.Monetary(
         string='Delivery Cost',
+        currency_field='currency_id',
         compute='compute_cost_delivery',
         store=True
     )
-    revenue = fields.Float(
+    revenue = fields.Monetary(
         string='Revenue',
+        currency_field='currency_id',
         compute='compute_revenue',
         store=True
     )
@@ -174,13 +179,6 @@ class SaleDealsheet(models.Model):
         string='Delivery Margin (%)',
         compute='compute_margin_delivery',
         store=True
-    )
-    summary = fields.One2many(
-        string='Summary',
-        comodel_name='sale.dealsheet.summary.line',
-        inverse_name='dealsheet_id',
-        default=lambda self: self.get_default_summary(),
-        readonly=True
     )
 
     # ATTACHMENTS
@@ -211,20 +209,12 @@ class SaleDealsheet(models.Model):
                           'default_res_id': self.id}
         return res
 
-    # DEFAULTS
-
-    @api.model
-    def get_default_summary(self):
-        return [(0, 0, {'cost_type': ct}) for ct in ('nr', 'mr', 'total')]
-
     # COMPUTES
 
     @api.depends('sale_order_id.name')
     def compute_name(self):
         for rec in self:
-            rec.update({
-                'name': "%s Dealsheet" % rec.sale_order_id.name
-            })
+            rec.name = "%s Dealsheet" % rec.sale_order_id.name
 
     @api.depends('sale_order_id.order_line')
     def compute_compute_lines(self):
@@ -240,120 +230,91 @@ class SaleDealsheet(models.Model):
                     continue
                 compute_lines += self.get_lines(order_line)
 
-            rec.update({
-                'compute_lines': compute_lines
-            })
+            rec.compute_lines = compute_lines
 
     @api.depends('nrc_lines.cost')
     def compute_nrc(self):
         for rec in self:
-            rec.update({
-                'nrc': sum(rec.mapped('nrc_lines.cost'))
-            })
+            rec.nrc = sum(rec.mapped('nrc_lines.total_cost'))
 
     @api.depends('nrc_lines.cost_delivery')
     def compute_nrc_delivery(self):
         for rec in self:
-            rec.update({
-                'nrc_delivery': sum(rec.mapped('nrc_lines.cost_delivery'))
-            })
+            rec.nrc_delivery = sum(
+                rec.mapped('nrc_lines.total_cost_delivery'))
 
     @api.depends('sale_order_id.order_line.price_subtotal')
     def compute_nrr(self):
         for rec in self:
-            rec.update({
-                'nrr': sum(
-                    l.price_subtotal for l in rec.sale_order_id.order_line
-                    if not l.product_id.recurring_invoice)
-            })
+            rec.nrr = sum(rec.sale_order_id.order_line
+                          .filtered(
+                lambda r: not r.product_id.recurring_invoice)
+                          .mapped('price_subtotal'))
 
     @api.depends('nrc', 'nrr')
     def compute_nrm(self):
         for rec in self:
-            rec.update({
-                'nrm': self.get_margin(rec.nrc, rec.nrr)
-            })
+            rec.nrm = self.get_margin(rec.nrc, rec.nrr)
 
     @api.depends('nrc_delivery', 'nrr')
     def compute_nrm_delivery(self):
         for rec in self:
-            rec.update({
-                'nrm_delivery': self.get_margin(rec.nrc_delivery, rec.nrr)
-            })
+            rec.nrm_delivery = self.get_margin(rec.nrc_delivery, rec.nrr)
 
     @api.depends('mrc_lines.cost')
     def compute_mrc(self):
         for rec in self:
-            rec.update({
-                'mrc': sum(rec.mapped('mrc_lines.cost'))
-            })
+            rec.mrc = sum(rec.mapped('mrc_lines.total_cost'))
 
     @api.depends('mrc_lines.cost_delivery')
     def compute_mrc_delivery(self):
         for rec in self:
-            rec.update({
-                'mrc_delivery': sum(rec.mapped('mrc_lines.cost_delivery'))
-            })
+            rec.mrc_delivery = sum(
+                rec.mapped('mrc_lines.total_cost_delivery'))
 
     @api.depends('sale_order_id.order_line.price_subtotal')
     def compute_mrr(self):
         for rec in self:
-            rec.update({
-                'mrr': sum(
-                    l.price_subtotal for l in rec.sale_order_id.order_line
-                    if l.product_id.recurring_invoice)
-            })
+            rec.mrr = sum(rec.sale_order_id.order_line
+                          .filtered(lambda r: r.product_id.recurring_invoice)
+                          .mapped('price_subtotal'))
 
     @api.depends('mrc', 'mrr')
     def compute_mrm(self):
         for rec in self:
-            rec.update({
-                'mrm': self.get_margin(rec.mrc, rec.mrr)
-            })
+            rec.mrm = self.get_margin(rec.mrc, rec.mrr)
 
     @api.depends('mrc_delivery', 'mrr')
     def compute_mrm_delivery(self):
         for rec in self:
-            rec.update({
-                'mrm_delivery': self.get_margin(rec.mrc_delivery, rec.mrr)
-            })
+            rec.mrm_delivery = self.get_margin(rec.mrc_delivery, rec.mrr)
 
     @api.depends('mrc', 'duration', 'nrc')
     def compute_cost(self):
         for rec in self:
-            rec.update({
-                'cost': rec.mrc * rec.duration + rec.nrc
-            })
+            rec.cost = rec.mrc * rec.duration + rec.nrc
 
     @api.depends('mrc_delivery', 'duration', 'nrc_delivery')
     def compute_cost_delivery(self):
         for rec in self:
-            cost_delivery = rec.mrc_delivery * rec.duration + rec.nrc_delivery
-            rec.update({
-                'cost_delivery': cost_delivery
-            })
+            rec.cost_delivery = rec.mrc_delivery * rec.duration \
+                                + rec.nrc_delivery
 
     @api.depends('mrr', 'duration', 'nrr')
     def compute_revenue(self):
         for rec in self:
-            rec.update({
-                'revenue': rec.mrr * rec.duration + rec.nrr
-            })
+            rec.revenue = rec.mrr * rec.duration + rec.nrr
 
     @api.depends('cost', 'revenue')
     def compute_margin(self):
         for rec in self:
-            rec.update({
-                'margin': self.get_margin(rec.cost, rec.revenue)
-            })
+            rec.margin = self.get_margin(rec.cost, rec.revenue)
 
     @api.depends('cost', 'revenue')
     def compute_margin_delivery(self):
         for rec in self:
-            rec.update({
-                'margin_delivery': self.get_margin(rec.cost_delivery,
-                                                   rec.revenue)
-            })
+            rec.margin_delivery = self.get_margin(rec.cost_delivery,
+                                                  rec.revenue)
 
     # TOOLS
 
@@ -389,7 +350,7 @@ class SaleDealsheet(models.Model):
                 order_line.product_id,
                 "%sM Protection" % epl_bandwidth,
                 order_line.product_uom_qty,
-                bundle_details_id.epl_backup_mrc * order_line.product_uom_qty
+                bundle_details_id.epl_backup_mrc
             )
             lines.append(data)
         lines += self.get_lines_bundle_products(
@@ -430,14 +391,13 @@ class SaleDealsheet(models.Model):
 
     @api.model
     def get_lines_product(self, order_line):
-        product_qty = order_line.product_uom_qty
         data = self.get_line_data(
             order_line.product_id.recurring_invoice,
             order_line,
             order_line.product_id,
             order_line.name,
             order_line.product_uom_qty,
-            order_line.product_id.standard_price * product_qty
+            order_line.product_id.standard_price
         )
         return [data]
 
@@ -492,7 +452,6 @@ class SaleDealsheet(models.Model):
             'sale_order_id': sale_order_id.id
         })
         sale_order_id.update({
-            'state': 'dealsheet',
             'dealsheet_id': dealsheet_id.id
         })
 
@@ -582,3 +541,14 @@ class SaleDealsheet(models.Model):
         self.message_post(subject=subject,
                           body=reason,
                           subtype='mt_comment')
+
+    @api.multi
+    def action_reset_draft(self):
+        self.ensure_one()
+        self.update({
+            'state': 'draft',
+            'presale_id': False,
+            'reviewer_id': False,
+            'validated_date': False,
+            'refused_date': False
+        })
