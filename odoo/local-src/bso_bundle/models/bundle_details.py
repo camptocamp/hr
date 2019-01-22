@@ -108,10 +108,10 @@ class BundleDetails(models.Model):
             for p in rec.bundle_products:
                 if not p.quantity:
                     continue
-                item_description = " (%s)" if p.description else ""
-                item = "%s%s: %s" % (p.product_id.display_name,
-                                     item_description,
-                                     p.quantity)
+                item = p.product_id.display_name
+                if p.description:
+                    item += " (%s)" % p.description
+                item += ": %s" % p.quantity
                 bundle_description.append(item)
             rec.update({
                 'bundle_description': '\n'.join(bundle_description)
@@ -174,8 +174,13 @@ class BundleDetails(models.Model):
                 'nrc_product': False,
                 'products': False,
             })
-        product.product_tmpl_id.sudo().write({'name': name})
+        self._set_product_name(product, name)
         return product
+
+    def _set_product_name(self, product_id, name):
+        tmpl_id = product_id.product_tmpl_id.sudo()
+        for lang in self.env['res.lang'].search([]):
+            tmpl_id.with_context({'lang': lang.code}).write({'name': name})
 
     @api.model
     def _set_line(self, product_id, description, price):
