@@ -41,7 +41,7 @@ class SaleDealsheetSourceLineMixin(models.AbstractModel):
         related='dealsheet_line_id.uom_id',
         readonly=True
     )
-    price = fields.Float(
+    price = fields.Monetary(
         related='dealsheet_line_id.cost',
         readonly=True
     )
