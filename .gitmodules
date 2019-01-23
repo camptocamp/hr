@@ -54,11 +54,11 @@
 	branch = 10.0
 [submodule "odoo/external-src/account-financial-reporting"]
 	path = odoo/external-src/account-financial-reporting
-	url = https://github.com/OCA/account-financial-reporting
+	url = git@github.com:OCA/account-financial-reporting.git
 	branch = 10.0
 [submodule "odoo/external-src/reporting-engine"]
 	path = odoo/external-src/reporting-engine
-	url = https://github.com/OCA/reporting-engine
+	url = git@github.com:OCA/reporting-engine.git
 	branch = 10.0
 [submodule "odoo/external-src/account-invoicing"]
 	path = odoo/external-src/account-invoicing
@@ -107,5 +107,5 @@
 	branch = 10.0
 [submodule "odoo/external-src/currency"]
 	path = odoo/external-src/currency
-	url = git@github.com:oca/currency.git
+	url = git@github.com:OCA/currency.git
 	branch = 10.0
