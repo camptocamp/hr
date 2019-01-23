@@ -246,10 +246,9 @@ class SaleDealsheet(models.Model):
     @api.depends('sale_order_id.order_line.price_subtotal')
     def compute_nrr(self):
         for rec in self:
-            rec.nrr = sum(rec.sale_order_id.order_line
-                          .filtered(
-                lambda r: not r.product_id.recurring_invoice)
-                          .mapped('price_subtotal'))
+            rec.nrr = sum(rec.sale_order_id.order_line.filtered(
+                lambda r: not r.product_id.recurring_invoice).mapped(
+                'price_subtotal'))
 
     @api.depends('nrc', 'nrr')
     def compute_nrm(self):

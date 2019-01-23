@@ -41,6 +41,10 @@ class SaleDealsheetSourceLineMixin(models.AbstractModel):
         related='dealsheet_line_id.uom_id',
         readonly=True
     )
+    currency_id = fields.Many2one(
+        related='dealsheet_line_id.currency_id',
+        readonly=True
+    )
     price = fields.Monetary(
         related='dealsheet_line_id.cost',
         readonly=True
