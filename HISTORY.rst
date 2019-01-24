@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.20.0 (2019-01-24)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1127: Add oca/currency repository
 * BSIBSO-1127: Add from oca/currency the module currency_monthly_rate
 * BSIBSO-1127: Update oca account_multicurrency_revaluation to add rate_type
@@ -40,8 +52,6 @@ Latest (Unreleased)
 
 * BSIBSO-1111: Migrate project to docker image 3.1
 * BSIBSO-1118: Apply patches for ODOO-SA-2018-11-28
-
-**Documentation**
 
 
 10.19.0 (2018-12-20)
