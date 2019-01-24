@@ -12,7 +12,7 @@
                             type="object"
                             states="draft"
                             class="oe_highlight"
-                            groups="bso_dealsheet.group_dealsheet_manager"/>
+                            groups="bso_dealsheet.group_dealsheet_role_presale"/>
                     <button name="action_validate"
                             string="Validate"
                             type="object"
@@ -24,6 +24,11 @@
                             type="object"
                             states="confirmed"
                             groups="bso_dealsheet.group_dealsheet_role_reviewer"/>
+                    <button name="action_reset_draft"
+                            string="Reset to Draft"
+                            type="object"
+                            attrs="{'invisible': ['|', ('state', 'in', ('draft')), ('sale_order_state', 'in', ('sale', 'done'))]}"
+                            groups="bso_dealsheet.group_dealsheet_role_presale"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,confirmed,validated"/>
                     <field name="name" invisible="1"/>
@@ -47,37 +52,86 @@
                         <field name="sale_order_state" invisible="1"/>
                         <field name="project_id" invisible="1"/>
                         <field name="partner_id"/>
-                        <field name="seller_id"/>
+                        <field name="user_id"/>
                         <field name="duration"/>
                         <field name="currency_id"/>
+                    </group>
+                    <div groups="bso_dealsheet.group_dealsheet_officer">
                         <field name="compute_lines" invisible="1"/>
-                    </group>
-                    <group>
-                        <field name="mrc_lines"/>
-                    </group>
-                    <group>
-                        <field name="nrc_lines"/>
-                    </group>
-                    <group>
-                        <group>
-                            <field name="nrc" invisible="1"/>
-                            <field name="nrc_delivery" invisible="1"/>
-                            <field name="nrr" invisible="1"/>
-                            <field name="nrm" invisible="1"/>
-                            <field name="nrm_delivery" invisible="1"/>
-                            <field name="mrc" invisible="1"/>
-                            <field name="mrc_delivery" invisible="1"/>
-                            <field name="mrr" invisible="1"/>
-                            <field name="mrm" invisible="1"/>
-                            <field name="mrm_delivery" invisible="1"/>
-                            <field name="cost" invisible="1"/>
-                            <field name="cost_delivery" invisible="1"/>
-                            <field name="revenue" invisible="1"/>
-                            <field name="margin" invisible="1"/>
-                            <field name="margin_delivery" invisible="1"/>
-                            <field name="summary"/>
-                        </group>
-                    </group>
+                        <h2>MRC</h2>
+                        <field name="mrc_lines"
+                               attrs="{'readonly': [('state', 'not in', ('draft', 'confirmed'))]}"/>
+                        <H2>NRC</H2>
+                        <field name="nrc_lines"
+                               attrs="{'readonly': [('state', 'not in', ('draft', 'confirmed'))]}"/>
+                    </div>
+                    <div id="dealsheet_summary">
+                        <!--attrs="{'invisible': [('state', 'not in' 'validated')]}"-->
+                        <h2>Summary</h2>
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Cost</th>
+                                    <th>Revenue</th>
+                                    <th>Margin</th>
+                                    <th groups="bso_dealsheet.group_dealsheet_manager">
+                                        Delivery
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        Non Recurring
+                                    </td>
+                                    <td>
+                                        <field name="nrc"/>
+                                    </td>
+                                    <td>
+                                        <field name="nrr"/>
+                                    </td>
+                                    <td><field name="nrm"/>%
+                                    </td>
+                                    <td groups="bso_dealsheet.group_dealsheet_manager">
+                                        <field name="nrm_delivery"/>%
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        Monthly Recurring
+                                    </td>
+                                    <td>
+                                        <field name="mrc"/>
+                                    </td>
+                                    <td>
+                                        <field name="mrr"/>
+                                    </td>
+                                    <td><field name="mrm"/>%
+                                    </td>
+                                    <td groups="bso_dealsheet.group_dealsheet_manager">
+                                        <field name="mrm_delivery"/>%
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        Total Contract
+                                    </td>
+                                    <td>
+                                        <field name="cost"/>
+                                    </td>
+                                    <td>
+                                        <field name="revenue"/>
+                                    </td>
+                                    <td><field name="margin"/>%
+                                    </td>
+                                    <td groups="bso_dealsheet.group_dealsheet_manager">
+                                        <field name="margin_delivery"/>%
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids"
@@ -101,45 +155,29 @@
                 <field name="refused_date"/>
                 <field name="project_id" invisible="1"/>
                 <field name="partner_id"/>
-                <field name="seller_id"/>
+                <field name="user_id"/>
                 <field name="presale_id"/>
                 <field name="reviewer_id"/>
                 <field name="duration"/>
                 <field name="currency_id" invisible="1"/>
-                <field name="compute_lines" invisible="1"/>
                 <field name="mrc_lines" invisible="1"/>
                 <field name="nrc_lines" invisible="1"/>
-                <field name="nrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       invisible="1"/>
-                <field name="nrc_delivery" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       invisible="1"/>
-                <field name="nrr" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       invisible="1"/>
+                <field name="nrc" invisible="1"/>
+                <field name="nrc_delivery" invisible="1"/>
+                <field name="nrr" invisible="1"/>
                 <field name="nrm" invisible="1"/>
                 <field name="nrm_delivery" invisible="1"/>
-                <field name="mrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       invisible="1"/>
-                <field name="mrc_delivery" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       invisible="1"/>
-                <field name="mrr" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       invisible="1"/>
+                <field name="mrc" invisible="1"/>
+                <field name="mrc_delivery" invisible="1"/>
+                <field name="mrr" invisible="1"/>
                 <field name="mrm" invisible="1"/>
                 <field name="mrm_delivery" invisible="1"/>
-                <field name="cost" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="cost_delivery" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       invisible="1"/>
-                <field name="revenue" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
+                <field name="cost"/>
+                <field name="cost_delivery" invisible="1"/>
+                <field name="revenue"/>
                 <field name="margin"/>
-                <field name="margin_delivery" invisible="1"/>
+                <field name="margin_delivery"
+                       groups="bso_dealsheet.group_dealsheet_manager"/>
                 <field name="state"/>
                 <field name="attachment_number" invisible="True"/>
                 <button name="action_get_attachment_view"
@@ -147,6 +185,26 @@
                         icon="fa-paperclip"
                         attrs="{'invisible': [('attachment_number', '=', 0)]}"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="dealsheet_form_group_delivery" model="ir.ui.view">
+        <field name="name">sale.dealsheet.form.group_delivery</field>
+        <field name="model">sale.dealsheet</field>
+        <field name="inherit_id" ref="bso_dealsheet.dealsheet_form"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_dealsheet.group_dealsheet_role_delivery')])]"/>
+        <field name="arch" type="xml">
+            <field name="mrc_lines" position="attributes">
+                <attribute name="attrs">
+                    {'readonly': [('state', 'not in', ('validated'))]}
+                </attribute>
+            </field>
+            <field name="nrc_lines" position="attributes">
+                <attribute name="attrs">
+                    {'readonly': [('state', 'not in', ('validated'))]}
+                </attribute>
+            </field>
         </field>
     </record>
 

@@ -465,6 +465,10 @@ migration:
           - currency_monthly_rate
           #### oca/account-closing
           - account_multicurrency_revaluation
+          #### local-src
+          - bso_bundle
+          - bso_dealsheet
+          - dealsheet_purchase_sourcing
       operations:
         post:
          - anthem songs.upgrade.upgrade_10_20_0::post

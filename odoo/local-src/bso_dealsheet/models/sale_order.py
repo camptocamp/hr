@@ -12,7 +12,11 @@ class SaleOrder(models.Model):
     dealsheet_id = fields.Many2one(
         string='Dealsheet',
         comodel_name='sale.dealsheet',
-        copy=False,
+        readonly=True
+    )
+    dealsheet_state = fields.Selection(
+        string='Dealsheet State',
+        related='dealsheet_id.state',
         readonly=True
     )
 
@@ -31,14 +35,6 @@ class SaleOrder(models.Model):
             'sale_order_id': self.id
         })
         self.update({
-            'state': 'dealsheet',
             'dealsheet_id': dealsheet_id.id
         })
         return dealsheet_id
-
-    @api.multi
-    def unlink(self):
-        for rec in self:
-            if rec.state == 'dealsheet':
-                rec.write({'state': 'draft'})
-        return super(SaleOrder, self).unlink()

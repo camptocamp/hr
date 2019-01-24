@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="sale_order_field_dealsheet" model="ir.ui.view">
-        <field name="name">sale.order.field.dealsheet</field>
+    <record id="sale_order_dealsheet" model="ir.ui.view">
+        <field name="name">sale.order.dealsheet</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority">99</field>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='payment_term_id']" position="after">
+            <field name="payment_term_id" position="after">
                 <field name="dealsheet_id"
                        groups="bso_dealsheet.group_dealsheet_user"/>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="sale_order_header_dealsheet" model="ir.ui.view">
-        <field name="name">sale.order.header.dealsheet</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="priority">17</field>
-        <field name="arch" type="xml">
+                <field name="dealsheet_state" invisible="1"/>
+            </field>
             <xpath expr="//header" position="replace">
                 <header>
                     <button name="action_dealsheet"
@@ -27,17 +20,17 @@
                             attrs="{'invisible': [('dealsheet_id', '!=', False)]}"/>
                     <button name="action_quotation_send" string="Send by Email"
                             type="object" class="btn-primary"
-                            attrs="{'invisible': ['|', ('dealsheet_id', '=', False), ('state', '!=', 'draft')]}"/>
+                            attrs="{'invisible': ['|', ('dealsheet_state', '!=', 'validated'), ('state', '!=', 'draft')]}"/>
                     <button name="action_quotation_send" string="Send by Email"
                             type="object" states="sent,sale"/>
                     <button name="print_quotation" string="Print"
                             type="object" class="btn-primary"
-                            attrs="{'invisible': ['|', ('dealsheet_id', '=', False), ('state', '!=', 'draft')]}"/>
+                            attrs="{'invisible': ['|', ('dealsheet_state', '!=', 'validated'), ('state', '!=', 'draft')]}"/>
                     <button name="print_quotation" string="Print"
                             type="object" states="sent,sale"/>
                     <button name="action_confirm" string="Confirm Sale"
                             type="object"
-                            attrs="{'invisible': ['|', ('dealsheet_id', '=', False), ('state', '!=', 'draft')]}"/>
+                            attrs="{'invisible': ['|', ('dealsheet_state', '!=', 'validated'), ('state', '!=', 'draft')]}"/>
                     <button name="action_confirm" string="Confirm Sale"
                             type="object" states="sent" class="btn-primary"/>
                     <button name="action_invoicing" string="Create Invoice"

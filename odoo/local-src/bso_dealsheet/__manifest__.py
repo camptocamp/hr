@@ -16,11 +16,10 @@
         'security/ir.model.access.csv',
         'views/sale_dealsheet.xml',
         'views/sale_dealsheet_line.xml',
-        'views/sale_dealsheet_summary_line.xml',
         'views/sale_dealsheet_wizard_confirm.xml',
         'views/sale_dealsheet_wizard_refuse.xml',
         'views/sale_dealsheet_wizard_request.xml',
         'views/sale_order.xml',
     ],
-    'application': False,
+    'application': True,
 }
