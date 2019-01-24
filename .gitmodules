@@ -107,5 +107,5 @@
 	branch = 10.0
 [submodule "odoo/external-src/currency"]
 	path = odoo/external-src/currency
-	url = git@github.com:camptocamp/currency.git
+	url = git@github.com:oca/currency.git
 	branch = 10.0
