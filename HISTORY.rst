@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1130: install sale_contract_tax_subscription
+
 **Bugfixes**
 
 **Build**
