@@ -101,11 +101,11 @@ var BSODashboardGraph = kanban_widgets.AbstractField.extend({
                     break;
             }
 
-            var div_kanban_record = self.getParent().$el[0]
-            var div_graph_svg = self.$el.find('svg')[0]
+            var div_kanban_record = self.getParent().$el[0];
+            var div_graph_svg = self.$el.find('svg')[0];
 
             $(div_kanban_record).css({
-                'min-width': self.settings.width,
+                'min-width': self.settings.width
             });
             $(div_graph_svg).css({
                 'height': self.settings.height

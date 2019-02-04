@@ -312,3 +312,11 @@ class BSODashboardGraph(models.Model):
             "target": "new",
             "res_id": self.settings_id.id,
         }
+
+    @api.multi
+    def action_print_xls_report(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': 'bso.dashboard.report',
+        }
