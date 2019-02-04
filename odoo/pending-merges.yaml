@@ -93,3 +93,10 @@
     # Security advisors 2018-11-28
     - git am "$(git format-patch -1 5472bbded51056a2322a24304db62e1d65dca464 -o ../patches)"
     - git am "$(git format-patch -1 9043305fa01fc21dc8a7dd996aa20765dbc7d93c -o ../patches)"
+./external-src/odoo-enterprise-addons:
+  remotes:
+    camptocamp: git@github.com:camptocamp/odoo-enterprise-addons.git
+  merges:
+    - camptocamp 10.0
+    - camptocamp refs/pull/1/head
+  target: *default_target

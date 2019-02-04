@@ -60,6 +60,9 @@ migration:
           - stock
           - website_contract
           - website_quote
+          #### camptocamp
+          # odoo-enterprise-addons
+          - sale_contract_tax_subscription
           #### OCA
           # account-closing
           - account_cutoff_prepaid
@@ -474,3 +477,8 @@ migration:
       operations:
         post:
          - anthem songs.upgrade.upgrade_10_20_0::post
+    - version: 10.21.0
+      addons:
+        upgrade:
+        # camptocamp/odoo-enterprise-addons
+        - sale_contract_tax_subscription

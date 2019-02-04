@@ -91,6 +91,7 @@ ENV ADDONS_PATH="/odoo/external-src/enterprise, \
   /odoo/external-src/web, \
   /odoo/external-src/reporting-engine, \
   /odoo/external-src/odoo-cloud-platform, \
+  /odoo/external-src/odoo-enterprise-addons, \
   /odoo/external-src/odoo-usability, \
   /odoo/external-src/social, \
   /odoo/external-src/account-closing, \
