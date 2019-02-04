@@ -320,3 +320,4 @@ class BSODashboardGraph(models.Model):
             'type': 'ir.actions.report.xml',
             'report_name': 'bso.dashboard.report',
         }
+
