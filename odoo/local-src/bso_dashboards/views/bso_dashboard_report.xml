@@ -3,11 +3,10 @@
     <report
             id="bso_dashboard_report"
             model="bso.dashboard.graph"
-            string="Graph Report"
+            string="bso.dashboard.graph"
             report_type="xlsx"
             name="bso.dashboard.report"
             file="bso.dashboard.report"
             attachment_use="False"
     />
 </odoo>
-

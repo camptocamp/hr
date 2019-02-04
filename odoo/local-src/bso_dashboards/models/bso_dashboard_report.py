@@ -14,14 +14,15 @@ class BSODashboardReport(ReportXlsx):
         data = json.loads(graph.graph).get('data', [])
         if not data:
             return
-        sheet = workbook.add_worksheet(graph.name)
+        sheet = workbook.add_worksheet('Sheet 1')
         bold = workbook.add_format({'bold': True})
         x_axis_label = self.get_axis_label(graph.groupby_id,
                                            graph.groupby_interval)
         y_axis_label = self.get_axis_label(graph.measure_id,
                                            graph.measure_consolidate_id)
-        sheet.write(0, 0, x_axis_label, bold)
-        sheet.write(0, 1, y_axis_label, bold)
+        sheet.write(0, 0, graph.name)
+        sheet.write(1, 0, x_axis_label, bold)
+        sheet.write(1, 1, y_axis_label, bold)
         if graph_type == 'bar' or graph_type == 'line':
             data = data[0].get('values', [])
         for counter, line in enumerate(data):

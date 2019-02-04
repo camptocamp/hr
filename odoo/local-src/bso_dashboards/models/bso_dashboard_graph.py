@@ -5,8 +5,9 @@
 import json
 from collections import OrderedDict, defaultdict
 
-from odoo import models, fields, api
 from odoo.tools.safe_eval import safe_eval
+
+from odoo import models, fields, api
 
 
 class OrderedDefaultDict(OrderedDict, defaultdict):
@@ -320,4 +321,3 @@ class BSODashboardGraph(models.Model):
             'type': 'ir.actions.report.xml',
             'report_name': 'bso.dashboard.report',
         }
-
