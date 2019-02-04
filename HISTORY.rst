@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BSIBSO-1132: update odoo and enterprise to latest
+
 **Build**
 
 **Documentation**

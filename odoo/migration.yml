@@ -480,5 +480,6 @@ migration:
     - version: 10.21.0
       addons:
         upgrade:
-        # camptocamp/odoo-enterprise-addons
-        - sale_contract_tax_subscription
+          - base
+          # camptocamp/odoo-enterprise-addons
+          - sale_contract_tax_subscription

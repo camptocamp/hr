@@ -6,11 +6,11 @@
 	url = git@github.com:oca/web.git
 [submodule "odoo/external-src/enterprise"]
 	path = odoo/external-src/enterprise
-	url = git@github.com:camptocamp/enterprise.git
+	url = git@github.com:odoo/enterprise.git
 	branch = 10.0
 [submodule "odoo/src"]
 	path = odoo/src
-	url = git@github.com:camptocamp/odoo.git
+	url = git@github.com:OCA/OCB.git
 [submodule "odoo/external-src/product-variant"]
 	path = odoo/external-src/product-variant
 	url = git@github.com:OCA/product-variant.git
