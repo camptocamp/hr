@@ -21,15 +21,23 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.21.0 (2019-02-05)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1130: install sale_contract_tax_subscription
 
 **Bugfixes**
 
 * BSIBSO-1132: update odoo and enterprise to latest
-
-**Build**
-
-**Documentation**
 
 
 10.20.0 (2019-01-24)
