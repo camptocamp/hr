@@ -29,6 +29,8 @@ Latest (Unreleased)
 
 **Build**
 
+* BSIBSO-1134: use wkhtml2pdf 0.12.5
+
 **Documentation**
 
 
