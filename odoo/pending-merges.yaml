@@ -1,8 +1,6 @@
 # file used with gitaggregate: https://github.com/acsone/git-aggregator
 # please see docs in docs/how-to-integrate-pull-request.md
-#
-# TODO v10: upgrade everything to v10.
-# See https://jira.camptocamp.com/browse/BSBSO10-2 + https://jira.camptocamp.com/browse/BSBSO10-6
+
 ./external-src/sale-workflow:
   remotes:
     oca: git@github.com:OCA/sale-workflow.git
@@ -56,43 +54,6 @@
     - camptocamp refs/pull/14/head
     - camptocamp refs/pull/15/head
   target: *default_target
-./external-src/enterprise:
-  remotes:
-    odoo: git@github.com:odoo/enterprise.git
-    camptocamp: git@github.com:camptocamp/enterprise.git
-  fetch_all:
-    odoo
-  merges:
-    - odoo 6e7140a39e6f8073142a5a40b0db7f1c700f8fcc
-  shell_command_after:
-    # security patch ODOO-SA-2018-11-28-1
-    - git am "$(git format-patch -1 410e038dd4e561143d741862203e7f3ed69f326a -o ../../patches)"
-  target: *default_target
-./src:
-  remotes:
-    oca: git@github.com:OCA/OCB.git
-    camptocamp: git@github.com:camptocamp/odoo.git
-  fetch_all:
-    oca
-  merges:
-    - oca 144402c7cb62324ec103e8aec8198a6f27a65cd9
-  target: *default_target
-  shell_command_after:
-    # Security advisors 2018-08-07
-    - git am "$(git format-patch -1 dae282279947e1f9cccad5ec0244ee654132509b -o ../patches)"
-    - git am "$(git format-patch -1 7501691da9a9dae832b7d6e78c6a5f57fc983b5c -o ../patches)"
-    - git am "$(git format-patch -1 b0203084133bee0dadc004debf3b0fb2835d0ffd -o ../patches)"
-    - git am "$(git format-patch -1 4c7e74f5e93a4832db8b8e15beb70a4aa90b2eee -o ../patches)"
-    - git am "$(git format-patch -1 19ac9fba0d4be4e30d6103e6ebd49b466adb74b5 -o ../patches)"
-    - git am "$(git format-patch -1 e00370e194ffa0c527bb4669401949cc6a15f55f -o ../patches)"
-    - git am "$(git format-patch -1 2d32609440239bd284fd472851a5c7936aa516ed -o ../patches)"
-    - git am "$(git format-patch -1 ef017ab1ab7bc5988ad30ab92a445079e245cf03 -o ../patches)"
-    - git am "$(git format-patch -1 0dbed816b90db5be06c60bf0e4a74411c9cf962e -o ../patches)"
-    - git am "$(git format-patch -1 2c9c7e770addb152f6d424c3ea0f6ac9bcc25a56 -o ../patches)"
-    - git am "$(git format-patch -1 e93fa785629500e997330731d84853eb2edac299 -o ../patches)"
-    # Security advisors 2018-11-28
-    - git am "$(git format-patch -1 5472bbded51056a2322a24304db62e1d65dca464 -o ../patches)"
-    - git am "$(git format-patch -1 9043305fa01fc21dc8a7dd996aa20765dbc7d93c -o ../patches)"
 ./external-src/odoo-enterprise-addons:
   remotes:
     camptocamp: git@github.com:camptocamp/odoo-enterprise-addons.git
