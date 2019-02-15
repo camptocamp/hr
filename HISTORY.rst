@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1137: fix naming of manually created analytic accounts
+
 **Bugfixes**
 
 **Build**

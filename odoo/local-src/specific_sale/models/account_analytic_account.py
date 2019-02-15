@@ -9,7 +9,8 @@ from odoo import fields, models, api, _
 class AccountAnalyticAccount(models.Model):
     _inherit = "account.analytic.account"
 
-    name = fields.Char(default='/')
+    name = fields.Char(default='/', readonly=1)
+    partner_id = fields.Many2one(required=1)
 
     @api.multi
     def name_get(self):
