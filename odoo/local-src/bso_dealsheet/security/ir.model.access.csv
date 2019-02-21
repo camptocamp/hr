@@ -1,7 +1,7 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sale_dealsheet_user,sale.dealsheet.user,model_sale_dealsheet,group_dealsheet_user,1,0,0,0
-access_sale_dealsheet_officer,sale.dealsheet.officer,model_sale_dealsheet,group_dealsheet_officer,1,0,0,0
-access_sale_dealsheet_manager,sale.dealsheet.manager,model_sale_dealsheet,group_dealsheet_manager,1,1,1,1
-access_sale_dealsheet_line_user,sale.dealsheet.line.user,model_sale_dealsheet_line,group_dealsheet_user,1,0,0,0
-access_sale_dealsheet_line_officer,sale.dealsheet.line.officer,model_sale_dealsheet_line,group_dealsheet_officer,1,0,0,0
-access_sale_dealsheet_line_manager,sale.dealsheet.line.manager,model_sale_dealsheet_line,group_dealsheet_manager,1,1,1,1
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink,perm_export
+access_sale_dealsheet_user,sale.dealsheet.user,model_sale_dealsheet,group_dealsheet_user,1,0,0,0,0
+access_sale_dealsheet_officer,sale.dealsheet.officer,model_sale_dealsheet,group_dealsheet_officer,1,0,0,0,0
+access_sale_dealsheet_manager,sale.dealsheet.manager,model_sale_dealsheet,group_dealsheet_manager,1,1,1,1,1
+access_sale_dealsheet_line_user,sale.dealsheet.line.user,model_sale_dealsheet_line,group_dealsheet_user,1,0,0,0,0
+access_sale_dealsheet_line_officer,sale.dealsheet.line.officer,model_sale_dealsheet_line,group_dealsheet_officer,1,0,0,0,0
+access_sale_dealsheet_line_manager,sale.dealsheet.line.manager,model_sale_dealsheet_line,group_dealsheet_manager,1,1,1,1,1
