@@ -12,8 +12,8 @@
                 <field name="a_xco_id"/>
                 <field name="z_device_id"/>
                 <field name="z_xco_id"/>
-                <field name="supplier_id" invisible="1"/>
-                <field name="supplier_name"/>
+                <field name="supplier_id"/>
+                <field name="supplier_name" invisible="1"/>
                 <field name="supplier_link_ref"/>
                 <field name="is_wireless"/>
                 <field name="latency"/>
@@ -26,36 +26,6 @@
                 <field name="is_protected"/>
                 <field name="cable_system_protection"
                        attrs="{'invisible': [('is_protected', '=', False)]}"/>
-                <field name="currency_id"
-                       groups="bso_backbone.group_backbone_manager"/>
-                <field name="nrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"/>
-                <field name="mrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"/>
-                <field name="mrc_mb" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"
-                       invisible="1"/>
-                <field name="nrr" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"
-                       invisible="1"/>
-                <field name="mrr" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"
-                       invisible="1"/>
-                <field name="mrr_mb" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"
-                       invisible="1"/>
-                <field name="date_start"
-                       groups="bso_backbone.group_backbone_manager"/>
-                <field name="date_end"
-                       groups="bso_backbone.group_backbone_manager"/>
-                <field name="auto_renewal"
-                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="notes" invisible="1"/>
                 <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
@@ -64,6 +34,37 @@
                         icon="fa-paperclip"
                         attrs="{'invisible': [('attachment_number', '=', 0)]}"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="backbone_link_tree_group_manager" model="ir.ui.view">
+        <field name="name">backbone.link.tree.group_manager</field>
+        <field name="model">backbone.link</field>
+        <field name="inherit_id" ref="bso_backbone.backbone_link_tree"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_backbone.group_backbone_manager')])]"/>
+        <field name="arch" type="xml">
+            <field name="notes" position="before">
+                <field name="currency_id"
+                       options="{'create': false, 'create_edit': false}"/>
+                <field name="nrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrc_mb" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="nrr" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrr" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrr_mb" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="auto_renewal"/>
+            </field>
         </field>
     </record>
 
@@ -84,16 +85,17 @@
                     </div>
                     <group>
                         <field name="name" invisible="1"/>
-                        <field name="cympa_id" domain="[('a_device_id', 'in',(a_device_id,z_device_id)),('z_device_id', 'in',(a_device_id,z_device_id)),('link_id', '=',False)]"/>
+                        <field name="cympa_id"
+                               domain="[('a_device_id', 'in',(a_device_id,z_device_id)),('z_device_id', 'in',(a_device_id,z_device_id)),('link_id', '=',False)]"/>
                         <field name="a_device_id"/>
                         <field name="a_xco_id"/>
                         <field name="z_device_id"/>
                         <field name="z_xco_id"/>
                     </group>
                     <group>
-                        <field name="supplier_id" invisible="1"
+                        <field name="supplier_id"
                                options="{'create': false, 'create_edit': false}"/>
-                        <field name="supplier_name"/>
+                        <field name="supplier_name" invisible="1"/>
                         <field name="supplier_link_ref"/>
                         <field name="is_wireless"/>
                         <field name="latency"/>
@@ -107,27 +109,7 @@
                         <field name="cable_system_protection"
                                attrs="{'invisible': [('is_protected', '=', False)]}"/>
                     </group>
-                    <group groups="bso_backbone.group_backbone_manager">
-                        <field name="currency_id"
-                               options="{'create': false, 'create_edit': false}"/>
-                        <field name="nrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="mrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="mrc_mb" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"
-                               invisible="1"/>
-                        <field name="nrr" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="mrr" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="mrr_mb" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"
-                               invisible="1"/>
-                        <field name="date_start"/>
-                        <field name="date_end"/>
-                        <field name="auto_renewal"/>
-                    </group>
+                    <group groups="bso_backbone.group_backbone_manager"/>
                     <group>
                         <field name="notes"/>
                     </group>
@@ -142,17 +124,49 @@
         </field>
     </record>
 
+    <record id="backbone_link_form_group_manager" model="ir.ui.view">
+        <field name="name">backbone.link.form.group_manager</field>
+        <field name="model">backbone.link</field>
+        <field name="inherit_id" ref="bso_backbone.backbone_link_form"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_backbone.group_backbone_manager')])]"/>
+        <field name="arch" type="xml">
+            <group groups="bso_backbone.group_backbone_manager"
+                   position="inside">
+                <field name="currency_id"
+                       options="{'create': false, 'create_edit': false}"/>
+                <field name="nrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrc_mb" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="nrr" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrr" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrr_mb" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       invisible="1"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="auto_renewal"/>
+            </group>
+        </field>
+    </record>
+
     <record id="backbone_link_search" model="ir.ui.view">
         <field name="name">backbone.link.search</field>
         <field name="model">backbone.link</field>
         <field name="arch" type="xml">
             <search string="Link">
-                <field name="name"/>
+                <field name="name" invisible="1"/>
                 <field name="cympa_id"/>
                 <field name="a_device_id"/>
                 <field name="z_device_id"/>
-                <field name="supplier_id" invisible="1"/>
-                <field name="supplier_name"/>
+                <field name="supplier_id"/>
+                <field name="supplier_name" invisible="1"/>
                 <field name="supplier_link_ref"/>
                 <separator/>
                 <filter string="Archived" domain="[('active', '=', False)]"/>

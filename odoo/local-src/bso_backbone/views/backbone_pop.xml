@@ -8,28 +8,11 @@
             <tree string="POP">
                 <field name="name"/>
                 <field name="code"/>
-                <field name="supplier_id" invisible="1"/>
-                <field name="supplier_name"/>
+                <field name="supplier_id"/>
+                <field name="supplier_name" invisible="1"/>
                 <field name="address"/>
                 <field name="latitude"/>
                 <field name="longitude"/>
-                <field name="currency_id"
-                       groups="bso_backbone.group_backbone_manager"/>
-                <field name="kva_mrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"/>
-                <field name="rack_nrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"/>
-                <field name="rack_mrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"/>
-                <field name="xco_nrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"/>
-                <field name="xco_mrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_manager"/>
                 <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
                 <button name="action_get_attachment_view"
@@ -37,6 +20,29 @@
                         icon="fa-paperclip"
                         attrs="{'invisible': [('attachment_number', '=', 0)]}"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="backbone_pop_tree_group_manager" model="ir.ui.view">
+        <field name="name">backbone.pop.tree.group_manager</field>
+        <field name="model">backbone.pop</field>
+        <field name="inherit_id" ref="bso_backbone.backbone_pop_tree"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_backbone.group_backbone_manager')])]"/>
+        <field name="arch" type="xml">
+            <field name="active" position="before">
+                <field name="currency_id"/>
+                <field name="kva_mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="rack_nrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="rack_mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="xco_nrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="xco_mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+            </field>
         </field>
     </record>
 
@@ -58,27 +64,14 @@
                     <group>
                         <field name="name"/>
                         <field name="code"/>
-                        <field name="supplier_id" invisible="1"
+                        <field name="supplier_id"
                                options="{'create': false, 'create_edit': false}"/>
-                        <field name="supplier_name"/>
+                        <field name="supplier_name" invisible="1"/>
                         <field name="address"/>
                         <field name="latitude"/>
                         <field name="longitude"/>
                     </group>
-                    <group groups="bso_backbone.group_backbone_manager">
-                        <field name="currency_id"
-                               options="{'create': false, 'create_edit': false}"/>
-                        <field name="kva_mrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="rack_nrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="rack_mrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="xco_nrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="xco_mrc" widget="monetary"
-                               options="{'currency_field': 'currency_id'}"/>
-                    </group>
+                    <group groups="bso_backbone.group_backbone_manager"/>
                     <group>
                         <field name="active"/>
                     </group>
@@ -90,6 +83,31 @@
         </field>
     </record>
 
+    <record id="backbone_pop_form_group_manager" model="ir.ui.view">
+        <field name="name">backbone.pop.form.group_manager</field>
+        <field name="model">backbone.pop</field>
+        <field name="inherit_id" ref="bso_backbone.backbone_pop_form"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_backbone.group_backbone_manager')])]"/>
+        <field name="arch" type="xml">
+            <group groups="bso_backbone.group_backbone_manager"
+                   position="inside">
+                <field name="currency_id"
+                       options="{'create': false, 'create_edit': false}"/>
+                <field name="kva_mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="rack_nrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="rack_mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="xco_nrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="xco_mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+            </group>
+        </field>
+    </record>
+
     <record id="backbone_pop_search" model="ir.ui.view">
         <field name="name">backbone.pop.search</field>
         <field name="model">backbone.pop</field>
@@ -97,7 +115,8 @@
             <search string="Pop">
                 <field name="name"/>
                 <field name="code"/>
-                <field name="supplier_name"/>
+                <field name="supplier_id"/>
+                <field name="supplier_name" invisible="1"/>
                 <separator/>
                 <filter string="Archived" domain="[('active', '=', False)]"/>
             </search>
