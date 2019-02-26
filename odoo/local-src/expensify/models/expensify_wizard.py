@@ -1,5 +1,4 @@
-from odoo import models, fields, api, exceptions, _
-import datetime
+from odoo import models, fields, api
 
 
 class ExpensifyWizard(models.TransientModel):
@@ -10,43 +9,12 @@ class ExpensifyWizard(models.TransientModel):
         comodel_name='hr.employee',
         required=True
     )
-    company_id = fields.Many2one(
-        string='Company',
-        related='employee_id.company_id',
-        readonly=True
-    )
-    since_date = fields.Date(
-        string='Since date',
-        required=True
-    )
     expensify_expenses = fields.One2many(
         string='Expenses',
         comodel_name='expensify.expense',
         inverse_name='expensify_wizard_id',
         required=True
     )
-
-    @api.multi
-    def button_import_submit(self):
-        end_date = datetime.date.today()
-        report_name = "Expensify (%s to %s)" % (self.since_date, end_date)
-        expense_ids = self.create_expenses()
-
-        report_id = self.env['hr.expense.sheet'].create({
-            'name': report_name,
-            'expense_line_ids': [(6, 0, expense_ids)]
-        })
-
-        # Show Report
-        return {
-            "name": report_name,
-            "type": "ir.actions.act_window",
-            "res_model": "hr.expense.sheet",
-            "res_id": report_id.id,
-            "view_type": "form",
-            "view_mode": "form",
-            "target": "self",
-        }
 
     @api.multi
     def button_import(self):
@@ -62,7 +30,6 @@ class ExpensifyWizard(models.TransientModel):
 
     @api.model
     def create_expenses(self):
-        self.validate_expensify_expenses()
         expense_ids = []
         for expense in self.expensify_expenses:
             expense_data = {
@@ -71,20 +38,20 @@ class ExpensifyWizard(models.TransientModel):
                 'date': expense.date,
                 'employee_id': self.employee_id.id,
                 'product_id': expense.product_id.id,
-                'unit_amount': expense.amount,
-                'tax_id': expense.tax_id.id,
-                'company_id': expense.company_id.id,
+                'company_id': self.employee_id.company_id.id,
                 'currency_id': expense.currency_id.id,
                 'analytic_account_id': expense.analytic_account_id.id,
                 'description': expense.description,
-                'payment_mode': expense.payment_mode,
+                'unit_amount': 0,  # Set after onchange_product_id()
             }
             expense_created = self.env['hr.expense'].create(expense_data)
+            expense_created._onchange_product_id()
+            expense_created.unit_amount = expense.amount
             if expense.receipt:
                 attachment_data = {
                     'res_id': expense_created.id,
                     'res_model': 'hr.expense',
-                    'company_id': expense.company_id.id,
+                    'company_id': self.employee_id.company_id.id,
                     'name': 'Receipt',
                     'type': 'binary',
                     'datas_fname': 'receipt_%s' % expense_created.id,
@@ -93,19 +60,3 @@ class ExpensifyWizard(models.TransientModel):
                 self.env['ir.attachment'].create(attachment_data)
             expense_ids.append(expense_created.id)
         return expense_ids
-
-    @api.model
-    def validate_expensify_expenses(self):
-        for expense in self.expensify_expenses:
-            if not expense.receipt:
-                raise exceptions.ValidationError(
-                    _("Missing Receipt for Expense: %s" % expense.name)
-                )
-            if not expense.product_id:
-                raise exceptions.ValidationError(
-                    _("Missing Product for Expense: %s" % expense.name)
-                )
-            if not expense.tax_id:
-                raise exceptions.ValidationError(
-                    _("Missing Tax for Expense: %s" % expense.name)
-                )
