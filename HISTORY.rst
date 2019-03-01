@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * BSIBSO-1137: fix naming of manually created analytic accounts
+* BSIBSO-1128: Improve account_multicurrency_revaluation report for currency unrealized
 
 **Bugfixes**
 

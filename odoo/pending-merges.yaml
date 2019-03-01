@@ -27,6 +27,8 @@
     - oca 10.0
     # [IMP][10][account_multicurrency_revaluation] add rate_type
     - oca refs/pull/98/head
+    # [10][IMP]account_multicurrency_revaluation report currency unrealized
+    - oca refs/pull/104/head
   target: *default_target
 ./external-src/hr:
   remotes:
