@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.22.0 (2019-03-05)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * BSIBSO-1137: fix naming of manually created analytic accounts
 * BSIBSO-1128: Improve account_multicurrency_revaluation report for currency unrealized
 * bso_dashboards: Export graph data to Excel
@@ -29,13 +41,9 @@ Latest (Unreleased)
 * Update expensify
 * Update backbone
 
-**Bugfixes**
-
 **Build**
 
 * BSIBSO-1134: use wkhtml2pdf 0.12.5
-
-**Documentation**
 
 
 10.21.0 (2019-02-05)
