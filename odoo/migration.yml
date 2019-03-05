@@ -491,3 +491,5 @@ migration:
           - account_multicurrency_revaluation
           - bso_dashboards
           - bso_dealsheet
+          - bso_holidays_notify_manager
+          - expensify

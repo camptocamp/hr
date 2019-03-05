@@ -4,7 +4,10 @@
     'description': 'Import expenses from Expensify',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
-    'depends': ['base', 'hr_expense', 'expense_tax'],
+    'depends': [
+        'base',
+        'hr_expense',
+    ],
     'data': [
         'data/expensify_data.xml',
         'security/ir.model.access.csv',

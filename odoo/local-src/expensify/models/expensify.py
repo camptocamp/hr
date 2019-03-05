@@ -31,9 +31,6 @@ class Expensify(models.TransientModel):
     deduct_surcharge = fields.Boolean(
         readonly=True
     )
-    null_tax = fields.Boolean(
-        readonly=True
-    )
 
     # Employee
 
@@ -41,16 +38,6 @@ class Expensify(models.TransientModel):
         string='Employee',
         comodel_name='hr.employee',
         default=lambda self: self.get_employee(),
-        readonly=True
-    )
-    company_id = fields.Many2one(
-        string='Company',
-        related='employee_id.company_id',
-        readonly=True
-    )
-    currency_id = fields.Many2one(
-        string='Currency',
-        related='company_id.currency_id',
         readonly=True
     )
 
@@ -104,14 +91,21 @@ class Expensify(models.TransientModel):
         employee = employee_id.sudo()
         if api_id != employee.expensify_api_id:
             employee.expensify_api_id = api_id
+            self._cr.commit()
         if api_secret != employee.expensify_api_secret:
             employee.expensify_api_secret = api_secret
+            self._cr.commit()
 
     @api.multi
     def button_fetch(self):
         self.store_credentials(self.employee_id,
                                self.expensify_api_id,
                                self.expensify_api_secret)
+
+        if self.env.user.company_id.id != self.employee_id.company_id.id:
+            raise exceptions.UserError(
+                _("Please change your current company (top right) to '%s'"
+                  % self.employee_id.company_id.name))
 
         reports = self.fetch_reports(self.since_date)
         if not reports:
@@ -164,15 +158,6 @@ class Expensify(models.TransientModel):
             if self.deduct_surcharge:
                 amount /= (1 + surcharge_rate)
 
-            if self.null_tax:  # Set non refundable tax
-                tax_id = self.get_tax_id(0)
-            else:
-                tax_id = False  # TODO: Get tax from taxRate if home country
-
-            # Extract payment mode
-            reimbursable = expense['reimbursable']
-            payment_mode = "own_account" if reimbursable else "company_account"
-
             # Extract Expense details
             merchant = expense['merchant']
             comment = expense.get('comment')
@@ -197,18 +182,15 @@ class Expensify(models.TransientModel):
                 description += "Conversion rate: %s\n" % converted_rate
 
             expensify_expense = {
-                'expensify_id': expensify_id,
                 'sequence': len(expensify_expenses),
+                'expensify_id': expensify_id,
                 'date': date,
                 'name': name,
                 'amount': amount,
                 'currency_id': currency_id,
                 'receipt': receipt_image,
-                'description': description,
-                'payment_mode': payment_mode,
-                'company_id': self.company_id.id,
                 'product_id': product_id,
-                'tax_id': tax_id,
+                'description': description,
             }
 
             expensify_expenses.append(expensify_expense)
@@ -217,22 +199,19 @@ class Expensify(models.TransientModel):
             raise exceptions.ValidationError(
                 _("All expenses already imported"))
 
-        # Create and populate Expensify wizard
-        expensify_wizard_id = self.env['expensify.wizard'].create({
-            'employee_id': self.employee_id.id,
-            'since_date': self.since_date,
-            'expensify_expenses': [(0, 0, exp) for exp in expensify_expenses]
-        })
-
         # Show Expensify wizard
         return {
             "name": "Import Expenses",
             "type": "ir.actions.act_window",
             "res_model": "expensify.wizard",
-            "res_id": expensify_wizard_id.id,
             "view_type": "form",
             "view_mode": "form",
             "target": "new",
+            "context": {
+                'default_employee_id': self.employee_id.id,
+                'default_expensify_expenses': [(0, 0, exp) for exp in
+                                               expensify_expenses]
+            }
         }
 
     @api.model
@@ -269,18 +248,6 @@ class Expensify(models.TransientModel):
                 'active': True
             })
         return currency.id
-
-    @api.model
-    def get_tax_id(self, tax_rate):
-        tax = self.env['account.tax'].search([
-            ('amount', '=', tax_rate),
-            ('amount_type', '=', 'percent'),
-            ('can_be_expensed', '=', True),
-            ('company_id', '=', self.company_id.id)
-        ], limit=1)
-        if not tax:
-            return False
-        return tax.id
 
     @api.model
     def get_b64_from_url(self, url):

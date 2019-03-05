@@ -7,13 +7,8 @@
         <field name="arch" type="xml">
             <form string="Import Expenses">
                 <field name="employee_id" invisible="1"/>
-                <field name="company_id" invisible="1"/>
-                <field name="expensify_expenses"
-                       context="{'default_company_id': company_id}"/>
+                <field name="expensify_expenses"/>
                 <footer>
-                    <button name="button_import_submit" invisible="1"
-                            string="Import &amp; Submit" type="object"
-                            class="oe_highlight"/>
                     <button name="button_import"
                             string="Import" type="object"
                             class="oe_highlight"/>

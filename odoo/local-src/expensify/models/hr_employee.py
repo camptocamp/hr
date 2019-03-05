@@ -10,11 +10,3 @@ class HrEmployee(models.Model):
     expensify_api_secret = fields.Char(
         string='partnerUserSecret'
     )
-    expensify_convert_currency = fields.Boolean(
-        string='Convert currency',
-        default=True
-    )
-    expensify_deduct_surcharge = fields.Boolean(
-        string='Deduct surcharge',
-        default=True
-    )

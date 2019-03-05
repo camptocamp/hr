@@ -19,7 +19,6 @@
                 <group string="Configs">
                     <field name="default_convert_currency"/>
                     <field name="default_deduct_surcharge"/>
-                    <field name="default_null_tax"/>
                 </group>
             </form>
         </field>

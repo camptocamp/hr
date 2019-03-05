@@ -25,6 +25,8 @@ Latest (Unreleased)
 * BSIBSO-1128: Improve account_multicurrency_revaluation report for currency unrealized
 * bso_dashboards: Export graph data to Excel
 * Dealsheet update
+* Install bso_holidays_notify_manager
+* Update expensify
 
 **Bugfixes**
 

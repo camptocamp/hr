@@ -21,7 +21,3 @@ class ExpensifyConfigSettings(models.TransientModel):
         string='Deduct surcharge',
         default_model='expensify'
     )
-    default_null_tax = fields.Boolean(
-        string='0% default tax',
-        default_model='expensify'
-    )
