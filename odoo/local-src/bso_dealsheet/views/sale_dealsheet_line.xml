@@ -21,24 +21,32 @@
                 <field name="quantity"
                        attrs="{'readonly': [('is_locked', '=', True)]}"/>
                 <field name="uom_id"/>
-                <field name="cost"
-                       attrs="{'readonly': [('dealsheet_state', 'in', ('validated', 'refused'))]}"
-                       groups="bso_dealsheet.group_dealsheet_manager"/>
-                <field name="total_cost"
-                       groups="bso_dealsheet.group_dealsheet_manager"/>
-                <field name="cost_delivery"
-                       attrs="{'readonly': True}"
-                       groups="bso_dealsheet.group_dealsheet_manager"/>
-                <field name="total_cost_delivery"
-                       groups="bso_dealsheet.group_dealsheet_manager"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="sale_dealsheet_line_tree_group_manager" model="ir.ui.view">
+        <field name="name">sale.dealsheet.line.tree.group_manager</field>
+        <field name="model">sale.dealsheet.line</field>
+        <field name="inherit_id" ref="bso_dealsheet.sale_dealsheet_line_tree"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_dealsheet.group_dealsheet_manager')])]"/>
+        <field name="arch" type="xml">
+            <field name="uom_id" position="after">
+                <field name="cost"
+                       attrs="{'readonly': [('dealsheet_state', 'in', ('validated', 'refused'))]}"/>
+                <field name="total_cost"/>
+                <field name="cost_delivery" attrs="{'readonly': True}"/>
+                <field name="total_cost_delivery"/>
+            </field>
         </field>
     </record>
 
     <record id="sale_dealsheet_line_tree_group_delivery" model="ir.ui.view">
         <field name="name">sale.dealsheet.line.tree.group_delivery</field>
         <field name="model">sale.dealsheet.line</field>
-        <field name="inherit_id" ref="bso_dealsheet.sale_dealsheet_line_tree"/>
+        <field name="inherit_id"
+               ref="bso_dealsheet.sale_dealsheet_line_tree_group_manager"/>
         <field name="groups_id"
                eval="[(6, 0, [ref('bso_dealsheet.group_dealsheet_role_delivery')])]"/>
         <field name="arch" type="xml">
@@ -68,16 +76,24 @@
                     <field name="description" readonly="1"/>
                     <field name="quantity" readonly="1"/>
                     <field name="uom_id" readonly="1"/>
-                    <field name="cost" readonly="1"
-                           groups="bso_dealsheet.group_dealsheet_manager"/>
-                    <field name="total_cost" readonly="1"
-                           groups="bso_dealsheet.group_dealsheet_manager"/>
-                    <field name="cost_delivery" readonly="1"
-                           groups="bso_dealsheet.group_dealsheet_manager"/>
-                    <field name="total_cost_delivery" readonly="1"
-                           groups="bso_dealsheet.group_dealsheet_manager"/>
                 </group>
             </form>
+        </field>
+    </record>
+
+    <record id="sale_dealsheet_line_form_group_manager" model="ir.ui.view">
+        <field name="name">sale.dealsheet.line.form.group_manager</field>
+        <field name="model">sale.dealsheet.line</field>
+        <field name="inherit_id" ref="bso_dealsheet.sale_dealsheet_line_form"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_dealsheet.group_dealsheet_manager')])]"/>
+        <field name="arch" type="xml">
+            <field name="uom_id" position="after">
+                <field name="cost" readonly="1"/>
+                <field name="total_cost" readonly="1"/>
+                <field name="cost_delivery" readonly="1"/>
+                <field name="total_cost_delivery" readonly="1"/>
+            </field>
         </field>
     </record>
 

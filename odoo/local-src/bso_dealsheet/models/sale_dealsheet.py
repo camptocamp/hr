@@ -413,8 +413,11 @@ class SaleDealsheet(models.Model):
 
     @api.model
     def get_margin(self, cost, revenue):
-        if revenue:
-            return (1 - cost / revenue) * 100
+        if not cost and not revenue:
+            return 0
+        if not revenue:
+            return -100
+        return (1 - cost / revenue) * 100
 
     # ACTIONS
 
@@ -507,9 +510,6 @@ class SaleDealsheet(models.Model):
             'state': 'validated',
             'reviewer_id': self.env.uid,
             'validated_date': fields.Datetime.now()
-        })
-        self.sale_order_id.update({
-            'state': 'draft'
         })
 
     @api.multi

@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="dealsheet_tree" model="ir.ui.view">
+        <field name="name">sale.dealsheet.tree</field>
+        <field name="model">sale.dealsheet</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" invisible="1"/>
+                <field name="sale_order_id"/>
+                <field name="sale_order_state" invisible="1"/>
+                <field name="create_date"/>
+                <field name="validated_date"/>
+                <field name="refused_date"/>
+                <field name="project_id" invisible="1"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="presale_id"/>
+                <field name="reviewer_id"/>
+                <field name="duration"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="cost"/>
+                <field name="revenue"/>
+                <field name="margin"/>
+                <field name="margin_delivery"
+                       groups="bso_dealsheet.group_dealsheet_manager"/>
+                <field name="state"/>
+                <field name="attachment_number" invisible="True"/>
+                <button name="action_get_attachment_view"
+                        string="View Attached Documents" type="object"
+                        icon="fa-paperclip"
+                        attrs="{'invisible': [('attachment_number', '=', 0)]}"/>
+            </tree>
+        </field>
+    </record>
+
     <record id="dealsheet_form" model="ir.ui.view">
         <field name="name">sale.dealsheet.form</field>
         <field name="model">sale.dealsheet</field>
@@ -56,15 +89,7 @@
                         <field name="duration"/>
                         <field name="currency_id"/>
                     </group>
-                    <div groups="bso_dealsheet.group_dealsheet_officer">
-                        <field name="compute_lines" invisible="1"/>
-                        <h2>MRC</h2>
-                        <field name="mrc_lines"
-                               attrs="{'readonly': [('state', 'not in', ('draft', 'confirmed'))]}"/>
-                        <H2>NRC</H2>
-                        <field name="nrc_lines"
-                               attrs="{'readonly': [('state', 'not in', ('draft', 'confirmed'))]}"/>
-                    </div>
+                    <div groups="bso_dealsheet.group_dealsheet_officer"/>
                     <div id="dealsheet_summary">
                         <!--attrs="{'invisible': [('state', 'not in' 'validated')]}"-->
                         <h2>Summary</h2>
@@ -142,56 +167,31 @@
         </field>
     </record>
 
-    <record id="dealsheet_tree" model="ir.ui.view">
-        <field name="name">sale.dealsheet.tree</field>
+    <record id="dealsheet_form_group_officer" model="ir.ui.view">
+        <field name="name">sale.dealsheet.form.group_officer</field>
         <field name="model">sale.dealsheet</field>
+        <field name="inherit_id" ref="bso_dealsheet.dealsheet_form"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_dealsheet.group_dealsheet_officer')])]"/>
         <field name="arch" type="xml">
-            <tree>
-                <field name="name" invisible="1"/>
-                <field name="sale_order_id"/>
-                <field name="sale_order_state" invisible="1"/>
-                <field name="create_date"/>
-                <field name="validated_date"/>
-                <field name="refused_date"/>
-                <field name="project_id" invisible="1"/>
-                <field name="partner_id"/>
-                <field name="user_id"/>
-                <field name="presale_id"/>
-                <field name="reviewer_id"/>
-                <field name="duration"/>
-                <field name="currency_id" invisible="1"/>
-                <field name="mrc_lines" invisible="1"/>
-                <field name="nrc_lines" invisible="1"/>
-                <field name="nrc" invisible="1"/>
-                <field name="nrc_delivery" invisible="1"/>
-                <field name="nrr" invisible="1"/>
-                <field name="nrm" invisible="1"/>
-                <field name="nrm_delivery" invisible="1"/>
-                <field name="mrc" invisible="1"/>
-                <field name="mrc_delivery" invisible="1"/>
-                <field name="mrr" invisible="1"/>
-                <field name="mrm" invisible="1"/>
-                <field name="mrm_delivery" invisible="1"/>
-                <field name="cost"/>
-                <field name="cost_delivery" invisible="1"/>
-                <field name="revenue"/>
-                <field name="margin"/>
-                <field name="margin_delivery"
-                       groups="bso_dealsheet.group_dealsheet_manager"/>
-                <field name="state"/>
-                <field name="attachment_number" invisible="True"/>
-                <button name="action_get_attachment_view"
-                        string="View Attached Documents" type="object"
-                        icon="fa-paperclip"
-                        attrs="{'invisible': [('attachment_number', '=', 0)]}"/>
-            </tree>
+            <div groups="bso_dealsheet.group_dealsheet_officer"
+                 position="inside">
+                <field name="compute_lines" invisible="1"/>
+                <h2>MRC</h2>
+                <field name="mrc_lines"
+                       attrs="{'readonly': [('state', 'not in', ('draft', 'confirmed'))]}"/>
+                <H2>NRC</H2>
+                <field name="nrc_lines"
+                       attrs="{'readonly': [('state', 'not in', ('draft', 'confirmed'))]}"/>
+            </div>
         </field>
     </record>
 
     <record id="dealsheet_form_group_delivery" model="ir.ui.view">
         <field name="name">sale.dealsheet.form.group_delivery</field>
         <field name="model">sale.dealsheet</field>
-        <field name="inherit_id" ref="bso_dealsheet.dealsheet_form"/>
+        <field name="inherit_id"
+               ref="bso_dealsheet.dealsheet_form_group_officer"/>
         <field name="groups_id"
                eval="[(6, 0, [ref('bso_dealsheet.group_dealsheet_role_delivery')])]"/>
         <field name="arch" type="xml">
