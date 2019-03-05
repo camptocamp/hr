@@ -1,13 +1,13 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_backbone_device_bundle,backbone.device.bundle,model_backbone_device,,1,0,0,0
+access_backbone_device_sales,backbone.device.sales,model_backbone_device,sales_team.group_sale_salesman,1,0,0,0
 access_backbone_device_user,backbone.device.user,model_backbone_device,group_backbone_user,1,0,0,0
 access_backbone_device_officer,backbone.device.officer,model_backbone_device,group_backbone_officer,1,1,1,0
 access_backbone_device_manager,backbone.device.manager,model_backbone_device,group_backbone_manager,1,1,1,0
-access_backbone_link_bundle,backbone.link.bundle,model_backbone_link,,1,0,0,0
+access_backbone_link_sales,backbone.link.sales,model_backbone_link,sales_team.group_sale_salesman,1,0,0,0
 access_backbone_link_user,backbone.link.user,model_backbone_link,group_backbone_user,1,0,0,0
 access_backbone_link_officer,backbone.link.officer,model_backbone_link,group_backbone_officer,1,1,1,0
 access_backbone_link_manager,backbone.link.manager,model_backbone_link,group_backbone_manager,1,1,1,0
-access_backbone_pop_bundle,backbone.pop.bundle,model_backbone_pop,,1,0,0,0
+access_backbone_pop_sales,backbone.pop.sales,model_backbone_pop,sales_team.group_sale_salesman,1,0,0,0
 access_backbone_pop_user,backbone.pop.user,model_backbone_pop,group_backbone_user,1,0,0,0
 access_backbone_pop_officer,backbone.pop.officer,model_backbone_pop,group_backbone_officer,1,1,1,0
 access_backbone_pop_manager,backbone.pop.manager,model_backbone_pop,group_backbone_manager,1,1,1,0

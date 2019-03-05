@@ -21,20 +21,6 @@
                 <field name="link_ref"
                        attrs="{'invisible': [('xco_type', '=', 'client')]}"/>
                 <field name="paid_by_bso"/>
-                <field name="currency_id"
-                       groups="bso_backbone.group_backbone_officer"/>
-                <field name="nrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_officer"/>
-                <field name="mrc" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"
-                       groups="bso_backbone.group_backbone_officer"/>
-                <field name="date_start"
-                       groups="bso_backbone.group_backbone_officer"/>
-                <field name="date_end"
-                       groups="bso_backbone.group_backbone_officer"/>
-                <field name="auto_renewal"
-                       groups="bso_backbone.group_backbone_officer"/>
                 <field name="notes" invisible="1"/>
                 <field name="active"/>
                 <field name="attachment_number" invisible="True"/>
@@ -43,6 +29,26 @@
                         icon="fa-paperclip"
                         attrs="{'invisible': [('attachment_number', '=', 0)]}"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="backbone_xco_tree_group_officer" model="ir.ui.view">
+        <field name="name">backbone.xco.tree.group_officer</field>
+        <field name="model">backbone.xco</field>
+        <field name="inherit_id" ref="bso_backbone.backbone_xco_tree"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_backbone.group_backbone_officer')])]"/>
+        <field name="arch" type="xml">
+            <field name="notes" position="before">
+                <field name="currency_id"/>
+                <field name="nrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrc" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="auto_renewal"/>
+            </field>
         </field>
     </record>
 
@@ -82,23 +88,7 @@
                         <field name="paid_by_bso"
                                attrs="{'invisible': [('xco_type', '=', False)]}"/>
                     </group>
-                    <group groups="bso_backbone.group_backbone_officer">
-                        <field name="currency_id"
-                               attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"
-                               options="{'create': false, 'create_edit': false}"/>
-                        <field name="nrc" widget="monetary"
-                               attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="mrc" widget="monetary"
-                               attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"
-                               options="{'currency_field': 'currency_id'}"/>
-                        <field name="date_start"
-                               attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"/>
-                        <field name="date_end"
-                               attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"/>
-                        <field name="auto_renewal"
-                               attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
-                    </group>
+                    <group groups="bso_backbone.group_backbone_officer"/>
                     <group>
                         <field name="notes"/>
                     </group>
@@ -110,6 +100,34 @@
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
             </form>
+        </field>
+    </record>
+
+    <record id="backbone_xco_form_group_officer" model="ir.ui.view">
+        <field name="name">backbone.xco.form.group_officer</field>
+        <field name="model">backbone.xco</field>
+        <field name="inherit_id" ref="bso_backbone.backbone_xco_form"/>
+        <field name="groups_id"
+               eval="[(6, 0, [ref('bso_backbone.group_backbone_officer')])]"/>
+        <field name="arch" type="xml">
+            <group groups="bso_backbone.group_backbone_officer"
+                   position="inside">
+                <field name="currency_id"
+                       attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"
+                       options="{'create': false, 'create_edit': false}"/>
+                <field name="nrc" widget="monetary"
+                       attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrc" widget="monetary"
+                       attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="date_start"
+                       attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"/>
+                <field name="date_end"
+                       attrs="{'required': [('paid_by_bso', '=', True)], 'invisible': [('paid_by_bso', '=', False)]}"/>
+                <field name="auto_renewal"
+                       attrs="{'invisible': [('paid_by_bso', '=', False)]}"/>
+            </group>
         </field>
     </record>
 

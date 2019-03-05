@@ -27,6 +27,7 @@ Latest (Unreleased)
 * Dealsheet update
 * Install bso_holidays_notify_manager
 * Update expensify
+* Update backbone
 
 **Bugfixes**
 
