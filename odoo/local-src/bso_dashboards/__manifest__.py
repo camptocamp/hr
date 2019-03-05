@@ -5,7 +5,8 @@
     'author': 'BSO',
     'license': 'AGPL-3',
     'website': 'https://www.bsonetwork.com',
-    'depends': ['base', 'web'],
+    'depends': ['base', 'web', 'report_xlsx',
+                'report'],
     'data': [
         'security/bso_dashboards_security.xml',
         'security/ir.model.access.csv',
@@ -16,6 +17,7 @@
         'views/bso_dashboard_graph.xml',
         'views/bso_dashboard_graph_filter.xml',
         'views/bso_dashboard_graph_settings.xml',
+        'views/bso_dashboard_report.xml',
     ],
     'application': True,
 }

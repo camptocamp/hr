@@ -489,3 +489,4 @@ migration:
           - specific_sale
           #### oca/account-closing
           - account_multicurrency_revaluation
+          - bso_dashboards

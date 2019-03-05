@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <report
+            id="bso_dashboard_report"
+            model="bso.dashboard.graph"
+            string="bso.dashboard.graph"
+            report_type="xlsx"
+            name="bso.dashboard.report"
+            file="bso.dashboard.report"
+            attachment_use="False"
+    />
+</odoo>

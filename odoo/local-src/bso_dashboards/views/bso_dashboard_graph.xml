@@ -78,6 +78,10 @@
                                 <field name="name"/>
                             </div>
                             <div class="o_kanban_card_header_settings">
+                                <a name="action_print_xls_report"
+                                   type="object"
+                                   groups="bso_dashboards.group_dashboard_manager"
+                                   class="fa fa-file-excel-o o_kanban_card_header_settings_button"/>
                                 <a name="action_open_dashboard_graph_settings"
                                    type="object"
                                    groups="bso_dashboards.group_dashboard_manager"

@@ -23,6 +23,7 @@ Latest (Unreleased)
 
 * BSIBSO-1137: fix naming of manually created analytic accounts
 * BSIBSO-1128: Improve account_multicurrency_revaluation report for currency unrealized
+* bso_dashboards: Export graph data to Excel
 
 **Bugfixes**
 
