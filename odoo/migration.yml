@@ -489,8 +489,8 @@ migration:
           - specific_sale
           #### oca/account-closing
           - account_multicurrency_revaluation
+          - bso_backbone
           - bso_dashboards
           - bso_dealsheet
           - bso_holidays_notify_manager
           - expensify
-          - bso_backbone
