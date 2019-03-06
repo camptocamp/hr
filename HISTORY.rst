@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Build**
 
+* BSIBSO-1139: Use C2C enterprise fork instead of Odoo to allow dev access
+
 **Documentation**
 
 
