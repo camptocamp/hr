@@ -63,3 +63,10 @@
     - camptocamp 10.0
     - camptocamp refs/pull/1/head
   target: *default_target
+./external-src/enterprise:
+  remotes:
+    odoo: git@github.com:odoo/enterprise.git
+    camptocamp: git@github.com:camptocamp/enterprise.git
+  merges:
+    - camptocamp defb949d4564bf93669cbfd9d28e0c6b639837fb
+  target: *default_target
