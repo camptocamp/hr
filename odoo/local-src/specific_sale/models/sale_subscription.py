@@ -125,6 +125,15 @@ class SaleSubscription(models.Model):
                 lambda x: (x.mapped("invoice_line_ids.account_analytic_id") >=
                            sub.analytic_account_id)
             )
+
+            partner_followers = sub.message_follower_ids.mapped("partner_id")
+            channel_followers = sub.message_follower_ids.mapped("channel_id")
+            invoices_to_update.with_context(
+                tracking_disable=1
+            ).message_subscribe(
+                partner_ids=partner_followers.ids,
+                channel_ids=channel_followers.ids
+            )
             orders = self.env['sale.order'].search_read(
                 domain=[('subscription_id', '=', sub.id)],
                 fields=['name'],
