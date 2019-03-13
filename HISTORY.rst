@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* BSIBSO-1140: Propagate sale.subscription followers to their new invoice
+
 **Bugfixes**
 
 **Build**
