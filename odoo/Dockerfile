@@ -84,6 +84,7 @@ ENV ADDONS_PATH="/odoo/external-src/enterprise, \
   /odoo/external-src/hr, \
   /odoo/external-src/hr-timesheet, \
   /odoo/external-src/margin-analysis, \
+  /odoo/external-src/mis-builder, \
   /odoo/external-src/partner-contact, \
   /odoo/external-src/product-variant, \
   /odoo/external-src/purchase-workflow, \

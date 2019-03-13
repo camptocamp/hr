@@ -26,6 +26,9 @@ Latest (Unreleased)
 **Build**
 
 * BSIBSO-1139: Use C2C enterprise fork instead of Odoo to allow dev access
+* BSIBSO-1141: Add OCA
+  mis_builder: mis_builder + mis_builder_budget
+  l10n-france: l10n_fr_mis_reports
 
 **Documentation**
 

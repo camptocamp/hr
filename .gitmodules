@@ -112,3 +112,7 @@
 	path = odoo/external-src/currency
 	url = git@github.com:OCA/currency.git
 	branch = 10.0
+[submodule "odoo/external-src/mis-builder"]
+	path = odoo/external-src/mis-builder
+	url = git@github.com:OCA/mis-builder.git
+	branch = 10.0
