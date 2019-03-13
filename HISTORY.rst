@@ -21,9 +21,19 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
-* BSIBSO-1140: Propagate sale.subscription followers to their new invoice
-
 **Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.23.0 (2019-03-13)
+++++++++++++++++++++
+
+**Features and Improvements**
+
+* BSIBSO-1140: Propagate sale.subscription followers to their new invoice
 
 **Build**
 
@@ -32,8 +42,6 @@ Latest (Unreleased)
     - Add mis_builder: mis_builder + mis_builder_budget
     - Add l10n-france: l10n_fr_mis_reports
     - Update currency_monthly_rate + account_multicurrency_revaluation
-
-**Documentation**
 
 
 10.22.0 (2019-03-05)
