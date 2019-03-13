@@ -498,8 +498,15 @@ migration:
           - bso_dealsheet
           - bso_holidays_notify_manager
           - expensify
+    - version: 10.23.0
+      addons:
+        upgrade:
           # mis-builder
           - mis_builder
           - mis_builder_budget
           # l10n_france
           - l10n_fr_mis_reports
+          # currency
+          - currency_monthly_rate
+          # account-closing
+          - account_multicurrency_revaluation
