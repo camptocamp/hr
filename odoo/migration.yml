@@ -50,6 +50,7 @@ migration:
           - inter_company_rules
           - l10n_fr
           - l10n_fr_certification
+          - l10n_fr_mis_reports
           - l10n_lu
           - l10n_uk
           - l10n_us
@@ -90,6 +91,9 @@ migration:
           - hr_holidays_imposed_days
           - hr_holidays_legal_leave
           - hr_employee_firstname
+          # mis-builder
+          - mis_builder
+          - mis_builder_budget
           # partner-contact
           - partner_address_street3
           - partner_multi_relation
@@ -494,3 +498,15 @@ migration:
           - bso_dealsheet
           - bso_holidays_notify_manager
           - expensify
+    - version: 10.23.0
+      addons:
+        upgrade:
+          # mis-builder
+          - mis_builder
+          - mis_builder_budget
+          # l10n_france
+          - l10n_fr_mis_reports
+          # currency
+          - currency_monthly_rate
+          # account-closing
+          - account_multicurrency_revaluation

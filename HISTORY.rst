@@ -28,6 +28,10 @@ Latest (Unreleased)
 **Build**
 
 * BSIBSO-1139: Use C2C enterprise fork instead of Odoo to allow dev access
+* BSIBSO-1141: From OCA
+    - Add mis_builder: mis_builder + mis_builder_budget
+    - Add l10n-france: l10n_fr_mis_reports
+    - Update currency_monthly_rate + account_multicurrency_revaluation
 
 **Documentation**
 
