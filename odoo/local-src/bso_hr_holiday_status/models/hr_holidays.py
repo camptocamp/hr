@@ -8,7 +8,10 @@ class HrHolidays(models.Model):
     @api.constrains('date_from', 'date_to', 'holiday_status_id')
     def _check_overlap(self):
         if not self.holiday_status_id.limit:
-            if self.date_from is False or self.date_to is False:
+            if (
+                    self.holiday_status_id.start_date is False or
+                    self.holiday_status_id.end_date is False
+            ):
                 return True
 
             Range = namedtuple('Range', ['start', 'end'])
@@ -40,3 +43,4 @@ class HrHolidays(models.Model):
     @staticmethod
     def str_to_date(str_date):
         return fields.Date.from_string(str_date)
+
