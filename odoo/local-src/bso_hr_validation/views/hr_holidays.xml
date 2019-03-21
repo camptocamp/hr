@@ -8,7 +8,7 @@
                ref="hr_holidays.edit_holiday_new"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='employee_id']" position="before">
-                <field name="employee_is_user" invisible="1"/>
+                <field name="validate_ok" invisible="1"/>
             </xpath>
 
             <xpath expr="//button[@name='action_approve']"
@@ -18,7 +18,7 @@
                     {'invisible': [
                     '|',
                     ('state', 'not in', ('confirm')),
-                    ('employee_is_user', '=', True)
+                    ('validate_ok', '=', False)
                     ]}
                 </attribute>
             </xpath>
@@ -30,7 +30,7 @@
                     {'invisible': [
                     '|',
                     ('state', 'not in', ('confirm', 'validate', 'validate1')),
-                    ('employee_is_user', '=', True)
+                    ('validate_ok', '=', False)
                     ]}
                 </attribute>
             </xpath>

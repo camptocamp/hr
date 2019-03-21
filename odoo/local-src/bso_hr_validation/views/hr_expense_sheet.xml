@@ -8,7 +8,7 @@
                ref="hr_expense.view_hr_expense_sheet_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='employee_id']" position="before">
-                <field name="employee_is_user" invisible="1"/>
+                <field name="validate_ok" invisible="1"/>
             </xpath>
 
             <xpath expr="//button[@name='approve_expense_sheets']"
@@ -18,7 +18,7 @@
                     {'invisible': [
                     '|',
                     ('state', 'not in', ('submit')),
-                    ('employee_is_user', '=', True)
+                    ('validate_ok', '=', False)
                     ]}
                 </attribute>
             </xpath>
@@ -30,7 +30,7 @@
                     {'invisible': [
                     '|',
                     ('state', 'not in', ('submit')),
-                    ('employee_is_user', '=', True)
+                    ('validate_ok', '=', False)
                     ]}
                 </attribute>
             </xpath>
@@ -42,7 +42,7 @@
                     {'invisible': [
                     '|',
                     ('state', 'not in', ('approve')),
-                    ('employee_is_user', '=', True)
+                    ('validate_ok', '=', False)
                     ]}
                 </attribute>
             </xpath>

@@ -1,44 +1,45 @@
-from odoo import models, fields, api, exceptions, _
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class HrExpenseSheet(models.Model):
     _inherit = 'hr.expense.sheet'
 
-    employee_is_user = fields.Boolean(
-        compute='compute_employee_is_user'
+    validate_ok = fields.Boolean(
+        string='Can Validate',
+        compute='compute_validate_ok',
     )
-    date_validated = fields.Datetime()
-    date_refused = fields.Datetime()
+    date_validated = fields.Datetime(
+        string='Validated At',
+    )
+    date_refused = fields.Datetime(
+        string='Refused At',
+    )
+
+    @api.multi
+    def write(self, values):
+        if 'state' in values:
+            if values['state'] == 'submit':
+                values['date_validated'] = False
+                values['date_refused'] = False
+            elif values['state'] == 'approve':
+                values['date_validated'] = fields.Datetime.now()
+            elif values['state'] == 'cancel':
+                values['date_refused'] = fields.Datetime.now()
+        return super(HrExpenseSheet, self).write(values)
 
     @api.depends('employee_id')
-    def compute_employee_is_user(self):
+    def compute_validate_ok(self):
         for rec in self:
-            rec.employee_is_user = rec.employee_id.user_id.id == self.env.uid
+            self_validator = 'bso_hr_validation.group_self_validator'
+            rec.validate_ok = (self.env.uid != rec.employee_id.user_id.id
+                               or self.env.user.has_group(self_validator))
 
-    @api.multi
-    def approve_expense_sheets(self):
-        if any(rec.employee_is_user for rec in self):
-            raise exceptions.ValidationError(_("Cannot approve own expenses"))
-        res = super(HrExpenseSheet, self).approve_expense_sheets()
-        validated_at = fields.Datetime.now()
+    @api.constrains('state')
+    def check_validate_ok(self):
         for rec in self:
-            rec.date_validated = validated_at
-        return res
-
-    @api.multi
-    def refuse_expenses(self, reason):
-        if any(rec.employee_is_user for rec in self):
-            raise exceptions.ValidationError(_("Cannot refuse own expenses"))
-        res = super(HrExpenseSheet, self).refuse_expenses(reason)
-        refused_at = fields.Datetime.now()
-        for rec in self:
-            rec.date_refused = refused_at
-        return res
-
-    @api.multi
-    def reset_expense_sheets(self):
-        res = super(HrExpenseSheet, self).reset_expense_sheets()
-        for rec in self:
-            rec.date_validated = False
-            rec.date_refused = False
-        return res
+            if not rec.validate_ok:
+                if rec.state == 'approve':
+                    raise ValidationError(_("Cannot approve own expenses"))
+                elif rec.state == 'cancel':
+                    raise ValidationError(_("Cannot refuse own expenses"))
