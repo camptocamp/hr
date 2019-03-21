@@ -1,5 +1,6 @@
-from odoo import models, fields, api, exceptions
 from collections import namedtuple
+
+from odoo import models, fields, api, exceptions
 
 
 class HrHolidays(models.Model):
@@ -43,4 +44,3 @@ class HrHolidays(models.Model):
     @staticmethod
     def str_to_date(str_date):
         return fields.Date.from_string(str_date)
-

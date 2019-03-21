@@ -1,7 +1,4 @@
-from odoo import models, fields, api, exceptions
-
-from datetime import datetime
-from collections import namedtuple
+from odoo import models, fields
 
 
 class HrHolidaysStatus(models.Model):

@@ -1,5 +1,5 @@
-from odoo.tests import common
 from odoo import exceptions
+from odoo.tests import common
 
 
 @common.at_install(False)
@@ -50,4 +50,3 @@ class TestLeaveHolidayOverlap(common.TransactionCase):
         leaves_after = self.env['hr.holidays'].search_count(
             [('employee_id', '=', self.employee.id)])
         self.assertEqual(leaves_after, leaves_before + 1)
-
