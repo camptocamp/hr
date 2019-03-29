@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Build**
 
+* Upgrade docker image to 3.1.2
+
 **Documentation**
 
 
