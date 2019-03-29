@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="group_self_validator" model="res.groups">
+        <field name="name">Self Validator</field>
+    </record>
+
+</odoo>

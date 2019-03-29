@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* install bso_hr_validation
+
 **Bugfixes**
 
 **Build**

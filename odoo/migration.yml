@@ -508,3 +508,7 @@ migration:
           - currency_monthly_rate
           # account-closing
           - account_multicurrency_revaluation
+    - version: 10.24.0
+      addons:
+        upgrade:
+          - bso_hr_validation
