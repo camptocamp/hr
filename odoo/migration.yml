@@ -512,3 +512,4 @@ migration:
       addons:
         upgrade:
           - bso_hr_validation
+          - bso_hr_holiday_status

@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * install bso_hr_validation
+* install bso_hr_holiday_status
 
 **Bugfixes**
 
