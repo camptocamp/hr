@@ -68,3 +68,5 @@ rancher/*/rancher.env
 
 # local dev composition
 docker-compose.override.yml
+
+odoo/dev-requirements.txt

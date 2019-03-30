@@ -25,7 +25,8 @@ RUN set -x; \
         && echo '4d104ff338dc2d2083457b3b1e9baab8ddf14202 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
         && apt-get -y install -f --no-install-recommends \
-        && cd /odoo && pip install -r requirements.txt \
+        && cd /odoo \
+        && find . -maxdepth 1 -name "*requirements.txt" ! -name src_requirements.txt ! -name base_requirements.txt -exec pip install -r {} \; \
         # Install additional python packages
         && apt-get remove -y python-dev build-essential libffi-dev libssl-dev \
         && apt-get clean \
