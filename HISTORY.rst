@@ -21,17 +21,24 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
-* install bso_hr_validation
-* install bso_hr_holiday_status
-
 **Bugfixes**
 
 **Build**
 
-* Upgrade docker image to 3.1.2
-
 **Documentation**
 
+
+10.24.0 (2019-04-02)
+++++++++++++++++++++
+
+**Features and Improvements**
+
+* install bso_hr_validation
+* install bso_hr_holiday_status
+
+**Build**
+
+* Upgrade docker image to 3.1.2
 
 10.23.0 (2019-03-13)
 ++++++++++++++++++++
