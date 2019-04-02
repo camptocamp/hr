@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Build**
 
+* BSIBSO-1145: Integrate pending merge to enterprise repo
+
 **Documentation**
 
 

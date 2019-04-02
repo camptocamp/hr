@@ -67,4 +67,5 @@
     camptocamp: git@github.com:camptocamp/enterprise.git
   merges:
     - camptocamp defb949d4564bf93669cbfd9d28e0c6b639837fb
+    - odoo refs/pull/3917/head
   target: *default_target
