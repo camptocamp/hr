@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.24.0 (2019-04-02)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * install bso_hr_validation
 * install bso_hr_holiday_status
 * BSIBSO-1145: l10n_uk_reports_hmrc
