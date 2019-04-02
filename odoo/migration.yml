@@ -514,8 +514,5 @@ migration:
         upgrade:
           - bso_hr_validation
           - bso_hr_holiday_status
-    - version: 10.25.0
-      addons:
-        upgrade:
           # enterprise
           - l10n_uk_reports_hmrc
