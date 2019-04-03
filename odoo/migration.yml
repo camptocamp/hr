@@ -68,6 +68,7 @@ migration:
           - account_cutoff_prepaid
           - account_invoice_start_end_dates
           - account_multicurrency_revaluation
+          - account_multicurrency_revaluation_rate_type
           ## account-analytic
           - analytic_tag_dimension
           - analytic_tag_dimension_purchase_warning
@@ -516,3 +517,5 @@ migration:
           - bso_hr_holiday_status
           # enterprise
           - l10n_uk_reports_hmrc
+          - account_multicurrency_revaluation
+          - account_multicurrency_revaluation_rate_type

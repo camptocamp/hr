@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* BSIBSO-1143: fix currency revaluation
+
 **Build**
 
 **Documentation**
