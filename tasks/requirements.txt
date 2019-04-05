@@ -9,6 +9,3 @@ gnupg==2.3.1
 psycopg2-binary==2.7.6
 python-dateutil==2.7.3
 
-# marabunta new versioning
-marabunta >= 0.9.0
-

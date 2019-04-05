@@ -26,7 +26,7 @@
   merges:
     - oca 10.0
     # [IMP][10][account_multicurrency_revaluation] add rate_type
-    - oca refs/pull/98/head
+    - oca refs/pull/108/head
   target: *default_target
 ./external-src/hr:
   remotes:
