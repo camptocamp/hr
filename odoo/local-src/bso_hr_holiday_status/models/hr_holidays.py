@@ -6,13 +6,13 @@ from odoo import models, fields, api, exceptions
 class HrHolidays(models.Model):
     _inherit = 'hr.holidays'
 
-    @api.constrains('date_from', 'date_to', 'holiday_status_id')
+    @api.constrains('date_from', 'date_to', 'holiday_status_id', 'type')
     def _check_overlap(self):
         if not self.holiday_status_id.limit:
-            if (
-                    self.holiday_status_id.start_date is False or
-                    self.holiday_status_id.end_date is False
-            ):
+            if not (
+                    self.holiday_status_id.start_date and
+                    self.holiday_status_id.end_date
+            ) or self.type == 'add':
                 return True
 
             Range = namedtuple('Range', ['start', 'end'])
@@ -30,15 +30,15 @@ class HrHolidays(models.Model):
             leave_type = Range(start=start_date, end=end_date)
             current_leave = Range(start=date_from, end=date_to)
 
-            latest_start = max(current_leave.start, leave_type.start)
-            earliest_end = min(current_leave.end, leave_type.end)
-
-            overlap = max(0, (earliest_end - latest_start).days + 1)
-            if overlap == 0:
+            if not (
+                    current_leave.start <= leave_type.end and
+                    current_leave.end >= leave_type.start
+            ):
                 raise exceptions.ValidationError(
                     'Your leave must have at least one day in the '
                     'authorized selected "Leave type" period'
                 )
+
         return True
 
     @staticmethod
