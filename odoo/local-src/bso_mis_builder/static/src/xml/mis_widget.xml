@@ -1,0 +1,17 @@
+<template>
+    <t t-extend="MisReportWidgetTemplate">
+        <t t-jquery="t[t-esc='row.label']"
+           t-operation="replace">
+            <t t-if="row.drilldown_arg">
+                <a href="javascript:void(0)"
+                   class="mis_builder_drilldown"
+                   t-att-data-drilldown="JSON.stringify(row.drilldown_arg)">
+                    <t t-esc="row.label"/>
+                </a>
+            </t>
+            <t t-if="!row.drilldown_arg">
+                <t t-esc="row.label"/>
+            </t>
+        </t>
+    </t>
+</template>
