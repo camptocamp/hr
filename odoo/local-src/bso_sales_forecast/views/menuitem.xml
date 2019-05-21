@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+            id="menu_forecast_reports"
+            name="Forecast Reports"
+            action="forecast_report_action"
+            parent=""
+            web_icon="bso_sales_forecast,static/description/icon.png"
+            groups="group_forecast_user"/>
+    <menuitem
+            id="menu_forecast_report"
+            name="Forecast Report"
+            action="forecast_report_action"
+            parent="menu_forecast_reports"
+            sequence="1"
+            groups="group_forecast_user"/>
+    <menuitem
+            id="menu_forecast_diff"
+            name="Forecast Diff"
+            action="forecast_diff_action"
+            parent="menu_forecast_reports"
+            sequence="2"
+            groups="group_forecast_user"/>
+</odoo>

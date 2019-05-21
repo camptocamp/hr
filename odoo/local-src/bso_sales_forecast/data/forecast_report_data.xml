@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record id="ir_cron_generate_forecast_report" model="ir.cron">
+            <field name="function">generate_forecast_reports</field>
+            <field name="args">()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_type">days</field>
+            <field name="name">Generate Forecast Reports</field>
+            <field name="numbercall">-1</field>
+            <field name="priority">5</field>
+            <field name="doall">False</field>
+            <field name="active">False</field>
+            <field name="interval_number">1</field>
+            <field name="model">forecast.report</field>
+        </record>
+
+    </data>
+</odoo>

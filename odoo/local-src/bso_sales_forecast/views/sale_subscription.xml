@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="sale_subscription_price_subtotal" model="ir.ui.view">
+        <field name="name">sale.subscription.line.price.subtotal</field>
+        <field name="model">sale.subscription</field>
+        <field name="inherit_id"
+               ref="sale_contract.sale_subscription_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_subtotal']"
+                   position="attributes">
+                <attribute name="readonly">True</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!--<record id="sale_subscription_line" model="ir.ui.view">
+        <field name="name">sale.subscription.line</field>
+        <field name="model">sale.subscription.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="product_id"
+                           domain="[('recurring_invoice', '=', True)]"
+                           context="{'default_recurring_invoice': True}"/>
+                    <field name="name"/>
+                    <field name="quantity" readonly="1"
+                           groups="base.group_no_one"/>
+                    <field name="actual_quantity"/>
+                    <field name="sold_quantity"/>
+                    <field name="uom_id" groups="product.group_uom"/>
+                    <field name="price_unit"/>
+                    <field name="discount"
+                           groups="sale.group_discount_per_so_line"/>
+                    <field name="price_subtotal"/>
+                </sheet>
+            </form>
+        </field>
+    </record>-->
+</odoo>

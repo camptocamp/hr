@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="forecast_report_tree" model="ir.ui.view">
+        <field name="name">forecast.report.tree</field>
+        <field name="model">forecast.report</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="forecast_report_form" model="ir.ui.view">
+        <field name="name">forecast.report.form</field>
+        <field name="model">forecast.report</field>
+        <field name="arch" type="xml">
+            <form string="Forecast Report">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button string="Preview" type="object"
+                                name="preview"
+                                icon="fa-search"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Telco Revenues" type="object"
+                                name="open_telco_revenue_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Housing Revenues" type="object"
+                                name="open_housing_revenue_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Managed service Revenues" type="object"
+                                name="open_managed_service_revenue_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Telco Costs" type="object"
+                                name="open_telco_cost_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Housing Costs" type="object"
+                                name="open_housing_cost_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Managed service Costs" type="object"
+                                name="open_managed_service_cost_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Invoice Lines" type="object"
+                                name="open_invoice_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Technical Team" type="object"
+                                name="open_technical_team_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Delivery Team" type="object"
+                                name="open_delivery_team_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Sales Department" type="object"
+                                name="open_sales_department_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="HR" type="object"
+                                name="open_hr_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Communication" type="object"
+                                name="open_communication_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Finance Department" type="object"
+                                name="open_finance_department_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Marketing" type="object"
+                                name="open_marketing_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Other Costs" type="object"
+                                name="open_other_costs_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Telecom" type="object"
+                                name="open_telecom_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Lawyers &amp;Accountants" type="object"
+                                name="open_lawyers_accountants_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Costs Non Invest" type="object"
+                                name="open_costs_non_invest_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="G &amp; A Inter Co Rebill"
+                                type="object"
+                                name="open_ga_inter_co_rebill_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="New Pop Amortization" type="object"
+                                name="open_new_pop_amortization_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Leasing Backbone" type="object"
+                                name="open_leasing_backbone_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Accurals Bad Debts" type="object"
+                                name="open_accurals_bad_debts_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Foreign Exchanges" type="object"
+                                name="open_foreign_exchanges_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                        <button string="Clevel" type="object"
+                                name="open_clevel_lines"
+                                icon="fa-dollar"
+                                class="oe_inline oe_stat_button"/>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="lock_month"/>
+                    </group>
+                    <group>
+                        <!--<field name="to_currency_id" invisible="1"/>-->
+                        <field name="currency_id"/>
+                        <field name="company_id"/>
+                        <field name="mis_report_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="forecast_report_action" model="ir.actions.act_window">
+        <field name="name">Forecast Reports</field>
+        <field name="res_model">forecast.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="forecast_diff_action" model="ir.actions.act_window">
+        <field name="name">Forecast Diff</field>
+        <field name="res_model">forecast.line.diff</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

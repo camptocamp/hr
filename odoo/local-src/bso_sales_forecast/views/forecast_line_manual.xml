@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="forecast_line_manual_tree" model="ir.ui.view">
+        <field name="name">forecast.line.manual.tree</field>
+        <field name="model">forecast.line.manual</field>
+        <field name="arch" type="xml">
+            <tree editable="top" colors="blue:manually_updated == True">
+                <field name="description"/>
+                <field name="jan_locked" invisible="1"/>
+                <field name="feb_locked" invisible="1"/>
+                <field name="mar_locked" invisible="1"/>
+                <field name="apr_locked" invisible="1"/>
+                <field name="may_locked" invisible="1"/>
+                <field name="jun_locked" invisible="1"/>
+                <field name="jul_locked" invisible="1"/>
+                <field name="aug_locked" invisible="1"/>
+                <field name="sep_locked" invisible="1"/>
+                <field name="oct_locked" invisible="1"/>
+                <field name="nov_locked" invisible="1"/>
+                <field name="dec_locked" invisible="1"/>
+                <field name="jan" sum="January" attrs="{'readonly': [('jan_locked','=',True)]}"/>
+                <field name="feb" sum="February" attrs="{'readonly': [('feb_locked','=',True)]}"/>
+                <field name="mar" sum="March" attrs="{'readonly': [('mar_locked','=',True)]}"/>
+                <field name="apr" sum="April" attrs="{'readonly': [('apr_locked','=',True)]}"/>
+                <field name="may" sum="May" attrs="{'readonly': [('may_locked','=',True)]}"/>
+                <field name="jun" sum="June" attrs="{'readonly': [('jun_locked','=',True)]}"/>
+                <field name="jul" sum="July" attrs="{'readonly': [('jul_locked','=',True)]}"/>
+                <field name="aug" sum="August" attrs="{'readonly': [('aug_locked','=',True)]}"/>
+                <field name="sep" sum="September" attrs="{'readonly': [('sep_locked','=',True)]}"/>
+                <field name="oct" sum="October" attrs="{'readonly': [('oct_locked','=',True)]}"/>
+                <field name="nov" sum="November" attrs="{'readonly': [('nov_locked','=',True)]}"/>
+                <field name="dec" sum="December" attrs="{'readonly': [('dec_locked','=',True)]}"/>
+                <field name="type"/>
+                <field name="form_id"/>
+                <field name="manually_updated" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="forecast_line_manual_form" model="ir.ui.view">
+        <field name="name">forecast.line.manual.form</field>
+        <field name="model">forecast.line.manual</field>
+        <field name="arch" type="xml">
+            <form string="Forecast Revenue">
+                <sheet>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <field name="jan_id"/>
+                        <field name="feb_id"/>
+                        <field name="mar_id"/>
+                        <field name="apr_id"/>
+                        <field name="may_id"/>
+                        <field name="jun_id"/>
+                        <field name="jul_id"/>
+                        <field name="aug_id"/>
+                        <field name="sep_id"/>
+                        <field name="oct_id"/>
+                        <field name="nov_id"/>
+                        <field name="dec_id"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+</odoo>

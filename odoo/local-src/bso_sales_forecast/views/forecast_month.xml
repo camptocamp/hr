@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="forecast_month_tree" model="ir.ui.view">
+        <field name="name">forecast.month.tree</field>
+        <field name="model">forecast.month</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="month"/>
+                <field name="amount"/>
+                <field name="delta"/>
+                <field name="total"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="forecast_month_form" model="ir.ui.view">
+        <field name="name">forecast.month.form</field>
+        <field name="model">forecast.month</field>
+        <field name="arch" type="xml">
+            <form string="Forecast Month">
+                <sheet>
+                    <group>
+                        <field name="month"/>
+                        <field name="is_locked" invisible="1"/>
+                        <field name="amount" readonly="1"/>
+                        <field name="amount_converted"/>
+                        <field name="delta" attrs="{'invisible': [('is_locked','=',True)]}"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="total" attrs="{'readonly': [('is_locked','=',True)]}"/>
+                        <field name="exchange_rate_id"/>
+                        <field name="conversion_error"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
