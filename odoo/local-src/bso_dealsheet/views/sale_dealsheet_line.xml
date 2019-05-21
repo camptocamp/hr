@@ -8,6 +8,7 @@
             <tree editable="bottom">
                 <field name="dealsheet_id" invisible="1"/>
                 <field name="dealsheet_state" invisible="1"/>
+                <field name="sale_order_state" invisible="1"/>
                 <field name="is_locked" invisible="1"/>
                 <field name="is_cost" invisible="1"/>
                 <field name="is_recurring" invisible="1"/>
@@ -32,12 +33,27 @@
         <field name="groups_id"
                eval="[(6, 0, [ref('bso_dealsheet.group_dealsheet_manager')])]"/>
         <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-danger">
+                    sale_order_state in ('sale', 'done')
+                    and supplier_id != False
+                    and purchase_order_state != 'purchase'
+                </attribute>
+            </xpath>
             <field name="uom_id" position="after">
                 <field name="cost"
                        attrs="{'readonly': [('dealsheet_state', 'in', ('validated', 'refused'))]}"/>
                 <field name="total_cost"/>
+                <field name="supplier_id"
+                       domain="[('supplier', '=', True), ('parent_id', '=', False)]"
+                       attrs="{'readonly': [('purchase_order_line_id', '!=', False)]}"/>
+                <field name="frequency"
+                       attrs="{'required': [('supplier_id', '!=', False), ('is_recurring', '=', True)], 'readonly': ['|', ('is_recurring', '=', False), ('purchase_order_line_id', '!=', False)]}"/>
                 <field name="cost_delivery" attrs="{'readonly': True}"/>
                 <field name="total_cost_delivery"/>
+                <field name="purchase_order_line_id" invisible="1"/>
+                <field name="purchase_order_id" invisible="1"/>
+                <field name="purchase_order_state" invisible="1"/>
             </field>
         </field>
     </record>
@@ -91,8 +107,12 @@
             <field name="uom_id" position="after">
                 <field name="cost" readonly="1"/>
                 <field name="total_cost" readonly="1"/>
+                <field name="supplier_id" readonly="1"/>
+                <field name="frequency" readonly="1"/>
                 <field name="cost_delivery" readonly="1"/>
                 <field name="total_cost_delivery" readonly="1"/>
+                <field name="purchase_order_line_id" readonly="1"/>
+                <field name="purchase_order_id" readonly="1"/>
             </field>
         </field>
     </record>

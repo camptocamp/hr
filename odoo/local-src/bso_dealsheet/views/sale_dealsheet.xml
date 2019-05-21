@@ -9,6 +9,7 @@
                 <field name="name" invisible="1"/>
                 <field name="sale_order_id"/>
                 <field name="sale_order_state" invisible="1"/>
+                <field name="company_id"/>
                 <field name="create_date"/>
                 <field name="validated_date"/>
                 <field name="refused_date"/>
@@ -72,6 +73,15 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box">
+                        <button name="action_get_purchase_order_view"
+                                class="oe_stat_button"
+                                icon="fa-usd"
+                                type="object"
+                                attrs="{'invisible': [('purchase_order_number', '=', 0)]}">
+                            <field name="purchase_order_number"
+                                   widget="statinfo"
+                                   string="POs"/>
+                        </button>
                         <button name="action_get_attachment_view"
                                 class="oe_stat_button"
                                 icon="fa-book"
@@ -83,6 +93,7 @@
                     <group>
                         <field name="sale_order_id"/>
                         <field name="sale_order_state" invisible="1"/>
+                        <field name="company_id"/>
                         <field name="project_id" invisible="1"/>
                         <field name="partner_id"/>
                         <field name="user_id"/>
@@ -91,7 +102,6 @@
                     </group>
                     <div groups="bso_dealsheet.group_dealsheet_officer"/>
                     <div id="dealsheet_summary">
-                        <!--attrs="{'invisible': [('state', 'not in' 'validated')]}"-->
                         <h2>Summary</h2>
                         <table class="table table-condensed table-striped">
                             <thead>
@@ -195,6 +205,14 @@
         <field name="groups_id"
                eval="[(6, 0, [ref('bso_dealsheet.group_dealsheet_role_delivery')])]"/>
         <field name="arch" type="xml">
+            <button name="action_refuse" position="after">
+                <field name="procure_ok" invisible="1"/>
+                <button name="action_procure"
+                        string="Procure"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': ['|', ('sale_order_state', 'not in', ('sale', 'done')), ('procure_ok', '=', False)]}"/>
+            </button>
             <field name="mrc_lines" position="attributes">
                 <attribute name="attrs">
                     {'readonly': [('state', 'not in', ('validated'))]}

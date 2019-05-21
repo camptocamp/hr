@@ -11,8 +11,13 @@ class SaleDealsheetLine(models.Model):
         ondelete='cascade'
     )
     dealsheet_state = fields.Selection(
-        string='Dealsheet State',
+        string='Dealsheet Status',
         related='dealsheet_id.state',
+        readonly=True
+    )
+    sale_order_state = fields.Selection(
+        string='Sale Order Status',
+        related='dealsheet_id.sale_order_state',
         readonly=True
     )
     is_locked = fields.Boolean(
@@ -67,6 +72,19 @@ class SaleDealsheetLine(models.Model):
         compute='compute_total_cost',
         store=True
     )
+    supplier_id = fields.Many2one(
+        string='Supplier',
+        comodel_name='res.partner',
+        # required=True,
+    )
+    frequency = fields.Selection(
+        string='Frequency',
+        selection=[
+            ('monthly', u"Monthly"),
+            ('quarterly', u"Quarterly"),
+            ('yearly', u"Yearly"),
+        ],
+    )
     cost_delivery = fields.Monetary(
         string='Delivery Unit Cost',
         currency_field='currency_id'
@@ -76,6 +94,20 @@ class SaleDealsheetLine(models.Model):
         currency_field='currency_id',
         compute='compute_total_cost_delivery',
         store=True
+    )
+    purchase_order_line_id = fields.Many2one(
+        string='Purchase Order Line',
+        comodel_name='purchase.order.line',
+    )
+    purchase_order_id = fields.Many2one(
+        string='Purchase Order',
+        related='purchase_order_line_id.order_id',
+        readonly=True,
+    )
+    purchase_order_state = fields.Selection(
+        string='Purchase Order State',
+        related='purchase_order_id.state',
+        readonly=True,
     )
 
     # OVERRIDES

@@ -1,6 +1,6 @@
 {
     'name': 'BSO Dealsheet',
-    'category': 'sale',
+    'category': 'Sale',
     'description': 'Dealsheet Costs, Margins & Validation Process',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
