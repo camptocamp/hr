@@ -121,9 +121,10 @@ class TestComputeAll(TransactionCase):
         self.assertEquals(tax4.amount, 554.4)
 
     def create_invoice(self, taxes_args_list):
-        partner_id = self.env['res.partner'].search([
-            ('name', '=', '01T')
-        ]).id
+        partner_id = self.env['res.partner'].create({
+            'name': 'Test partner',
+            'customer': True
+        }).id
         currency_id = self.env['res.currency'].search([
             ('name', '=', 'EUR')
         ]).id
