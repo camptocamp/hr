@@ -5,7 +5,7 @@
     for subsequent taxes',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
-    'depends': ['base', 'account'],
+    'depends': ['base', 'account', 'sale', 'purchase'],
     'data': [
         'security/ir.model.access.csv',
         'views/account_tax.xml',
