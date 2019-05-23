@@ -1,7 +1,7 @@
 {
     'name': 'BSO half tax base',
     'category': 'accounting',
-    'description': '',
+    'description': 'Half taxes must include full amount in base for subsequent taxes',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
     'depends': ['base', 'account'],
