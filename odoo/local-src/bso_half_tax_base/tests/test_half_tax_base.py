@@ -127,12 +127,12 @@ class TestComputeAll(TransactionCase):
         currency_id = self.env['res.currency'].search([
             ('name', '=', 'EUR')
         ]).id
-        journal_id = self.env['account.journal'].search([
-            ('name', '=', 'Ventes')
-        ], limit=1).id
         company_id = self.env['res.company'].search([
             ('name', '=', 'BSO Network Solutions SAS')
         ]).id
+        journal_id = self.env['account.journal'].create(
+            {'name': 'Ventes', 'code': 'V123', 'type': 'sale',
+             'company_id': company_id, }).id
         product_id = self.env['product.product'].search([
             ('name', '=', 'MRC Cabinet')]
         ).id
