@@ -121,28 +121,26 @@ class TestComputeAll(TransactionCase):
         self.assertEquals(tax4.amount, 554.4)
 
     def create_invoice(self, taxes_args_list):
+        company_id = self.env.user.company_id.id
+        account_type_rcv_id = self.env['account.account.type'].create(
+            {'name': 'RCV type', 'type': 'receivable'}).id
+        account_id = self.env['account.account'].create(
+            {'name': 'Receivable', 'code': 'RCV00', 'company_id': company_id,
+             'user_type_id': account_type_rcv_id, 'reconcile': True})
         partner_id = self.env['res.partner'].create({
             'name': 'Test partner',
-            'customer': True
+            'customer': True,
+            'property_account_receivable_id': account_id
         }).id
-        currency_id = self.env['res.currency'].search([
-            ('name', '=', 'EUR')
-        ]).id
-        company_id = self.env['res.company'].search([
-            ('name', '=', 'BSO Network Solutions SAS')
-        ]).id
+        currency_id = self.env.ref("base.EUR").id
         journal_id = self.env['account.journal'].create(
             {'name': 'Ventes', 'code': 'V123', 'type': 'sale',
              'company_id': company_id, }).id
-        product_id = self.env['product.product'].search([
-            ('name', '=', 'MRC Cabinet')]
-        ).id
-        line_account_id = self.env['account.account'].search([
-            ('code', '=', 420201)
-        ], limit=1).id
-        account_id = self.env['account.account'].search([
-            ('code', '=', 411100)
-        ], limit=1).id
+        account_type_inc_id = self.env['account.account.type'].create(
+            {'name': 'INC type', 'type': 'other'}).id
+        line_account_id = self.env['account.account'].create(
+            {'name': 'Income', 'code': 'INCV00', 'company_id': company_id,
+             'user_type_id': account_type_inc_id, 'reconcile': True}).id
 
         tax_ids = self._get_tax_ids(taxes_args_list)
 
@@ -151,10 +149,8 @@ class TestComputeAll(TransactionCase):
             'currency_id': currency_id,
             'journal_id': journal_id,
             'company_id': company_id,
-            'account_id': account_id,
             'invoice_line_ids': [(0, 0, {
                 'name': 'invoice line',
-                'product_id': product_id,
                 'account_id': line_account_id,
                 'price_unit': 1000,
                 'invoice_line_tax_ids': [(6, 0, tax_ids)],
