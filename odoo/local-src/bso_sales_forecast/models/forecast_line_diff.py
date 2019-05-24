@@ -14,8 +14,6 @@ class ForecastLineDiff(models.Model):
     line_id = fields.Many2one(
         string='Forecast Line',
         comodel_name="forecast.line",
-        # compute='_get_line_id',
-        # store=True,
     )
     res_model = fields.Char(
         string='Resource Model',
@@ -55,13 +53,6 @@ class ForecastLineDiff(models.Model):
             ('close', 'Close'),
         ]
     )
-    # template = fields.Selection(
-    #     string='Template',
-    #     selection=[
-    #         ('advance', 'Advance'),
-    #         ('arrears', 'Arrears'),
-    #     ]
-    # )
     template_id = fields.Many2one(
         string='Subscription Template',
         comodel_name='sale.subscription.template',
