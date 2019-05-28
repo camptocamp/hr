@@ -10,5 +10,4 @@ class MisReportQuery(models.Model):
     row_model_id = fields.Many2one(
         string='Row Model',
         comodel_name='ir.model',
-        required=True,
     )
