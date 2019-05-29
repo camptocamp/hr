@@ -71,6 +71,7 @@ class ForecastMonth(models.Model):
     )
     amount = fields.Monetary(
         string='Amount',
+	currency_field='source_currency_id',
     )
     amount_converted = fields.Monetary(
         string='Amount converted',
