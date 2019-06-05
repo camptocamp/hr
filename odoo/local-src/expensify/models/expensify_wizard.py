@@ -1,4 +1,5 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class ExpensifyWizard(models.TransientModel):
@@ -12,8 +13,7 @@ class ExpensifyWizard(models.TransientModel):
     expensify_expenses = fields.One2many(
         string='Expenses',
         comodel_name='expensify.expense',
-        inverse_name='expensify_wizard_id',
-        required=True
+        inverse_name='expensify_wizard_id'
     )
 
     @api.multi
@@ -30,6 +30,7 @@ class ExpensifyWizard(models.TransientModel):
 
     @api.model
     def create_expenses(self):
+        self.validate_expensify_expenses()
         expense_ids = []
         for expense in self.expensify_expenses:
             expense_data = {
@@ -60,3 +61,22 @@ class ExpensifyWizard(models.TransientModel):
                 self.env['ir.attachment'].create(attachment_data)
             expense_ids.append(expense_created.id)
         return expense_ids
+
+    def validate_expensify_expenses(self):
+        for idx, expense in enumerate(self.expensify_expenses):
+            if not expense.date:
+                return self._raise_invalid_expense("Date", idx, expense)
+            if not expense.name:
+                return self._raise_invalid_expense("Description", idx, expense)
+            if not expense.amount:
+                return self._raise_invalid_expense("Amount", idx, expense)
+            if not expense.currency_id:
+                return self._raise_invalid_expense("Currency", idx, expense)
+            if not expense.receipt:
+                return self._raise_invalid_expense("Receipt", idx, expense)
+            if not expense.product_id:
+                return self._raise_invalid_expense("Product", idx, expense)
+
+    def _raise_invalid_expense(self, field, idx, expense):
+        raise ValidationError(_("Missing %s at index %s: %s - %s" %
+                                (field, idx, expense.date, expense.name)))

@@ -4,7 +4,8 @@ import json
 
 import requests
 import yaml
-from odoo import models, fields, api, exceptions, _
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class Expensify(models.TransientModel):
@@ -103,19 +104,19 @@ class Expensify(models.TransientModel):
                                self.expensify_api_secret)
 
         if self.env.user.company_id.id != self.employee_id.company_id.id:
-            raise exceptions.UserError(
+            raise ValidationError(
                 _("Please change your current company (top right) to '%s'"
                   % self.employee_id.company_id.name))
 
         reports = self.fetch_reports(self.since_date)
         if not reports:
-            raise exceptions.ValidationError(
+            raise ValidationError(
                 _("No reports found. Try setting an earlier date?"))
 
         expenses = [expense for report in reports for expense in
                     report.get('expenses') or []]
         if not expenses:
-            raise exceptions.ValidationError(
+            raise ValidationError(
                 _("No expenses found. Try submitting them to a report?"))
 
         expensify_expenses = []
@@ -196,22 +197,27 @@ class Expensify(models.TransientModel):
             expensify_expenses.append(expensify_expense)
 
         if not expensify_expenses:
-            raise exceptions.ValidationError(
+            raise ValidationError(
                 _("All expenses already imported"))
+
+        # Create Expensify Wizard
+        expensify_wizard_id = self.env['expensify.wizard'].create({
+            'employee_id': self.employee_id.id,
+        })
+        # Populate Expensify Expenses
+        for exp in expensify_expenses:
+            exp.update({'expensify_wizard_id': expensify_wizard_id.id})
+            self.env['expensify.expense'].create(exp)
 
         # Show Expensify wizard
         return {
             "name": "Import Expenses",
             "type": "ir.actions.act_window",
             "res_model": "expensify.wizard",
+            "res_id": expensify_wizard_id.id,
             "view_type": "form",
             "view_mode": "form",
             "target": "new",
-            "context": {
-                'default_employee_id': self.employee_id.id,
-                'default_expensify_expenses': [(0, 0, exp) for exp in
-                                               expensify_expenses]
-            }
         }
 
     @api.model
@@ -358,7 +364,7 @@ class Expensify(models.TransientModel):
         if response.content.endswith(".txt"):
             return response.content
         else:
-            raise exceptions.ValidationError(
+            raise ValidationError(
                 _("Error generating report: %s" % response.content))
 
     @api.model
@@ -379,5 +385,5 @@ class Expensify(models.TransientModel):
         if response.status_code == 200:
             return response.content
         else:
-            raise exceptions.ValidationError(
+            raise ValidationError(
                 _("Error fetching report: %s" % response.content))

@@ -8,10 +8,10 @@ class ExpensifyExpense(models.TransientModel):
              'id ASC'
 
     sequence = fields.Integer(
-        default=0
+        default=0,
     )
     expensify_wizard_id = fields.Many2one(
-        comodel_name='expensify.wizard'
+        comodel_name='expensify.wizard',
     )
     expensify_id = fields.Text(
         # ID too big for Integer type

@@ -9,15 +9,14 @@
                 <field name="sequence" widget="handle"/>
                 <field name="expensify_wizard_id" invisible="1"/>
                 <field name="expensify_id" invisible="1"/>
-                <field name="date" required="1"/>
-                <field name="name" required="1"/>
-                <field name="amount" required="1"/>
-                <field name="currency_id" required="1"/>
-                <field name="receipt" required="1"/>
-                <field name="product_id" widget="selection" required="1"
+                <field name="date"/>
+                <field name="name"/>
+                <field name="amount"/>
+                <field name="currency_id"/>
+                <field name="receipt"/>
+                <field name="product_id" widget="selection"
                        domain="[('can_be_expensed', '=', True)]"/>
-                <field name="analytic_account_id" required="0"
-                       groups="analytic.group_analytic_accounting"/>
+                <field name="analytic_account_id" invisible="1"/>
                 <field name="description" invisible="1"/>
             </tree>
         </field>
