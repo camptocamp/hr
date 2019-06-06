@@ -23,13 +23,21 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.25.0 (2019-06-06)
+++++++++++++++++++++
+
+**Bugfixes**
+
 * BSIBSO-1143: fix currency revaluation
 
 **Build**
 
 * BIZ-3402 : Add modules in migration.yml for BSO devs + History trace
-
-**Documentation**
 
 **BSO devs**
 
