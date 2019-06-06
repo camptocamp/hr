@@ -108,6 +108,12 @@ migration:
           # odoo-usability
           - account_invoice_update_wizard
           #### local-src
+          - bso_dealsheet
+          - bso_half_tax_base
+          - bso_hr_holiday_status
+          - bso_mis_builder
+          - bso_sales_forecast
+          - expensify
           - server_environment_files
           - specific_fct
           - specific_security
@@ -519,3 +525,12 @@ migration:
           - l10n_uk_reports_hmrc
           - account_multicurrency_revaluation
           - account_multicurrency_revaluation_rate_type
+    - version: 10.25.0
+      addons:
+        upgrade:
+          - bso_dealsheet
+          - bso_half_tax_base
+          - bso_hr_holiday_status
+          - bso_mis_builder
+          - bso_sales_forecast
+          - expensify

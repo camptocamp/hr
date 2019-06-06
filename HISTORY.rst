@@ -27,8 +27,17 @@ Latest (Unreleased)
 
 **Build**
 
+* BIZ-3402 : Add modules in migration.yml for BSO devs + History trace
+
 **Documentation**
 
+**BSO devs**
+
+* Expensify Update #321 by gcoudu
+* bso_half_tax_base #320 by Mraimou
+* Sales Forecast #319 by Mraimou
+* BSO Dealsheet Update #318 by gcoudu
+* adjust to suite allocations creation, Add UTs #314 by janatii
 
 10.24.0 (2019-04-02)
 ++++++++++++++++++++
