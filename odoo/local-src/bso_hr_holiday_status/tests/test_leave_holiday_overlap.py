@@ -28,9 +28,9 @@ class TestLeaveHolidayOverlap(common.TransactionCase):
     def test_leave_creation_error(self):
         with self.assertRaises(exceptions.ValidationError):
             self.env['hr.holidays'].create({
+                'type': 'remove',
                 'employee_id': self.employee.id,
                 'holiday_status_id': self.leave_status.id,
-                'type': 'add',
                 'holiday_type': 'employee',
                 'date_from': '2017-02-05',
                 'date_to': '2017-02-10'
@@ -42,10 +42,24 @@ class TestLeaveHolidayOverlap(common.TransactionCase):
         self.env['hr.holidays'].create({
             'employee_id': self.employee.id,
             'holiday_status_id': self.leave_status.id,
-            'type': 'add',
+            'type': 'remove',
             'holiday_type': 'employee',
             'date_from': '2017-01-05',
             'date_to': '2017-02-10'
+        })
+        leaves_after = self.env['hr.holidays'].search_count(
+            [('employee_id', '=', self.employee.id)])
+        self.assertEqual(leaves_after, leaves_before + 1)
+
+    def test_allocation_creation_ok(self):
+        leaves_before = self.env['hr.holidays'].search_count(
+            [('employee_id', '=', self.employee.id)])
+        self.env['hr.holidays'].create({
+            'type': 'add',  # allocation
+            'employee_id': self.employee.id,
+            'holiday_status_id': self.leave_status.id,
+            'type': 'add',
+            'holiday_type': 'employee',
         })
         leaves_after = self.env['hr.holidays'].search_count(
             [('employee_id', '=', self.employee.id)])
