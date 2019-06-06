@@ -12,8 +12,7 @@ class ExpensifyWizard(models.TransientModel):
     expensify_expenses = fields.One2many(
         string='Expenses',
         comodel_name='expensify.expense',
-        inverse_name='expensify_wizard_id',
-        required=True
+        inverse_name='expensify_wizard_id'
     )
 
     @api.multi
@@ -30,6 +29,7 @@ class ExpensifyWizard(models.TransientModel):
 
     @api.model
     def create_expenses(self):
+        self.expensify_expenses.validate()
         expense_ids = []
         for expense in self.expensify_expenses:
             expense_data = {
