@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="forecast_line_diff_tree" model="ir.ui.view">
+        <field name="name">forecast.line.diff.tree</field>
+        <field name="model">forecast.line.diff</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="line_id"/>
+                <field name="action"/>
+                <field name="res_model"/>
+                <field name="res_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="amount"/>
+                <field name="auto_renewal"/>
+                <field name="state"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="forecast_line_diff_form" model="ir.ui.view">
+        <field name="name">forecast.line.diff.form</field>
+        <field name="model">forecast.line.diff</field>
+        <field name="arch" type="xml">
+            <form string="Forecast Cost">
+                <sheet>
+                    <group>
+                        <field name="line_id"/>
+                        <field name="action"/>
+                        <field name="res_model"/>
+                        <field name="res_id"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="amount"/>
+                        <field name="auto_renewal"/>
+                        <field name="state"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

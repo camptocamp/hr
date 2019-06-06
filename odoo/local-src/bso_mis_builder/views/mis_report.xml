@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mis_report_view_form_parent_model_id" model="ir.ui.view">
+        <field name="name">mis.report.parent.model</field>
+        <field name="model">mis.report</field>
+        <field name="inherit_id"
+               ref="mis_builder.mis_report_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[2]/field/tree/field[@name='model_id']"
+                   position="before">
+                <field name="row_model_id">
+                </field>
+            </xpath>
+        </field>
+    </record>
+</odoo>
