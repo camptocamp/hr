@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_tax_form_is_half" model="ir.ui.view">
+        <field name="name">account.tax.is_half</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id"
+               ref="account.view_tax_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='include_base_amount']"
+                   position="after">
+                <field name="is_half"
+                       attrs="{'invisible':[('include_base_amount','=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
