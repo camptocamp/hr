@@ -9,13 +9,21 @@ class SaleOrder(models.Model):
             ('dealsheet', 'Dealsheet'),
         ]
     )
+    currency_id = fields.Many2one(
+        string='Currency',
+        related='pricelist_id.currency_id',
+        required=False,
+        readonly=True,
+        store=True,
+    )
     dealsheet_id = fields.Many2one(
         string='Dealsheet',
         comodel_name='sale.dealsheet',
-        readonly=True
+        readonly=True,
+        copy=False,
     )
     dealsheet_state = fields.Selection(
-        string='Dealsheet State',
+        string='Dealsheet Status',
         related='dealsheet_id.state',
         readonly=True
     )

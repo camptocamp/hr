@@ -1,4 +1,7 @@
-from odoo import models, fields, api
+from collections import defaultdict
+
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 
 class SaleDealsheet(models.Model):
@@ -22,54 +25,76 @@ class SaleDealsheet(models.Model):
         compute='compute_name',
         store=True
     )
+    procure_ok = fields.Boolean(
+        string='Procurable',
+        compute='compute_procure_ok',
+    )
     sale_order_id = fields.Many2one(
         string='Sale Order',
         comodel_name='sale.order',
         ondelete='cascade',
         readonly=True,
-        required=True
+        required=True,
+        copy=False,
     )
     sale_order_state = fields.Selection(
+        string='Sale Order Status',
         related='sale_order_id.state',
-        readonly=True
+        readonly=True,
+        store=True,
+    )
+    company_id = fields.Many2one(
+        related='sale_order_id.company_id',
+        readonly=True,
+        store=True,
     )
     project_id = fields.Many2one(
         related='sale_order_id.project_id',
-        readonly=True
+        readonly=True,
+        store=True,
     )
     partner_id = fields.Many2one(
         related='sale_order_id.partner_id',
-        readonly=True
+        readonly=True,
+        store=True,
     )
     duration = fields.Integer(
         related='sale_order_id.duration',
-        readonly=True
+        readonly=True,
+        store=True,
     )
     currency_id = fields.Many2one(
         related='sale_order_id.currency_id',
-        readonly=True
+        readonly=True,
+        store=True,
     )
     user_id = fields.Many2one(
         related='sale_order_id.user_id',
-        readonly=True
+        readonly=True,
+        store=True,
+    )
+    commitment_date = fields.Datetime(
+        related='sale_order_id.commitment_date',
+        readonly=True,
+        store=True,
     )
     presale_id = fields.Many2one(
         string='Pre-Sale',
         comodel_name='res.users',
-        readonly=True
+        readonly=True,
     )
     reviewer_id = fields.Many2one(
         string='Reviewer',
         comodel_name='res.users',
-        readonly=True
+        readonly=True,
     )
     validated_date = fields.Datetime(
         string='Validated on',
-        readonly=True
+        readonly=True,
     )
     refused_date = fields.Datetime(
         string='Refused on',
-        readonly=True
+        readonly=True,
     )
     compute_lines = fields.One2many(
         string='Computed Lines',
@@ -78,7 +103,7 @@ class SaleDealsheet(models.Model):
         compute='compute_compute_lines',
         domain=[('is_cost', '=', False), ('is_recurring', '=', True)],
         context={'default_is_cost': False, 'default_is_recurring': True},
-        store=True
+        store=True,
     )
     mrc_lines = fields.One2many(
         string='MRCs',
@@ -86,7 +111,7 @@ class SaleDealsheet(models.Model):
         inverse_name='dealsheet_id',
         domain=[('is_cost', '=', True), ('is_recurring', '=', True)],
         context={'default_is_cost': True, 'default_is_recurring': True},
-        copy=True
+        copy=True,
     )
     nrc_lines = fields.One2many(
         string='NRCs',
@@ -94,99 +119,118 @@ class SaleDealsheet(models.Model):
         inverse_name='dealsheet_id',
         domain=[('is_cost', '=', True), ('is_recurring', '=', False)],
         context={'default_is_cost': True, 'default_is_recurring': False},
-        copy=True
+        copy=True,
     )
     nrc = fields.Monetary(
         string='NRC',
         currency_field='currency_id',
         compute='compute_nrc',
-        store=True
+        store=True,
     )
     nrc_delivery = fields.Monetary(
         string='Delivery NRC',
         currency_field='currency_id',
         compute='compute_nrc_delivery',
-        store=True
+        store=True,
     )
     nrr = fields.Monetary(
         string='NRR',
         currency_field='currency_id',
         compute='compute_nrr',
-        store=True
+        store=True,
     )
     nrm = fields.Float(
         string='NRM (%)',
         compute='compute_nrm',
-        store=True
+        store=True,
     )
     nrm_delivery = fields.Float(
         string='Delivery NRM (%)',
         compute='compute_nrm_delivery',
-        store=True
+        store=True,
     )
     mrc = fields.Monetary(
         string='MRC',
         currency_field='currency_id',
         compute='compute_mrc',
-        store=True
+        store=True,
     )
     mrc_delivery = fields.Monetary(
         string='Delivery MRC',
         currency_field='currency_id',
         compute='compute_mrc_delivery',
-        store=True
+        store=True,
     )
     mrr = fields.Monetary(
         string='MRR',
         currency_field='currency_id',
         compute='compute_mrr',
-        store=True
+        store=True,
     )
     mrm = fields.Float(
         string='MRM (%)',
         compute='compute_mrm',
-        store=True
+        store=True,
     )
     mrm_delivery = fields.Float(
         string='Delivery MRM (%)',
         compute='compute_mrm_delivery',
-        store=True
+        store=True,
     )
     cost = fields.Monetary(
         string='Cost',
         currency_field='currency_id',
         compute='compute_cost',
-        store=True
+        store=True,
     )
     cost_delivery = fields.Monetary(
         string='Delivery Cost',
         currency_field='currency_id',
         compute='compute_cost_delivery',
-        store=True
+        store=True,
     )
     revenue = fields.Monetary(
         string='Revenue',
         currency_field='currency_id',
         compute='compute_revenue',
-        store=True
+        store=True,
     )
     margin = fields.Float(
         string='Margin (%)',
         compute='compute_margin',
-        store=True
+        store=True,
     )
     margin_delivery = fields.Float(
         string='Delivery Margin (%)',
         compute='compute_margin_delivery',
-        store=True
+        store=True,
     )
-
-    # ATTACHMENTS
-
+    purchase_order_ids = fields.One2many(
+        string='Purchase Orders',
+        comodel_name='purchase.order',
+        inverse_name='dealsheet_id',
+    )
+    purchase_order_number = fields.Integer(
+        string='Number of Purchase Orders',
+        compute='_compute_purchase_order_number'
+    )
     attachment_number = fields.Integer(
         string='Number of Attachments',
         compute='_compute_attachment_number'
     )
+
+    @api.depends('purchase_order_ids')
+    def _compute_purchase_order_number(self):
+        for rec in self:
+            rec.purchase_order_number = len(rec.purchase_order_ids)
+
+    @api.multi
+    def action_get_purchase_order_view(self):
+        self.ensure_one()
+        res = self.env['ir.actions.act_window'].for_xml_id('purchase',
+                                                           'purchase_rfq')
+        res['domain'] = [('dealsheet_id', '=', self.id)]
+        return res
 
     @api.multi
     def _compute_attachment_number(self):
@@ -215,6 +259,12 @@ class SaleDealsheet(models.Model):
     def compute_name(self):
         for rec in self:
             rec.name = "%s Dealsheet" % rec.sale_order_id.name
+
+    @api.depends('mrc_lines.purchase_order_line_id', 'mrc_lines.supplier_id',
+                 'nrc_lines.purchase_order_line_id', 'nrc_lines.supplier_id')
+    def compute_procure_ok(self):
+        for rec in self:
+            rec.procure_ok = bool(rec._get_procure_lines())
 
     @api.depends('sale_order_id.order_line')
     def compute_compute_lines(self):
@@ -339,7 +389,9 @@ class SaleDealsheet(models.Model):
                 order_line.product_id,
                 "%.0fM %s" % (epl_bandwidth, link.link_id.name),
                 order_line.product_uom_qty,
-                link.mrc_mb * epl_bandwidth
+                link.mrc_mb * epl_bandwidth,
+                order_line.product_id.sudo().company_id.partner_id.id,
+                "monthly",
             )
             lines.append(data)
         if bundle_details_id.epl_backup:
@@ -349,7 +401,9 @@ class SaleDealsheet(models.Model):
                 order_line.product_id,
                 "%sM Protection" % epl_bandwidth,
                 order_line.product_uom_qty,
-                bundle_details_id.epl_backup_mrc
+                bundle_details_id.epl_backup_mrc,
+                order_line.product_id.sudo().company_id.partner_id.id,
+                "monthly",
             )
             lines.append(data)
         lines += self.get_lines_bundle_products(
@@ -402,14 +456,19 @@ class SaleDealsheet(models.Model):
 
     @api.model
     def get_line_data(self, is_recurring, sale_order_line_id, product_id,
-                      description, quantity, cost):
-        return {'is_cost': True,
-                'is_recurring': is_recurring,
-                'sale_order_line_id': sale_order_line_id.id,
-                'product_id': product_id.id,
-                'description': description,
-                'quantity': quantity,
-                'cost': cost}
+                      description, quantity, cost, supplier_id=False,
+                      frequency=False):
+        return {
+            'is_cost': True,
+            'is_recurring': is_recurring,
+            'sale_order_line_id': sale_order_line_id.id,
+            'product_id': product_id.id,
+            'description': description,
+            'quantity': quantity,
+            'cost': cost,
+            'supplier_id': supplier_id,
+            'frequency': frequency,
+        }
 
     @api.model
     def get_margin(self, cost, revenue):
@@ -511,6 +570,14 @@ class SaleDealsheet(models.Model):
             'reviewer_id': self.env.uid,
             'validated_date': fields.Datetime.now()
         })
+        self._set_delivery_cost_defaults()
+
+    def _set_delivery_cost_defaults(self):
+        lines = self.env['sale.dealsheet.line'].search([
+            ('dealsheet_id', '=', self.id),
+        ])
+        for l in lines:
+            l.cost_delivery = l.cost
 
     @api.multi
     def action_refuse(self):
@@ -549,5 +616,79 @@ class SaleDealsheet(models.Model):
             'presale_id': False,
             'reviewer_id': False,
             'validated_date': False,
-            'refused_date': False
+            'refused_date': False,
         })
+
+    def action_procure(self):
+        self.ensure_one()
+        if self.env.user.company_id.id != self.company_id.id:
+            raise UserError(
+                _("Please change your current company (top right) to '%s'"
+                  % self.company_id.name))
+        grouped = self._get_procure_lines_grouped()
+        for supplier_id, frequencies in grouped.iteritems():
+            for frequency, lines in frequencies.iteritems():
+                self._create_purchase_order(supplier_id, frequency, lines)
+        return self.action_get_purchase_order_view()
+
+    def _get_procure_lines_grouped(self):
+        grouped = defaultdict(lambda: defaultdict(lambda: []))
+        for l in self._get_procure_lines():
+            grouped[l.supplier_id.id][l.frequency].append(l)
+        return grouped
+
+    def _get_procure_lines(self):
+        return self.env['sale.dealsheet.line'].search([
+            ('dealsheet_id', '=', self.id),
+            ('supplier_id', '!=', False),
+            ('purchase_order_line_id', '=', False),
+        ])
+
+    def _create_purchase_order(self, supplier_id, frequency, ds_lines):
+        data = {
+            'dealsheet_id': self.id,
+            'company_id': self.company_id.id,
+            'currency_id': self.currency_id.id,
+            'partner_id': supplier_id,
+        }
+        if frequency:
+            data.update({
+                'supplier_invoicing_period': frequency,
+                'subscr_date_start': self.commitment_date,
+                'subscr_duration': self.duration,
+                'continue_after_end': True,
+            })
+        order_id = self.env['purchase.order'].create(data.copy())
+        order_id.onchange_partner_id()
+        diff = self._get_onchange_diff(data, order_id)
+        order_id.write(diff)
+        for ds_line_id in ds_lines:
+            self._create_purchase_order_line(order_id, ds_line_id)
+        return order_id
+
+    def _create_purchase_order_line(self, order_id, ds_line_id):
+        data = {
+            'order_id': order_id.id,
+            'dealsheet_line_id': ds_line_id.id,
+            'account_analytic_id': self.project_id.id,
+            'name': ds_line_id.description,
+            'date_planned': fields.Datetime.now(),
+            'product_id': ds_line_id.product_id.id,
+            'product_qty': ds_line_id.quantity,
+            'product_uom': ds_line_id.product_id.uom_id.id,
+            'price_unit': ds_line_id.cost_delivery,
+        }
+        order_line_id = self.env['purchase.order.line'].create(data.copy())
+        order_line_id.onchange_product_id()
+        diff = self._get_onchange_diff(data, order_line_id)
+        order_line_id.write(diff)
+        ds_line_id.purchase_order_line_id = order_line_id.id
+        return order_line_id
+
+    def _get_onchange_diff(self, data, record):
+        diff = {}
+        record_data = record.copy_data()[0]
+        for key, value in data.iteritems():
+            if value != record_data[key]:
+                diff[key] = value
+        return diff
