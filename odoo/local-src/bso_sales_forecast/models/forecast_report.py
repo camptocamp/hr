@@ -69,6 +69,9 @@ class ForecastReport(models.Model):
         comodel_name='forecast.line.invoice',
         inverse_name='report_id',
     )
+    lock_date = fields.Date(
+        string='Lock date',
+    )
     lock_month = fields.Selection(
         selection=[(1, 'January'),
                    (2, 'February'),
@@ -83,6 +86,8 @@ class ForecastReport(models.Model):
                    (11, 'November'),
                    (12, 'December'),
                    ],
+        compute='compute_lock_month',
+        store=True,
     )
 
     @api.model
@@ -109,6 +114,12 @@ class ForecastReport(models.Model):
             rec.update({
                 'end_date': datetime(rec.year, 12, 31)
             })
+
+    @api.depends('lock_date')
+    def compute_lock_month(self):
+        for rec in self:
+            if rec.lock_date:
+                rec.lock_month = fields.Date.from_string(rec.lock_date).month
 
     @api.model
     def create(self, values):

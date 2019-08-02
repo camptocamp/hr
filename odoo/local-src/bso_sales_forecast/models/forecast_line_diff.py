@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import date, datetime
 
 from dateutil.relativedelta import relativedelta
 from odoo import fields, models, api
@@ -60,8 +60,6 @@ class ForecastLineDiff(models.Model):
     company_id = fields.Many2one(
         string='Company',
         comodel_name='res.company',
-        compute='_get_company_id',
-        store=True
     )
     report_id = fields.Many2one(
         string='Forecast Report',
@@ -83,21 +81,12 @@ class ForecastLineDiff(models.Model):
                 continue
             rec.update({'report_id': line.report_id.id})
 
-    @api.depends('res_model', 'res_id')
-    def _get_company_id(self):
-        for rec in self:
-            if not rec.line_id:
-                company = self._get_company(rec.res_model, rec.res_id)
-                rec.update({'company_id': company.id})
-                continue
-            rec.update({'company_id': rec.line_id.company_id.id})
-
-    def _get_company(self, res_model, res_id):
+    def get_company_id(self, res_model, res_id):
         parent_field = self._get_forecast_line_dict(res_model).get(
             'fields_mapping').get('parent_field')
         line = self.env[res_model].browse(res_id)
         parent = getattr(line, parent_field)
-        return parent.company_id
+        return parent.company_id.id
 
     def _get_line(self, res_model, res_id):
         forecast_line = self._get_forecast_line_dict(res_model).get(
@@ -157,15 +146,23 @@ class ForecastLineDiff(models.Model):
         return forecast_lines_dict.get(res_model)
 
     def log(self, res_model, res_id, action, values):
-        line = self._get_line(res_model, res_id)
-        line_diff = self.get_line_diff(res_model, res_id)
+        self_sudo = self.sudo()
+        generated_reports_companies = self_sudo.env['forecast.report'].search(
+            []).mapped('company_id').ids
+        company_id = self_sudo.get_company_id(res_model, res_id)
+        if company_id not in generated_reports_companies:
+            return False
+        line = self_sudo._get_line(res_model, res_id)
+        line_diff = self_sudo.get_line_diff(res_model, res_id)
         if not line_diff:
             values.update({
                 'line_id': line.id,
                 'res_model': res_model,
                 'res_id': res_id,
-                'action': action})
-            return self.create(values)
+                'action': action,
+                'company_id': company_id
+            })
+            return self_sudo.create(values)
         if line_diff.action == 'create' and action == 'delete':
             return line_diff.unlink()
         if line_diff.action == 'update' and action == 'delete':
@@ -182,6 +179,10 @@ class ForecastLineDiff(models.Model):
 
     def apply_changes(self):
         for rec in self:
+            if not rec.is_refreshable():
+                rec.unlink()
+                continue
+
             forecast_line_dict = self._get_forecast_line_dict(rec.res_model)
             forecast_line = forecast_line_dict.get('forecast_line')
             forecast_line_model = forecast_line.get('model_name')
@@ -192,7 +193,9 @@ class ForecastLineDiff(models.Model):
                     original_line_field: rec.res_id,
                     'report_id': rec.report_id.id,
                 })
+                rec.unlink()
                 continue
+
             if not rec.line_id and rec.state == 'open':
                 original_line_field = forecast_line.get('original_line_field')
                 month_values = rec.get_month_values()
@@ -203,7 +206,9 @@ class ForecastLineDiff(models.Model):
                                        'amount': month_values.get(m),
                                        }) for idx, m in enumerate(MONTHS)]
                 })
+                rec.unlink()
                 continue
+
             month_values = rec.get_month_values()
             current_month = fields.Datetime.from_string(rec.create_date).month
             for m in rec.line_id.months[current_month - 1:]:
@@ -216,6 +221,20 @@ class ForecastLineDiff(models.Model):
             rec.unlink()
 
         return
+
+    def is_refreshable(self):
+        lock_date = self.get_lock_date()
+        if self.auto_renewal:
+            return True
+        end_d = fields.Date.from_string(self.end_date)
+        if end_d and end_d >= lock_date:
+            return True
+        return False
+
+    def get_lock_date(self):
+        if self.report_id.lock_date:
+            return self.report_id.lock_date
+        return date.today().replace(day=1)
 
     def get_month_values(self):
         if self.action == 'delete':
@@ -233,7 +252,7 @@ class ForecastLineDiff(models.Model):
         else:
             end_date = self.end_date
         max_start_date = max(self.create_date, self.start_date)
-        if 'arrears' in self.template_id.name:
+        if self.template_id and 'arrears' in self.template_id.name:
             max_start_date = self._add_months_to_date(max_start_date)
             end_date = self._add_months_to_date(end_date)
         return self.line_id.get_month_amounts(max_start_date, end_date,
