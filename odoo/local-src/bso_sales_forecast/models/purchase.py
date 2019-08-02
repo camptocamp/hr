@@ -45,7 +45,8 @@ class PurchaseOrderLine(models.Model):
             'amount': kwargs.get('price_subtotal', self.price_subtotal),
             'auto_renewal': kwargs.get('continue_after_end',
                                        po.continue_after_end),
-            'start_date': kwargs.get('subscr_date_start', po.subscr_date_start),
+            'start_date': kwargs.get('subscr_date_start',
+                                     po.subscr_date_start),
             'end_date': kwargs.get('subscr_date_end', po.subscr_date_end),
             'state': self._get_corresponding_state(state),
         }
