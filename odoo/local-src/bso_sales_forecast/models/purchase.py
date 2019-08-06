@@ -28,14 +28,14 @@ class PurchaseOrderLine(models.Model):
             diff.log(self._name, rec.id, 'create', fields)
         return rec
 
-    # @api.multi
-    # def unlink(self):
-    #     diff = self.env['forecast.line.diff']
-    #     for rec in self:
-    #         if rec.order_id.state in ('purchase', 'done'):
-    #             fields = rec.get_fields_to_log()
-    #             diff.log(rec._name, rec.id, 'delete', fields)
-    #     return super(PurchaseOrderLine, self).unlink()
+    @api.multi
+    def unlink(self):
+        diff = self.env['forecast.line.diff']
+        for rec in self:
+            if rec.order_id.state in ('purchase', 'done'):
+                fields = rec.get_fields_to_log()
+                diff.log(rec._name, rec.id, 'delete', fields)
+        return super(PurchaseOrderLine, self).unlink()
 
     def get_fields_to_log(self, **kwargs):
         po = self.order_id
