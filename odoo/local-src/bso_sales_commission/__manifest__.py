@@ -5,6 +5,7 @@
     'website': 'https://www.bsonetwork.com',
     'depends': ['base', 'sales_team', 'sale', 'purchase', 'bso_dealsheet'],
     'data': [
+        'data/sales_commission_data.xml',
         'security/bso_sales_commission_security.xml',
         'security/ir.model.access.csv',
         'views/sale_order_view.xml',
