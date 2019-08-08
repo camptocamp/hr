@@ -674,7 +674,7 @@ class ForecastReport(models.Model):
         self.ensure_one()
         line_diffs = self._get_line_diffs()
         line_diffs.apply_changes()
-        return
+        return True
 
     def _get_line_diffs(self):
         return self.env['forecast.line.diff'].search([

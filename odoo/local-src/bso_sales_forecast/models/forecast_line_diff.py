@@ -179,8 +179,8 @@ class ForecastLineDiff(models.Model):
 
     def apply_changes(self):
         for rec in self:
-            if not rec.is_refreshable():
-                rec.unlink()
+            lock_date = rec.get_lock_date()
+            if not rec.is_refreshable(lock_date):
                 continue
 
             forecast_line_dict = self._get_forecast_line_dict(rec.res_model)
@@ -198,7 +198,7 @@ class ForecastLineDiff(models.Model):
 
             if not rec.line_id and rec.state == 'open':
                 original_line_field = forecast_line.get('original_line_field')
-                month_values = rec.get_month_values()
+                month_values = rec.get_month_values(lock_date)
                 self.env[forecast_line_model].create({
                     original_line_field: rec.res_id,
                     'report_id': rec.report_id.id,
@@ -209,8 +209,8 @@ class ForecastLineDiff(models.Model):
                 rec.unlink()
                 continue
 
-            month_values = rec.get_month_values()
-            current_month = fields.Datetime.from_string(rec.create_date).month
+            month_values = rec.get_month_values(lock_date)
+            current_month = lock_date.month
             for m in rec.line_id.months[current_month - 1:]:
                 key = MONTHS[m.month - 1]
                 if key in month_values:
@@ -222,8 +222,7 @@ class ForecastLineDiff(models.Model):
 
         return
 
-    def is_refreshable(self):
-        lock_date = self.get_lock_date()
+    def is_refreshable(self, lock_date):
         if self.auto_renewal:
             return True
         end_d = fields.Date.from_string(self.end_date)
@@ -232,11 +231,12 @@ class ForecastLineDiff(models.Model):
         return False
 
     def get_lock_date(self):
-        if self.report_id.lock_date:
-            return self.report_id.lock_date
+        lock_date = self.report_id.lock_date
+        if lock_date:
+            return fields.Date.from_string(lock_date)
         return date.today().replace(day=1)
 
-    def get_month_values(self):
+    def get_month_values(self, lock_date):
         if self.action == 'delete':
             current_month = datetime.today().month
             return {m: 0 for m in MONTHS[current_month:]}
@@ -251,7 +251,8 @@ class ForecastLineDiff(models.Model):
             end_date = self.report_id.end_date
         else:
             end_date = self.end_date
-        max_start_date = max(self.create_date, self.start_date)
+        lock_date_str = fields.Date.to_string(lock_date)
+        max_start_date = max(lock_date_str, self.start_date)
         if self.template_id and 'arrears' in self.template_id.name:
             max_start_date = self._add_months_to_date(max_start_date)
             end_date = self._add_months_to_date(end_date)

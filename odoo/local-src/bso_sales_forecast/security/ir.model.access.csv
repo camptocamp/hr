@@ -16,7 +16,7 @@ access_forecast_line_revenue_officer,forecast.line.revenue.officer,model_forecas
 access_forecast_line_invoice_officer,forecast.line.invoice.officer,model_forecast_line_invoice,group_forecast_officer,1,1,1,0
 access_forecast_line_manual_officer,forecast.line.manual.officer,model_forecast_line_manual,group_forecast_officer,1,1,1,0
 access_forecast_month_officer,forecast.month.officer,model_forecast_month,group_forecast_officer,1,1,1,0
-access_forecast_line_diff_officer,forecast.line.diff.officer,model_forecast_line_diff,group_forecast_officer,1,1,1,0
+access_forecast_line_diff_officer,forecast.line.diff.officer,model_forecast_line_diff,group_forecast_officer,1,1,1,1
 
 
 access_forecast_report_user,forecast.report.user,model_forecast_report,group_forecast_user,1,0,0,0
