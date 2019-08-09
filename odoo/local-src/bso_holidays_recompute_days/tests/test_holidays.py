@@ -13,7 +13,7 @@ class TestHolidays(TransactionCase):
         self.status = self._get_status()
         self.company.legal_holidays_status_id = self.status.id
         self.employee = self._get_fr_employee()
-        self._check_or_create_fr_public_holiday_line()
+        self._get_or_create_fr_public_holiday_line()
         self.holidays_obj = self.env['hr.holidays']
 
     def _get_fr_company(self):
@@ -42,11 +42,8 @@ class TestHolidays(TransactionCase):
             'address_id': partner.id
         })
 
-    def _check_or_create_fr_public_holiday_line(self):
-        fr_public_holidays_2019 = self.env['hr.holidays.public'].search([
-            ('year', '=', 2019),
-            ('country_id', '=', self.env.ref('base.fr').id)
-        ])
+    def _get_or_create_fr_public_holiday_line(self):
+        fr_public_holidays_2019 = self._get_or_create_fr_public_holiday()
         lundi_de_pentecote = self.env['hr.holidays.public.line'].search([
             ('name', '=', 'Lundi de Pentecôte'),
             ('date', '=', '2019-06-10'),
@@ -59,6 +56,18 @@ class TestHolidays(TransactionCase):
                     'date': '2019-06-10', })]
             })
         return
+
+    def _get_or_create_fr_public_holiday(self):
+        fr_public_holidays_2019 = self.env['hr.holidays.public'].search([
+            ('year', '=', 2019),
+            ('country_id', '=', self.env.ref('base.fr').id)
+        ])
+        if not fr_public_holidays_2019:
+            fr_public_holidays_2019 = self.env['hr.holidays.public'].create({
+                'year': 2019,
+                'country_id': self.env.ref('base.fr').id
+            })
+        return fr_public_holidays_2019
 
     def test_holidays_case1(self):
         date_from = '2019-06-04 08:00:00'
