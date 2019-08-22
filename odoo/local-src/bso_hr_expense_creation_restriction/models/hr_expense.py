@@ -29,6 +29,5 @@ class HrExpense(models.Model):
     def raise_change_company_error(self, company):
         raise AccessError(
             _("Please change your current company (top right) to '{}'".format(
-                company)
-              )
+                company))
         )

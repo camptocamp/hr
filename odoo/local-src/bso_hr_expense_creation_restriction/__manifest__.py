@@ -1,7 +1,7 @@
 {
-    'name': 'HR restrict expense creation',
+    'name': 'Hr Expense',
     'category': 'HR',
-    'description': "Prevent expense creation in q different company than the employee's",
+    'description': "Prevent expenses in different company than employee's",
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
     'depends': ['base', 'hr_expense'],
