@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="salesperson_commission_quarter_form" model="ir.ui.view">
+        <field name="name">salesperson.commission.quarter.form</field>
+        <field name="model">salesperson.commission.quarter</field>
+        <field name="arch" type="xml">
+            <form string="Salespeople">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="year" readonly="1"/>
+                        <field name="user_id" readonly="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="commission"/>
+                        <field name="payout"/>
+                    </group>
+                    <notebook>
+                        <page string="Summary">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>NRR</th>
+                                        <th>MRR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-weight: bold;">
+                                            Target
+                                        </td>
+                                        <td>
+                                            <field name="target_nrr"/>
+                                        </td>
+                                        <td>
+                                            <field name="target_mrr"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">
+                                            Earnings
+                                        </td>
+                                        <td>
+                                            <field name="earnings_nrr"/>
+                                        </td>
+                                        <td>
+                                            <field name="earnings_mrr"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">
+                                            Attainment Ratio
+                                        </td>
+                                        <td>
+                                            <field name="attainment_ratio_nrr"/>
+                                        </td>
+                                        <td>
+                                            <field name="attainment_ratio_mrr"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">
+                                            Commission
+                                        </td>
+                                        <td>
+                                            <field name="commission_nrr"/>
+                                        </td>
+                                        <td>
+                                            <field name="commission_mrr"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">
+                                            Attainment Factor
+                                        </td>
+                                        <td>
+                                            <field name="attainment_factor_nrr"/>
+                                        </td>
+                                        <td>
+                                            <field name="attainment_factor_mrr"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">
+                                            Payout
+                                        </td>
+                                        <td>
+                                            <field name="payout_nrr"/>
+                                        </td>
+                                        <td>
+                                            <field name="payout_mrr"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </page>
+                        <page string="Details">
+                            <field name="commission_lines"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="salesperson_commission_quarter_tree" model="ir.ui.view">
+        <field name="name">salesperson.commission.quarter.tree</field>
+        <field name="model">salesperson.commission.quarter</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="earnings_nrr"/>
+                <field name="earnings_mrr"/>
+                <field name="payout"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="salesperson_commission_quarter_view_search" model="ir.ui.view">
+        <field name="name">salesperson.commission.quarter.search</field>
+        <field name="model">salesperson.commission.quarter</field>
+        <field name="arch" type="xml">
+            <search string="Salesperson Commissions per quarter">
+                <group expand="0" string="Group By">
+                    <filter string="Year" domain="[]"
+                            context="{'group_by':'year'}"/>
+                    <filter string="Salesperson" domain="[]"
+                            context="{'group_by':'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="salesperson_commission_quarter_action"
+            model="ir.actions.act_window">
+        <field name="name">Sales Commissions</field>
+        <field name="res_model">salesperson.commission.quarter</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id"
+               ref="salesperson_commission_quarter_view_search"/>
+    </record>
+
+
+    <menuitem id="salesperson_commission_quarter_menu"
+              name="Commissions"
+              sequence="2"
+              action="salesperson_commission_quarter_action"
+              parent="bso_sales_commission.sales_commissions_menu"
+              groups="bso_sales_commission.group_sales_commission_user"/>
+</odoo>
