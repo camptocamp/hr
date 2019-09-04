@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_new_employee_tree" model="ir.ui.view">
+        <field name="name">hr.new.employee.tree</field>
+        <field name="model">hr.new.employee</field>
+        <field name="arch" type="xml">
+            <tree delete="false">
+                <field name="name" required="1"/>
+                <field name="status"/>
+                <field name="create_date"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_new_employee_form" model="ir.ui.view">
+        <field name="name">hr.new.employee.form</field>
+        <field name="model">hr.new.employee</field>
+        <field name="arch" type="xml">
+            <form delete="false">
+                <header>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+
+                    <group string="User's credentials">
+                        <group string="Personal informations">
+                            <field name="user_id"
+                                   attrs="{'invisible': [('user_id', '=', False)],
+                                   'readonly':'1'}"/>
+                            <field name="name"/>
+                            <field name="nationality"/>
+                            <field name="passport"/>
+                            <field name="gender"/>
+                            <field name="marital"/>
+                            <field name="children"/>
+                            <field name="dob"/>
+                            <field name="pob"/>
+                        </group>
+                        <group string="Company informations">
+                            <field name="employee_id"
+                                   attrs="{'invisible': [('user_id', '=', False)],
+                                   'readonly':'1'
+                                   }"/>
+                            <field name="title" required="1"/>
+                            <field name="is_manager"/>
+                            <field name="csd" required="1"/>
+                            <field name="manager_id" required="1"/>
+                            <field name="department_id" required="1"/>
+                            <field name="company_id"/>
+                            <field name="location"/>
+                            <field name="company_ids"
+                                   widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_bso_new_employee"
+                name="New Employees"
+                res_model="hr.new.employee"
+                view_mode="tree,form"/>
+    <menuitem id="menu_new_employee"
+              name="New employee Form"
+              action="action_bso_new_employee"
+              parent="hr.menu_hr_root"
+              sequence="3"/>
+</odoo>
