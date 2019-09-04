@@ -28,6 +28,19 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.26.0 (2019-09-04)
+++++++++++++++++++++
+
+**Features and Improvements**
+ * BSIBSO-1168 including BSO code
+
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
 10.25.0 (2019-06-06)
 ++++++++++++++++++++
 
