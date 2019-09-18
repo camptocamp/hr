@@ -48,7 +48,6 @@ class UbersmithInvoice(models.Model):
         string="Odoo Invoice",
         comodel_name="account.invoice"
     )
-    ################# Test Purposes ####################
     non_creation_reason = fields.Selection(
         string='Reason why Odoo invoice is not created',
         selection=[
@@ -74,8 +73,6 @@ class UbersmithInvoice(models.Model):
         compute='_is_correctly_imported',
         store='True'
     )
-
-    ##########################################
 
     @api.depends('odoo_invoice_id.amount_untaxed', 'current_charges')
     def _is_correctly_imported(self):

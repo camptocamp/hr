@@ -52,10 +52,10 @@ class UbersmithClient(models.Model):
     grace_due = fields.Boolean(
         string="Due Date Method",
         help='''0 = Grace Period 
-                    (invoice is due 'datepay' days after generation)
+                (invoice is due 'datepay' days after generation)
                 1 = Static Due Date 
-                    (invoice is due on 'datedue' day of the month, 
-                    only applicable to monthly invoicing)'''
+                (invoice is due on 'datedue' day of the month, 
+                only applicable to monthly invoicing)'''
     )
     discount_type = fields.Selection(
         string='Discount type',
@@ -209,8 +209,8 @@ class UbersmithClient(models.Model):
                 odoo_partner_id = rec.parent_account_id.odoo_partner_id.id
             else:
                 odoo_partner_id = rec.create_partner()
-                rec.parent_account_id.write({'odoo_partner_id':
-                                                 odoo_partner_id})
+                rec.parent_account_id.write({
+                    'odoo_partner_id': odoo_partner_id})
             rec.write({'odoo_partner_id': odoo_partner_id})
 
     def create_partner(self):
