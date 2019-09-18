@@ -51,10 +51,10 @@ class UbersmithClient(models.Model):
     )
     grace_due = fields.Boolean(
         string="Due Date Method",
-        help='''0 = Grace Period 
+        help='''0 = Grace Period
                 (invoice is due 'datepay' days after generation)
-                1 = Static Due Date 
-                (invoice is due on 'datedue' day of the month, 
+                1 = Static Due Date
+                (invoice is due on 'datedue' day of the month,
                 only applicable to monthly invoicing)'''
     )
     discount_type = fields.Selection(
