@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+            id="menu_delivery"
+            name="Service Delivery"
+            action="action_delivery_project"
+            parent=""
+            web_icon="bso_delivery,static/description/icon.png"/>
+
+</odoo>

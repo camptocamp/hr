@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="delivery_project_tree" model="ir.ui.view">
+        <field name="name">delivery.project.tree</field>
+        <field name="model">delivery.project</field>
+        <field name="arch" type="xml">
+            <tree string="Project">
+                <field name="sale_order_id"/>
+                <field name="id" invisible="1"/>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="user_id"/>
+                <field name="company_id"/>
+                <field name="customer_id"/>
+                <field name="dealsheet_id"/>
+                <field name="currency_id"/>
+                <field name="nrr" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="mrr" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="date_signed"/>
+                <field name="date_cease_requested"/>
+                <field name="notes"/>
+                <field name="progress_rate" widget="progressbar"/>
+                <button name="action_get_attachment_view"
+                        string="View Attached Documents" type="object"
+                        icon="fa-paperclip"/>
+            </tree>
+        </field>
+    </record>
+    <record id="delivery_project_form" model="ir.ui.view">
+        <field name="name">delivery.project.form</field>
+        <field name="model">delivery.project</field>
+        <field name="arch" type="xml">
+            <form string="Project">
+                <header>
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,track,complete"
+                    />
+                    <button name="create_project" string="Create project"
+                            class="btn-primary"
+                            type="object"
+                            attrs="{'invisible':
+                            [('project_project', '!=', False)]}"/>
+                    <button name="track_project" string="On track"
+                            class="btn-primary"
+                            type="object"
+                            attrs="{'invisible':
+                            ['|', ('project_project', '=', False),
+                            ('state', 'in', ('track', 'complete'))]}"/>
+                    <button name="complete_project" string="complete"
+                            class="btn-primary"
+                            type="object"
+                            attrs="{'invisible':
+                            ['|', ('project_project', '=', False),
+                            ('state', '=', 'complete')]}"/>
+                    <button name="hold_project" string="On hold"
+                            type="object"
+                            attrs="{'invisible':
+                            ['|', ('project_project', '=', False),
+                            ('state', 'in', ('hold', 'complete'))]}"/>
+                    <button name="risk_project" string="At risk"
+                            type="object"
+                            attrs="{'invisible':
+                            ['|', ('project_project', '=', False),
+                            ('state', 'in', ('risk', 'complete'))]}"/>
+                    <button name="cancel_project" string="Cancel"
+                            type="object"
+                            attrs="{'invisible':
+                            ['|', ('project_project', '=', False),
+                            ('state', 'in', ('cancel', 'complete'))]}"/>
+                    <button name="draft_project" string="reset to draft"
+                            type="object"
+                            attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button name="action_open_jira_project"
+                            string="open in JIRA"
+                            type="object"
+                            class="btn-info"
+                            attrs="{'invisible':
+                            [('project_project', '=', False)]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box">
+                        <button type="object"
+                                name="action_view_deliveries"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                groups="base.group_user">
+                        <field name="delivery_count" widget="statinfo"
+                               string="Delivery"/>
+                        </button>
+                        <button name="action_get_attachment_view"
+                                class="oe_stat_button"
+                                icon="fa-book"
+                                type="object">
+                            <field name="attachment_number" widget="statinfo"
+                                   string="Documents"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" attrs="{'required': True}"/>
+                        <field name="user_id" required='1'/>
+                    </group>
+                    <group>
+                        <field name="sale_order_id"
+                               domain="[('state', 'in',('sale', 'done'))]"
+                               readonly="1"
+                        />
+                        <field name="company_id"/>
+                        <field name="customer_id"/>
+                        <field name="dealsheet_id"/>
+                        <field name="currency_id"/>
+                        <field name="nrr" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="mrr" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="date_signed" readonly="1"/>
+                        <field name="kickoff_date" readonly="1"/>
+                        <field name="date_cease_requested"/>
+                    </group>
+                </sheet>
+                <sheet>
+                    <notebook>
+                        <page string="Delivery lines"
+                              attrs="{'invisible':
+                              [('project_project', '=', False)]}">
+                            <field name="delivery_line_ids">
+                                <tree create="false" editable="top"
+                                      delete="false" edit="true">
+                                    <field name="checked"/>
+                                    <field name="name"/>
+                                    <field name="qty_delivered"/>
+                                    <field name="qty_invoiced"/>
+                                    <field name="date_forecasted"/>
+                                    <field name="date_sla"/>
+                                    <field name="date_completed"/>
+                                    <field name="date_handover"/>
+                                    <field name="state"/>
+                                    <button type="object"
+                                            name="action_view_delivery"
+                                            class="oe_stat_button"
+                                            icon="fa-truck"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="JIRA Bindings">
+                            <group>
+                                <field name="backend_id" invisible="1"/>
+                                <field name="gaia_template" required='1'/>
+                                <field name="sync_issue_type_ids"
+                                       widget="many2many_checkboxes"
+                                       invisible="1"/>
+                                <field name="project_project"/>
+                                <field name="jira_key" required="1"/>
+                            </group>
+                        </page>
+                        <page string="Print">
+                            <group>
+                                <button name="action_generate_attachment" string="print"
+                            class="btn-primary" type="object"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <sheet>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                      <field name="message_follower_ids"
+                           widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>
