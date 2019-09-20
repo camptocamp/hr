@@ -150,7 +150,6 @@ class DeliveryProject(models.Model):
                 for picking_id in rec.sale_order_id.picking_ids:
                     for pack_operation in \
                             picking_id.pack_operation_product_ids:
-                        print(picking_id.product_id.id)
                         prod += pack_operation.qty_done * average_price.get(
                             picking_id.product_id.id, 0)
                 total = rec.sale_order_id.amount_untaxed
