@@ -87,8 +87,8 @@
                                 class="oe_stat_button"
                                 icon="fa-truck"
                                 groups="base.group_user">
-                        <field name="delivery_count" widget="statinfo"
-                               string="Delivery"/>
+                            <field name="delivery_count" widget="statinfo"
+                                   string="Delivery"/>
                         </button>
                         <button name="action_get_attachment_view"
                                 class="oe_stat_button"
@@ -122,7 +122,8 @@
                 </sheet>
                 <sheet>
                     <notebook>
-                        <page string="Delivery lines"
+                        <page id="delivery_lines"
+                              string="Delivery lines"
                               attrs="{'invisible':
                               [('project_project', '=', False)]}">
                             <field name="delivery_line_ids">
@@ -136,15 +137,11 @@
                                     <field name="date_sla"/>
                                     <field name="date_completed"/>
                                     <field name="date_handover"/>
-                                    <field name="state"/>
-                                    <button type="object"
-                                            name="action_view_delivery"
-                                            class="oe_stat_button"
-                                            icon="fa-truck"/>
                                 </tree>
                             </field>
                         </page>
-                        <page string="JIRA Bindings">
+                        <page id="jira_bindings"
+                              string="JIRA Bindings">
                             <group>
                                 <field name="backend_id" invisible="1"/>
                                 <field name="gaia_template" required='1'/>
@@ -155,12 +152,6 @@
                                 <field name="jira_key" required="1"/>
                             </group>
                         </page>
-                        <page string="Print">
-                            <group>
-                                <button name="action_generate_attachment" string="print"
-                            class="btn-primary" type="object"/>
-                            </group>
-                        </page>
                     </notebook>
                 </sheet>
                 <sheet>
@@ -169,7 +160,7 @@
                     </group>
                 </sheet>
                 <div class="oe_chatter">
-                      <field name="message_follower_ids"
+                    <field name="message_follower_ids"
                            widget="mail_followers"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>

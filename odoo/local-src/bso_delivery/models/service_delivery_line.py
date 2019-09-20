@@ -23,11 +23,6 @@ class DeliveryProjectLine(models.Model):
         read_only=True,
     )
 
-    state = fields.Selection(
-        related='sale_order_line_id.picking_id.state',
-        read_only=True,
-        store=True
-    )
     date_forecasted = fields.Date(
         string='Forecasted Date',
     )
@@ -43,16 +38,3 @@ class DeliveryProjectLine(models.Model):
     checked = fields.Boolean(
         string='Select'
     )
-
-    @api.multi
-    def action_view_delivery(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'stock.picking',
-            'view_mode': 'form',
-            'view_type': 'form',
-            'res_id': self.sale_order_line_id.order_id.picking_ids.ids[0],
-            # 'res_id': self.sale_order_line_id.picking_id.id,
-            'views': [(False, 'form')],
-            'target': 'current',
-        }

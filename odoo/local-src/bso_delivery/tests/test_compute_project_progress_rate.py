@@ -44,26 +44,6 @@ class TestComputeProjectProgressRate(common.TransactionCase):
             'location_dest_id': customer_location.id,
         })
 
-        sm_1 = self.env['stock.move'].create({
-            'name': product.name,
-            'product_id': product.id,
-            'product_uom_qty': 1,
-            'product_uom': product.uom_id.id,
-            'picking_id': sp_1.id,
-            'location_id': stock_location.id,
-            'location_dest_id': customer_location.id,
-        })
-
-        sm_2 = self.env['stock.move'].create({
-            'name': product.name,
-            'product_id': product.id,
-            'product_uom_qty': 1,
-            'product_uom': product.uom_id.id,
-            'picking_id': sp_2.id,
-            'location_id': stock_location.id,
-            'location_dest_id': customer_location.id,
-        })
-
         self.sp = [sp_1.id, sp_2.id]
         product.picking_ids = self.sp
         # create stock.pack.operation records
@@ -75,11 +55,11 @@ class TestComputeProjectProgressRate(common.TransactionCase):
             'product_qty': 5,
             'picking_id': sp_1.id
         }
-        self. spo_1 = self.env['stock.pack.operation'].create(pack_data)
+        self.spo_1 = self.env['stock.pack.operation'].create(pack_data)
 
         pack_data['picking_id'] = sp_2.id
 
-        self. spo_2 = self.env['stock.pack.operation'].create(pack_data)
+        self.spo_2 = self.env['stock.pack.operation'].create(pack_data)
 
         # create sale.order record
         so_data = {

@@ -16,6 +16,7 @@
         'views/menus/menuitem.xml',
         'views/delivery_project.xml',
         'views/sale_order.xml',
+        'data/res_api_record.xml'
     ],
     'application': True,
 }

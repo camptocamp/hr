@@ -1,5 +1,6 @@
 from collections import defaultdict
 from math import ceil
+import urlparse
 
 from odoo import models, fields, api, exceptions, _
 
@@ -147,9 +148,11 @@ class DeliveryProject(models.Model):
                 rec.progress_rate = 100
             else:
                 for picking_id in rec.sale_order_id.picking_ids:
-                    for pack_operation in picking_id.pack_operation_product_ids:
-                        prod += pack_operation.qty_done * average_price[
-                            picking_id.product_id.id]
+                    for pack_operation in \
+                            picking_id.pack_operation_product_ids:
+                        print(picking_id.product_id.id)
+                        prod += pack_operation.qty_done * average_price.get(
+                            picking_id.product_id.id, 0)
                 total = rec.sale_order_id.amount_untaxed
                 try:
                     rec.progress_rate = ceil(100 * prod / total)
@@ -239,7 +242,8 @@ class DeliveryProject(models.Model):
         """
         many2one_fields = self.many2one_fields()
         domain = list()
-        for res_id, model_name in many2one_fields:
+        for res_id, model_name in \
+                many2one_fields:
             domain.append('|')
             domain.append('&')
             domain.append(('res_id', '=', res_id))
@@ -328,9 +332,10 @@ class DeliveryProject(models.Model):
     @api.depends('jira_key')
     def compute_jira_url(self):
         for project in self:
-            project.jira_url = (
-                'https://jira.bsonetwork.net/projects/{}'.format(
-                    project.jira_key))
+            jira_projects_url = self.env['res.api'].search(
+                [('api_id', '=', 'jira_projects')]).endpoint
+            project.jira_url = urlparse.urljoin(jira_projects_url,
+                                                project.jira_key)
 
     @api.multi
     def action_open_jira_project(self):
@@ -339,17 +344,6 @@ class DeliveryProject(models.Model):
             'url': self.jira_url,
             'target': 'new'
         }
-
-    @api.multi
-    def action_generate_attachment(self):
-        return {
-            'data': None,
-            'name': u'Handover',
-            'report_file': u'bso_delivery.handover_template',
-            'report_name': u'bso_delivery.handover_template',
-            'report_type': u'qweb-pdf',
-            'res_model': self._name,
-            'type': 'ir.actions.report.xml'}
 
     @api.multi
     def action_view_deliveries(self):
@@ -363,5 +357,3 @@ class DeliveryProject(models.Model):
                 (self.env.ref('stock.view_picking_form').id, 'form')]
             action['res_id'] = pickings.id
         return action
-
-

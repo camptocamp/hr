@@ -6,7 +6,6 @@
         <field name="inherit_id"
                ref="bso_dealsheet.sale_order_dealsheet"/>
         <field name="arch" type="xml">
-
             <header position="inside">
                 <button name="create_project_delivery" type="object"
                         string='Kick-Off' class="btn-primary"

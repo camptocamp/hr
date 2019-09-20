@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="flawless_api_url" model="res.api">
+            <field name="api_id">jira_projects</field>
+            <field name="endpoint">https://jira.bsonetwork
+                .net/projects/</field>
+        </record>
+    </data>
+</odoo>
