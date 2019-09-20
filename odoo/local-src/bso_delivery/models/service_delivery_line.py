@@ -38,3 +38,4 @@ class DeliveryProjectLine(models.Model):
     checked = fields.Boolean(
         string='Select'
     )
+
