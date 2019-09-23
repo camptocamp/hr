@@ -221,7 +221,9 @@ class UbersmithInvoice(models.Model):
             'partner_id': self.client_id.odoo_partner_id.id,
             'company_id': self.client_id.brand_id.company_id.id,
             'date_invoice': self.date,
-            'date_due': self.due
+            'date_due': self.due,
+            'currency_id':
+                self.client_id.brand_id.currency_id.odoo_currency_id.id
         }
 
     def create_invoice_lines(self, inv):
