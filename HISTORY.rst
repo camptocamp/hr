@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.27.0 (2019-09-25)
+++++++++++++++++++++
+
+**Features and Improvements**
+
  * BSO developments #342, #343, #338, #340, #339
 
 **Bugfixes**

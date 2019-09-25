@@ -541,7 +541,7 @@ migration:
           - bso_sales_forecast
           - bso_so_subscription_renewal
           - bso_new_employee
-    - version: 10.26.0
+    - version: 10.27.0
       addons:
         upgrade:
           - bso_sales_commission
