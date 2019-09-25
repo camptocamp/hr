@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="ubersmith_settings_view_form" model="ir.ui.view">
+        <field name="name">ubersmith settings</field>
+        <field name="model">ubersmith.settings</field>
+        <field name="arch" type="xml">
+            <form string="ubersmith Settings"
+                  class="oe_form_configuration">
+                <header>
+                    <button string="Save" type="object"
+                            name="write" class="oe_highlight"/>
+                    <button string="Import Brands" type="object"
+                            name="import_ubersmith_brands"
+                            class="oe_highlight"/>
+                    <button string="Import ubersmith Service Plans"
+                            type="object"
+                            name="import_ubersmith_service_plans"
+                            class="oe_highlight"/>
+                    <button string="Import ubersmith Clients" type="object"
+                            name="import_ubersmith_clients"
+                            class="oe_highlight"/>
+                    <button string="Import ubersmith Taxes"
+                            type="object"
+                            name="import_ubersmith_taxes"
+                            class="oe_highlight"/>
+                    <button string="Import Services"
+                            type="object"
+                            name="import_ubersmith_services"
+                            class="oe_highlight"/>
+                    <button string="Add manual updates"
+                            type="object"
+                            name="add_manual_updates"
+                            class="oe_highlight"/>
+                    <button string="Import Invoices"
+                            type="object"
+                            name="import_ubersmith_invoices"
+                            class="oe_highlight"/>
+                    <button string="Undo manual updates"
+                            type="object"
+                            name="undo_manual_updates"
+                            class="oe_highlight"/>
+                    <button string="Create Invoices"
+                            type="object"
+                            name="create_odoo_invoices"
+                            class="oe_highlight"/>
+                </header>
+                <group>
+                    <field name="url"/>
+                </group>
+                <group string="Credentials">
+                    <field name="username"/>
+                    <field name="api_token"/>
+                </group>
+                <group string="States">
+                    <field name="invoice_state"/>
+                    <field name="service_plan_state"/>
+                    <field name="service_state"/>
+                </group>
+                <group string="Dates">
+                    <field name="invoice_generation_date"/>
+                    <field name="invoice_generation_timestamp"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_settings">
+        <field name="name">ubersmith settings</field>
+        <field name="model_id" ref="model_ubersmith_settings"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_settings()
+        </field>
+    </record>
+
+
+</odoo>

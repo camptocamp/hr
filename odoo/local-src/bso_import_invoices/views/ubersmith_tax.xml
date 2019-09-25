@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ubersmith_tax_form" model="ir.ui.view">
+        <field name="name">ubersmith.tax.form</field>
+        <field name="model">ubersmith.tax</field>
+        <field name="arch" type="xml">
+            <form string="Ubersmith taxes" create="false">
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="tax_id" readonly="True"/>
+                        <field name="name" readonly="True"/>
+                        <field name="brand_id" readonly="True"/>
+                        <field name="rate" readonly="True"/>
+                        <field name="odoo_tax_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ubersmith_tax_tree" model="ir.ui.view">
+        <field name="name">ubersmith.tax.tree</field>
+        <field name="model">ubersmith.tax</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="tax_id"/>
+                <field name="name"/>
+                <field name="brand_id"/>
+                <field name="rate"/>
+                <field name="odoo_tax_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ubersmith_tax_action" model="ir.actions.act_window">
+        <field name="name">Taxes</field>
+        <field name="res_model">ubersmith.tax</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

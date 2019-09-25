@@ -534,3 +534,10 @@ migration:
           - bso_mis_builder
           - bso_sales_forecast
           - expensify
+    - version: 10.26.0
+      addons:
+        upgrade:
+          - bso_sales_commission
+          - bso_sales_forecast
+          - bso_so_subscription_renewal
+          - bso_new_employee
