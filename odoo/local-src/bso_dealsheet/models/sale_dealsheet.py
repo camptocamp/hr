@@ -359,7 +359,7 @@ class SaleDealsheet(models.Model):
         for rec in self:
             rec.margin = self.get_margin(rec.cost, rec.revenue)
 
-    @api.depends('cost', 'revenue')
+    @api.depends('cost_delivery', 'revenue')
     def compute_margin_delivery(self):
         for rec in self:
             rec.margin_delivery = self.get_margin(rec.cost_delivery,
