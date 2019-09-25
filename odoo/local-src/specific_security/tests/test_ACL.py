@@ -21,6 +21,9 @@ class TestACL(common.TransactionCase):
         self.emp_andre = self.env.ref('specific_security.emp_andre')
         self.emp_damien = self.env.ref('specific_security.emp_damien')
 
+        self.andre.update({
+            'company_id': self.andre.employee_ids.company_id.id}
+        )
         test_users = self.env['res.users']
         test_users |= self.emmanuel
         test_users |= self.damien
