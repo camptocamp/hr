@@ -170,6 +170,7 @@ class SalespersonCommissionLine(models.Model):
         string='Exchange Rate',
         compute='_compute_rate',
         digits=(12, 6),
+        store=True
     )
 
     @api.constrains('percentage')
