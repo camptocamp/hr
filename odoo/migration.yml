@@ -541,3 +541,11 @@ migration:
           - bso_sales_forecast
           - bso_so_subscription_renewal
           - bso_new_employee
+    - version: 10.26.0
+      addons:
+        upgrade:
+          - bso_sales_commission
+          - bso_delivey
+          - bso_hr_expense_creation_restriction
+          - bso_import_invoices
+          - bso_dealsheet

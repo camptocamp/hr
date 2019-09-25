@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+ * BSO developments #342, #343, #338, #340, #339
+
 **Bugfixes**
 
 **Build**
