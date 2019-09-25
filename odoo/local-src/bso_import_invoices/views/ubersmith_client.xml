@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ubersmith_client_form" model="ir.ui.view">
+        <field name="name">ubersmith.client.form</field>
+        <field name="model">ubersmith.client</field>
+        <field name="arch" type="xml">
+            <form string="Ubersmith Client" create="false">
+                <header>
+                    <button string="Create Partner" type="object"
+                            name="get_or_create_partner"/>
+                    <button string="Create Ubersmith Invoices" type="object"
+                            name="create_or_sync_client_ubersmith_invoices"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="client_id" readonly="True"/>
+                        <field name="parent_account_id" readonly="True"/>
+                        <field name="odoo_partner_id"/>
+                        <field name="first" readonly="True"/>
+                        <field name="last" readonly="True"/>
+                        <field name="full_name" readonly="True"/>
+                        <field name="company" readonly="True"/>
+                        <field name="email" readonly="True"/>
+                        <field name="vat_number" readonly="True"/>
+                    </group>
+                    <group>
+                        <field name="phone" readonly="True"/>
+                        <field name="fax" readonly="True"/>
+                        <field name="address" readonly="True"/>
+                        <field name="city" readonly="True"/>
+                        <field name="state" readonly="True"/>
+                        <field name="zip" readonly="True"/>
+                        <field name="country" readonly="True"/>
+                    </group>
+                    <group>
+                        <field name="grace_due" readonly="True"/>
+                        <field name="datepay" readonly="True"/>
+                        <field name="datedue" readonly="True"/>
+                        <field name="datesend" readonly="True"/>
+                        <field name="discount_type" readonly="True"/>
+                    </group>
+                    <notebook>
+                        <page>
+                            <field name="invoice_ids" readonly="True">
+                                <tree>
+                                    <field name="invoice_id"/>
+                                    <field name="date"/>
+                                    <field name="datepaid"/>
+                                    <field name="due"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ubersmith_client_tree" model="ir.ui.view">
+        <field name="name">ubersmith.client.tree</field>
+        <field name="model">ubersmith.client</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="client_id"/>
+                <field name="parent_account_id"/>
+                <field name="odoo_partner_id"/>
+                <field name="company"/>
+                <field name="full_name"/>
+                <field name="first"/>
+                <field name="last"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="address"/>
+                <field name="city"/>
+                <field name="country"/>
+                <field name="state"/>
+                <field name="zip"/>
+                <field name="brand_id"/>
+                <field name="grace_due"/>
+                <field name="datepay"/>
+                <field name="datedue"/>
+                <field name="datesend"/>
+                <field name="discount_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ubersmith_client_action" model="ir.actions.act_window">
+        <field name="name">Clients</field>
+        <field name="res_model">ubersmith.client</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
