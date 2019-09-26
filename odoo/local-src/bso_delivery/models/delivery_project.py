@@ -1,5 +1,4 @@
 from collections import defaultdict
-from math import ceil
 import urlparse
 
 from odoo import models, fields, api, exceptions, _
@@ -136,27 +135,25 @@ class DeliveryProject(models.Model):
             qty = defaultdict(lambda: 0)
 
             for order in rec.sale_order_id.order_line:
-                product_price[order.product_id.id] += \
-                    order.price_unit * order.product_uom_qty
-
+                product_price[
+                    order.product_id.id
+                ] += order.price_unit * order.product_uom_qty
                 qty[order.product_id.id] += order.product_uom_qty
 
-            average_price = {x: float(product_price[x]) / qty[x] for x in
-                             product_price}
-            prod = 0
+            average_price = {
+                x: float(product_price[x]) / qty[x] if qty[x] != 0 else 0
+                for x in product_price}
             if not rec.sale_order_id.picking_ids:
                 rec.progress_rate = 100
             else:
+                prod = 0
                 for picking_id in rec.sale_order_id.picking_ids:
-                    for pack_operation in \
-                            picking_id.pack_operation_product_ids:
-                        prod += pack_operation.qty_done * average_price.get(
+                    popis = picking_id.pack_operation_product_ids
+                    for po in popis:
+                        prod += po.qty_done * average_price.get(
                             picking_id.product_id.id, 0)
                 total = rec.sale_order_id.amount_untaxed
-                try:
-                    rec.progress_rate = ceil(100 * prod / total)
-                except ZeroDivisionError:
-                    rec.progress_rate = 0
+                rec.progress_rate = 100 * (prod / total if total else 1)
 
     @api.multi
     def _compute_attachment_number(self):
