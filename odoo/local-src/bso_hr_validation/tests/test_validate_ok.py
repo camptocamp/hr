@@ -44,8 +44,7 @@ class TestValidateOk(common.TransactionCase):
             'holiday_status_id': self.holiday_status.id,
             'type': 'add',
             'holiday_type': 'employee',
-            'date_from': '2019-01-04',
-            'date_to': '2019-01-05',
+            'number_of_days_temp': 2
         })
 
     def _create_expense(self, employee_id):
