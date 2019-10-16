@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="sale_order_extra_salesperson" model="ir.ui.view">
+        <field name="name">sale.order.extra.salesperson</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Commissions"
+                      groups="bso_sales_commission.group_sales_commission_user">
+                    <field name="salesperson_commission_line_ids"
+                           context="{'form_view_ref': 'bso_sales_commission.minimal_salesperson_commission_line_from_view'}">
+                        <tree editable="bottom">
+                            <field name="user_id"
+                                   attrs="{'readonly': [('is_main_salesperson', '=', True)]}"/>
+                            <field name="percentage"
+                                   attrs="{'readonly': [('is_main_salesperson', '=', True)]}"/>
+                            <field name="is_main_salesperson" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='user_id']"
+                   position="attributes">
+                <attribute name="required">True</attribute>
+            </xpath>
+        </field>
+    </record>
+    <data>
+        <record id="view_sale_order_inherit_search" model="ir.ui.view">
+            <field name="name">sale.order.search.expand.filter</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id"
+                   ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter string="This Quarter" name="this_quarter"
+                            domain="[]"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+
+    <record id="signed_sales_orders_in_this_quarter"
+            model="ir.actions.act_window">
+        <field name="name">My Signed Sales Orders in this quarter</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar,graph,pivot</field>
+        <field name="domain">
+            [('state','=','sale'),'|',('user_id','=',uid),('salesperson_commission_line_ids.user_id','in',[uid])]
+        </field>
+        <field name="context">{'search_default_this_quarter':True}</field>
+        <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+    </record>
+
+
+</odoo>

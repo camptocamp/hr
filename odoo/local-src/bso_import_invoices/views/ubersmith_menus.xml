@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+            id="ubersmith_menu"
+            name="Ubersmith"
+            parent="account.menu_finance"
+            sequence="11"/>
+
+    <menuitem id="ubersmith_brand_menu" name="Ubersmith Brands"
+              sequence="1"
+              action="ubersmith_brand_action"
+              parent="bso_import_invoices.ubersmith_menu"/>
+
+    <menuitem id="ubersmith_currency_menu" name="Ubersmith Currency"
+              sequence="2"
+              action="ubersmith_currency_action"
+              parent="bso_import_invoices.ubersmith_menu"/>
+
+    <menuitem id="ubersmith_client_menu" name="Ubersmith clients" sequence="3"
+              action="ubersmith_client_action"
+              parent="bso_import_invoices.ubersmith_menu"/>
+
+    <menuitem id="ubersmith_tax_menu" name="Ubersmith Taxes"
+              sequence="4"
+              action="ubersmith_tax_action"
+              parent="bso_import_invoices.ubersmith_menu"/>
+
+    <menuitem id="ubersmith_service_plan_menu" name="Ubersmith Service plans"
+              sequence="4"
+              action="ubersmith_service_plan_action"
+              parent="bso_import_invoices.ubersmith_menu"/>
+
+    <menuitem id="ubersmith_service_menu" name="Ubersmith Services"
+              sequence="4"
+              action="ubersmith_service_action"
+              parent="bso_import_invoices.ubersmith_menu"/>
+
+    <menuitem id="ubersmith_invoice_menu" name="Ubersmith Invoices"
+              sequence="5"
+              action="ubersmith_invoice_action"
+              parent="bso_import_invoices.ubersmith_menu"/>
+    <menuitem id="ubersmith_invoice_line_menu" name="Ubersmith Invoice Lines"
+              sequence="5"
+              action="ubersmith_invoice_line_action"
+              parent="bso_import_invoices.ubersmith_menu"/>
+
+    <menuitem
+            id="ubersmith_settings_menu"
+            string="Ubersmith Settings"
+            parent="bso_import_invoices.ubersmith_menu"
+            action="action_settings"
+            sequence="20"/>
+
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ubersmith_service_form" model="ir.ui.view">
+        <field name="name">ubersmith.service.form</field>
+        <field name="model">ubersmith.service</field>
+        <field name="arch" type="xml">
+            <form string="Ubersmith services" create="false">
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="service_id" readonly="True"/>
+                        <field name="bill_type" readonly="True"/>
+                        <field name="discount_type" readonly="True"/>
+                        <field name="price" readonly="True"/>
+                        <field name="plan_id" readonly="True"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ubersmith_service_tree" model="ir.ui.view">
+        <field name="name">ubersmith.service.tree</field>
+        <field name="model">ubersmith.service</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="service_id"/>
+                <field name="bill_type"/>
+                <field name="discount_type"/>
+                <field name="price"/>
+                <field name="plan_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ubersmith_service_action" model="ir.actions.act_window">
+        <field name="name">service</field>
+        <field name="res_model">ubersmith.service</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

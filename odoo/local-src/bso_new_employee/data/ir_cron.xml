@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.cron" id="employee_ad_status">
+        <field name='name'>check employee status</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+        <field name="model">hr.new.employee</field>
+        <field name="function">update_credentials_when_treated</field>
+        <field name="args">()</field>
+    </record>
+</odoo>

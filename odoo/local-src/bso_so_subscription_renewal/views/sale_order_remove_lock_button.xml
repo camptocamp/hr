@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="remove_lock_button" model="ir.ui.view">
+        <field name="name">sale.order.remove.lock.button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="bso_dealsheet.sale_order_dealsheet"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_done']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

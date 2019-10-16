@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ubersmith_currency_form" model="ir.ui.view">
+        <field name="name">ubersmith.currency.form</field>
+        <field name="model">ubersmith.currency</field>
+        <field name="arch" type="xml">
+            <form string="Ubersmith Currency" create="false">
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="currency_id" readonly="True"/>
+                        <field name="name" readonly="True"/>
+                        <field name="odoo_currency_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ubersmith_currency_tree" model="ir.ui.view">
+        <field name="name">ubersmith.currency.tree</field>
+        <field name="model">ubersmith.currency</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="currency_id"/>
+                <field name="name"/>
+                <field name="odoo_currency_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ubersmith_currency_action" model="ir.actions.act_window">
+        <field name="name">Currency</field>
+        <field name="res_model">ubersmith.currency</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_update_subscription_button" model="ir.ui.view">
+        <field name="name">sale.order.update.button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id"
+               ref="bso_dealsheet.sale_order_dealsheet"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <field name="pickings_done" invisible="1"/>
+                <field name="non_computable_pickings_done" invisible="1"/>
+                <button name="update_subscription" type="object"
+                        string='Update subscription' class="btn-primary"
+                        attrs="{'invisible':['|', '|',
+                        ('pickings_done', '=', False),
+                        ('non_computable_pickings_done', '=', True),
+                        '|',
+                        ('state', '=', 'done'),
+                        ('subscription_id', '=', False)
+                        ]}" />
+            </header>
+        </field>
+    </record>
+</odoo>

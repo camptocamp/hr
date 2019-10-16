@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ubersmith_brand_form" model="ir.ui.view">
+        <field name="name">ubersmith.brand.form</field>
+        <field name="model">ubersmith.brand</field>
+        <field name="arch" type="xml">
+            <form string="Ubersmith Brands" create="false">
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="brand_id" readonly="True"/>
+                        <field name="class_name" readonly="True"/>
+                        <field name="currency_id" readonly="True"/>
+                        <field name="class_abbr" readonly="True"/>
+                        <field name="serverurl" readonly="True"/>
+                        <field name="class_name_en_GB" readonly="True"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ubersmith_brand_tree" model="ir.ui.view">
+        <field name="name">ubersmith.brand.tree</field>
+        <field name="model">ubersmith.brand</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="brand_id"/>
+                <field name="class_name"/>
+                <field name="currency_id"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ubersmith_brand_action" model="ir.actions.act_window">
+        <field name="name">Brand</field>
+        <field name="res_model">ubersmith.brand</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
