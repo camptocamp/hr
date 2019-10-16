@@ -37,7 +37,7 @@ class TestLeaveHolidayOverlap(common.TransactionCase):
             })
 
     def test_leave_creation_ok(self):
-    	allocation = self.env['hr.holidays'].create({
+        allocation = self.env['hr.holidays'].create({
             'type': 'add',  # allocation
             'employee_id': self.employee.id,
             'holiday_status_id': self.leave_status.id,
