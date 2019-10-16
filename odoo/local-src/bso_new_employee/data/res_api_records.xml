@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="flawless_api_url" model="res.api">
+            <field name="api_id">flawless</field>
+            <field name="endpoint">https://flawless.bsonetwork.net</field>
+        </record>
+    </data>
+</odoo>

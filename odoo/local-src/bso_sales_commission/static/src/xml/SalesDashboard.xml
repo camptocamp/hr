@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-extend="sales_team.SalesDashboard">
+        <t t-jquery=".hidden-xs" t-operation="replace">
+            <table class="hidden-xs table table-condensed">
+                <tr>
+                    <td class="o_text">
+                        <div class="o_highlight">Performance</div>
+                        This Quarter
+                    </td>
+                    <td t-attf-class="o_secondary" title="SO Details">
+                        Signed SO
+                        <br/>
+                        <a href="#" class="o_dashboard_action"
+                           name="bso_sales_commission.signed_sales_orders_in_this_quarter">
+                            <span class="o_highlight">
+                                <t t-if="values['performance']">
+                                    <t t-esc="values['performance']['this_quarter']['total_signed_so']"/>
+                                </t>
+                            </span>
+                        </a>
+                    </td>
+                    <td t-attf-class="o_secondary" title="NRR">
+                        NRR
+                        <br/>
+                        <a href="#" class="o_dashboard_action"
+                           name="bso_sales_commission.signed_sales_orders_in_this_quarter">
+                            <span class="o_highlight">
+                                <t t-if="values['performance']">
+                                    <t t-esc="widget.render_monetary_field(values['performance']['this_quarter']['nrr'], values['currency_id'])"/>
+                                </t>
+                            </span>
+                        </a>
+                    </td>
+                    <td t-attf-class="o_secondary" title="MRR">
+                        MRR
+                        <br/>
+                        <a href="#" class="o_dashboard_action"
+                           name="bso_sales_commission.signed_sales_orders_in_this_quarter">
+                            <span class="o_highlight">
+                                <t t-if="values['performance']">
+                                    <t t-esc="widget.render_monetary_field(values['performance']['this_quarter']['mrr'], values['currency_id'])"/>
+                                </t>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="o_text">
+                        <div class="o_highlight">Target</div>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td t-attf-class="o_secondary" title="NRR Target">
+                        <a>
+                            <span class="o_highlight">
+                                <t t-if="values['target']">
+                                    <t t-esc="widget.render_monetary_field(values['target']['this_quarter']['nrr'], values['currency_id'])"/>
+                                </t>
+                            </span>
+                        </a>
+                    </td>
+                    <td t-attf-class="o_secondary" title="MRR Target">
+                        <a>
+                            <span class="o_highlight">
+                                <t t-if="values['target']">
+                                    <t t-esc="widget.render_monetary_field(values['target']['this_quarter']['mrr'], values['currency_id'])"/>
+                                </t>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </t>
+    </t>
+
+</templates>

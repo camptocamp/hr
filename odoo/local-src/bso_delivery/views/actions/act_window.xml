@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <act_window
+            id="action_delivery_project"
+            name="Projects"
+            res_model="delivery.project"
+            view_mode="tree,form,graph,pivot"
+    />
+</odoo>

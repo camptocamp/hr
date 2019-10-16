@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 
-from odoo import models, api, fields
+from odoo import models, api
 
 
 class SaleSubscriptionLine(models.Model):
@@ -16,7 +15,7 @@ class SaleSubscriptionLine(models.Model):
             return res
         diff = self.env['forecast.line.diff']
         for rec in self:
-            if rec.to_log():
+            if rec.analytic_account_id.state == 'open':
                 fields = rec.get_fields_to_log()
                 diff.log(rec._name, rec.id, 'update', fields)
         return res
@@ -25,7 +24,7 @@ class SaleSubscriptionLine(models.Model):
     def create(self, values):
         rec = super(SaleSubscriptionLine, self).create(values)
         diff = self.env['forecast.line.diff']
-        if rec.to_log():
+        if rec.analytic_account_id.state == 'open':
             fields = rec.get_fields_to_log()
             diff.log(rec._name, rec.id, 'create', fields)
         return rec
@@ -34,16 +33,10 @@ class SaleSubscriptionLine(models.Model):
     def unlink(self):
         diff = self.env['forecast.line.diff']
         for rec in self:
-            if rec.to_log():
-                diff.log(rec._name, rec.id, 'delete', {})
+            if rec.analytic_account_id.state == 'open':
+                fields = rec.get_fields_to_log()
+                diff.log(rec._name, rec.id, 'delete', fields)
         return super(SaleSubscriptionLine, self).unlink()
-
-    def to_log(self):
-        if self.analytic_account_id.state != 'open':
-            return False
-        if not self.analytic_account_id.to_log():
-            return False
-        return True
 
     def get_fields_to_log(self, **kwargs):
         subscription = self.analytic_account_id
@@ -53,12 +46,14 @@ class SaleSubscriptionLine(models.Model):
         state = kwargs.get('state', subscription.state)
 
         return {
+            'company_id': kwargs.get('company_id', subscription.company_id.id),
             'amount': kwargs.get('price_subtotal', self.price_subtotal),
             'auto_renewal': self._get_corresponding_renewal(auto_renewal),
             'start_date': kwargs.get('date_start', subscription.date_start),
             'end_date': kwargs.get('date', subscription.date),
             'state': self._get_corresponding_state(state),
-            'template_id': kwargs.get('template_id', subscription.template_id),
+            'template_id': kwargs.get('template_id',
+                                      subscription.template_id.id),
         }
 
     @staticmethod
@@ -87,8 +82,6 @@ class SaleSubscription(models.Model):
             action_to_log = rec.get_action(values)
             if not action_to_log:
                 continue
-            if not rec.to_log():
-                continue
             for line in rec.recurring_invoice_line_ids:
                 fields_to_log = line.get_fields_to_log(**updated_fields)
                 diff.log(line._name, line.id, action_to_log, fields_to_log)
@@ -104,27 +97,17 @@ class SaleSubscription(models.Model):
             return 'update'
         return False
 
-    def to_log(self):
-        # check if updated sub company is related to a generated forecast
-        # report and in futur
-        generated_reports_companies = self._get_generated_reports_companies()
-        if self.company_id not in generated_reports_companies:
-            return False
-        if not self.is_futur_subscription():
-            return False
-        return True
-
-    def _get_generated_reports_companies(self):
-        return self.env['forecast.report'].search([]).mapped('company_id')
-
-    def is_futur_subscription(self):
-        end_dt = fields.Datetime.from_string(self.date)
-        today = datetime.today()
-        if self.automatic_renewal not in (False, 'none'):
-            return True
-        if self.date and end_dt >= today:
-            return True
-        return False
+    # def is_futur_subscription(self, **values):
+    #     end_date = values.get('date', self.date)
+    #     automatic_renewal = values.get('automatic_renewal',
+    #                                    self.automatic_renewal)
+    #     if automatic_renewal not in (False, 'none'):
+    #         return True
+    #     end_dt = fields.Datetime.from_string(end_date)
+    #     today = datetime.today()
+    #     if end_date and end_dt >= today:
+    #         return True
+    #     return False
 
     @api.multi
     def unlink(self):
@@ -132,8 +115,7 @@ class SaleSubscription(models.Model):
         for rec in self:
             if rec.state != 'open':
                 continue
-            if not rec.to_log():
-                continue
             for line in rec.recurring_invoice_line_ids:
-                diff.log(line._name, line.id, 'delete', {})
+                fields = line.get_fields_to_log()
+                diff.log(line._name, line.id, 'delete', fields)
         return super(SaleSubscription, self).unlink()

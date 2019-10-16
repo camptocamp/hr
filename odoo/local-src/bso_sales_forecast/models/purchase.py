@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 
-from odoo import models, api, fields
+from odoo import models, api
 
 
 class PurchaseOrderLine(models.Model):
@@ -15,7 +14,7 @@ class PurchaseOrderLine(models.Model):
             return res
         diff = self.env['forecast.line.diff']
         for rec in self:
-            if rec.to_log():
+            if rec.order_id.state in ('purchase', 'done'):
                 fields = rec.get_fields_to_log()
                 diff.log(rec._name, rec.id, 'update', fields)
         return res
@@ -24,7 +23,7 @@ class PurchaseOrderLine(models.Model):
     def create(self, values):
         rec = super(PurchaseOrderLine, self).create(values)
         diff = self.env['forecast.line.diff']
-        if rec.to_log():
+        if rec.order_id.state in ('purchase', 'done'):
             fields = rec.get_fields_to_log()
             diff.log(self._name, rec.id, 'create', fields)
         return rec
@@ -33,25 +32,21 @@ class PurchaseOrderLine(models.Model):
     def unlink(self):
         diff = self.env['forecast.line.diff']
         for rec in self:
-            if rec.to_log():
-                diff.log(rec._name, rec.id, 'delete', {})
+            if rec.order_id.state in ('purchase', 'done'):
+                fields = rec.get_fields_to_log()
+                diff.log(rec._name, rec.id, 'delete', fields)
         return super(PurchaseOrderLine, self).unlink()
-
-    def to_log(self):
-        if self.order_id.state not in ('purchase', 'done'):
-            return False
-        if not self.order_id.to_log():
-            return False
-        return True
 
     def get_fields_to_log(self, **kwargs):
         po = self.order_id
         state = kwargs.get('state', po.state)
         return {
+            'company_id': kwargs.get('company_id', self.company_id.id),
             'amount': kwargs.get('price_subtotal', self.price_subtotal),
             'auto_renewal': kwargs.get('continue_after_end',
                                        po.continue_after_end),
-            'start_date': kwargs.get('date_start', po.subscr_date_start),
+            'start_date': kwargs.get('subscr_date_start',
+                                     po.subscr_date_start),
             'end_date': kwargs.get('subscr_date_end', po.subscr_date_end),
             'state': self._get_corresponding_state(state),
         }
@@ -79,34 +74,22 @@ class PurchaseOrder(models.Model):
             action = rec.get_action(values)
             if not action:
                 continue
-            if not rec.to_log():
-                continue
             for line in rec.order_line:
                 fields_to_log = line.get_fields_to_log(**updated_fields)
                 diff.log(line._name, line.id, action, fields_to_log)
         return super(PurchaseOrder, self).write(values)
 
-    def to_log(self):
-        # check if updated sub company is related to a generated forecast
-        # report
-        generated_reports_companies = self._get_generated_reports_companies()
-        if self.company_id not in generated_reports_companies:
-            return False
-        if not self.is_futur_purchase():
-            return False
-        return True
-
-    def _get_generated_reports_companies(self):
-        return self.env['forecast.report'].search([]).mapped('company_id')
-
-    def is_futur_purchase(self):
-        end_dt = fields.Datetime.from_string(self.subscr_date_end)
-        today = datetime.today()
-        if self.continue_after_end:
-            return True
-        if self.subscr_date_end and end_dt >= today:
-            return True
-        return False
+    # def is_futur_purchase(self, **values):
+    #     end_date = values.get('subscr_date_end', self.subscr_date_end)
+    #     continue_after_end = values.get('continue_after_end',
+    #                                     self.continue_after_end)
+    #     if continue_after_end:
+    #         return True
+    #     end_dt = fields.Datetime.from_string(end_date)
+    #     today = datetime.today()
+    #     if end_date and end_dt >= today:
+    #         return True
+    #     return False
 
     def get_action(self, values):
         if self.state != 'purchase' and values.get('state') == 'purchase':

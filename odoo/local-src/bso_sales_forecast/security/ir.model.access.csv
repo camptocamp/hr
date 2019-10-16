@@ -5,6 +5,7 @@ access_forecast_line_manager,forecast.line.manager,model_forecast_line,group_for
 access_forecast_line_cost_manager,forecast.line.cost.manager,model_forecast_line_cost,group_forecast_manager,1,1,1,1
 access_forecast_line_revenue_manager,forecast.line.revenue.manager,model_forecast_line_revenue,group_forecast_manager,1,1,1,1
 access_forecast_line_manual_manager,forecast.line.manual.manager,model_forecast_line_manual,group_forecast_manager,1,1,1,1
+access_forecast_line_invoice_manager,forecast.line.invoice.manager,model_forecast_line_invoice,group_forecast_manager,1,1,1,1
 access_forecast_month_manager,forecast.month.manager,model_forecast_month,group_forecast_manager,1,1,1,1
 access_forecast_line_diff_manager,forecast.line.diff.manager,model_forecast_line_diff,group_forecast_manager,1,1,1,1
 
@@ -12,15 +13,17 @@ access_forecast_report_officer,forecast.report.officer,model_forecast_report,gro
 access_forecast_line_officer,forecast.line.officer,model_forecast_line,group_forecast_officer,1,1,1,0
 access_forecast_line_cost_officer,forecast.line.cost.officer,model_forecast_line_cost,group_forecast_officer,1,1,1,0
 access_forecast_line_revenue_officer,forecast.line.revenue.officer,model_forecast_line_revenue,group_forecast_officer,1,1,1,0
+access_forecast_line_invoice_officer,forecast.line.invoice.officer,model_forecast_line_invoice,group_forecast_officer,1,1,1,0
 access_forecast_line_manual_officer,forecast.line.manual.officer,model_forecast_line_manual,group_forecast_officer,1,1,1,0
 access_forecast_month_officer,forecast.month.officer,model_forecast_month,group_forecast_officer,1,1,1,0
-access_forecast_line_diff_officer,forecast.line.diff.officer,model_forecast_line_diff,group_forecast_officer,1,1,1,0
+access_forecast_line_diff_officer,forecast.line.diff.officer,model_forecast_line_diff,group_forecast_officer,1,1,1,1
 
 
 access_forecast_report_user,forecast.report.user,model_forecast_report,group_forecast_user,1,0,0,0
 access_forecast_line_user,forecast.line.user,model_forecast_line,group_forecast_user,1,0,0,0
 access_forecast_line_cost_user,forecast.line.cost.user,model_forecast_line_cost,group_forecast_user,1,0,0,0
 access_forecast_line_revenue_user,forecast.line.revenue.user,model_forecast_line_revenue,group_forecast_user,1,0,0,0
+access_forecast_line_invoice_user,forecast.line.invoice.user,model_forecast_line_invoice,group_forecast_user,1,0,0,0
 access_forecast_line_manual_user,forecast.line.manual.user,model_forecast_line_manual,group_forecast_user,1,0,0,0
 access_forecast_month_user,forecast.month.user,model_forecast_month,group_forecast_user,1,0,0,0
 access_forecast_line_diff_user,forecast.line.diff.user,model_forecast_line_diff,group_forecast_user,1,0,0,0
