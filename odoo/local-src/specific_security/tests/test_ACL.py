@@ -237,7 +237,7 @@ class TestACL(common.TransactionCase):
             leave_allocation = self.env['hr.holidays'].sudo(
                 user=employee.user_id).create(vals)
             self.assertTrue(leave_allocation)
-            leave_allocation.sudo().action_validate()
+            leave_allocation.sudo().action_approve()
 
         for employee in emp_obj.search([('user_id', '!=', False)]):
             vals = {
