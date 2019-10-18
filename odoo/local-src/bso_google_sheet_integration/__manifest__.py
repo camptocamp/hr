@@ -1,5 +1,5 @@
 {
-    'name': 'odoo to google spreadsheet',
+    'name': 'Reports',
     'category': 'Placeholder',
     'description': 'Placeholder',
     'author': 'BSO',
@@ -14,5 +14,7 @@
         'views/google_sheet_workbook_view.xml',
         'views/google_sheet_settings_view.xml',
     ],
+    "external_dependencies": {"python": ["hyou"]},
     'application': True,
 }
+
