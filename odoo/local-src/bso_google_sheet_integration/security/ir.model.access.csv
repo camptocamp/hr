@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_google_sheet_user,google.sheet.user,model_google_sheet_workbook,google_sheet_reports_user,1,0,0,0
+access_google_sheet_manager,google.sheet.manager,model_google_sheet_workbook,google_sheet_reports_manager,1,1,1,1

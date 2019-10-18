@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+            id="menu_google_sheet_workbook"
+            name="Reports"
+            action="action_google_sheet_workbook"
+            parent=""
+            web_icon="bso_google_sheet_integration,static/description/icon.png"/>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="google_sheet_workbook_tree" model="ir.ui.view">
+        <field name="name">google.sheet.workbook.tree</field>
+        <field name="model">google.sheet.workbook</field>
+        <field name="arch" type="xml">
+            <tree string="Workbooks">
+                <field name="name"/>
+                <field name="server_action_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="google_sheet_workbook_form" model="ir.ui.view">
+        <field name="name">google.sheet.workbook.form</field>
+        <field name="model">google.sheet.workbook</field>
+        <field name="arch" type="xml">
+            <form string="Sheet" create="false">
+                <group class="oe_edit_only">
+                    <field name="workbook_ref"/>
+                    <field name="server_action_id"/>
+                    <field name="src" invisible="0"/>
+                </group>
+                <field name="iframe" widget="html"/>
+            </form>
+        </field>
+    </record>
+
+    <template id='workbook_iframe'>
+        <div style="position:absolute; left:0; top:0; width:100%; height:100%;"
+             class="oe_read_only"
+             attrs="{'invisible':['|', ('workbook_ref','=',False), ('server_action_id','=',False)]}">
+            <iframe t-att-src="url"
+                    width="100%" height="100%" marginwidth="0"
+                    marginheight="0" frameborder="no"
+                    scrolling="no"
+                    style="border-width:0px;"/>
+        </div>
+    </template>
+</odoo>
