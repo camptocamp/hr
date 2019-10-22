@@ -57,6 +57,7 @@ class UbersmithInvoice(models.Model):
             ('odoo_company_missing', 'Client Brand not linked to a company'),
             ('line_date_missing', 'Date is missing in invoice lines period'),
             ('line_tax_missing', 'Ubersmith tax not linked to an odoo tax'),
+            ('invoice_without_lines', 'Invoice without lines'),
             ('none', 'None')
 
         ],
@@ -186,7 +187,11 @@ class UbersmithInvoice(models.Model):
         if not self.client_id.odoo_partner_id:
             self.write({'non_creation_reason': 'odoo_partner_missing'})
             return False
+        settings = self.env['ubersmith.settings'].get()
         lines = self.ubersmith_invoice_line_ids
+        if not settings.create_invoices_without_lines and not lines:
+            self.write({'non_creation_reason': 'invoice_without_lines'})
+            return False
         if not all(l.plan_id for l in lines):
             self.write({'non_creation_reason': 'service_plan_missing'})
             return False

@@ -216,7 +216,7 @@ class UbersmithClient(models.Model):
     def create_partner(self):
         odoo_country = self._get_odoo_country(self.country)
         return self.odoo_partner_id.create({
-            'company_type': 'company',
+            'is_company': True,
             'name': self.company or self.full_name,
             'phone': self.phone,
             'email': self.email,
