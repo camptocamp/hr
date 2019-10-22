@@ -29,6 +29,10 @@ class GoogleSheetWorkbook(models.Model):
         strip_style=False,
         store=True
     )
+    group_ids = fields.Many2many(
+        string='Groups',
+        comodel_name='res.groups'
+    )
 
     @api.depends('workbook_ref')
     def compute_src(self):

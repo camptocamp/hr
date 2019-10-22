@@ -18,7 +18,8 @@
                 <group class="oe_edit_only">
                     <field name="workbook_ref"/>
                     <field name="server_action_id"/>
-                    <field name="src" invisible="0"/>
+                    <field name="src" widget="url"/>
+                    <field name="group_ids" widget="many2many_tags"/>
                 </group>
                 <field name="iframe" widget="html"/>
             </form>

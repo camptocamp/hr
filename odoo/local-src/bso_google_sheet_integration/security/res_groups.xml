@@ -4,6 +4,8 @@
         <field name="name">Google Sheet Workbook</field>
         <field name="sequence">30</field>
     </record>
+
+    <!-- groups -->
     <record id="google_sheet_reports_user" model="res.groups">
         <field name="name">User</field>
         <field name="category_id" ref="module_google_sheet_workbook"/>
@@ -11,5 +13,19 @@
     <record id="google_sheet_reports_manager" model="res.groups">
         <field name="name">Manager</field>
         <field name="category_id" ref="module_google_sheet_workbook"/>
+    </record>
+
+
+    <!-- record rules -->
+    <record id="reports_visibility_rule_for_managers" model="ir.rule">
+        <field name="name">reports.visibility.rule.for.managers</field>
+        <field name="model_id" ref="model_google_sheet_workbook"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="reports_visibility_rule_for_users" model="ir.rule">
+        <field name="name">reports.visibility.rule.for.users</field>
+        <field name="model_id" ref="model_google_sheet_workbook"/>
+        <field name="domain_force">[('group_ids','in', user.groups_id.ids)]</field>
     </record>
 </odoo>

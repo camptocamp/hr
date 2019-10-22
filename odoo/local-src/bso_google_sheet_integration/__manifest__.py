@@ -1,7 +1,8 @@
 {
     'name': 'Reports',
-    'category': 'Placeholder',
-    'description': 'Placeholder',
+    'category': 'reports',
+    'description': 'Display data from odoo in a google sheet, '
+                   'and visualize it',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
     'depends': ['base'],
@@ -17,4 +18,3 @@
     "external_dependencies": {"python": ["hyou"]},
     'application': True,
 }
-
