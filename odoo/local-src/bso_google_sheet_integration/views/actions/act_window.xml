@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <act_window
+            id="action_google_sheet_workbook"
+            name="Workbooks"
+            res_model="google.sheet.workbook"
+            view_type="form"
+            view_mode="tree,form"
+    />
+</odoo>

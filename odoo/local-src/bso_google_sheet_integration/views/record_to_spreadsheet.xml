@@ -1,0 +1,40 @@
+<odoo>
+    <record id="save_records_to_google_sheet"
+            model="ir.actions.server">
+        <field name="name">save.records.to.google.sheets</field>
+        <field name="model_id" ref="model_google_sheet_workbook"/>
+        <field name="state">code</field>
+        <field name="code">
+            settings = env['google.sheet.settings'].get()
+hyou = settings.get_hyou()
+collection = hyou.login(json_text=settings.get_json_settings())
+workbook = collection[model.workbook_ref]
+record.write({'name': workbook.title})
+worksheet = workbook['res_api']
+domain = []
+recs = [('A', 'B', 'C'), (1, 2, 3)]
+for row_index, tupl in enumerate(recs):
+    for col_index, value in enumerate(tupl):
+        worksheet[row_index][col_index] = value
+worksheet.commit()
+        </field>
+    </record>
+    <record id="refresh_workbook" model="ir.actions.server">
+        <field name="name">Refresh</field>
+        <field name="model_id" ref="model_google_sheet_workbook"/>
+        <field name="state">code</field>
+        <field name="code">
+            record.refresh_action()
+        </field>
+    </record>
+
+    <!--  Show Server action in "More" menu. -->
+     <record model="ir.values" id="add_refresh_to_more_menu">
+            <field name="name">ad.refresh.to.more.menu</field>
+             <field name="model_id" ref="model_google_sheet_workbook"/>
+            <field name="key">action</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.server,' + str(ref('refresh_workbook'))" />
+            <field name="model">google.sheet.workbook</field>
+        </record>
+</odoo>

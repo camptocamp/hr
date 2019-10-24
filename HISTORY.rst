@@ -24,6 +24,7 @@ Latest (Unreleased)
 * #345 add_bso_chat_access_control module
 * #344 delivery_service
 * #334 bso_holiday_recompute_days
+* #349 add bso_google_sheet_integration
 
 **Bugfixes**
 

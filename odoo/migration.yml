@@ -556,4 +556,5 @@ migration:
           - bso_chat_access_control
           - delivery_service
           - bso_holiday_recompute_days
+          - bso_google_sheet_integration
 
