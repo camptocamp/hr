@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #349 add bso_google_sheet_integration
+
 **Bugfixes**
 
 * #346 ubersmith fix
