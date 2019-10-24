@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.28.0 (2019-10-24)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #345 add_bso_chat_access_control module
 * #344 delivery_service
 * #334 bso_holiday_recompute_days
@@ -29,11 +41,6 @@ Latest (Unreleased)
 **Bugfixes**
 
 * #346 ubersmith fix
-
-**Build**
-
-**Documentation**
-
 
 10.27.0 (2019-09-25)
 ++++++++++++++++++++
