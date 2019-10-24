@@ -554,4 +554,5 @@ migration:
         upgrade:
           - bso_import_invoices
           - bso_chat_access_control
+          - delivery_service
 

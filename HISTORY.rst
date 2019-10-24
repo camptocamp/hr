@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * #345 add_bso_chat_access_control module
+* #344 delivery_service
 
 **Bugfixes**
 
