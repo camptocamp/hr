@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="ir_model_view_form" model="ir.ui.view">
+        <field name="name">ir.model.form.chat_perm</field>
+        <field name="model">ir.model</field>
+        <field name="inherit_id" ref="base.view_model_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='access_ids']//tree//field[@name='perm_unlink']"
+                   position="after">
+                <field name="perm_chat"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

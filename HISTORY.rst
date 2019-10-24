@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #345 add_bso_chat_access_control module
+
 **Bugfixes**
 
 * #346 ubersmith fix
