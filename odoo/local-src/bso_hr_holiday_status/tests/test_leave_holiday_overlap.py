@@ -37,6 +37,14 @@ class TestLeaveHolidayOverlap(common.TransactionCase):
             })
 
     def test_leave_creation_ok(self):
+        allocation = self.env['hr.holidays'].create({
+            'type': 'add',  # allocation
+            'employee_id': self.employee.id,
+            'holiday_status_id': self.leave_status.id,
+            'holiday_type': 'employee',
+            'number_of_days_temp': 40
+        })
+        allocation.sudo().action_validate()
         leaves_before = self.env['hr.holidays'].search_count(
             [('employee_id', '=', self.employee.id)])
         self.env['hr.holidays'].create({
@@ -58,7 +66,7 @@ class TestLeaveHolidayOverlap(common.TransactionCase):
             'type': 'add',  # allocation
             'employee_id': self.employee.id,
             'holiday_status_id': self.leave_status.id,
-            'type': 'add',
+            'number_of_days_temp': 2,
             'holiday_type': 'employee',
         })
         leaves_after = self.env['hr.holidays'].search_count(
