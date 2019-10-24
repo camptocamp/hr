@@ -117,10 +117,10 @@ class UbersmithClient(models.Model):
             disc = client_dict['discount_type']
             return self.create({
                 'client_id': client_dict['clientid'],
-                'full_name': client_dict['full_name'],
+                'full_name': client_dict['full_name'].upper(),
                 'first': client_dict['first'],
                 'last': client_dict['last'],
-                'company': client_dict['company'],
+                'company': client_dict['company'].upper(),
                 'phone': client_dict['phone'],
                 'email': client_dict['email'],
                 'fax': client_dict['fax'],
@@ -216,7 +216,7 @@ class UbersmithClient(models.Model):
     def create_partner(self):
         odoo_country = self._get_odoo_country(self.country)
         return self.odoo_partner_id.create({
-            'company_type': 'company',
+            'is_company': True,
             'name': self.company or self.full_name,
             'phone': self.phone,
             'email': self.email,
@@ -228,6 +228,7 @@ class UbersmithClient(models.Model):
             'state_id': self._get_odoo_state_id(self.state, odoo_country),
             'company_id': self.brand_id.company_id.id,
             'comment': self.vat_number,
+            'notify_email': 'none',
         }).id
 
     def _get_odoo_country(self, country):

@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #346 ubersmith fix
+
 **Build**
 
 **Documentation**

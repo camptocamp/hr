@@ -62,6 +62,9 @@ class UbersmithSettings(models.Model):
         store=True,
         digits=(15, 0)
     )
+    create_invoices_without_lines = fields.Boolean(
+        string='Create invoices without lines'
+    )
 
     def get(self):
         record = self._get()

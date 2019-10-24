@@ -549,3 +549,7 @@ migration:
           - bso_hr_expense_creation_restriction
           - bso_import_invoices
           - bso_dealsheet
+    - version: 10.28.0
+      addons:
+        upgrade:
+          - bso_import_invoices

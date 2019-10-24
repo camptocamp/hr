@@ -57,6 +57,7 @@ class UbersmithInvoice(models.Model):
             ('odoo_company_missing', 'Client Brand not linked to a company'),
             ('line_date_missing', 'Date is missing in invoice lines period'),
             ('line_tax_missing', 'Ubersmith tax not linked to an odoo tax'),
+            ('invoice_without_lines', 'Invoice without lines'),
             ('none', 'None')
 
         ],
@@ -186,7 +187,11 @@ class UbersmithInvoice(models.Model):
         if not self.client_id.odoo_partner_id:
             self.write({'non_creation_reason': 'odoo_partner_missing'})
             return False
+        settings = self.env['ubersmith.settings'].get()
         lines = self.ubersmith_invoice_line_ids
+        if not settings.create_invoices_without_lines and not lines:
+            self.write({'non_creation_reason': 'invoice_without_lines'})
+            return False
         if not all(l.plan_id for l in lines):
             self.write({'non_creation_reason': 'service_plan_missing'})
             return False
@@ -255,7 +260,8 @@ class UbersmithInvoice(models.Model):
                 'end_date': line.date_end,
                 # 'invoice_line_tax_ids': [(6, 0, tax_ids)],
             }
-            new_inv_line = self.env['account.invoice.line'].sudo().new(vals)
+            new_inv_line = self.env['account.invoice.line'].with_context(
+                force_company=inv.company_id.id).sudo().new(vals)
             new_inv_line._onchange_product_id()
             diff = self._get_onchange_diff(vals, new_inv_line)
             inv_line_dict = new_inv_line._convert_to_write(new_inv_line._cache)

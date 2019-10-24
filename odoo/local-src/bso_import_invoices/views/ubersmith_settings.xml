@@ -61,6 +61,9 @@
                     <field name="invoice_generation_date"/>
                     <field name="invoice_generation_timestamp"/>
                 </group>
+                <group string="Options">
+                    <field name="create_invoices_without_lines"/>
+                </group>
             </form>
         </field>
     </record>
