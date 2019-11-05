@@ -165,7 +165,8 @@ class UbersmithInvoice(models.Model):
 
     @api.multi
     def create_invoice(self):
-        if not self.check_invoice_validity():
+        if not self.client_id.odoo_partner_id:
+            self.write({'non_creation_reason': 'odoo_partner_missing'})
             return False
         if not self.odoo_invoice_id:
             company_id = self.client_id.brand_id.company_id.id
@@ -184,9 +185,6 @@ class UbersmithInvoice(models.Model):
             return inv
 
     def check_invoice_validity(self):
-        if not self.client_id.odoo_partner_id:
-            self.write({'non_creation_reason': 'odoo_partner_missing'})
-            return False
         settings = self.env['ubersmith.settings'].get()
         lines = self.ubersmith_invoice_line_ids
         if not settings.create_invoices_without_lines and not lines:
@@ -283,6 +281,8 @@ class UbersmithInvoice(models.Model):
             ('odoo_invoice_id', '=', False),
         ])
         for counter, u_invoice in enumerate(u_invoices):
+            if not u_invoice.check_invoice_validity():
+                continue
             if not u_invoice.client_id.odoo_partner_id:
                 u_invoice.client_id.sudo().get_or_create_partner()
             u_invoice.sudo().create_invoice()
