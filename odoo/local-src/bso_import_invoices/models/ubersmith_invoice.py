@@ -75,14 +75,13 @@ class UbersmithInvoice(models.Model):
         store='True'
     )
 
-    @api.depends('odoo_invoice_id.amount_untaxed', 'current_charges')
+    @api.depends('ubersmith_invoice_line_ids.is_correctly_imported')
     def _is_correctly_imported(self):
         for rec in self:
             if not rec.odoo_invoice_id:
                 continue
-            amount_untaxed = int(rec.odoo_invoice_id.amount_untaxed)
-            current_charges = int(rec.current_charges)
-            if amount_untaxed == current_charges:
+            if all(rec.ubersmith_invoice_line_ids.mapped(
+                    'is_correctly_imported')):
                 rec.is_correctly_imported = True
 
     def create_ubersmith_invoice(self, invoice_id, client):
@@ -286,7 +285,17 @@ class UbersmithInvoice(models.Model):
             if not u_invoice.client_id.odoo_partner_id:
                 u_invoice.client_id.sudo().get_or_create_partner()
             u_invoice.sudo().create_invoice()
+            u_invoice.sudo().check_invoice_amounts()
             self.log_progress(counter + 1, len(u_invoices), 'invoice')
+
+    def check_invoice_amounts(self):
+        for rec in self:
+            if not rec.odoo_invoice_id:
+                continue
+            for line in rec.ubersmith_invoice_line_ids:
+                if round(line.odoo_invoice_line_id.price_subtotal,
+                         2) == line.value:
+                    line.write({'is_correctly_imported': True})
 
     @staticmethod
     def log_progress(counter, u_invoices_count, item_name):
