@@ -71,18 +71,7 @@ class UbersmithInvoice(models.Model):
     )
     is_correctly_imported = fields.Boolean(
         string='Correctly imported without Taxes',
-        compute='_is_correctly_imported',
-        store='True'
     )
-
-    @api.depends('ubersmith_invoice_line_ids.is_correctly_imported')
-    def _is_correctly_imported(self):
-        for rec in self:
-            if not rec.odoo_invoice_id:
-                continue
-            if all(rec.ubersmith_invoice_line_ids.mapped(
-                    'is_correctly_imported')):
-                rec.is_correctly_imported = True
 
     def create_ubersmith_invoice(self, invoice_id, client):
         invoice = self.search([
@@ -292,10 +281,22 @@ class UbersmithInvoice(models.Model):
         for rec in self:
             if not rec.odoo_invoice_id:
                 continue
-            for line in rec.ubersmith_invoice_line_ids:
-                if round(line.odoo_invoice_line_id.price_subtotal,
-                         2) == line.value:
-                    line.write({'is_correctly_imported': True})
+            rec.check_invoice_lines_amounts()
+            if rec.ubersmith_invoice_line_ids and all(
+                    rec.ubersmith_invoice_line_ids.mapped(
+                        'is_correctly_imported')):
+                rec.write({'is_correctly_imported': True})
+                continue
+            settings = self.env['ubersmith.settings'].get()
+            if settings.create_invoices_without_lines and \
+                    rec.odoo_invoice_id.amount_untaxed == 0:
+                rec.write({'is_correctly_imported': True})
+
+    def check_invoice_lines_amounts(self):
+        for line in self.ubersmith_invoice_line_ids:
+            if round(line.odoo_invoice_line_id.price_subtotal,
+                     2) == line.value:
+                line.write({'is_correctly_imported': True})
 
     @staticmethod
     def log_progress(counter, u_invoices_count, item_name):
