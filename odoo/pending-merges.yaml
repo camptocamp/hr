@@ -69,3 +69,6 @@
     - camptocamp defb949d4564bf93669cbfd9d28e0c6b639837fb
     - odoo refs/pull/3917/head
   target: *default_target
+  shell_command_after:
+    # Vat declaration issue for UK report upload
+    -  git am "$(git format-patch -1 2858e2a1aeef79712d6a401f1d74b4332d967ad4 -o ../../patches)"
