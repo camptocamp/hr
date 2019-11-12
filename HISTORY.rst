@@ -27,6 +27,7 @@ Latest (Unreleased)
     -remove partner sync 
     -fix partner creation bug 
     -is_correctly_imported field set in invoices creation instead of compute
+* BSIBSO-1175: Fix vat uk sending report issue
 
 **Build**
 

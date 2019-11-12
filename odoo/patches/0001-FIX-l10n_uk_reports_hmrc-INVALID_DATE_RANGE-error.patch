@@ -1,0 +1,33 @@
+From 2858e2a1aeef79712d6a401f1d74b4332d967ad4 Mon Sep 17 00:00:00 2001
+From: Alex Tuyls <alt@odoo.com>
+Date: Mon, 2 Sep 2019 09:42:58 +0000
+Subject: [PATCH] [FIX] l10n_uk_reports_hmrc: INVALID_DATE_RANGE error
+
+When retrieving open obligations, we look in the
+-6 months +6 months range, but in case we have a
+leap year, we count 366 days instead of 365, which
+causes an invalid range.
+
+closes odoo/enterprise#5382
+
+Signed-off-by: Richard Mathot (rim) <rim@openerp.com>
+---
+ l10n_uk_reports_hmrc/models/hmrc_vat_obligation.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/l10n_uk_reports_hmrc/models/hmrc_vat_obligation.py b/l10n_uk_reports_hmrc/models/hmrc_vat_obligation.py
+index 428aa95..1531b2d 100644
+--- a/l10n_uk_reports_hmrc/models/hmrc_vat_obligation.py
++++ b/l10n_uk_reports_hmrc/models/hmrc_vat_obligation.py
+@@ -104,7 +104,7 @@ class HmrcVatObligation(models.Model):
+             raise UserError(_('Please fill in your VAT number on the company form.  '))
+         obligations = self.retrieve_vat_obligations(vat,
+             (today + relativedelta(months=-6)).strftime('%Y-%m-%d'),
+-            (today + relativedelta(months=6)).strftime('%Y-%m-%d'))
++            (today + relativedelta(months=6,leapdays=-1)).strftime('%Y-%m-%d'))
+ 
+         for new_obligation in obligations:
+             obligation = self.env['l10n_uk.vat.obligation'].search([('period_key', '=', new_obligation.get('periodKey')),
+-- 
+2.7.4
+
