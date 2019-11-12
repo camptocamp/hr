@@ -23,6 +23,11 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #353 bso_import_invoices: 
+    -remove partner sync 
+    -fix partner creation bug 
+    -is_correctly_imported field set in invoices creation instead of compute
+
 **Build**
 
 **Documentation**

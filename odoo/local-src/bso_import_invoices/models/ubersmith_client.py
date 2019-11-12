@@ -265,43 +265,7 @@ class UbersmithClient(models.Model):
                 child = self.search([('parent_account_id', '=', rec.id)])
                 child.write({'odoo_partner_id': values['odoo_partner_id']})
                 continue
-            if rec.odoo_partner_id:
-                rec.sudo().sync_partner(values)
         return res
-
-    def sync_partner(self, client_values):
-        partner_values = {}
-        if 'company' in client_values or 'full_name' in client_values:
-            company = client_values.get('company')
-            full_name = client_values.get('full_name')
-            partner_values['name'] = company or full_name
-        if 'phone' in client_values:
-            partner_values['phone'] = client_values['phone']
-        if 'email' in client_values:
-            partner_values['email'] = client_values['email']
-        if 'fax' in client_values:
-            partner_values['fax'] = client_values['fax']
-        if 'city' in client_values:
-            partner_values['city'] = client_values['city']
-        if 'zip' in client_values:
-            partner_values['zip'] = client_values['zip']
-        if 'address' in client_values:
-            partner_values['street'] = client_values['address']
-        if 'country' in client_values:
-            odoo_country = self._get_odoo_country(client_values['country'])
-            partner_values['country_id'] = odoo_country.id
-        if 'state' in client_values:
-            country = client_values.get('country', self.country)
-            odoo_country = self._get_odoo_country(country)
-            odoo_state_id = self._get_odoo_state_id(client_values['state'],
-                                                    odoo_country)
-            partner_values['state_id'] = odoo_state_id
-        if 'brand_id' in client_values:
-            new_brand = self.brand_id.get_brand(client_values['brand_id'])
-            partner_values['company_id'] = new_brand.company_id.id
-        if 'vat_number' in client_values:
-            partner_values['comment'] = self.vat_number
-        self.odoo_partner_id.write(partner_values)
 
     @api.multi
     def create_or_sync_client_ubersmith_invoices(self):

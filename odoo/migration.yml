@@ -557,4 +557,7 @@ migration:
           - delivery_service
           - bso_holiday_recompute_days
           - bso_google_sheet_integration
-
+    - version: 10.28.1
+      addons:
+        upgrade:
+          - bso_import_invoices

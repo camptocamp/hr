@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class UbersmithInvoiceLine(models.Model):
@@ -65,18 +65,7 @@ class UbersmithInvoiceLine(models.Model):
     )
     is_correctly_imported = fields.Boolean(
         string='Correctly imported',
-        compute='_is_correctly_imported',
-        store='True'
     )
-
-    @api.depends('odoo_invoice_line_id.price_subtotal', 'value')
-    def _is_correctly_imported(self):
-        for rec in self:
-            if not rec.odoo_invoice_line_id:
-                continue
-            price_subtotal = round(rec.odoo_invoice_line_id.price_subtotal, 2)
-            if price_subtotal == rec.value:
-                rec.is_correctly_imported = True
 
     def get_discount_percentage(self):
         if not self.discount:
