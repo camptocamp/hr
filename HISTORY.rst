@@ -23,6 +23,18 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.28.1 (2019-11-12)
+++++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
 * #353 bso_import_invoices: 
     -remove partner sync 
     -fix partner creation bug 
