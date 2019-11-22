@@ -192,7 +192,7 @@ class UbersmithClient(models.Model):
         if self.discount_type != disc:
             client_values['discount_type'] = disc
         parent_id = client_dict.get('metadata', {}).get(
-            'parent_account_id', False)
+            'parent_account_id') or False
         if self.parent_account_id.client_id != parent_id:
             odoo_parent_id = self.get_odoo_parent_id(clients_dict, parent_id)
             client_values['parent_account_id'] = odoo_parent_id
