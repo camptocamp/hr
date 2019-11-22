@@ -87,3 +87,9 @@ class UbersmithInvoiceLine(models.Model):
         p = self.period or 1
         u_q = self.quantity
         return u_q if self.bill_type == 'period' else u_q * p
+
+    def get_unit_price(self):
+        q = self.get_quantity()
+        if not q:
+            return 0
+        return self.value / q

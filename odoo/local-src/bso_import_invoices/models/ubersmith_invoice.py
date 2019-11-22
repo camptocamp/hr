@@ -240,7 +240,7 @@ class UbersmithInvoice(models.Model):
                 'product_id': line.plan_id.odoo_product_id.id,
                 'uom_id': line.plan_id.odoo_product_id.uom_id.id,
                 'quantity': line.get_quantity(),
-                'price_unit': line.value / line.get_quantity(),
+                'price_unit': line.get_unit_price(),
                 'discount': 0,
                 'start_date': line.date_start,
                 'end_date': line.date_end,
@@ -313,7 +313,7 @@ class UbersmithInvoice(models.Model):
                 if line.is_correctly_imported:
                     continue
                 line.odoo_invoice_line_id.write({
-                    'price_unit': line.value / line.get_quantity(),
+                    'price_unit': line.get_unit_price(),
                     'quantity': line.get_quantity(),
                     'discount': 0
                 })
