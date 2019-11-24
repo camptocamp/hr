@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="survey_user_input_form_sign_button" model="ir.ui.view">
+        <field name="name">survey.user.input.form.sign.button</field>
+        <field name="model">survey.user_input</field>
+        <field name="inherit_id" ref="survey.survey_user_input_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_survey_resend']"
+                   position="before">
+                <field name="is_my_response" invisible="1"/>
+                <button name="action_sign" class="btn btn-primary"
+                        string="Sign" type="object"
+                        attrs="{'invisible':['|', ('is_my_response', '=', True)
+                        , ('signature', '!=', False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record id="survey_user_input_form" model="ir.ui.view">
+        <field name="name">survey.user.input.form</field>
+        <field name="model">survey.user_input</field>
+        <field name="arch" type="xml">
+            <form string="Sign" create="0" edit="0">
+                <h3>Dear
+                    <field name="connected_user" readonly="1"/>
+                    <br/>Your signature below indicates that you have read,
+                    understand and agree with the content of this survey
+                </h3>
+                <field name="signature" widget="signature"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="survey_user_input_form_signature_field" model="ir.ui.view">
+        <field name="name">survey.user.input.form.signature.field</field>
+        <field name="model">survey.user_input</field>
+        <field name="inherit_id" ref="survey.survey_user_input_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_input_line_ids']"
+                   position="after">
+                <group>
+                    <field name="signature" widget="image" readonly="1"
+                           attrs="{'invisible':[('signature', '=', False)]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
