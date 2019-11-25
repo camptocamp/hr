@@ -1,0 +1,19 @@
+<odoo>
+    <record id="hr_appraisal_view_search" model="ir.ui.view">
+        <field name="name">hr.appraisal.view.search</field>
+        <field name="model">hr.appraisal</field>
+        <field name="inherit_id" ref="hr_appraisal.hr_appraisal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="collaborators_ids"/>
+                <filter name="my_appraisals" string="My appraisals"
+                        domain="['|', ('employee_id.user_id', '=', uid),
+                        ('manager_ids.user_id', 'in', [uid])]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_appraisal.open_view_hr_appraisal_tree" model="ir.actions.act_window">
+        <field name="context">{"search_default_my_appraisals":1}</field>
+    </record>
+</odoo>

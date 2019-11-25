@@ -561,3 +561,8 @@ migration:
       addons:
         upgrade:
           - bso_import_invoices
+    - version: 10.28.2
+      addons:
+        upgrade:
+          - bso_import_invoices
+          - bso_appraisal_signature

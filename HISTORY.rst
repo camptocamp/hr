@@ -21,7 +21,14 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #357 bso_appraisal_signature
+
 **Bugfixes**
+
+* #356 bso_import_invoices:
+    -unlinking partners bug fixed
+    -correct_invoices function added
+    -prices formula updated in odoo invoices creation
 
 **Build**
 
