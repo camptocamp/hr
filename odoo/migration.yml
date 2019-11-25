@@ -561,7 +561,7 @@ migration:
       addons:
         upgrade:
           - bso_import_invoices
-    - version: 10.28.2
+    - version: 10.29.0
       addons:
         upgrade:
           - bso_import_invoices
