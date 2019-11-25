@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.29.0 (2019-11-25)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #357 bso_appraisal_signature
 
 **Bugfixes**
