@@ -223,25 +223,25 @@ class UbersmithInvoice(models.Model):
             return False
         for line in lines:
             # tax_ids = [t.odoo_tax_id.id for t in line.tax_ids]
-            p = line.period or 1
-            u_q = line.quantity
-            q = u_q if line.bill_type == 'period' else u_q * p
-            discount = line.get_discount_percentage()
-            if line.cost != line.value and line.cost != 0:
-                # and line.date_start and line.date_end:
-                # start_dt = fields.Date.from_string(line.date_start)
-                # end_dt = fields.Date.from_string(line.date_end)
-                # number_of_days = (end_dt - start_dt).days + 1
-                number_of_days = line.value / line.cost * 30 * p
-                q = number_of_days * 1. / 30 * line.quantity
+            # p = line.period or 1
+            # u_q = line.quantity
+            # q = u_q if line.bill_type == 'period' else u_q * p
+            # discount = line.get_discount_percentage()
+            # if line.cost != line.value and line.cost != 0:
+            #     # and line.date_start and line.date_end:
+            #     # start_dt = fields.Date.from_string(line.date_start)
+            #     # end_dt = fields.Date.from_string(line.date_end)
+            #     # number_of_days = (end_dt - start_dt).days + 1
+            #     number_of_days = line.value / line.cost * 30 * p
+            #     q = number_of_days * 1. / 30 * line.quantity
             vals = {
                 'name': line.description,
                 'invoice_id': inv.id,
                 'product_id': line.plan_id.odoo_product_id.id,
                 'uom_id': line.plan_id.odoo_product_id.uom_id.id,
-                'quantity': q,
-                'price_unit': line.service_id.price,
-                'discount': discount,
+                'quantity': line.get_quantity(),
+                'price_unit': line.get_unit_price(),
+                'discount': 0,
                 'start_date': line.date_start,
                 'end_date': line.date_end,
                 # 'invoice_line_tax_ids': [(6, 0, tax_ids)],
@@ -303,3 +303,19 @@ class UbersmithInvoice(models.Model):
         p = counter * 100 / u_invoices_count
         if not p % 10:
             _logger.info('%s%% odoo %s created' % (p, item_name))
+
+    @api.multi
+    def correct_invoice(self):
+        for rec in self:
+            if not rec.odoo_invoice_id:
+                continue
+            for line in rec.ubersmith_invoice_line_ids:
+                if line.is_correctly_imported:
+                    continue
+                line.odoo_invoice_line_id.write({
+                    'price_unit': line.get_unit_price(),
+                    'quantity': line.get_quantity(),
+                    'discount': 0
+                })
+                line.write({'is_corrected': True})
+            rec.check_invoice_amounts()

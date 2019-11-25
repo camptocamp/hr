@@ -66,6 +66,9 @@ class UbersmithInvoiceLine(models.Model):
     is_correctly_imported = fields.Boolean(
         string='Correctly imported',
     )
+    is_corrected = fields.Boolean(
+        string='Is corrected',
+    )
 
     def get_discount_percentage(self):
         if not self.discount:
@@ -79,3 +82,14 @@ class UbersmithInvoiceLine(models.Model):
         elif discount_type == 'percentage':
             return discount_value
         return False
+
+    def get_quantity(self):
+        p = self.period or 1
+        u_q = self.quantity
+        return u_q if self.bill_type == 'period' else u_q * p
+
+    def get_unit_price(self):
+        q = self.get_quantity()
+        if not q:
+            return 0
+        return self.value / q

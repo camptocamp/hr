@@ -24,6 +24,7 @@
                         <field name="service_id" readonly="True"/>
                         <field name="bill_type" readonly="True"/>
                         <field name="is_correctly_imported" readonly="True"/>
+                        <field name="is_corrected" readonly="True"/>
                     </group>
                 </sheet>
             </form>
@@ -49,6 +50,7 @@
                 <field name="service_id"/>
                 <field name="bill_type"/>
                 <field name="is_correctly_imported" readonly="True"/>
+                <field name="is_corrected" readonly="True"/>
             </tree>
         </field>
     </record>

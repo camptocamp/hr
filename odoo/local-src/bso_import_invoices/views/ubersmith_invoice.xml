@@ -9,6 +9,8 @@
                 <header>
                     <button string="Create Invoice" type="object"
                             name="create_invoice"/>
+                    <button string="Correct Invoice" type="object"
+                            name="correct_invoice"/>
                 </header>
                 <sheet>
                     <group>
