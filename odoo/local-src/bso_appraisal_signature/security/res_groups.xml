@@ -24,7 +24,7 @@
         <field name="name">Survey User</field>
         <field name="model_id" ref="model_survey_user_input"/>
         <field name="domain_force">['|', ('appraisal_id.employee_id.user_id',
-            '=', user.id), ('appraisal_id.manager_ids.user_id', 'in' ,
+            '=', user.id), ('appraisal_id.manager_ids.user_id', 'in',
             [user.id])]
         </field>
         <field name="groups"
