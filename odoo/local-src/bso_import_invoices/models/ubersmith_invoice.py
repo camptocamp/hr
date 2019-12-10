@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from odoo import models, fields, api
 from pytz import timezone
@@ -131,17 +131,19 @@ class UbersmithInvoice(models.Model):
                 'date_start': self.convert_timestamp_to_date(
                     pack['date_range_start']),
                 'date_end': self.convert_timestamp_to_date(
-                    pack['date_range_end']),
+                    pack['date_range_end'], is_end_date=True),
                 'period': p,
                 'tax_ids': [(6, 0, u_tax_o.get_ubersmith_taxes(tax_ids))],
                 'service_id': service.id
             }))
         return ubersmith_invoice_lines
 
-    def convert_timestamp_to_date(self, ts):
+    def convert_timestamp_to_date(self, ts, is_end_date=None):
         if not int(ts):
             return False
         dt = datetime.fromtimestamp(int(ts))
+        if is_end_date:
+            dt = dt - timedelta(days=1)
         dt_user_tz = self.convert_dt_to_user_tz(dt)
         return dt_user_tz.date()
 
