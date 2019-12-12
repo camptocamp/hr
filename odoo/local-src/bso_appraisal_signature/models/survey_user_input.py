@@ -25,7 +25,7 @@ class SurveyUserInput(models.Model):
     @api.multi
     def write(self, vals):
         for uinput in self:
-            appraisal_id = uinput.appraisal_id
+            appraisal_id = uinput.sudo().appraisal_id
             if (
                     appraisal_id.manager_ids and
                     appraisal_id.count_sent_survey ==
@@ -51,7 +51,7 @@ class SurveyUserInput(models.Model):
         if not self.is_my_response:
             raise AccessError(
                 _('You can not modify other users answers'))
-        if self.appraisal_id.state == 'done':
+        if self.sudo().appraisal_id.state == 'done':
             raise AccessError(
                 _('You can not modify your answers at this stage'))
         self.sudo().write({'state': 'new'})
