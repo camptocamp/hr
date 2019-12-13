@@ -216,7 +216,8 @@ class UbersmithInvoice(models.Model):
             'date_invoice': self.date,
             'date_due': self.due,
             'currency_id':
-                self.client_id.brand_id.currency_id.odoo_currency_id.id
+                self.client_id.brand_id.currency_id.odoo_currency_id.id,
+            'comment': 'Ubersmith ID: %s' % self.invoice_id
         }
 
     def create_invoice_lines(self, inv):
@@ -237,7 +238,9 @@ class UbersmithInvoice(models.Model):
             #     number_of_days = line.value / line.cost * 30 * p
             #     q = number_of_days * 1. / 30 * line.quantity
             vals = {
-                'name': line.description,
+                'name': 'Service ID: %s\n%s' % (
+                    line.service_id.service_id,
+                    line.description),
                 'invoice_id': inv.id,
                 'product_id': line.plan_id.odoo_product_id.id,
                 'uom_id': line.plan_id.odoo_product_id.uom_id.id,
