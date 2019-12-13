@@ -52,9 +52,9 @@ class ExpensifyWizard(models.TransientModel):
                     'res_id': expense_created.id,
                     'res_model': 'hr.expense',
                     'company_id': self.employee_id.company_id.id,
-                    'name': 'Receipt',
+                    'name': 'hr_expense_%s' % expense_created.id,
                     'type': 'binary',
-                    'datas_fname': 'receipt_%s' % expense_created.id,
+                    'datas_fname': 'hr_expense_%s' % expense_created.id,
                     'datas': expense.receipt
                 }
                 self.env['ir.attachment'].create(attachment_data)
