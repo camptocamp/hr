@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from odoo import models, fields, api
 from pytz import timezone
@@ -131,17 +131,19 @@ class UbersmithInvoice(models.Model):
                 'date_start': self.convert_timestamp_to_date(
                     pack['date_range_start']),
                 'date_end': self.convert_timestamp_to_date(
-                    pack['date_range_end']),
+                    pack['date_range_end'], is_end_date=True),
                 'period': p,
                 'tax_ids': [(6, 0, u_tax_o.get_ubersmith_taxes(tax_ids))],
                 'service_id': service.id
             }))
         return ubersmith_invoice_lines
 
-    def convert_timestamp_to_date(self, ts):
+    def convert_timestamp_to_date(self, ts, is_end_date=None):
         if not int(ts):
             return False
         dt = datetime.fromtimestamp(int(ts))
+        if is_end_date:
+            dt = dt - timedelta(days=1)
         dt_user_tz = self.convert_dt_to_user_tz(dt)
         return dt_user_tz.date()
 
@@ -214,7 +216,8 @@ class UbersmithInvoice(models.Model):
             'date_invoice': self.date,
             'date_due': self.due,
             'currency_id':
-                self.client_id.brand_id.currency_id.odoo_currency_id.id
+                self.client_id.brand_id.currency_id.odoo_currency_id.id,
+            'comment': 'Ubersmith ID: %s' % self.invoice_id
         }
 
     def create_invoice_lines(self, inv):
@@ -235,7 +238,9 @@ class UbersmithInvoice(models.Model):
             #     number_of_days = line.value / line.cost * 30 * p
             #     q = number_of_days * 1. / 30 * line.quantity
             vals = {
-                'name': line.description,
+                'name': 'Service ID: %s\n%s' % (
+                    line.service_id.service_id,
+                    line.description),
                 'invoice_id': inv.id,
                 'product_id': line.plan_id.odoo_product_id.id,
                 'uom_id': line.plan_id.odoo_product_id.uom_id.id,

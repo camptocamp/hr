@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #364 bso_import_invoices
+
 **Build**
 
 **Documentation**

@@ -570,4 +570,5 @@ migration:
       addons:
         upgrade:
           - bso_track_subtype
+          - bso_import_invoices
 
