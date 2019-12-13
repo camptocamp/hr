@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #365 bso_track_subtype
+
 **Bugfixes**
 
 **Build**

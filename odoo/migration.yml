@@ -566,3 +566,8 @@ migration:
         upgrade:
           - bso_import_invoices
           - bso_appraisal_signature
+    - version: 10.30.0
+      addons:
+        upgrade:
+          - bso_track_subtype
+
