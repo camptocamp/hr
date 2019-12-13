@@ -31,13 +31,13 @@ class MailMessageSubtype(models.Model):
          'field_id and trigger_value should be unique by subtype')
     ]
 
-    @api.constrains('field_id')
-    def check_field_tracked(self):
-        if not self.res_model:
-            return
-        tracked_fields = self.env[self.res_model]._get_tracked_fields([])
-        if self.field_id.name in tracked_fields.keys():
-            raise ValidationError('This field is already tracked.')
+    # @api.constrains('field_id')
+    # def check_field_tracked(self):
+    #     if not self.res_model:
+    #         return
+    #     tracked_fields = self.env[self.res_model]._get_tracked_fields([])
+    #     if self.field_id.name in tracked_fields.keys():
+    #         raise ValidationError('This field is already tracked.')
 
     @api.multi
     def write(self, vals):

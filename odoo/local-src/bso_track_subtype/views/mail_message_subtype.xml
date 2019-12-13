@@ -17,8 +17,8 @@
                 <group name="recipients" string="Recipients"
                        attrs="{'invisible':[('field_id', '=', False)]}">
                     <field name="notify_existing_followers"/>
-                    <field name="group_ids"/>
-                    <field name="partner_ids"/>
+                    <field name="group_ids" widget="many2many_tags"/>
+                    <field name="partner_ids" widget="many2many_tags"/>
                 </group>
             </xpath>
         </field>
