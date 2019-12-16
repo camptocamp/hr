@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.30.0 (2019-12-16)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #365 bso_track_subtype
 
 * #366 bso_appraisal_signature
