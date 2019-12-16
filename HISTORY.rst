@@ -29,6 +29,8 @@ Latest (Unreleased)
 
 * #364 bso_import_invoices
 
+* #358 web_widget_digitized_signature
+
 **Build**
 
 **Documentation**

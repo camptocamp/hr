@@ -572,3 +572,4 @@ migration:
           - bso_track_subtype
           - bso_import_invoices
           - bso_appraisal_signature
+          - web_widget_digitized_signature
