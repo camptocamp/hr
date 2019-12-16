@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * #365 bso_track_subtype
 
+* #366 bso_appraisal_signature
+
 **Bugfixes**
 
 * #364 bso_import_invoices

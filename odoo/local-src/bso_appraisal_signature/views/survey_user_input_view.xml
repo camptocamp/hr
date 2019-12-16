@@ -13,16 +13,23 @@
                         attrs="{'invisible':['|', ('is_my_response', '=', True)
                         , ('signature', '!=', False)]}"
                 />
+                <field name="appraisal_state" invisible="1"/>
+                <button name="button_modify_answers" class="btn"
+                        string="Edit Reponses" type="object"
+                        attrs="{'invisible':['|',('is_my_response', '=', False)
+                        , ('appraisal_state', '=', 'done')]}"
+                />
             </xpath>
         </field>
     </record>
+
     <record id="survey_user_input_form" model="ir.ui.view">
         <field name="name">survey.user.input.form</field>
         <field name="model">survey.user_input</field>
         <field name="arch" type="xml">
             <form string="Sign" create="0" edit="0">
                 <h3>Dear
-                    <field name="connected_user" readonly="1"/>
+                    <field name="connected_partner" readonly="1"/>
                     <br/>Your signature below indicates that you have read,
                     understand and agree with the content of this survey
                 </h3>
@@ -42,6 +49,36 @@
                     <field name="signature" widget="image" readonly="1"
                            attrs="{'invisible':[('signature', '=', False)]}"/>
                 </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="user_input_form_answer_field" model="ir.ui.view">
+        <field name="name">user input form answer field</field>
+        <field name="model">survey.user_input</field>
+        <field name="inherit_id" ref="survey.survey_user_input_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="/form/sheet/field[@name='user_input_line_ids']/tree"
+                   position="attributes">
+                 <attribute name="edit">0</attribute>
+            </xpath>
+
+            <xpath expr="/form/sheet/field[@name='user_input_line_ids']/tree/field[@name='question_id']"
+                   position="after">
+                <field name="value_suggested_row"/>
+                <field name="raw_answer"/>
+            </xpath>
+            <xpath expr="/form/sheet/field[@name='user_input_line_ids']/tree/field[@name='answer_type']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/field[@name='user_input_line_ids']/tree/field[@name='date_create']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/field[@name='user_input_line_ids']/tree/field[@name='quizz_mark']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
         </field>
     </record>

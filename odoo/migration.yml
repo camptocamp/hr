@@ -571,4 +571,4 @@ migration:
         upgrade:
           - bso_track_subtype
           - bso_import_invoices
-
+          - bso_appraisal_signature

@@ -5,7 +5,7 @@
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
     'depends': ['web_widget_digitized_signature', 'hr_appraisal',
-                'survey'],
+                'survey', 'web'],
     'data': [
         'security/res_groups.xml',
         'security/ir.model.access.csv',
