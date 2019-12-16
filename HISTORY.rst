@@ -31,6 +31,8 @@ Latest (Unreleased)
 
 * #358 web_widget_digitized_signature
 
+* #366 expensify
+
 **Build**
 
 **Documentation**
