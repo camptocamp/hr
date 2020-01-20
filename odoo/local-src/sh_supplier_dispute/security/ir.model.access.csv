@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_supplier_dispute_manager,access.supplier.dispute.manager,model_account_invoice_dispute,account.group_account_manager,1,1,1,1
+access_supplier_dispute_user,access.supplier.dispute.user,model_account_invoice_dispute,account.group_account_user,1,0,0,0
+access_supplier_dispute_all,access.supplier.dispute.all,model_account_invoice_dispute,base.group_user,1,0,0,0

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+        
+	<!-- VENDOR BILLS FORM VIEW -->
+	<record id="sh_cancel_invoice_inherit_invoice_supplier_form" model="ir.ui.view">
+        <field name="name">sh.cancel.invoice.inherit.invoice.supplier.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+            	
+                 <page string="Dispute" attrs="{'invisible': [('type','!=','in_invoice')]}" groups="account.group_account_manager">
+                     <field name="dispute_line_ids" context="{'default_invoice_id':id}">
+                         <tree string="Dispute lines" editable="bottom">
+								<field name="name" string="Dispute Number"/>
+								<field name="invoice_id" 
+								    options="{'no_create': True, 'no_open': True}"
+                                 	force_save="1"	
+                                 	readonly="True"
+									/>
+								<field name="dispute_title"/>
+								<field name="dispute_description"/>
+								<field name="date"/>
+								<field name="user_id" options="{'no_create': True}"/>
+								<field name="state"/>
+                         </tree>
+                     </field>
+                 </page>            	
+            
+            </xpath>
+        </field>	
+	</record>        
+
+	
+</odoo>
