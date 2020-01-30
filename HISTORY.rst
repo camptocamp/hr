@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.31.0 (2020-01-30)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #368 active and order by name
 
 * #367 sh_supplier_dispute
