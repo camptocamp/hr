@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * #368 active and order by name
 
+* #367 sh_supplier_dispute
+
 **Bugfixes**
 
 **Build**

@@ -578,3 +578,4 @@ migration:
       addons:
         upgrade:
           - bso_google_sheet_integration
+          - sh_supplier_dispute
