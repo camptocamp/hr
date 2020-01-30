@@ -20,6 +20,7 @@
                     <field name="server_action_id"/>
                     <field name="src" widget="url"/>
                     <field name="group_ids" widget="many2many_tags"/>
+                    <field name="active"/>
                 </group>
                 <field name="iframe" widget="html"/>
             </form>

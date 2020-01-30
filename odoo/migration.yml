@@ -574,3 +574,7 @@ migration:
           - bso_appraisal_signature
           - web_widget_digitized_signature
           - expensify
+    - version: 10.31.0
+      addons:
+        upgrade:
+          - bso_google_sheet_integration

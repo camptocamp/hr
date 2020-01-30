@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #368 active and order by name
+
 **Bugfixes**
 
 **Build**
