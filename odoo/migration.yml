@@ -579,3 +579,7 @@ migration:
         upgrade:
           - bso_google_sheet_integration
           - sh_supplier_dispute
+    - version: 10.32.0
+      addons:
+        upgrade:
+          - base
