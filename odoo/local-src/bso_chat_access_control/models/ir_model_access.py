@@ -8,13 +8,13 @@ class IrModelAccess(models.Model):
 
     @api.model
     def create(self, values):
-        if values.get('perm_write') and 'perm_chat' not in values:
+        if values.get('perm_write'):
             values['perm_chat'] = True
         return super(IrModelAccess, self).create(values)
 
     @api.multi
     def write(self, values):
-        if values.get('perm_write') and 'perm_chat' not in values:
+        if values.get('perm_write'):
             values['perm_chat'] = True
         return super(IrModelAccess, self).write(values)
 
