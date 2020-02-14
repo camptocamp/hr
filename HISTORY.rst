@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Build**
 
+* BSIBSO-1184: Update odoo/odoo and odoo/enterprise
+
 **Documentation**
 
 
