@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bso_bank_statement_append_button_bso_bank_statement_append_button,bso_bank_statement_append_button.bso_bank_statement_append_button,model_bso_bank_statement_append_button_bso_bank_statement_append_button,,1,0,0,0
