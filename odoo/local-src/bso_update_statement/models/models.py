@@ -2,7 +2,6 @@
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
-import psycopg2
 
 
 class AccountBankStatement(models.Model):
