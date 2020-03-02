@@ -25,6 +25,18 @@ Latest (Unreleased)
 
 **Build**
 
+**Documentation**
+
+
+10.32.0 (2020-03-02)
+++++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+**Build**
+
 * BSIBSO-1184: Update odoo/odoo and odoo/enterprise
 
 **Documentation**
