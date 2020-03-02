@@ -590,3 +590,4 @@ migration:
           - bso_appraisal_signature
           - bso_update_statement
           - bso_pop_up_message
+          - bso_analytic_account_acs
