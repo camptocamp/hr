@@ -21,7 +21,11 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #375 bso_hr_contract_raise
+
 **Bugfixes**
+
+* #373 bso_appraisal_signature
 
 **Build**
 

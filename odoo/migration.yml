@@ -583,3 +583,8 @@ migration:
       addons:
         upgrade:
           - base
+    - version: 10.33.0
+      addons:
+        upgrade:
+          - bso_hr_contract_raise
+          - bso_appraisal_signature
