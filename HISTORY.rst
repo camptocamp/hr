@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * #375 bso_hr_contract_raise
 
+* #371 bso_update_statement
+
 **Bugfixes**
 
 * #373 bso_appraisal_signature

@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bso_bank_statement_append_button">
+            <field name="name">bso_bank_statement_append_button</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='check_confirm_bank']"
+                       position="before">
+                    <field name="state" invisible="1"/>
+                    <button name="append_to_statement_action"
+                            attrs="{'invisible': [('state', '=', 'confirm')]}"
+                            string="Update Statement" type="object"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="merge_statements">
+            <field name="name">Merge Statements</field>
+            <field name="model_id" ref="model_account_bank_statement"/>
+            <field name="code">
+                records.merge_statements_action()
+            </field>
+        </record>
+        <record model="ir.values" id="ir_value_your_custom">
+            <field name="model_id" ref="model_account_bank_statement"/>
+            <field name="name">Merge Statments</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value"
+                   eval="'ir.actions.server,' +str(ref('merge_statements'))"/>
+            <field name="key">action</field>
+            <field name="model">account.bank.statement</field>
+        </record>
+    </data>
+</odoo>

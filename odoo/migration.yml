@@ -588,3 +588,4 @@ migration:
         upgrade:
           - bso_hr_contract_raise
           - bso_appraisal_signature
+          - bso_update_statement
