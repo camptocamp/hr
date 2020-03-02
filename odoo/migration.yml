@@ -589,3 +589,4 @@ migration:
           - bso_hr_contract_raise
           - bso_appraisal_signature
           - bso_update_statement
+          - bso_pop_up_message

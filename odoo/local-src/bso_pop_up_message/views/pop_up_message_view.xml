@@ -1,0 +1,21 @@
+<odoo>
+    <record id="pop_up_message_view" model="ir.ui.view">
+        <field name="name">pop.up.message.view</field>
+        <field name="model">pop.up.message</field>
+        <field name="context">{'recall':True}</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="description" readonly="1"/>
+                <footer>
+                    <button string="ok"
+                            class="oe_highlight" name="action_ok" type="object"
+                    />
+                    <button string="cancel"
+                            class="oe_highlight" name="action_cancel"
+                            type="object"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 * #371 bso_update_statement
 
+* #362 bso_pop_up_message
+
 **Bugfixes**
 
 * #373 bso_appraisal_signature

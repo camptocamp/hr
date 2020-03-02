@@ -23,6 +23,11 @@ class TestSaleTripleValidation(BaseCase):
             ],
             'pricelist_id': cls.env.ref('product.list0').id,
         })
+        cls.env['hr.employee'].create({
+            'name': cls.technical_manager.name,
+            'company_id': cls.technical_manager.company_id.id,
+            'user_id': cls.technical_manager.id
+        })
 
     def test_so_state_options_order(self):
         selection = self.env['sale.order']._fields['state'].selection
