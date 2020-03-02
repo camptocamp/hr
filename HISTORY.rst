@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.33.0 (2020-03-02)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #375 bso_hr_contract_raise
 
 * #371 bso_update_statement
