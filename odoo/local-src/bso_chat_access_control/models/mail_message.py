@@ -10,7 +10,6 @@ class MailMessage(models.Model):
         model = vals.get('model')
         if not model:
             return super(MailMessage, self).create(vals)
-
         chat_access = self._has_chat_access(model)
         if not chat_access:
             raise AccessError(
