@@ -33,6 +33,8 @@ Latest (Unreleased)
 
 * #373 bso_appraisal_signature
 
+* #370 bso_chat_access_control
+
 **Build**
 
 **Documentation**

@@ -591,3 +591,4 @@ migration:
           - bso_update_statement
           - bso_pop_up_message
           - bso_analytic_account_acs
+          - bso_chat_access_control
