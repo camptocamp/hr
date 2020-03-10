@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_expense_sheet_form_bso" model="ir.ui.view">
+        <field name="name">hr.expense.sheet.form.bso</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+        <field name="arch" type="xml">
+
+            <field name="expense_line_ids" position="attributes">
+                <attribute name="domain">
+                    [('state', '=', 'draft'), ('employee_id', '=', employee_id)]
+                </attribute>
+            </field>
+
+        </field>
+    </record>
+
+</odoo>
