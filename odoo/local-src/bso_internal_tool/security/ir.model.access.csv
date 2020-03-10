@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+internal_tool_user,user,model_internal_tool,internal_tools_user,1,0,0,0
+internal_tool_tag_user,user,model_internal_tool_tag,internal_tools_user,1,0,0,0
+internal_tool_manager,manager,model_internal_tool,internal_tools_manager,1,1,1,1
+internal_tool_tag_manager,manager,model_internal_tool_tag,internal_tools_manager,1,1,1,1

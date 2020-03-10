@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <template id="assets_backend" name="custom assets"
+                  inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript"
+                        src="/bso_internal_tool/static/src/js/on_card_click.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>
