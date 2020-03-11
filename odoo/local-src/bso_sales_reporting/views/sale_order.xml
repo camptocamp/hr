@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="sale_order_reporting" model="ir.ui.view">
+        <field name="name">sale.order.reporting</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Reporting">
+                    <group>
+                        <group string='Revenue'>
+                            <field name="order_type"
+                                   attrs="{'required': [('dealsheet_state', '=', 'validated')]}"/>
+                            <field name="nrr"/>
+                            <field name="mrr"/>
+                            <field name="renew_mrr"/>
+                            <field name="new_mrr"/>
+                        </group>
+                        <group string="Status">
+                            <field name="is_delivered"/>
+                            <field name="delivery_date"/>
+                            <field name="nrr_is_invoiced"/>
+                            <field name="nrr_payment_date"/>
+                            <field name="mrr_is_invoiced"/>
+                            <field name="mrr_payment_date"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
