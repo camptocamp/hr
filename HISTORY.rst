@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 * #379 bso_interface_changes
 
+* #381 bso_report_saleorder
+
 **Bugfixes**
 
 * #378 bso_hr_contract_raise

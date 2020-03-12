@@ -25,39 +25,84 @@
             </attribute>
         </xpath>
 
+        <xpath expr="//h1/t" position="replace"/>
+        <xpath expr="//h1/t" position="replace"/>
+        <xpath expr="//h1/em" position="before">
+            <t>Your Order</t>
+        </xpath>
+
         <xpath expr="//small[@t-field='quotation.state']" position="replace"/>
+
+        <xpath expr="//div[@t-if='quotation.partner_shipping_id.id != quotation.partner_invoice_id.id']"
+               position="replace"/>
+
+        <xpath expr="//label[@class='col-sm-5 col-xs-5 text-right']"
+               position="attributes">
+            <attribute name="class">col-sm-4 col-xs-4 text-right</attribute>
+        </xpath>
+        <xpath expr="//div[@class='col-sm-7 col-xs-7']"
+               position="attributes">
+            <attribute name="class">col-sm-8 col-xs-8</attribute>
+        </xpath>
+
+        <xpath expr="//label[@class='col-sm-5 col-xs-5 text-right']"
+               position="attributes">
+            <attribute name="class">col-sm-4 col-xs-4 text-right</attribute>
+        </xpath>
+        <xpath expr="//div[@class='col-sm-7 col-xs-7']"
+               position="attributes">
+            <attribute name="class">col-sm-8 col-xs-8</attribute>
+        </xpath>
+
+        <xpath expr="//label[@class='col-sm-5 col-xs-5 text-right']"
+               position="attributes">
+            <attribute name="class">col-sm-4 col-xs-4 text-right</attribute>
+        </xpath>
+        <xpath expr="//div[@class='col-sm-7 col-xs-7']"
+               position="attributes">
+            <attribute name="class">col-sm-8 col-xs-8</attribute>
+        </xpath>
+
+        <xpath expr="//label[@class='col-sm-5 col-xs-5 text-right']"
+               position="attributes">
+            <attribute name="class">col-sm-4 col-xs-4 text-right</attribute>
+        </xpath>
+        <xpath expr="//div[@class='col-sm-7 col-xs-7']"
+               position="attributes">
+            <attribute name="class">col-sm-8 col-xs-8</attribute>
+        </xpath>
 
         <xpath expr="//div[@t-if='quotation.client_order_ref']"
                position="after">
-            <div class="clearfix"/>
-            <div t-if="quotation.partner_id.ref">
-                <label class="col-sm-5 col-xs-5 text-right">Governing MSA:
-                </label>
-                <div class="col-sm-7 col-xs-7">
-                    <span t-field="quotation.partner_id.ref"/>
-                </div>
-            </div>
+            <!--<div class="clearfix"/>-->
+            <!--<div t-if="quotation.partner_id.ref">-->
+                <!--<label class="col-sm-4 col-xs-4 text-right">Governing MSA:-->
+                <!--</label>-->
+                <!--<div class="col-sm-8 col-xs-8">-->
+                    <!--<span t-field="quotation.partner_id.ref"/>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="clearfix"/>
             <div t-if="quotation.duration">
-                <label class="col-sm-5 col-xs-5 text-right">Duration:
+                <label class="col-sm-4 col-xs-4 text-right">Duration:
                 </label>
-                <div class="col-sm-7 col-xs-7">
-                    <span t-field="quotation.duration"/>
+                <div class="col-sm-8 col-xs-8">
+                    <span t-field="quotation.duration"/> month(s)
                 </div>
             </div>
             <div class="clearfix"/>
             <div t-if="quotation.payment_term_id">
-                <label class="col-sm-5 col-xs-5 text-right">Payment Terms:
+                <label class="col-sm-4 col-xs-4 text-right">Payment Terms:
                 </label>
-                <div class="col-sm-7 col-xs-7">
+                <div class="col-sm-8 col-xs-8">
                     <span t-field="quotation.payment_term_id"/>
                 </div>
             </div>
             <div class="clearfix"/>
             <div t-if="quotation.currency_id">
-                <label class="col-sm-5 col-xs-5 text-right">Currency:
+                <label class="col-sm-4 col-xs-4 text-right">Currency:
                 </label>
-                <div class="col-sm-7 col-xs-7">
+                <div class="col-sm-8 col-xs-8">
                     <span t-field="quotation.currency_id"/>
                 </div>
             </div>
@@ -84,6 +129,32 @@
             <attribute name="t-att-style">
                 'color:#7131A1;' if from_bso_report_saleorder else ''
             </attribute>
+        </xpath>
+
+        <xpath expr="//t[@t-if='page_index == page_size - 1']"
+               position="replace">
+            <t t-if="page_index == page_size - 1">
+                <t t-if="quotation.mrr">
+                    <tr>
+                        <td/>
+                        <td colspan="4" class="text-right"><strong>Untaxed MRC:</strong></td>
+                        <td class="text-right">
+                            <strong data-id="mrr" t-field="quotation.mrr" t-options="{&quot;widget&quot;: &quot;monetary&quot;,&quot;display_currency&quot;: quotation.pricelist_id.currency_id}"/>
+                        </td>
+                        <td/>
+                    </tr>
+                </t>
+                <t t-if="quotation.nrr">
+                    <tr>
+                        <td/>
+                        <td colspan="4" class="text-right"><strong>Untaxed NRC:</strong></td>
+                        <td class="text-right">
+                            <strong data-id="nrr" t-field="quotation.nrr" t-options="{&quot;widget&quot;: &quot;monetary&quot;,&quot;display_currency&quot;: quotation.pricelist_id.currency_id}"/>
+                        </td>
+                        <td/>
+                    </tr>
+                </t>
+            </t>
         </xpath>
 
         <xpath expr="//section[@id='terms']" position="before">

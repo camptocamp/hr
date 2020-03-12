@@ -5,9 +5,9 @@
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
     'depends': [
-        'base',
         'sale',
-        'website_quote'
+        'website_quote',
+        'bso_sales_reporting',
     ],
     'data': [
         'security/ir.model.access.csv',
