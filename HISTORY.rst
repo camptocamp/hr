@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * #377 bso_internal_tool
 
+* #379 bso_interface_changes
+
 **Bugfixes**
 
 * #378 bso_hr_contract_raise

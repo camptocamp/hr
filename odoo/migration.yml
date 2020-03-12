@@ -597,3 +597,4 @@ migration:
         upgrade:
           - bso_internal_tool
           - bso_hr_contract_raise
+          - bso_interface_changes

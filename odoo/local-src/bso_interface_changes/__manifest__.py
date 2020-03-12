@@ -1,0 +1,25 @@
+{
+    'name': 'BSO Interface Changes',
+    'category': 'other',
+    'description': 'Module to manage all interface changes',
+    'author': 'BSO',
+    'website': 'https://www.bsonetwork.com',
+    'depends': [
+        'account',
+        'product',
+        'purchase',
+        'sale_contract',
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/account_invoice/invoice_form.xml',
+        'views/account_invoice/invoice_supplier_form.xml',
+        'views/hr_expense_sheet/view_hr_expense_sheet_form.xml',
+        'views/product_category/product_category_list_view.xml',
+        'views/purchase_order/purchase_order_form.xml',
+        'views/res_currency_rate/view_currency_rate_tree.xml',
+        'views/sale_order/view_order_form.xml',
+        'views/sale_subscription/sale_subscription_view_form.xml',
+    ],
+    'application': False,
+}
