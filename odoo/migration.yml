@@ -596,3 +596,4 @@ migration:
       addons:
         upgrade:
           - bso_internal_tool
+          - bso_hr_contract_raise

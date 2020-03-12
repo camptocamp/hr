@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #378 bso_hr_contract_raise
+
 **Build**
 
 **Documentation**
