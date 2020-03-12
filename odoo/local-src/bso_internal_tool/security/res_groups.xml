@@ -1,0 +1,18 @@
+<odoo>
+    <record id="internal_tools_drawer" model="ir.module.category">
+        <field name="name">Internal Tools</field>
+        <field name="sequence">14</field>
+    </record>
+
+    <record id="internal_tools_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="internal_tools_drawer"/>
+    </record>
+    <record id="internal_tools_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="implied_ids"
+               eval="[(4, ref('bso_internal_tool.internal_tools_user'))]"/>
+        <field name="category_id" ref="internal_tools_drawer"/>
+    </record>
+</odoo>

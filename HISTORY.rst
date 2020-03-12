@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #377 bso_internal_tool
+
 **Bugfixes**
 
 **Build**

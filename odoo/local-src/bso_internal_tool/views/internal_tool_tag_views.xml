@@ -1,0 +1,42 @@
+<odoo>
+    <record id="internal_tool_tag_form" model="ir.ui.view">
+        <field name="name">internal.tool.tag.form</field>
+        <field name="model">internal.tool.tag</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="tool_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="internal_tool_tag_tree" model="ir.ui.view">
+        <field name="name">internal.tool.tag.form</field>
+        <field name="model">internal.tool.tag</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <act_window id="internal_tool_tag_action"
+                name="Internal tool tag"
+                res_model="internal.tool.tag"
+                view_mode="tree,form"
+                target="current"
+    />
+    <menuitem id="internal_tool_config"
+              name="Configuration"
+              parent="menu_internal_tool"
+              groups="bso_internal_tool.internal_tools_manager"
+    />
+    <menuitem id="menu_internal_tool_tag"
+              name="Internal Tools Tags"
+              action="bso_internal_tool.internal_tool_tag_action"
+              parent="internal_tool_config"/>
+</odoo>

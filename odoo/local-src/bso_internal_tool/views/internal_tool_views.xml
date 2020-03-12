@@ -1,0 +1,83 @@
+<odoo>
+    <record id="internal_tool_kanban_view" model="ir.ui.view">
+        <field name="name">internal.tool.kanban</field>
+        <field name="model">internal.tool</field>
+        <field name="arch" type="xml">
+            <kanban default_order="sequence">
+                <field name="icon"/>
+                <field name="name"/>
+                <field name="url"/>
+                <field name="tag_ids"/>
+                <field name="sequence"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_tags_section o_form_field_many2manytags">
+                                <field name="tag_ids"/>
+                            </div>
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('window','icon',record.id.raw_value)"
+                                     class="oe_module_icon"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="internal_tool_form_view" model="ir.ui.view">
+        <field name="name">internal.tool.form</field>
+        <field name="model">internal.tool</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="url" widget="url"/>
+                        <field name="tag_ids" widget="many2many_tags"/>
+                        <field name="description"/>
+                        <field name="icon" widget="image"
+                               style="width:30mm; height:30mm;"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="internal_tool_tree_view" model="ir.ui.view">
+        <field name="name">internal.tool.tree</field>
+        <field name="model">internal.tool</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="sequence"/>
+                <field name="url"/>
+                <field name="tag_ids"/>
+            </tree>
+        </field>
+    </record>
+    <act_window id="internal_tool_action"
+                name="Internal Tools"
+                res_model="internal.tool"
+                view_mode="kanban,tree,form"/>
+    <menuitem id="menu_internal_tool"
+              name="Internal Tools"
+              action="internal_tool_action"
+              parent=""
+              web_icon="bso_internal_tool,static/description/icon.png"
+              sequence="0"
+              groups="base.group_user"
+    />
+    <menuitem id="submenu_internal_tool"
+              name="Internal tools"
+              action="internal_tool_action"
+              parent="menu_internal_tool"
+              groups="bso_internal_tool.internal_tools_manager"
+    />
+</odoo>

@@ -592,3 +592,7 @@ migration:
           - bso_pop_up_message
           - bso_analytic_account_acs
           - bso_chat_access_control
+    - version: 10.34.0
+      addons:
+        upgrade:
+          - bso_internal_tool
