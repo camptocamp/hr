@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.34.0 (2020-03-12)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #377 bso_internal_tool
 
 * #379 bso_interface_changes
