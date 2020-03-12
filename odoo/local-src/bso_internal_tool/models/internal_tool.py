@@ -4,10 +4,14 @@ from odoo.tools import odoo, image_colorize
 
 class InternalTool(models.Model):
     _name = 'internal.tool'
+    _order = 'sequence, name'
 
     name = fields.Char(
         string='Name',
         required=True
+    )
+    sequence = fields.Integer(
+        string='Sequence'
     )
     icon = fields.Binary(
         string='Icon',

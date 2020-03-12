@@ -3,11 +3,12 @@
         <field name="name">internal.tool.kanban</field>
         <field name="model">internal.tool</field>
         <field name="arch" type="xml">
-            <kanban>
+            <kanban default_order="sequence">
                 <field name="icon"/>
                 <field name="name"/>
                 <field name="url"/>
                 <field name="tag_ids"/>
+                <field name="sequence"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click">
@@ -38,6 +39,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="sequence"/>
                         <field name="url" widget="url"/>
                         <field name="tag_ids" widget="many2many_tags"/>
                         <field name="description"/>
@@ -54,6 +56,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
+                <field name="sequence"/>
                 <field name="url"/>
                 <field name="tag_ids"/>
             </tree>
