@@ -290,8 +290,7 @@ class SaleDealsheet(models.Model):
     @api.depends('nrc_lines.cost_delivery')
     def compute_nrc_delivery(self):
         for rec in self:
-            rec.nrc_delivery = sum(
-                rec.mapped('nrc_lines.total_cost_delivery'))
+            rec.nrc_delivery = sum(rec.mapped('nrc_lines.total_cost_delivery'))
 
     @api.depends('sale_order_id.order_line.price_subtotal')
     def compute_nrr(self):
@@ -318,8 +317,7 @@ class SaleDealsheet(models.Model):
     @api.depends('mrc_lines.cost_delivery')
     def compute_mrc_delivery(self):
         for rec in self:
-            rec.mrc_delivery = sum(
-                rec.mapped('mrc_lines.total_cost_delivery'))
+            rec.mrc_delivery = sum(rec.mapped('mrc_lines.total_cost_delivery'))
 
     @api.depends('sale_order_id.order_line.price_subtotal')
     def compute_mrr(self):
