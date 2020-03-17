@@ -3,6 +3,7 @@ from odoo import models, fields, api
 
 class GoogleSheetWorkbook(models.Model):
     _name = 'google.sheet.workbook'
+    _order = 'name'
 
     name = fields.Char(
         string='Workbook Name',
@@ -32,6 +33,10 @@ class GoogleSheetWorkbook(models.Model):
     group_ids = fields.Many2many(
         string='Groups',
         comodel_name='res.groups'
+    )
+    active = fields.Boolean(
+        string='Active',
+        default=True,
     )
 
     @api.depends('workbook_ref')
