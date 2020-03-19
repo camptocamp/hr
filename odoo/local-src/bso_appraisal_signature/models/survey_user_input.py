@@ -78,3 +78,7 @@ class SurveyUserInput(models.Model):
             'view_mode': 'form',
             'target': 'new'
         }
+
+    @api.multi
+    def action_signed(self):
+        return {'type': 'ir.actions.act_window_close'}

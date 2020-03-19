@@ -44,7 +44,6 @@ odoo.define('web_widget_digitized_signature.web_digital_sign', function(require)
             if (! is_empty && typeof signature !== "undefined" && signature[1]) {
                 self.set('value',signature[1]);
             }
-            location.reload();
         },
         render_value: function() {
             var self = this;
