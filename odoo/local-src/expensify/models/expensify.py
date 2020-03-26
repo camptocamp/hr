@@ -4,8 +4,9 @@ import json
 
 import requests
 import yaml
-from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+
+from odoo import models, fields, api, _
 
 
 class Expensify(models.TransientModel):
@@ -357,10 +358,9 @@ class Expensify(models.TransientModel):
                      "label": "Odoo"}
                 ]
             }),
-            "template": self._get_report_template()
         }
-
-        response = requests.get(self.api_url, params=params)
+        data = {'template': self._get_report_template()}
+        response = requests.post(self.api_url, params=params, data=data)
         if response.content.endswith(".txt"):
             return response.content
         else:
@@ -381,7 +381,7 @@ class Expensify(models.TransientModel):
             })
         }
 
-        response = requests.get(self.api_url, params=params)
+        response = requests.post(self.api_url, params=params)
         if response.status_code == 200:
             return response.content
         else:
