@@ -53,14 +53,22 @@
         <field name="name">survey.user.input.form</field>
         <field name="model">survey.user_input</field>
         <field name="arch" type="xml">
-            <form string="Sign" create="0" edit="0">
-                <h3>Dear
-                    <field name="connected_partner" readonly="1"/>
-                    <br/>Your signature below indicates that you have read,
-                    understand and agree with the content of this survey
-                </h3>
-                <field name="signature" widget="signature"/>
+            <form string="Sign">
+                <sheet>
+                    <h3>Dear
+                        <field name="connected_partner" readonly="1"/>
+                        <br/>Your signature below indicates that you have read,
+                        understand and agree with the content of this survey
+                    </h3>
+                    <field name="signature" widget="signature"/>
+                </sheet>
+                <footer>
+                    <button name="action_signed" type="object"
+                           class="btn-primary"
+                           string="Save"/>
+                </footer>
             </form>
+
         </field>
     </record>
 </odoo>

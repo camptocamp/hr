@@ -27,6 +27,8 @@ Latest (Unreleased)
 
 * #383 bso_internal_tool groups fix
 
+* #384 fix data refresh problem after signature
+
 **Build**
 
 **Documentation**

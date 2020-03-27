@@ -605,3 +605,5 @@ migration:
           - bso_dealsheet
           - bso_google_sheet_integration
           - bso_internal_tool
+          - bso_appraisal_signature
+          - web_widget_digitized_signature
