@@ -23,6 +23,18 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.34.1 (2020-03-27)
+++++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
 * #382 Interface Changes: DS & GS
 
 * #383 bso_internal_tool groups fix
