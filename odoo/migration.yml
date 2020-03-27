@@ -599,3 +599,8 @@ migration:
           - bso_hr_contract_raise
           - bso_interface_changes
           - bso_report_saleorder
+    - version: 10.34.1
+      addons:
+        upgrade:
+          - bso_dealsheet
+          - bso_google_sheet_integration

@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #382 Interface Changes: DS & GS
+
 **Build**
 
 **Documentation**
