@@ -29,6 +29,8 @@ Latest (Unreleased)
 
 * #384 fix data refresh problem after signature
 
+* #385 smtp change
+
 **Build**
 
 **Documentation**

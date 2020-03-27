@@ -607,3 +607,4 @@ migration:
           - bso_internal_tool
           - bso_appraisal_signature
           - web_widget_digitized_signature
+          - server_environment_files
