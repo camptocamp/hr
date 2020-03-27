@@ -604,3 +604,4 @@ migration:
         upgrade:
           - bso_dealsheet
           - bso_google_sheet_integration
+          - bso_internal_tool

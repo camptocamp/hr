@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 * #382 Interface Changes: DS & GS
 
+* #383 bso_internal_tool groups fix
+
 **Build**
 
 **Documentation**
