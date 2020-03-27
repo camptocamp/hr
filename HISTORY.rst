@@ -31,6 +31,8 @@ Latest (Unreleased)
 
 * #385 smtp change
 
+* #386 Expenisfy export fix
+
 **Build**
 
 **Documentation**
