@@ -608,4 +608,4 @@ migration:
           - bso_appraisal_signature
           - web_widget_digitized_signature
           - server_environment_files
-	  - expensify
+          - expensify
