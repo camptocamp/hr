@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <record id="crm_opportunity_reporting" model="ir.ui.view">
+            <field name="name">crm.opportunity.reporitng</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <group>
+                        <field name="order_type"/>
+                        <field name="product_category_id"/>
+                    </group>
+                </xpath>
+                <xpath expr="//h2[@class='o_row']" position="after">
+                    <br/>
+                    <h2 class="o_row">
+                        <div>
+                            <strong>
+                                <span class="o_label">NEW MRC:</span>
+                            </strong>
+                            <div class="o_row">
+                                <field name="planned_revenue_new_mrc"/>
+                            </div>
+                        </div>
+                        <div>
+                            <strong>
+                                <span class="o_label">RENEW MRC:</span>
+                            </strong>
+                            <div class="o_row">
+                                <field name="planned_revenue_renew_mrc"/>
+                            </div>
+                        </div>
+                    </h2>
+                </xpath>
+            </field>
+        </record>
+        <record id="lead_opportunity_consolidation_new_values"
+                model="ir.ui.view">
+            <field name="name">crm.lead.opp.consolitdation.new.values</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id"
+                   ref="specific_crm.crm_case_form_view_oppor_bso"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='planned_revenue_mrc_eur']"
+                       position="after">
+                    <field name="planned_revenue_new_mrc_eur"/>
+                    <field name="new_planned_revenue_eur"/>
+                    <field name="new_weighted_revenue_eur"/>
+                </xpath>
+                <xpath expr="//field[@name='planned_revenue_mrc_usd']"
+                       position="after">
+                    <field name="planned_revenue_new_mrc_usd"/>
+                    <field name="new_planned_revenue_usd"/>
+                    <field name="new_weighted_revenue_usd"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
