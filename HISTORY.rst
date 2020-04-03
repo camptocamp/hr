@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.35.0 (2020-04-03)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #388 bso_opportunities_reporiting
 
 **Bugfixes**
