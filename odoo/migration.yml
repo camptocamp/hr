@@ -609,3 +609,7 @@ migration:
           - web_widget_digitized_signature
           - server_environment_files
           - expensify
+    - version: 10.35.0
+      addons:
+        upgrade:
+          - bso_opportunities_reporiting

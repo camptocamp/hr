@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #388 bso_opportunities_reporiting
+
 **Bugfixes**
 
 **Build**
