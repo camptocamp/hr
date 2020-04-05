@@ -10,6 +10,6 @@
     'depends': ['specific_crm', 'sale'],
 
     'data': [
-        'views/views.xml',
+        'views/crm_lead.xml',
     ],
 }
