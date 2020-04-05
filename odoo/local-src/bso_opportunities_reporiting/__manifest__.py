@@ -3,7 +3,7 @@
     'name': "Opportunities Reporting",
 
     'author': "BSO",
-    'website': "http://www.bosnetwork.net",
+    'website': "https://www.bsonetwork.com",
 
     'category': 'sale',
 
