@@ -93,6 +93,7 @@ class CrmLead(models.Model):
         help='Total Contract Value',
         compute='_compute_planned_revenue',
         currency_field='currency_id',
+        store=True,
     )
     planned_revenue_nrc = fields.Monetary(
         string='NRC',
@@ -106,10 +107,12 @@ class CrmLead(models.Model):
         track_visibility='always',
         currency_field='currency_id',
     )
+
     weighted_revenue = fields.Monetary(
         string='Adjusted TCV',
         compute='_compute_planned_revenue',
         currency_field='currency_id',
+        store=True,
     )
     sum_planned_revenue_nrc = fields.Float(
         string="Sum planned revenue nrc",
@@ -161,11 +164,13 @@ class CrmLead(models.Model):
         string='Adjusted TCV (EUR)',
         compute='_compute_planned_revenue',
         currency_field='currency_eur_id',
+        store=True
     )
     weighted_revenue_usd = fields.Monetary(
         string='Adjusted TCV (USD)',
         compute='_compute_planned_revenue',
         currency_field='currency_usd_id',
+        store=True
     )
 
     # Used conversion rates
