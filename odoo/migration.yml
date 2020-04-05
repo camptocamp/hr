@@ -613,3 +613,8 @@ migration:
       addons:
         upgrade:
           - bso_opportunities_reporiting
+    - version: 10.35.1
+      addons:
+        upgrade:
+          - bso_opportunities_reporiting
+          - specific_crm

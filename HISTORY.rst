@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #390 bso_opportunities_reporting_fix
+
 **Build**
 
 **Documentation**

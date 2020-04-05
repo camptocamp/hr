@@ -12,8 +12,8 @@ class TestCrmLead(common.TransactionCase):
                 'name': 'test opp',
                 'type': 'opportunity',
                 'planned_revenue_mrc': 1000,
-                'planned_revenue_new_mrc': 0
+                'planned_revenue_renew_mrc': 0
             })
-        self.assertEqual(lead.planned_revenue_renew_mrc, 1000)
-        lead.update({'planned_revenue_new_mrc': 200})
-        self.assertEqual(lead.planned_revenue_renew_mrc, 800)
+        self.assertEqual(lead.planned_revenue_new_mrc, 1000)
+        lead.update({'planned_revenue_renew_mrc': 200})
+        self.assertEqual(lead.planned_revenue_new_mrc, 800)
