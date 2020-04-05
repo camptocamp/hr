@@ -147,7 +147,7 @@ class CrmLeads(models.Model):
         for rec in self:
             rec.planned_revenue_new_mrc = \
                 rec.planned_revenue_mrc - rec.planned_revenue_renew_mrc
-    
+
     @api.multi
     @api.depends(
         'planned_duration',
@@ -181,19 +181,19 @@ class CrmLeads(models.Model):
                 'weighted_new_revenue_usd': weighted_new_revenue_usd,
                 'weighted_new_revenue_eur': weighted_new_revenue_eur,
             })
-            
+
             from_new_mrc = rec.planned_revenue_new_mrc
             new_mrc_amount_eur = rec.currency_id.compute(
                 from_new_mrc, rec.currency_eur_id)
             new_mrc_amount_usd = rec.currency_id.compute(
                 from_new_mrc, rec.currency_usd_id)
-            
+
             from_renew_mrc = rec.planned_revenue_renew_mrc
             renew_mrc_amount_eur = rec.currency_id.compute(
                 from_renew_mrc, rec.currency_eur_id)
             renew_mrc_amount_usd = rec.currency_id.compute(
                 from_renew_mrc, rec.currency_usd_id)
-            
+
             rec.update({
                 'planned_revenue_new_mrc_eur': new_mrc_amount_eur,
                 'planned_revenue_new_mrc_usd': new_mrc_amount_usd,
