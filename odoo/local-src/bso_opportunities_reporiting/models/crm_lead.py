@@ -128,7 +128,7 @@ class CrmLeads(models.Model):
 
     @api.multi
     @api.depends('child_leads_ids')
-    def _compute_sum_nrc_mrc(self):
+    def _compute_sum_new_renew(self):
         for record in self:
             if not record.has_child_leads:
                 continue
