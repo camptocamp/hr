@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 * #390 bso_opportunities_reporting_fix
 
+* #391 Merge fix
+
 **Build**
 
 **Documentation**
