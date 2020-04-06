@@ -23,6 +23,18 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.35.1 (2020-04-06)
+++++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
 * #390 bso_opportunities_reporting_fix
 
 * #391 Merge fix
