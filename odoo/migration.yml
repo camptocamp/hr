@@ -614,6 +614,9 @@ migration:
         upgrade:
           - bso_opportunities_reporiting
     - version: 10.35.1
+      operations:
+        pre:
+          - anthem songs.upgrade.upgrade_10_35_1::main
       addons:
         upgrade:
           - bso_opportunities_reporiting
