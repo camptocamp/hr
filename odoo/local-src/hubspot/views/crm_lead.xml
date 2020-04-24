@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hubspot_view_lead_form" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(crm.action_crm_lead2opportunity_partner)d']"
+                       position="attributes">
+                    <attribute name="context">{'is_converted': True}
+                    </attribute>
+                </xpath>
+                <xpath expr="//page[@name='extra']/group" position="inside">
+                    <group name="hubspot" string="Hubspot">
+                        <field name="hubspot_contact_id"
+                               attrs="{'invisible': [('type', '==', 'opportunity')]}"/>
+                        <field name="hubspot_deal_id"
+                               attrs="{'invisible': [('type', '==', 'lead')]}"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="hubspot_view_opp_form" model="ir.ui.view">
+            <field name="name">crm.opp.form.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='lead']/group" position="inside">
+                    <group name="hubspot" string="Hubspot">
+                        <field name="hubspot_deal_id"
+                               attrs="{'invisible': [('type', '==', 'lead')]}"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

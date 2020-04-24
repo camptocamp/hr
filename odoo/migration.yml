@@ -621,4 +621,7 @@ migration:
         upgrade:
           - bso_opportunities_reporiting
           - specific_crm
-
+    - version: 10.36.0
+      addons:
+        upgrade:
+          - hubspot

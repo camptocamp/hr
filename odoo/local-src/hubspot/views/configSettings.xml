@@ -1,0 +1,83 @@
+<odoo>
+    <data>
+        <record id="view_general_configuration_inherit" model="ir.ui.view">
+            <field name="name">base.config.settings.form.inherit</field>
+            <field name="model">base.config.settings</field>
+            <field name="inherit_id"
+                   ref="base_setup.view_general_configuration"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='google']" position="after">
+                    <group string="Hubspot Integration" name="hubspot">
+                        <label for="id" string="Hubspot App ID"/>
+                        <div name="app_id">
+                            <div name="module_app_id">
+                                <field name="hubspot_app_key"
+                                       class="oe_inline"/>
+                            </div>
+                        </div>
+                    </group>
+                    <group name="app_name">
+                        <label for="id" string="Hubspot App Name"/>
+                        <div name="app_name">
+                            <div name="module_app_name">
+                                <field name="hubspot_app_name"
+                                       class="oe_inline"/>
+                                <br/>
+                                <label for="modifiedDateForOdoo"/>
+                                <field name="modifiedDateForOdoo"
+                                       class="oe_inline"/>
+                                <br/>
+                                <label for="modifiedDateForContact"/>
+                                <field name="modifiedDateForContact"
+                                       class="oe_inline"/>
+                                <br/>
+                                <label for="createdDateForOwner"/>
+                                <field name="createdDateForOwner"
+                                       class="oe_inline"/>
+                                <br/>
+                                <label for="modifiedDateForOriginalCompany"/>
+                                <field name="modifiedDateForOriginalCompany"
+                                       class="oe_inline"/>
+                            </div>
+                        </div>
+                    </group>
+                    <group name="fields">
+                        <label for="id" string="Hubspot Fields"/>
+                        <div>
+                            <div>
+                                <label for="hubspot_mrc_name"/>
+                                <field name="hubspot_mrc_name"
+                                       class="oe_inline"/>
+                                <br/>
+                                <label for="hubspot_nrc_name"/>
+                                <field name="hubspot_nrc_name"
+                                       class="oe_inline"/>
+                                <br/>
+                                <label for="hubspot_tcv_name"/>
+                                <field name="hubspot_tcv_name"
+                                       class="oe_inline"/>
+                                <br/>
+                                <label for="hubspot_duration_name"/>
+                                <field name="hubspot_duration_name"
+                                       class="oe_inline"/>
+                                <br/>
+                                 <label for="hubspot_new_mrc_name"/>
+                                <field name="hubspot_new_mrc_name"
+                                       class="oe_inline"/>
+                                <br/>
+                                <label for="hubspot_renew_mrc_name"/>
+                                <field name="hubspot_renew_mrc_name"
+                                       class="oe_inline"/>
+                                <br/>
+                                <label for="hubspot_new_tcv_name"/>
+                                <field name="hubspot_new_tcv_name"
+                                       class="oe_inline"/>
+                                <br/>
+                            </div>
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hubspot_view_stage_form" model="ir.ui.view">
+        <field name="name">crm.stage.form.inherit</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='fold']" position="after">
+                <field name="hubspot_stage_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_stage"
+            name="Stages"
+            action="crm.crm_stage_action"
+            parent="specific_crm.sales_marketing_menu"
+            groups="hubspot.group_hubspot_manager"
+            sequence="1"/>
+</odoo>
