@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #393 hubspot
+
 **Bugfixes**
 
 **Build**

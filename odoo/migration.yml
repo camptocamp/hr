@@ -621,3 +621,4 @@ migration:
         upgrade:
           - bso_opportunities_reporiting
           - specific_crm
+
