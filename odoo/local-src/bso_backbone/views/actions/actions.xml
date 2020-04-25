@@ -26,6 +26,24 @@
             view_mode="tree,form,graph,pivot"/>
 
     <act_window
+            id="action_backbone_csp"
+            name="CSPs"
+            res_model="backbone.csp"
+            view_mode="tree,form,graph,pivot"/>
+
+    <act_window
+            id="action_backbone_ix"
+            name="IXs"
+            res_model="backbone.ix"
+            view_mode="tree,form,graph,pivot"/>
+
+    <act_window
+            id="action_backbone_fx"
+            name="FXs"
+            res_model="backbone.fx"
+            view_mode="tree,form,graph,pivot"/>
+
+    <act_window
             id="action_cympa_link"
             name="CYMPA Links"
             res_model="backbone.cympa.link"
