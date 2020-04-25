@@ -32,7 +32,7 @@ hubspot crm
         'views/crm_stage.xml'
     ],
     "external_dependencies": {
-        "python": ["hubspot-connection", "hubspot-contacts"]
+        "python": ["hubspot"]
     },
     'price': 349,
     'currency': 'EUR',
