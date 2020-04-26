@@ -14,6 +14,15 @@ access_backbone_pop_manager,backbone.pop.manager,model_backbone_pop,group_backbo
 access_backbone_xco_user,backbone.xco.user,model_backbone_xco,group_backbone_user,1,0,0,0
 access_backbone_xco_officer,backbone.xco.officer,model_backbone_xco,group_backbone_officer,1,1,1,0
 access_backbone_xco_manager,backbone.xco.manager,model_backbone_xco,group_backbone_manager,1,1,1,0
+access_backbone_csp_user,backbone.csp.user,model_backbone_csp,group_backbone_user,1,0,0,0
+access_backbone_csp_officer,backbone.csp.officer,model_backbone_csp,group_backbone_officer,1,1,1,0
+access_backbone_csp_manager,backbone.csp.manager,model_backbone_csp,group_backbone_manager,1,1,1,0
+access_backbone_ix_user,backbone.ix.user,model_backbone_ix,group_backbone_user,1,0,0,0
+access_backbone_ix_officer,backbone.ix.officer,model_backbone_ix,group_backbone_officer,1,1,1,0
+access_backbone_ix_manager,backbone.ix.manager,model_backbone_ix,group_backbone_manager,1,1,1,0
+access_backbone_fx_user,backbone.fx.user,model_backbone_fx,group_backbone_user,1,0,0,0
+access_backbone_fx_officer,backbone.fx.officer,model_backbone_fx,group_backbone_officer,1,1,1,0
+access_backbone_fx_manager,backbone.fx.manager,model_backbone_fx,group_backbone_manager,1,1,1,0
 access_backbone_cympa_link_manager,backbone.cympa.link.manager,model_backbone_cympa_link,group_backbone_manager,1,0,0,0
 access_backbone_cympa_link_user,backbone.cympa.link.user,model_backbone_cympa_link,group_backbone_user,1,0,0,0
 access_backbone_cympa_link_officer,backbone.cympa.link.officer,model_backbone_cympa_link,group_backbone_officer,1,0,0,0

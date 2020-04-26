@@ -42,12 +42,36 @@
             sequence="4"/>
 
     <menuitem
+            id="menu_backbone_csp"
+            name="CSPs"
+            action="action_backbone_csp"
+            parent="menu_backbone"
+            groups="group_backbone_user"
+            sequence="5"/>
+
+    <menuitem
+            id="menu_backbone_ix"
+            name="IXs"
+            action="action_backbone_ix"
+            parent="menu_backbone"
+            groups="group_backbone_user"
+            sequence="6"/>
+
+    <menuitem
+            id="menu_backbone_fx"
+            name="FXs"
+            action="action_backbone_fx"
+            parent="menu_backbone"
+            groups="group_backbone_user"
+            sequence="7"/>
+
+    <menuitem
             id="menu_cympa_link"
             name="CYMPA Links"
             action="action_cympa_link"
             parent="menu_backbone"
             groups="group_backbone_manager"
-            sequence="5"/>
+            sequence="8"/>
 
     <menuitem
             id="menu_setting"
@@ -55,6 +79,6 @@
             action="action_settings"
             parent="menu_backbone"
             groups="base.group_no_one"
-            sequence="6"/>
+            sequence="9"/>
 
 </odoo>

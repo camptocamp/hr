@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="backbone_ix_tree" model="ir.ui.view">
+        <field name="name">backbone.ix.tree</field>
+        <field name="model">backbone.ix</field>
+        <field name="arch" type="xml">
+            <tree string="IX">
+                <field name="name"/>
+                <field name="city"/>
+                <field name="country"/>
+                <field name="pop_id"/>
+                <field name="active"/>
+                <field name="attachment_number" invisible="True"/>
+                <button name="action_get_attachment_view"
+                        string="View Attached Documents" type="object"
+                        icon="fa-paperclip"
+                        attrs="{'invisible': [('attachment_number', '=', 0)]}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="backbone_ix_form" model="ir.ui.view">
+        <field name="name">backbone.ix.form</field>
+        <field name="model">backbone.ix</field>
+        <field name="arch" type="xml">
+            <form string="IX">
+                <sheet>
+                    <div class="oe_button_box">
+                        <button name="action_get_attachment_view"
+                                class="oe_stat_button"
+                                icon="fa-book"
+                                type="object">
+                            <field name="attachment_number" widget="statinfo"
+                                   string="Documents"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="city"/>
+                        <field name="country"/>
+                        <field name="pop_id"/>
+                    </group>
+                    <group>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="backbone_ix_search" model="ir.ui.view">
+        <field name="name">backbone.ix.search</field>
+        <field name="model">backbone.ix</field>
+        <field name="arch" type="xml">
+            <search string="IX">
+                <field name="name"/>
+                <field name="city"/>
+                <field name="country"/>
+                <field name="pop_id"/>
+                <separator/>
+                <filter string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

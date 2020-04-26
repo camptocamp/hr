@@ -625,3 +625,4 @@ migration:
       addons:
         upgrade:
           - hubspot
+          - bso_backbone
