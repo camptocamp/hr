@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.36.0 (2020-04-26)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #393 hubspot
 * #394 Backbone update
 
