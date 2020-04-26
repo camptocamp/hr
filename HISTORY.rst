@@ -22,6 +22,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 * #393 hubspot
+* #394 Backbone update
 
 **Bugfixes**
 
