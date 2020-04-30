@@ -29,7 +29,8 @@ hubspot crm
         'views/crm_lead.xml',
         'views/hubspot_scheduler.xml',
         'views/configSettings.xml',
-        'views/crm_stage.xml'
+        'views/crm_stage.xml',
+        'views/hubspot_log.xml'
     ],
     "external_dependencies": {
         "python": ["hubspot"]

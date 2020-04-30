@@ -55,6 +55,10 @@ class BaseConfigSettings(models.TransientModel):
         string='Hubspot Renewal MRC(USD) Name',
         default='planned_revenue_renew_mrc_usd'
     )
+    log_sync_exceptions = fields.Boolean(
+        string='Log Odoo Husbpot sync errors',
+        default=True
+    )
 
     @api.multi
     def set_hubspot_app_key(self):
@@ -86,6 +90,13 @@ class BaseConfigSettings(models.TransientModel):
         config_value = self.createdDateForOwner
         self.env['ir.values'].set_default('base.config.settings',
                                           'createdDateForOwner',
+                                          config_value)
+
+    @api.multi
+    def set_modifiedDateForOriginalCompany(self):
+        config_value = self.modifiedDateForOriginalCompany
+        self.env['ir.values'].set_default('base.config.settings',
+                                          'modifiedDateForOriginalCompany',
                                           config_value)
 
     @api.multi
@@ -135,4 +146,11 @@ class BaseConfigSettings(models.TransientModel):
         config_value = self.hubspot_duration_name
         self.env['ir.values'].set_default('base.config.settings',
                                           'hubspot_duration_name',
+                                          config_value)
+
+    @api.multi
+    def set_log_sync_exceptions(self):
+        config_value = self.log_sync_exceptions
+        self.env['ir.values'].set_default('base.config.settings',
+                                          'log_sync_exceptions',
                                           config_value)

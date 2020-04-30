@@ -17,7 +17,7 @@
                         </div>
                     </group>
                     <group name="app_name">
-                        <label for="id" string="Hubspot App Name"/>
+                        <label for="name" string="Hubspot App Name"/>
                         <div name="app_name">
                             <div name="module_app_name">
                                 <field name="hubspot_app_name"
@@ -42,7 +42,7 @@
                         </div>
                     </group>
                     <group name="fields">
-                        <label for="id" string="Hubspot Fields"/>
+                        <label for="fields" string="Hubspot Fields"/>
                         <div>
                             <div>
                                 <label for="hubspot_mrc_name"/>
@@ -61,7 +61,7 @@
                                 <field name="hubspot_duration_name"
                                        class="oe_inline"/>
                                 <br/>
-                                 <label for="hubspot_new_mrc_name"/>
+                                <label for="hubspot_new_mrc_name"/>
                                 <field name="hubspot_new_mrc_name"
                                        class="oe_inline"/>
                                 <br/>
@@ -71,6 +71,17 @@
                                 <br/>
                                 <label for="hubspot_new_tcv_name"/>
                                 <field name="hubspot_new_tcv_name"
+                                       class="oe_inline"/>
+                                <br/>
+                            </div>
+                        </div>
+                    </group>
+                    <group name="log">
+                        <label for="log" string="Hubspot Log"/>
+                        <div>
+                            <div>
+                                <label for="log_sync_exceptions"/>
+                                <field name="log_sync_exceptions"
                                        class="oe_inline"/>
                                 <br/>
                             </div>
