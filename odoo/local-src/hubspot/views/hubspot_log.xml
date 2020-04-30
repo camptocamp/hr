@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hubspot_log_view_form" model="ir.ui.view">
+        <field name="name">hubspot.log.form</field>
+        <field name="model">hubspot.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="lead_id"/>
+                        <field name="hubspot_contact_id"/>
+                        <field name="hubspot_deal_id"/>
+                    </group>
+                    <group>
+                        <field name="params"/>
+                        <field name="error_message"/>
+                    </group>
+                    <group>
+                        <field name="function_name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hubspot_log_view_tree" model="ir.ui.view">
+        <field name="name">hubspot.log.tree</field>
+        <field name="model">hubspot.log</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="lead_id"/>
+                <field name="function_name"/>
+                <field name="error_message"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hubspot_log_action" model="ir.actions.act_window">
+        <field name="name">Hubspot Log</field>
+        <field name="res_model">hubspot.log</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="hubspot_log_menu"
+              name="Hubspot Log"
+              action="hubspot_log_action"
+              parent="specific_crm.sales_marketing_menu"
+              groups="hubspot.group_hubspot_manager"/>
+
+</odoo>

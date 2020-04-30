@@ -27,8 +27,8 @@ class ResCompany(models.Model):
 
     hubspot_original_company_id = fields.Char(
         string='Hubspot Original Company ID',
+        readonly=True,
         copy=False,
-        required=True
     )
 
 
@@ -41,6 +41,31 @@ class ResUsers(models.Model):
         copy=False,
         index=True
     )
+
+
+def log_hubspot_exceptions(func):
+    def func_wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            lead = args[0]
+            log_sync_exceptions = lead.env['ir.values'].get_default(
+                'base.config.settings', 'log_sync_exceptions')
+            if log_sync_exceptions:
+                lead.env['hubspot.log'].sudo().create({
+                    'lead_id': lead.id,
+                    'error_message': e,
+                    'function_name': func.func_name,
+                    'params': str(args[3:]) if len(args) > 3 else '',
+                    'hubspot_contact_id': lead.hubspot_contact_id,
+                    'hubspot_deal_id': lead.hubspot_deal_id
+
+                })
+            if func.func_name == '_create_contact':
+                args = args[1:3]
+                lead._match_contact_by_email(*args)
+
+    return func_wrapper
 
 
 class CrmLead(models.Model):
@@ -58,15 +83,16 @@ class CrmLead(models.Model):
         copy=False,
         index=True
     )
-    is_not_synced = fields.Boolean(
-        string='Is not synced correctly'
-    )
 
     @api.multi
     @api.constrains('stage_id')
     def _check_hubspot_stage(self):
         for record in self:
-            if not record.stage_id.hubspot_stage_id:
+            key = self.env['ir.values'].get_default(
+                'base.config.settings', 'hubspot_app_key')
+            name = self.env['ir.values'].get_default(
+                'base.config.settings', 'hubspot_app_name')
+            if not record.stage_id.hubspot_stage_id and key and name:
                 raise ValidationError(_(
                     'Hubspot Stage ID sould be filled in %s stage'
                     % record.stage_id.name,
@@ -83,20 +109,28 @@ class CrmLead(models.Model):
         if self.env.context.get('default_type') == 'opportunity':
             original_lead = self.with_context(default_type='lead').create({
                 'name': vals['name']})
-            rec.write({'original_lead_id': original_lead.id})
+            fields = ['planned_revenue_mrc', 'planned_revenue_nrc',
+                      'planned_revenue', 'planned_revenue_new_mrc',
+                      'planned_revenue_renew_mrc', 'planned_duration']
+            deal_vals = {field: vals[field] for field in fields
+                         if field in vals.keys()}
+            deal_vals['original_lead_id'] = original_lead.id
+            rec.write(deal_vals)
             return rec
         if not self.env.context.get('from_hubspot') and \
                 not self.env.context.get('is_converted'):
-            rec._create_contact(vals,
-                                hubspot_app_key,
-                                hubspot_app_name)
+            ctx = {'is_create': True}
+            properties = rec.with_context(ctx)._get_contact_properties(vals)
+            rec._create_contact(hubspot_app_key,
+                                hubspot_app_name,
+                                properties)
         return rec
 
     @api.multi
     def write(self, vals):
         res = super(CrmLead, self).write(vals)
         fields_to_sync = ['name', 'contact_name', 'user_id', 'stage_id',
-                          'email_from', 'planned_revenue_mrc',
+                          'email_from', 'partner_name', 'planned_revenue_mrc',
                           'planned_revenue_nrc', 'planned_revenue',
                           'planned_revenue_new_mrc',
                           'planned_revenue_renew_mrc',
@@ -110,17 +144,25 @@ class CrmLead(models.Model):
             if not self.env.context.get('from_hubspot'):
                 for rec in self:
                     if vals.get('original_lead_id'):
-                        rec._create_deal(vals, hubspot_app_key,
-                                         hubspot_app_name)
+                        ctx = {'is_create': True}
+                        properties = \
+                            rec.with_context(ctx)._get_deal_properties(vals)
+                        associations = rec._get_deal_associations()
+                        rec._create_deal(hubspot_app_key,
+                                         hubspot_app_name,
+                                         properties,
+                                         associations, )
                         continue
                     if rec.hubspot_contact_id:
-                        rec._update_contact(vals,
-                                            hubspot_app_key,
-                                            hubspot_app_name)
+                        properties = rec._get_contact_properties(vals)
+                        rec._update_contact(hubspot_app_key,
+                                            hubspot_app_name,
+                                            properties)
                     if rec.hubspot_deal_id:
-                        rec._update_deal(vals,
-                                         hubspot_app_key,
-                                         hubspot_app_name)
+                        properties = rec._get_deal_properties(vals)
+                        rec._update_deal(hubspot_app_key,
+                                         hubspot_app_name,
+                                         properties)
         return res
 
     @api.multi
@@ -137,30 +179,22 @@ class CrmLead(models.Model):
                 rec._delete_deal(hubspot_app_key, hubspot_app_name)
         return super(CrmLead, self).unlink()
 
-    @api.multi
-    def _create_contact(self, vals, key, app_name):
-        logger.info('Creating new contacts in hubspot')
-        # create hubspot dictionary
-        properties = self.with_context(is_create=True)._get_contact_properties(
-            vals)
-        try:
-            with PortalConnection(key, app_name) as connection:
-                response = connection.send_post_request(
-                    '/contacts/v1/contact',
-                    ({'properties': properties}))
-                self.hubspot_contact_id = response['canonical-vid']
-        except Exception, e:
-            logger.error("Cannot create contact in Hubspot: %s", e)
-            try:
+    @log_hubspot_exceptions
+    def _create_contact(self, key, app_name, properties):
+        with PortalConnection(key, app_name) as connection:
+            response = connection.send_post_request(
+                '/contacts/v1/contact',
+                ({'properties': properties}))
+            self.hubspot_contact_id = response['canonical-vid']
+
+    @log_hubspot_exceptions
+    def _match_contact_by_email(self, key, app_name):
+        with PortalConnection(key, app_name) as connection:
+            if self.email_from:
                 existingContact = connection.send_get_request(
                     '/contacts/v1/contact/email/' + self.email_from +
                     '/profile')
-                if existingContact:
-                    self.hubspot_contact_id = existingContact['canonical-vid']
-            except Exception, e:
-                logger.error("Cannot update contact in Hubspot: %s", e)
-                self.is_not_synced = True
-        logger.info('Completed Creating new contacts in hubspot')
+                self.hubspot_contact_id = existingContact['canonical-vid']
 
     def _get_contact_properties(self, vals):
         properties = []
@@ -208,20 +242,14 @@ class CrmLead(models.Model):
             ('user_id', '=', self.user_id.id)
         ], limit=1)
 
-    def _create_deal(self, vals, key, app_name):
-        properties = self.with_context(is_create=True)._get_deal_properties(
-            vals)
-        associations = self._get_deal_associations()
-        try:
-            with PortalConnection(key, app_name) as connection:
-                response = connection.send_post_request(
-                    '/deals/v1/deal',
-                    ({'associations': associations, 'properties': properties})
-                )
-                self.hubspot_deal_id = response['dealId']
-        except Exception, e:
-            logger.error("Cannot create deal in Hubspot: %s", e)
-            self.is_not_synced = True
+    @log_hubspot_exceptions
+    def _create_deal(self, key, app_name, properties, associations):
+        with PortalConnection(key, app_name) as connection:
+            response = connection.send_post_request(
+                '/deals/v1/deal',
+                ({'associations': associations, 'properties': properties})
+            )
+            self.hubspot_deal_id = response['dealId']
 
     def _get_deal_properties(self, vals):
         properties = []
@@ -280,15 +308,6 @@ class CrmLead(models.Model):
         user_id = self.user_id.browse(user_id)
         return user_id.hubspot_owner_id
 
-    def _update_vals(self, vals, user_id):
-        if self.env.context.get('is_create'):
-            return
-        user_id = self.user_id.browse(user_id)
-        vals['company_id'] = user_id.company_id.id
-        vals['team_id'] = self.env['crm.team'].sudo()._get_default_team_id(
-            user_id=user_id.id)
-        return vals
-
     def _get_deal_associations(self):
         contacts_list = []
         if self.original_lead_id.hubspot_contact_id:
@@ -297,56 +316,32 @@ class CrmLead(models.Model):
             "associatedVids": contacts_list
         }
 
-    @api.multi
-    def _update_contact(self, vals, key, app_name):
-        logger.info('Updating contacts in hubspot')
-        try:
-            with PortalConnection(key, app_name) as connection:
-                properties = self._get_contact_properties(vals)
-                connection.send_post_request(
-                    '/contacts/v1/contact/vid/' +
-                    self.hubspot_contact_id + '/profile',
-                    ({'properties': properties}))
-        except Exception, e:
-            logger.error("Cannot update contact in Hubspot: %s", e)
-            self.is_not_synced = True
-        logger.info('Completed updating contacts in hubspot')
+    @log_hubspot_exceptions
+    def _update_contact(self, key, app_name, properties):
+        with PortalConnection(key, app_name) as connection:
+            connection.send_post_request(
+                '/contacts/v1/contact/vid/' +
+                self.hubspot_contact_id + '/profile',
+                ({'properties': properties}))
 
-    @api.multi
-    def _update_deal(self, vals, key, app_name):
-        logger.info('Updating deals in hubspot')
-        try:  # c3
-            with PortalConnection(key, app_name) as connection:
-                properties = self._get_deal_properties(vals)
-                connection.send_put_request(
-                    '/deals/v1/deal/' + self.hubspot_deal_id,
-                    ({'properties': properties}))
-        except Exception, e:
-            logger.error("Cannot update contact in Hubspot: %s", e)
-            self.is_not_synced = True
-        logger.info('Completed updating contacts in hubspot')
+    @log_hubspot_exceptions
+    def _update_deal(self, key, app_name, properties):
+        with PortalConnection(key, app_name) as connection:
+            connection.send_put_request(
+                '/deals/v1/deal/' + self.hubspot_deal_id,
+                ({'properties': properties}))
 
+    @log_hubspot_exceptions
     def _delete_contact(self, key, app_name):
-        logger.info('Delete contact from Hubspot')
-        try:
-            with PortalConnection(key, app_name) as connection:
-                connection.send_delete_request(
-                    '/contacts/v1/contact/vid/' + self.hubspot_contact_id)
-        except Exception, e:
-            logger.error("Cannot delete from Hubspot: %s", e)
-            self.is_not_synced = True
-        logger.info('Completed Delete from hubspot')
+        with PortalConnection(key, app_name) as connection:
+            connection.send_delete_request(
+                '/contacts/v1/contact/vid/' + self.hubspot_contact_id)
 
+    @log_hubspot_exceptions
     def _delete_deal(self, key, app_name):
-        logger.info('Delete deal from Hubspot')
-        try:
-            with PortalConnection(key, app_name) as connection:
-                connection.send_delete_request(
-                    '/deals/v1/deal/' + self.hubspot_deal_id)
-        except Exception, e:
-            logger.error("Cannot delete from Hubspot: %s", e)
-            self.is_not_synced = True
-        logger.info('Completed Delete from hubspot')
+        with PortalConnection(key, app_name) as connection:
+            connection.send_delete_request(
+                '/deals/v1/deal/' + self.hubspot_deal_id)
 
     @api.model
     def syncHubspotData(self):
@@ -517,18 +512,21 @@ class CrmLead(models.Model):
         company_name = contact['company']
         email = contact.get('email', {}).get('value', False)
         contact_name = self._get_contact_name(firstname, lastname)
-        partner_id = self._get_partner_by_company(company_name)
+        partner_id = self._get_partner_by_name(company_name)
+        user_id = self._get_user_by_owner_id(hubspot_owner_id)
+        company_id = self.env['res.users'].browse(user_id).company_id.id
         lead_values = {
             'contact_name': contact_name,
-            'user_id': self._get_user_by_owner_id(hubspot_owner_id),
+            'user_id': user_id,
             'email_from': email,
             'partner_id': partner_id,
-            'name': name
+            'name': name,
+            'company_id': company_id
         }
         lead = self._get_lead_by_hubspot_id(hubspot_contact_id)
         if lead:
-            lead._update_lead(lead_values)
-            lead._call_onchange(lead_values)
+            vals = lead._update_lead(lead_values)
+            lead._call_onchange(vals)
             return lead
         lead_values['hubspot_contact_id'] = hubspot_contact_id
         lead = self._get_lead_by_email(email)
@@ -544,11 +542,11 @@ class CrmLead(models.Model):
         return lead
 
     def _call_onchange(self, vals):
-        for rec in self:
+        for rec in self.with_context({'from_hubspot': False}):
             if vals.get('user_id'):
                 rec._onchange_user_id()
-            if vals.get('partner_id'):
-                rec._onchange_partner_id()
+            # if vals.get('partner_id'):
+                # rec._onchange_partner_id()
 
     @staticmethod
     def _get_contact_name(firstname, lastname):
@@ -567,12 +565,12 @@ class CrmLead(models.Model):
             ('hubspot_owner_id', '=', owner_id)
         ], limit=1).id
 
-    def _get_partner_by_company(self, company_name):
-        if not company_name:
+    def _get_partner_by_name(self, name):
+        if not name:
             return False
         return self.env['res.partner'].search([
             ('is_company', '=', True),
-            ('name', '=ilike', company_name)
+            ('name', '=', name)
         ], limit=1).id
 
     def _get_lead_by_hubspot_id(self, hubspot_id):
@@ -605,9 +603,9 @@ class CrmLead(models.Model):
             if vals_from_hubspot.get('hubspot_contact_id'):
                 hubspot_contact_id = vals_from_hubspot['hubspot_contact_id']
                 vals['hubspot_contact_id'] = hubspot_contact_id
-            if not vals:
-                return False
-            rec.with_context({'from_hubspot': True}).write(vals)
+            if vals:
+                rec.with_context({'from_hubspot': True}).write(vals)
+        return vals
 
     @api.model
     def match_original_companies(self, key, app_name, modified_date_company):
