@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 * #395 hubspot
 
+* #392 bso_import_invoices
+
 **Build**
 
 **Documentation**

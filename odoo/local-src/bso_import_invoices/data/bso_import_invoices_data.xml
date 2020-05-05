@@ -10,7 +10,7 @@
             <field name="numbercall">-1</field>
             <field name="priority">5</field>
             <field name="doall">False</field>
-            <field name="active">False</field>
+            <field name="active">True</field>
             <field name="interval_number">1</field>
             <field name="model">ubersmith.settings</field>
         </record>
@@ -26,7 +26,7 @@
             <field name="numbercall">-1</field>
             <field name="priority">5</field>
             <field name="doall">False</field>
-            <field name="active">False</field>
+            <field name="active">True</field>
             <field name="interval_number">1</field>
             <field name="model">ubersmith.settings</field>
         </record>
