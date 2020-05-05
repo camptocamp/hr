@@ -626,7 +626,7 @@ migration:
         upgrade:
           - hubspot
           - bso_backbone
-    - version: 10.36.1
+    - version: 10.37.0
       addons:
         upgrade:
           - hubspot

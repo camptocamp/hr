@@ -23,9 +23,21 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.37.0 (2020-05-05)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #395 hubspot
 
 * #392 bso_import_invoices
+
+**Bugfixes**
 
 **Build**
 
