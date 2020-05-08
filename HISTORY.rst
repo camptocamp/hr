@@ -23,6 +23,18 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.37.1 (2020-05-08)
+++++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
 * #396 hubspot
 
 **Build**
