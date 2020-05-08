@@ -631,3 +631,7 @@ migration:
         upgrade:
           - hubspot
           - bso_import_invoices
+    - version: 10.37.1
+      addons:
+        upgrade:
+          - hubspot

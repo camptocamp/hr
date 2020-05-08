@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #396 hubspot
+
 **Build**
 
 **Documentation**
