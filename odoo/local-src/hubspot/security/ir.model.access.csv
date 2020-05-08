@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
 access_crm_stage_user,crm.stage.user,model_crm_stage,group_hubspot_manager,1,1,0,0
+access_hubspot_log_user,hubspot.log.user,model_hubspot_log,group_hubspot_user,1,0,0,0

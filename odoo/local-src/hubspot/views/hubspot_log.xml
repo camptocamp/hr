@@ -44,6 +44,6 @@
               name="Hubspot Log"
               action="hubspot_log_action"
               parent="specific_crm.sales_marketing_menu"
-              groups="hubspot.group_hubspot_manager"/>
+              groups="hubspot.group_hubspot_user"/>
 
 </odoo>

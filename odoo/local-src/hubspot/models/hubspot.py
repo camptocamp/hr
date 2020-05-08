@@ -124,6 +124,11 @@ class CrmLead(models.Model):
             rec._create_contact(hubspot_app_key,
                                 hubspot_app_name,
                                 properties)
+        if self.env.context.get('from_hubspot'):
+            properties = [{'property': 'odoo_id', 'value': rec.id}]
+            rec._update_contact(hubspot_app_key,
+                                hubspot_app_name,
+                                properties)
         return rec
 
     @api.multi
@@ -546,7 +551,7 @@ class CrmLead(models.Model):
             if vals.get('user_id'):
                 rec._onchange_user_id()
             # if vals.get('partner_id'):
-                # rec._onchange_partner_id()
+            # rec._onchange_partner_id()
 
     @staticmethod
     def _get_contact_name(firstname, lastname):
@@ -623,7 +628,7 @@ class CrmLead(models.Model):
                         if odoo_company:
                             odoo_company.write({
                                 'hubspot_original_company_id':
-                                    original_company['label']
+                                    original_company['value']
                             })
                     self.env['ir.values'].set_default(
                         'base.config.settings',
