@@ -17,7 +17,7 @@ class AccountBankStatementImport(models.TransientModel):
     def import_mt940_files(self):
         dir_path = self._get_mt940_files_path()
         if not dir_path:
-            _logger.info("""mt940 files Path not found, 
+            _logger.info("""mt940 files Path not found,
             please check your settings """)
             return
         files_list = os.listdir(dir_path)
