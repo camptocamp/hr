@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #398 bso_update_statement
+
 **Bugfixes**
 
 **Build**

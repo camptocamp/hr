@@ -1,3 +1,4 @@
+from datetime import date
 from odoo import models, api
 from odoo.exceptions import ValidationError
 
@@ -18,6 +19,8 @@ class AccountBankStatement(models.Model):
             )
         older_rec = self.search([('id', 'in', self.ids)])[-1]
         for statement in self - older_rec:
-            for line in statement.line_ids:
-                line.statement_id = older_rec.id
+            statement.line_ids.write({'statement_id': older_rec.id})
             statement.unlink()
+        older_rec.write({
+            'date': date.today()
+        })

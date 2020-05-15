@@ -635,3 +635,7 @@ migration:
       addons:
         upgrade:
           - hubspot
+    - version: 10.38.0
+      addons:
+        upgrade:
+          - bso_update_statement
