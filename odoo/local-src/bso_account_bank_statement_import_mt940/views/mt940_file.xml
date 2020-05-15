@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mt940_file_tree" model="ir.ui.view">
+        <field name="name">mt940.file.tree</field>
+        <field name="model">mt940.file</field>
+        <field name="arch" type="xml">
+            <tree string="mt940 Files">
+                <field name="name"/>
+                <field name="status"/>
+                <field name="statement_id"/>
+            </tree>
+        </field>
+    </record>
+    <act_window
+            id="action_mt940_file"
+            name="mt940 Files"
+            res_model="mt940.file"
+            view_mode="tree,form"/>
+    <menuitem
+            id="menu_mt940_files"
+            name="mt940 Files"
+            action="action_mt940_file"
+            parent="account.menu_finance_configuration"
+            groups="account.group_account_manager"
+            sequence="1"/>
+</odoo>
