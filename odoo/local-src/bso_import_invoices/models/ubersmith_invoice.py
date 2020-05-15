@@ -180,19 +180,19 @@ class UbersmithInvoice(models.Model):
         if not settings.create_invoices_without_lines and not lines:
             self.write({'non_creation_reason': 'invoice_without_lines'})
             return False
-        if not all(l.plan_id for l in lines):
+        if not all(line.plan_id for line in lines):
             self.write({'non_creation_reason': 'service_plan_missing'})
             return False
-        if not all(l.plan_id.odoo_product_id.id for l in lines):
+        if not all(line.plan_id.odoo_product_id.id for line in lines):
             self.write({'non_creation_reason': 'odoo_product_missing'})
             return False
-        if not all(t.odoo_tax_id for l in lines for t in l.tax_ids):
+        if not all(t.odoo_tax_id for line in lines for t in line.tax_ids):
             self.write({'non_creation_reason': 'line_tax_missing'})
             return False
         if not self.client_id.brand_id.company_id:
             self.write({'non_creation_reason': 'odoo_company_missing'})
             return False
-        if not all(l.date_start and l.date_end for l in lines):
+        if not all(line.date_start and line.date_end for line in lines):
             self.write({'non_creation_reason': 'line_date_missing'})
             return False
         return True

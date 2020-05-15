@@ -384,7 +384,7 @@ class MailchimpCampaign(models.Model):
     def _update_members_stats(self, client):
         if not self._get_leads():
             return True
-        lead_emails = {l.email_from: l.id for l in self._get_leads()}
+        lead_emails = {lead.email_from: lead.id for lead in self._get_leads()}
         for lead_activity in self._get_members_email_activity(client):
             lead_email = lead_activity.get('email_address', '').strip().lower()
             lead_id = lead_emails.get(lead_email)

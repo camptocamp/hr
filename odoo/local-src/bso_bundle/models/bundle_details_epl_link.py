@@ -149,7 +149,8 @@ class BundleDetailsEPLLink(models.Model):
                 continue
             links = self.get_link_ids(rec.a_device_id.id)
             device_keys = ('a_device_id', 'z_device_id')
-            device_all_ids = [l[d].id for l in links for d in device_keys]
+            device_all_ids = [line[d].id
+                              for line in links for d in device_keys]
             device_ids = list(set(device_all_ids) - {rec.a_device_id.id})
             if len(device_ids) == 1:
                 rec.z_device_id = device_ids[0]

@@ -270,7 +270,7 @@ class SaleDealsheet(models.Model):
     def compute_compute_lines(self):
         for rec in self:
             lines = rec.mrc_lines + rec.nrc_lines
-            compute_lines = [(4, l.id, 0) for l in lines]
+            compute_lines = [(4, line.id, 0) for line in lines]
 
             order_lines = rec.sale_order_id.order_line
             exclude_order_lines = lines.mapped('sale_order_line_id')
@@ -373,7 +373,7 @@ class SaleDealsheet(models.Model):
             lines = self.get_lines_bundle(order_line)
         else:
             lines = self.get_lines_product(order_line)
-        return [(0, 0, l) for l in lines]
+        return [(0, 0, line) for line in lines]
 
     @api.model
     def get_lines_epl(self, order_line):
@@ -574,8 +574,8 @@ class SaleDealsheet(models.Model):
         lines = self.env['sale.dealsheet.line'].search([
             ('dealsheet_id', '=', self.id),
         ])
-        for l in lines:
-            l.cost_delivery = l.cost
+        for line in lines:
+            line.cost_delivery = line.cost
 
     @api.multi
     def action_refuse(self):
@@ -631,8 +631,8 @@ class SaleDealsheet(models.Model):
 
     def _get_procure_lines_grouped(self):
         grouped = defaultdict(lambda: defaultdict(lambda: []))
-        for l in self._get_procure_lines():
-            grouped[l.supplier_id.id][l.frequency].append(l)
+        for line in self._get_procure_lines():
+            grouped[line.supplier_id.id][line.frequency].append(line)
         return grouped
 
     def _get_procure_lines(self):

@@ -28,9 +28,9 @@ class SaleOrder(models.Model):
         for rec in self:
             rec.update({
                 'amount_mrc':
-                    sum(l.price_subtotal for l in rec.order_line if
-                        l.product_id.product_tmpl_id.recurring_invoice),
+                    sum(line.price_subtotal for line in rec.order_line if
+                        line.product_id.product_tmpl_id.recurring_invoice),
                 'amount_nrc':
-                    sum(l.price_subtotal for l in rec.order_line if
-                        not l.product_id.product_tmpl_id.recurring_invoice)
+                    sum(line.price_subtotal for line in rec.order_line if
+                        not line.product_id.product_tmpl_id.recurring_invoice)
             })
