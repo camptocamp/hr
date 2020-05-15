@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "bso_update_statement",
-
+    'name': "BSO update statement",
+    'description': 'Possibility to merge existing statements, or update an'
+                   'existing statement with the content of a csv ',
     'author': "BSO",
-    'website': "http://www.yourcompany.com",
+    'website': 'https://www.bsonetwork.com',
 
-    'category': 'Uncategorized',
+    'category': 'Accounting',
     'version': '0.1',
 
     'depends': ['account_bank_statement_import_csv'],
