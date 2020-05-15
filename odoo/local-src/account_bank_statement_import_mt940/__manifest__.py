@@ -29,7 +29,7 @@
 Module to import MT940 bank statements.
 ======================================
 
-This module allows you to import MT940 files in Odoo: they are parsed and 
+This module allows you to import MT940 files in Odoo: they are parsed and
 stored in human readable format in
 Accounting, Bank and Cash Bank Statements.
 
