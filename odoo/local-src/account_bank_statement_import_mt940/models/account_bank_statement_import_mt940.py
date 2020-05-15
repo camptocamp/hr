@@ -40,7 +40,6 @@ class AccountBankStatementImport(models.TransientModel):
 
         currency = None
         account = None
-        statements = []
 
         try:
             transactions = mt940.parse(StringIO.StringIO(data_file))
@@ -55,8 +54,8 @@ class AccountBankStatementImport(models.TransientModel):
 
             statement = {
                 'name': transactions.data['account_identification'] + "-" +
-                        transactions.data['statement_number'] + "-" +
-                        transactions.data['sequence_number'],
+                transactions.data['statement_number'] + "-" +
+                transactions.data['sequence_number'],
                 'balance_start': transactions.data[
                     'final_opening_balance'].amount.amount,
                 'balance_end_real': transactions.data[
