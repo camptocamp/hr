@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_config_settings_mt940" model="ir.ui.view">
+        <field name="name">account.config.settings.mt940</field>
+        <field name="model">account.config.settings</field>
+        <field name="inherit_id" ref="account.view_account_config_settings"/>
+        <field name="arch" type="xml">
+            <xpath expr="//separator[@name='analytic_account']"
+                   position="before">
+                <group name="mt940" string="Bank Statements">
+                    <field name="mt940_files_path"/>
+                    <field name="delete_imported_files"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

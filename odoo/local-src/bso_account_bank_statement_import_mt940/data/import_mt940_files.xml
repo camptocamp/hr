@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="ir_cron_import_mt940_files" model="ir.cron">
+        <field name="function">import_mt940_files</field>
+        <field name="args">()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_type">days</field>
+        <field name="name">Import MT940 Files</field>
+        <field name="numbercall">-1</field>
+        <field name="priority">5</field>
+        <field name="doall">False</field>
+        <field name="active">True</field>
+        <field name="interval_number">1</field>
+        <field name="model">account.bank.statement.import</field>
+    </record>
+</odoo>

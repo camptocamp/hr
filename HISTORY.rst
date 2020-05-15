@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * #398 bso_update_statement
 
+* #399 bso_account_bank_statement_import_mt940 added
+
 **Bugfixes**
 
 **Build**

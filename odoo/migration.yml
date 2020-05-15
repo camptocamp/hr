@@ -639,3 +639,5 @@ migration:
       addons:
         upgrade:
           - bso_update_statement
+          - account_bank_statement_import_mt940
+          - bso_account_bank_statement_import_mt940 added
