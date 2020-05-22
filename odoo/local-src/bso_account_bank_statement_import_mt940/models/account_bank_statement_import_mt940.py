@@ -43,13 +43,13 @@ class AccountBankStatementImport(models.TransientModel):
                     self.env.user.company_id = journal_id.company_id.id
                     res = import_wizard.import_file()
                     statement_ids = res.get('context', {}).get('statement_ids')
-                    if statement_ids and to_delete:
-                        mt940_rec.delete_file(os.path.join(dir_path, f))
-                    if statement_ids and not to_delete:
+                    if statement_ids:
                         mt940_rec.write({
                             'status': 'Imported',
                             'statement_id': statement_ids[0]
                         })
+                        if to_delete:
+                            mt940_rec.delete_file(os.path.join(dir_path, f))
                     if res.get('name') == 'Journal Creation':
                         mt940_rec.write({'status': 'Missing Journal'})
                 except ValueError, e:
