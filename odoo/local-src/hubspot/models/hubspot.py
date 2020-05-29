@@ -101,6 +101,8 @@ class CrmLead(models.Model):
     @api.model
     def create(self, vals):
         rec = super(CrmLead, self).create(vals)
+        if self.env.context.get('dryrun'):
+            return rec
         hubspot_app_key = self.env['ir.values'].get_default(
             'base.config.settings', 'hubspot_app_key')
         hubspot_app_name = self.env['ir.values'].get_default(

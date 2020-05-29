@@ -21,7 +21,7 @@ hubspot crm
     'website': 'pragtech.co.in',
     'depends': [
         'base', 'base_setup', 'sale', 'crm', 'specific_crm',
-        'bso_opportunities_reporiting'
+        'bso_opportunities_reporiting', 'bso_base_import_parameters'
     ],
     'data': [
         'security/bso_hubspot_security.xml',

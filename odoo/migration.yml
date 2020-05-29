@@ -645,3 +645,5 @@ migration:
       addons:
         upgrade:
           - bso_supplier_dispute
+          - bso_base_import_parameters
+          - hubspot

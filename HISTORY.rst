@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #401 bso_base_import_parameters
+
 **Build**
 
 **Documentation**
