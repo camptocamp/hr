@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #400 bso_supplier_dispute
+
 **Bugfixes**
 
 **Build**
