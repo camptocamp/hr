@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.39.0 (2020-05-29)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #400 bso_supplier_dispute
 
 * #402 bso_account_bank_statement_import_mt940
