@@ -29,5 +29,4 @@ class Mt940File(models.Model):
     )
 
     def delete_file(self, file_path):
-        self.unlink()
         os.remove(file_path)

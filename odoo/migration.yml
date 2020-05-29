@@ -647,3 +647,4 @@ migration:
           - bso_supplier_dispute
           - bso_base_import_parameters
           - hubspot
+          - bso_account_bank_statement_import_mt940

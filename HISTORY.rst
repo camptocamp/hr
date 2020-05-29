@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * #400 bso_supplier_dispute
 
+* #402 bso_account_bank_statement_import_mt940
+
 **Bugfixes**
 
 * #401 bso_base_import_parameters
