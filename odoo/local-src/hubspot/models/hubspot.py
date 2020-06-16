@@ -83,6 +83,10 @@ class CrmLead(models.Model):
         copy=False,
         index=True
     )
+    prevent_sync = fields.Boolean(
+        string='Prevent syncing with Hubspot',
+        default=False
+    )
 
     @api.multi
     @api.constrains('stage_id')
@@ -102,6 +106,8 @@ class CrmLead(models.Model):
     def create(self, vals):
         rec = super(CrmLead, self).create(vals)
         if self.env.context.get('dryrun'):
+            return rec
+        if vals.get('prevent_sync'):
             return rec
         hubspot_app_key = self.env['ir.values'].get_default(
             'base.config.settings', 'hubspot_app_key')

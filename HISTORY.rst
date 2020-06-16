@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #403 Prevent odoo hubspot sync
+
 **Build**
 
 **Documentation**
