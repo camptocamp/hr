@@ -23,7 +23,19 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+**Build**
+
+**Documentation**
+
+
+10.39.1 (2020-06-16)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #403 Prevent odoo hubspot sync
+
+**Bugfixes**
 
 **Build**
 
