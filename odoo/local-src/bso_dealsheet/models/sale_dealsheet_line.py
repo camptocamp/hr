@@ -52,7 +52,7 @@ class SaleDealsheetLine(models.Model):
         store=True
     )
     description = fields.Char(
-        string='Description'
+        string='Description',
     )
     quantity = fields.Integer(
         string='Quantity',
