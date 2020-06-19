@@ -172,10 +172,11 @@ class BundleDetailsEPLLink(models.Model):
 
     @api.model
     def get_link_ids(self, a_device_id, z_device_id=0):
-        domain = [('bandwidth', '>=', self.bundle_details_id.epl_bandwidth),
-                  '|',
-                  ('a_device_id', '=', a_device_id),
-                  ('z_device_id', '=', a_device_id)]
+        domain = [
+            '|',
+            ('a_device_id', '=', a_device_id),
+            ('z_device_id', '=', a_device_id)
+        ]
         if z_device_id:
             domain += ['|',
                        ('a_device_id', '=', z_device_id),
