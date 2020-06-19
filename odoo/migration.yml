@@ -659,3 +659,4 @@ migration:
           - bso_delivery
           - bso_dealsheet
           - bso_bundle
+          - bso_subscription_lines

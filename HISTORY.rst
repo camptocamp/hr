@@ -27,6 +27,8 @@ Latest (Unreleased)
 
 * #408 bso_bundle updates
 
+* #409 bso_subscription_lines
+
 **Bugfixes**
 
 **Build**
