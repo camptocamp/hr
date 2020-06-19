@@ -144,7 +144,6 @@ class OptimalAPI(models.Model):
     @api.model
     def _get_graph_domain(self):
         domain = [
-            ('bandwidth', '>=', self.epl_bandwidth),
             ('latency', '>', 0),
         ]
         if not self.epl_optimal_wireless:

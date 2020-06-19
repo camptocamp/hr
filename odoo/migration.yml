@@ -658,3 +658,4 @@ migration:
           - bso_connector_jira
           - bso_delivery
           - bso_dealsheet
+          - bso_bundle

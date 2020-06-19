@@ -23,7 +23,9 @@ Latest (Unreleased)
 
 * #406 bso_delivery & bso_connector_jira
 
-* #407 bso_dealsheet
+* #407 bso_dealsheet updates
+
+* #408 bso_bundle updates
 
 **Bugfixes**
 
