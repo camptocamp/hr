@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.40.0 (2020-06-19)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #406 bso_delivery & bso_connector_jira
 
 * #407 bso_dealsheet updates
