@@ -17,7 +17,7 @@
                 <field name="product_id"
                        attrs="{'readonly': [('is_locked', '=', True)]}"
                        domain="[('recurring_invoice', '=', is_recurring), '|', ('sale_ok', '=', True), ('purchase_ok', '=', True)]"/>
-                <field name="description"
+                <field name="description" required="1"
                        attrs="{'readonly': [('is_locked', '=', True)]}"/>
                 <field name="quantity"
                        attrs="{'readonly': [('is_locked', '=', True)]}"/>
