@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="bso_jira_settings_view_form" model="ir.ui.view">
+        <field name="name">bso jira settings</field>
+        <field name="model">jira.settings</field>
+        <field name="arch" type="xml">
+            <form string="BSO jira Settings">
+                <header>
+                    <button string="Authentication" type="object"
+                            name="do_auth"
+                            class="oe_highlight"/>
+                    <button string="Test Authentication" type="object"
+                            name="test_auth"
+                            class="oe_default"/>
+                </header>
+                <group string="Jira">
+                    <field name="jira_url"/>
+                    <field name="verify_ssl"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <act_window
+            id="action_jira"
+            name="Jira"
+            res_model="jira.settings"
+            view_mode="tree,form,graph,pivot"/>
+
+    <record model="ir.actions.server" id="action_jira_settings">
+        <field name="name">jira settings</field>
+        <field name="model_id" ref="model_jira_settings"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_settings()
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_jira"
+            name="Jira Connector"
+            action="action_jira"
+            parent=""
+            web_icon="bso_jira,static/description/icon.png"/>
+
+    <menuitem
+            id="menu_jira_settings"
+            name="Settings"
+            action="action_jira_settings"
+            parent="menu_jira"
+            sequence="1"/>
+</odoo>

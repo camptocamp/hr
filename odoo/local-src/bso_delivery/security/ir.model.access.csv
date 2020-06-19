@@ -1,5 +1,15 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
 access_delivery_project_user,delivery.project.user,model_delivery_project,group_delivery_user,1,0,0,0
 access_delivery_project_manager,delivery.project.manager,model_delivery_project,group_delivery_manager,1,1,1,1
-access_gaia_template_user,gaia.template.user,model_gaia_template,group_delivery_user,1,0,0,0
-access_gaia_template_manager,gaia.template.manager,model_gaia_template,group_delivery_manager,1,1,1,1
+
+access_delivery_project_line_user,delivery.project.line.user,model_delivery_project_line,group_delivery_user,1,0,0,0
+access_delivery_line_manager,delivery.project.line.manager,model_delivery_project_line,group_delivery_manager,1,1,1,1
+
+access_product_template_user,jira.product.template.user,model_jira_product_template,group_delivery_user,1,0,0,0
+access_product_template_manager,jira.product.template.manager,model_jira_product_template,group_delivery_manager,1,1,1,1
+
+access_jira_project_user,jira.project.user,model_jira_project,group_delivery_user,1,0,0,0
+access_jira_project_manager,jira.project.manager,model_jira_project,group_delivery_manager,1,1,1,1
+access_delivery_checklist_user,delivery.chekclist.user,model_delivery_checklist,group_delivery_user,1,0,0,0
+access_delivery_checklist_manager,delivery.chekclist.manager,model_delivery_checklist,group_delivery_manager,1,1,1,1

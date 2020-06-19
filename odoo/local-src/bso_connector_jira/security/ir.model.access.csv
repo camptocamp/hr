@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_connector_user,jira.api.user,model_jira_api,group_connector_user,1,0,0,0
+access_connector_manager,jira.api.manager,model_jira_api,group_connector_manager,1,1,1,1
+access_jira_settings_user,jira.settings.user,model_jira_settings,group_connector_user,1,0,0,0
+access_jira_settings_manager,jira.settings.manager,model_jira_settings,group_connector_manager,1,1,1,1
+access_jira_auth_manager,jira.auth.manager,model_jira_auth,group_connector_manager,1,1,1,1

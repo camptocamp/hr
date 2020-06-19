@@ -6,5 +6,11 @@
             action="action_delivery_project"
             parent=""
             web_icon="bso_delivery,static/description/icon.png"/>
-
+    <menuitem
+            id="submenu_delivery"
+            name="Projects"
+            action="action_delivery_project"
+            parent="menu_delivery"
+            sequence="1"
+    />
 </odoo>
