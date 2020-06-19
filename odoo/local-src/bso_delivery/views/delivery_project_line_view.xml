@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="delivery_line_form_view" model="ir.ui.view">
+        <field name="name">delivery.line.form</field>
+        <field name="model">delivery.project.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <notebook>
+                    <page string="General">
+                        <group>
+                            <field name="name"/>
+                            <field name="date_forecasted"/>
+                            <field name="date_sla"/>
+                            <field name="jira_product_template_ids"
+                                   widget="many2many_tags"/>
+                        </group>
+                    </page>
+                    <page string="Handover Details">
+                        <group>
+                            <field name="product_category"/>
+                            <field name="service_id"/>
+                            <field name="hosting_site_address"
+                                   attrs="{'invisible':[('product_category', '!=','hosting')]}"/>
+                            <field name="rack_location"
+                                   attrs="{'invisible':[('product_category', '!=','hosting')]}"/>
+                            <field name="site_address"
+                                   attrs="{'invisible':[('product_category', 'not in',('iptransit', 'other'))]}"/>
+                            <field name="demarcation"
+                                   attrs="{'invisible':[('product_category', '!=','iptransit')]}"/>
+                            <field name="ip_details"
+                                   attrs="{'invisible':[('product_category', '!=','iptransit')]}"/>
+                            <field name="service_details"
+                                   attrs="{'invisible':[('product_category', '!=','other')]}"/>
+                            <field name="service_point"
+                                   attrs="{'invisible':[('product_category', 'not in', ('l2l', 'm2m'))]}">
+                                <tree editable="bottom">
+                                    <field name="point_name" readonly="1"/>
+                                    <field name="site_address"/>
+                                    <field name="demarcation"/>
+                                    <field name="handoff"/>
+                                </tree>
+                            </field>
+                            <field name="delivery_date"/>
+                            <field name="extra_note"/>
+                        </group>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+</odoo>

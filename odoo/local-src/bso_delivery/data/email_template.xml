@@ -1,0 +1,38 @@
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_send_handover" model="mail.template">
+            <field name="name">Handover Document: Send by email</field>
+            <field name="model_id" ref="bso_delivery.model_delivery_project"/>
+            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
+            <field name="partner_to">${object.customer_id.id}</field>
+            <field name="subject">${object.company_id.name} Handover Document</field>
+            <field name="body_html" type="html">
+                <p>Dear Customer,
+
+I am very pleased to announce that your new service(s) is now live.
+
+
+
+	Description: ${object.name}
+
+
+
+Attached is your Support Guide with full details of your new service(s) and an explanation of how to log trouble tickets via BSO Service Desk.
+
+
+
+To ensure you are confident that your service is working as expected, your service delivery team remains at your disposal for any activation queries over the next 5 working days. If we don’t hear from you within that time, we presume that you’re happy your service is correctly installed and functioning properly.
+
+
+
+We are continuing to work hard to improve our customer service, if you have any feedback on the delivery process, please do let me know.
+
+
+
+Thank you for your order and I look forward to our continued work together.</p>
+            </field>
+            <field name="report_template" ref="handover_document_report"/>
+            <field name="report_name">Handover Document_${object.name_seq}</field>
+        </record>
+    </data>
+</odoo>

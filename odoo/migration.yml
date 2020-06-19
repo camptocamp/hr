@@ -652,3 +652,8 @@ migration:
       addons:
         upgrade:
           - hubspot
+    - version:
+      addons:
+        upgrade:
+          - bso_connector_jira
+          - bso_delivery

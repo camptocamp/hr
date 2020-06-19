@@ -1,0 +1,100 @@
+<odoo>
+    <record id="checklist_form_view" model="ir.ui.view">
+        <field name="name">checklist.form.view</field>
+        <field name="model">delivery.checklist</field>
+        <field name="arch" type="xml">
+            <form string="Chekclist" create="false">
+                <notebook>
+                    <page string="Admin">
+                        <group>
+                            <field name="cutomer_signed_order_form_attached"/>
+                            <field name="customer_contact_information_available"/>
+                            <field name="network_diagram_docuement_attached"/>
+                            <field name="network_diagram_ends_specied"/>
+                            <field name="network_diagram_cable_system_included"/>
+                            <field name="network_diagram_docuemnt_matching_solution_to_deploy"/>
+                            <field name="odoo_sales_order_status_correct"/>
+                            <field name="odoo_sales_order_information_correct"/>
+                            <field name="odoo_sales_product_items_correct"/>
+                            <field name="odoo_dealsheet_status_correct"/>
+                            <field name="odoo_dealsheet_line_items_correct"/>
+                            <field name="odoo_dealsheet_project_management_included"/>
+                            <field name="odoo_dealsheet_net_sys_engineer_time_included"/>
+                            <field name="odoo_dealsheet_procider_specified"/>
+                            <field name="odoo_dealsheetout_of_hours_activation_included"/>
+                            <field name="admin_extra_notes"/>
+                            <field name="admin_exception_identified"/>
+                        </group>
+                    </page>
+                    <page string="Order Forms">
+                        <group string="Local Loop - order form information review">
+                            <field name="ll_latency_available"/>
+                            <field name="ll_bandwidth_available"/>
+                            <field name="ll_handoff_available"/>
+                            <field name="ll_jumbo_frame_specified"/>
+                            <field name="ll_protection_specified"/>
+                            <field name="ll_test_resulted_specified"/>
+                            <field name="ll_delivery_lead_time_specified"/>
+                        </group>
+                        <group string="Backbone - order form information review">
+                            <field name="bb_latency_available"/>
+                            <field name="bb_bandwidth_available"/>
+                            <field name="bb_handoff_available"/>
+                            <field name="bb_jumbo_frame_specified"/>
+                            <field name="bb_protection_specified"/>
+                            <field name="bb_test_resulted_specified"/>
+                            <field name="bb_delivery_lead_time_specified"/>
+                            <field name="eq_delivery_lead_time_specified"/>
+                        </group>
+                        <group string="Equipment - order form information review">
+                            <field name="eq_qualtity_correct"/>
+                            <field name="eq_support_included"/>
+                            <field name="eq_rack_mount_included"/>
+                            <field name="eq_power_plug_type_specified"/>
+                            <field name="eq_power_redundancy_specified"/>
+                        </group>
+                        <group string="Extra Notes">
+                            <field name="order_forms_extra_notes"/>
+                            <field name="order_forms_exception_identified"/>
+                        </group>
+                    </page>
+                    <page string="Network Details">
+                        <group>
+                            <field name="general"/>
+                            <field name="port_capacity"/>
+                            <field name="handoff"/>
+                        </group>
+                        <group string="IP Transit - Technical Solution Details">
+                            <field name="ip_type"/>
+                            <field name="ip_number_ip_address"/>
+                            <field name="ip_ipv4_or_ipv6_required"/>
+                            <field name="ip_nb_port"/>
+                            <field name="ip_bgp_details"/>
+                            <field name="ip_bso_platform"/>
+                        </group>
+                        <group string="L2 - Technical Solution Details">
+                            <field name="l2_routing_specificities"/>
+                            <field name="l2_bso_platform_to_be_used"/>
+                            <field name="network_details_extra_notes"/>
+                            <field name="network_details_exception_identified"/>
+                        </group>
+                    </page>
+                    <page string="System Details">
+                        <group>
+                            <field name="system_details_extra_notes"/>
+                            <field name="system_details_exception_identified"/>
+                        </group>
+                    </page>
+                    <page string="Other Details">
+                        <field name="other_details_extra_notes"/>
+                        <field name="other_details_exception_identified"/>
+                    </page>
+                </notebook>
+                <footer>
+                    <button name="kickoff_action" string="Kick-off"
+                            class="btn-primary" type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

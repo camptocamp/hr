@@ -1,0 +1,497 @@
+<odoo>
+    <data>
+        <template id="delivery_report_file">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <h2>Dear Customer</h2>
+                        <h1 style="color: #690069; font-weight: bold;">
+                            Great news!
+                        </h1>
+                        <p class="text-justify">Your new BSO service is now
+                            operational and
+                            under
+                            management. You’ll find all the important
+                            details
+                            regarding your service in this guide.
+
+                            We are here, on-hand to support you <div
+                                    style="font-weight: bold;">24 hours a
+                                day,
+                                7 days a week and 365 days of the year.
+                            </div> Our contact
+                            details are in this guide.
+
+                            We are always looking to improve your
+                            experience
+                            with us, if you have any feedback or need any
+                            support now or in the future, please do let us
+                            know.
+
+                            Once again, thank you for choosing us as your
+                            preferred partner.
+                            <br/>
+                            The BSO Support Team
+                        </p>
+                    </div>
+                    <t t-foreach="o.delivery_line_ids" t-as="line">
+                        <t t-if="line.select">
+                            <div class="page">
+                                <h2 style="color: #690069;">Service Details
+                                </h2>
+                                <table class="table">
+                                    <!--                                    <colgroup>-->
+                                    <!--                                        <col class="col-xs-2"></col>-->
+                                    <!--                                        <col class="col-xs-6"></col>-->
+                                    <!--                                        <col class="col-xs-4"></col>-->
+                                    <!--                                    </colgroup>-->
+                                    <tr>
+                                        <th width="30%">Order reference
+                                        </th>
+                                        <td width="70%">
+                                            <t t-esc="o.sale_order_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Service ID</th>
+                                        <td width="70%">
+                                            <t t-esc="line.service_id"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Project description
+                                        </th>
+                                        <td width="70%">
+                                            <t t-esc="line.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Delivery Date</th>
+                                        <td width="70%">
+                                            <t t-esc="line.delivery_date"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <t t-if="line.product_category == 'hosting'">
+                                    <h2 style="color: #690069;">Hosting
+                                        Service
+                                    </h2>
+                                    <table class="table">
+                                        <tr>
+                                            <th width="30%">Hosting site
+                                                address
+                                            </th>
+                                            <td width="70%">
+                                                <t t-esc="line.hosting_site_address"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Rack
+                                                location(s)
+                                            </th>
+                                            <td width="70%">
+                                                <t t-esc="line.rack_location"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Extra notes
+                                            </th>
+                                            <td width="70%">
+                                                <t t-esc="line.extra_note"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </t>
+                                <t t-elif="line.product_category == 'iptransit'">
+                                    <h2 style="color: #690069;">IP Transit
+                                        Service
+                                    </h2>
+                                    <table class="table">
+                                        <tr>
+                                            <th width="30%">Site address
+                                            </th>
+                                            <td width="70%">
+                                                <t t-esc="line.site_address"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Demarcation
+                                            </th>
+                                            <td width="70%">
+                                                <t t-esc="line.demarcation"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">IP details
+                                            </th>
+                                            <td width="70%">
+                                                <t t-esc="line.ip_details"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Extra notes
+                                            </th>
+                                            <td width="70%">
+                                                <t t-esc="line.extra_note"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </t>
+                                <t t-elif="line.product_category == 'other'">
+                                    <h2 style="color: #690069;">Other
+                                        Service
+                                    </h2>
+                                    <table class="table">
+                                        <tr>
+                                            <th width="30%">Site address
+                                            </th>
+                                            <td width="70%">
+                                                <t t-esc="line.site_address"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Service
+                                                details
+                                            </th>
+                                            <td width="70%">
+                                                <t t-esc="line.service_details"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Extra notes
+                                            </th>
+                                            <td width="70%">
+                                                <t t-esc="line.extra_note"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </t>
+                                <t t-else="line.product_category in ('l2l', 'm2m')">
+                                    <h2 style="color: #690069;">
+                                        <span t-if="line.product_category == 'l2l'">
+                                            L2L / RF Service
+                                        </span>
+                                        <span t-if="line.product_category == 'm2m'">
+                                            M2M / VPLS Service
+                                        </span>
+                                    </h2>
+                                    <div t-foreach="line.service_point"
+                                         t-as="point">
+                                        <h2>Point
+                                            <span t-esc="point.point_name"/>
+                                        </h2>
+                                        <table class="table">
+                                            <tr>
+                                                <th width="30%">Site
+                                                    address
+                                                </th>
+                                                <td width="70%">
+                                                    <t t-esc="point.site_address"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th width="30%">
+                                                    Demarcation
+                                                </th>
+                                                <td width="70%">
+                                                    <t t-esc="point.demarcation"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th width="30%">Handoff
+                                                </th>
+                                                <td width="70%">
+                                                    <t t-esc="point.handoff"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div>
+                                        <table class="table">
+                                            <th width="30%">Extra notes</th>
+                                            <td width="70%">
+                                                <t t-esc="line.extra_note"/>
+                                            </td>
+                                        </table>
+                                    </div>
+                                </t>
+                            </div>
+                        </t>
+                    </t>
+                    <div class="page">
+                        <h2 style="color=#690069">Service live date</h2>
+                        <p class="text-justify">Your service is live and
+                            operational as of the delivery date specified on
+                            each service page
+                        </p>
+                        <p class="text-justify">Billing of the service will
+                            also begin on this
+                            date. If you have any immediate queries or
+                            concerns, please let us know as soon as
+                            possible so we can help. If we don’t hear from
+                            you, we’ll assume you’re happy with the live
+                            service.
+                        </p>
+                        <h2 style="color=#690069">Need help activating your
+                            service?
+                        </h2>
+                        <p class="text-justify">To ensure you are confident
+                            that your service is
+                            working as expected, your service delivery team
+                            remains at your disposal for any activation
+                            queries over the next
+                            <big>5 working days.</big>
+                        </p>
+                        <p class="text-justify">
+                            No news is good news – so if we don’t hear from
+                            you within the next <big>5 working days</big>,
+                            we presume
+                            that you’re happy your service is correctly
+                            installed and functioning properly as of the
+                            date above.
+                        </p>
+
+                        <p class="bg-info text-center">
+                            Please contact your Service Delivery Manager if
+                            you would like to schedule an activation call
+                        </p>
+                    </div>
+                    <div class="page">
+                        <h2>GET IN TOUTCH</h2>
+                        <h3 style="color:#690069;">BSO Service Desk</h3>
+                        <p>
+                            If you need any Support with your live service,
+                            then open a ticket via BSO Service Desk with
+                            "High" or "Very High" priority if you are
+                            experiencing an emergency/major outage.
+                            <div class="text-center">
+                                <img src="/bso_delivery/static/src/img/mouse.png"
+                                     style="max-height: 45px;"/>
+                                <a style="color:#690096 font-weight: bold"
+                                   href="https://servicedesk.bsonetwork.net">
+                                    servicedesk.bsonetwork.net
+                                </a>
+                            </div>
+                        </p>
+                        <p style="font-weight: bold">
+                            Your BSO Service Desk username and password
+                            will be sent to you shortly. If you do not
+                            receive them within a few days, please let us
+                            know.
+                        </p>
+                        <p>
+                            Alternatively, you can raise a trouble-ticket
+                            within the Service Desk directly by using the
+                            following
+                            email addresses:
+                        </p>
+                        <table class="table">
+                            <tr>
+                                <th>Cloud/Hosting services</th>
+                                <td>
+                                    <a href="mailto:system-servicedesk@bsonetwork.com">
+                                        system-servicedesk@bsonetwork.com
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                        <p>Otherwise, you can give us a call on the local
+                            numbers below:
+                        </p>
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    <img src="/bso_delivery/static/src/img/us-flag.png"
+                                         style="max-height: 20px;"/>
+                                </th>
+                                <td>
+                                    +1 347 433 7997
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <img src="/bso_delivery/static/src/img/uk-flag.png"
+                                         style="max-height: 20px;"/>
+                                </th>
+                                <td>
+                                    +44 20 4608 9893
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <img src="/bso_delivery/static/src/img/france-flag.png"
+                                         style="max-height: 25px;"/>
+                                </th>
+                                <td>
+                                    +33 1 83 88 56 48
+                                </td>
+                            </tr>
+                        </table>
+                        <p>
+                            If the local numbers are unavailable, please
+                            call the emergency support number:
+                        </p>
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    <img src="/bso_delivery/static/src/img/phone.png"
+                                         style="max-height: 30px;"/>
+                                </th>
+                                <td>
+                                    +44 20 3368 6753
+                                </td>
+                            </tr>
+                        </table>
+                        <p>
+                            Please share the following details if you have
+                            them available:
+                        </p>
+                        <table class="table">
+                            <tr>
+                                <th>Service ID</th>
+                            </tr>
+                            <tr>
+                                <th>Type of service</th>
+                            </tr>
+                            <tr>
+                                <th>Type of problem encountered</th>
+                            </tr>
+                            <tr>
+                                <th>Date of first occurrence of problem
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>Test results (if available)</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="page">
+                        <h2 style="color: #690069">ESCALATION PROCEDURE
+                        </h2>
+                        <p>In case of issue, please open a trouble ticket
+                            via BSO Service Desk with a ‘High’ or ‘Very
+                            High’
+                            priority if you’re experiencing an
+                            emergency/major outage.
+                        </p>
+                        <a href="https://servicedesk.bsonetwork.net">
+                            https://servicedesk.bsonetwork.net
+                        </a>
+                        <p>If you don’t have access to BSO Service Desk,
+                            please call our 365/24/7 NOC Support Team that
+                            is
+                            reachable on +44 20 3608 9893.
+                        </p>
+                        <p>According to the troubleshooting progress of
+                            your issue, please refer to the matrix below to
+                            escalate your enquiry if necessary.
+                        </p>
+                        <table class="table table-bordered"
+                               style="background-color: #690069; color:white">
+                            <tr>
+                                <th>Level</th>
+                                <th colspan="2">BSO Contacts</th>
+                                <th>When</th>
+                            </tr>
+                            <tr>
+                                <td>Initial Call</td>
+                                <td colspan="2">
+                                    Global Network Operations Centre (GNOC)
+                                    <br/>
+                                    <br/>
+                                    <span style="font-weight: bold">UK
+                                    </span>
+                                    Local Number: +44 20 3608 9893
+                                    <br/>
+                                    <span style="font-weight: bold">USA
+                                    </span>
+                                    Local Number: +1 347 433 7997
+                                    <br/>
+                                    <span style="font-weight: bold">
+                                        FRANCE
+                                    </span>
+                                    Local Number: +33 1 84 88 56 48
+                                    <br/>
+                                    <br/>
+                                    Back-up phone system (If the main phone
+                                    system on the 3 numbers
+                                    listed above does not work): +44 20
+                                    3368 6753
+                                </td>
+                                <td>Initial Call</td>
+                            </tr>
+                            <tr>
+                                <td>1st Level</td>
+                                <td colspan="2">
+                                    GNOC Manager
+                                    <br/>
+                                    <div style="font-weight: bold">Davy
+                                        DUARTE
+                                    </div>
+                                    +33 6 43 31 85 82
+                                </td>
+                                <td>
+                                    After 1 hour
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2nd Level</td>
+                                <td>
+                                    Service Assurance Director
+                                    <br/>
+                                    <div style="font-weight: bold">
+                                        David Gaul
+                                    </div>
+                                    +44 7923 243 419
+                                </td>
+                                <td>
+                                    Cloud and Managed Services Director
+                                    <br/>
+                                    <div style="font-weight: bold">
+                                        Alexandre LEGRIX
+                                    </div>
+                                    +33 6 32 23 21 09
+                                </td>
+                                <td>After 4 hours</td>
+                            </tr>
+                            <tr>
+                                <td>3th Level</td>
+                                <td colspan="2">Chief Operations Officer
+                                    <br/>
+                                    <div style="font-weight: bold">
+                                        Emmanuel PELLE
+                                    </div>
+                                    +33 6 32 01 98 15 / +1 347 901 5171
+                                </td>
+                                <td>After 6 hours</td>
+                            </tr>
+                            <tr>
+                                <td>4th Level</td>
+                                <td colspan="2">Chief Executive Officer
+                                    <br/>
+                                    <div style="font-weight: bold">
+                                        Michael OURABAH
+                                    </div>
+                                    +33 6 70 20 10 36 / +44 7920 4878 48 /
+                                    +1 424 208 9302
+                                </td>
+                                <td>After 8 hours</td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="delivery_report_footer">
+            <xpath expr="//div[@class='footer']" position="replace">
+                <div class="footer">
+                    <div class="row">
+                        <img src="/bso_delivery/static/src/img/handover-footer.png"
+                             style="max-width:100%;"/>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

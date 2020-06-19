@@ -5,22 +5,18 @@
         <field name="model">delivery.project</field>
         <field name="arch" type="xml">
             <tree string="Project">
-                <field name="sale_order_id"/>
                 <field name="id" invisible="1"/>
                 <field name="name"/>
-                <field name="state"/>
                 <field name="user_id"/>
                 <field name="company_id"/>
-                <field name="customer_id"/>
-                <field name="dealsheet_id"/>
-                <field name="currency_id"/>
                 <field name="nrr" widget="monetary"
                        options="{'currency_field': 'currency_id'}"/>
                 <field name="mrr" widget="monetary"
                        options="{'currency_field': 'currency_id'}"/>
                 <field name="date_signed"/>
-                <field name="date_cease_requested"/>
-                <field name="notes"/>
+                <field name="kickoff_date"/>
+                <field name="display_forecasted_date"/>
+                <field name="state"/>
                 <field name="progress_rate" widget="progressbar"/>
                 <button name="action_get_attachment_view"
                         string="View Attached Documents" type="object"
@@ -34,59 +30,72 @@
         <field name="arch" type="xml">
             <form string="Project">
                 <header>
+                    <field name="checklist_id" invisible="1"/>
                     <field name="state"
                            widget="statusbar"
-                           statusbar_visible="draft,track,complete"
+                           statusbar_visible="kickoff,inprogress,complete"
                     />
-                    <button name="create_project" string="Create project"
+                    <button name="select_line_pop_up_action"
+                            string="Send Handover Email"
+                            type="object"
+                            class="btn-default"
+                    />
+                    <button name="checklist_action" string="Kick-off"
+                            class="btn-primary" type="object"
+                            attrs="{'invisible':
+                            [('checklist_id', '!=', False)]}"/>
+                    <button name="export_project" string="Create project"
                             class="btn-primary"
                             type="object"
                             attrs="{'invisible':
-                            [('project_project', '!=', False)]}"/>
-                    <button name="track_project" string="On track"
-                            class="btn-primary"
-                            type="object"
-                            attrs="{'invisible':
-                            ['|', ('project_project', '=', False),
-                            ('state', 'in', ('track', 'complete'))]}"/>
+                            [('jira_key', '!=', False)]}"/>
                     <button name="complete_project" string="complete"
                             class="btn-primary"
                             type="object"
                             attrs="{'invisible':
-                            ['|', ('project_project', '=', False),
+                            ['|', ('jira_key', '=', False),
                             ('state', '=', 'complete')]}"/>
                     <button name="hold_project" string="On hold"
                             type="object"
                             attrs="{'invisible':
-                            ['|', ('project_project', '=', False),
+                            ['|', ('jira_key', '=', False),
                             ('state', 'in', ('hold', 'complete'))]}"/>
+                    <button name="track_project" string="In progress"
+                            type="object"
+                            attrs="{'invisible':
+                            ['|', ('jira_key', '=', False),
+                            ('state', 'in', ('inprogress', 'complete'))]}"/>
                     <button name="risk_project" string="At risk"
                             type="object"
                             attrs="{'invisible':
-                            ['|', ('project_project', '=', False),
+                            ['|', ('jira_key', '=', False),
                             ('state', 'in', ('risk', 'complete'))]}"/>
                     <button name="cancel_project" string="Cancel"
                             type="object"
                             attrs="{'invisible':
-                            ['|', ('project_project', '=', False),
+                            ['|', ('jira_key', '=', False),
                             ('state', 'in', ('cancel', 'complete'))]}"/>
-                    <button name="draft_project" string="reset to draft"
+                    <button name="trigger_reset_to_draft"
+                            string="reset to draft"
                             type="object"
-                            attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                            attrs="{'invisible': [('state', '=', 'kickoff')]}"/>
                     <button name="action_open_jira_project"
                             string="open in JIRA"
                             type="object"
                             class="btn-info"
                             attrs="{'invisible':
-                            [('project_project', '=', False)]}"/>
+                            [('jira_key', '=', False)]}"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box">
+                        <field name="pickings_visibility" invisible="1"/>
                         <button type="object"
                                 name="action_view_deliveries"
                                 class="oe_stat_button"
                                 icon="fa-truck"
-                                groups="base.group_user">
+                                groups="base.group_user"
+                                attrs="{'invisible': [
+                                ('pickings_visibility', '=', False)]}">
                             <field name="delivery_count" widget="statinfo"
                                    string="Delivery"/>
                         </button>
@@ -101,6 +110,10 @@
                     <group>
                         <field name="name" attrs="{'required': True}"/>
                         <field name="user_id" required='1'/>
+                        <field name="network_engineer_ids"
+                               widget="many2many_tags"/>
+                        <field name="system_engineer_ids"
+                               widget="many2many_tags"/>
                     </group>
                     <group>
                         <field name="sale_order_id"
@@ -116,41 +129,126 @@
                         <field name="mrr" widget="monetary"
                                options="{'currency_field': 'currency_id'}"/>
                         <field name="date_signed" readonly="1"/>
-                        <field name="kickoff_date" readonly="1"/>
                         <field name="date_cease_requested"/>
+                        <field name="kickoff_date"/>
                     </group>
                 </sheet>
                 <sheet>
                     <notebook>
                         <page id="delivery_lines"
-                              string="Delivery lines"
-                              attrs="{'invisible':
-                              [('project_project', '=', False)]}">
+                              string="Delivery lines">
                             <field name="delivery_line_ids">
-                                <tree create="false" editable="top"
+                                <tree create="false"
                                       delete="false" edit="true">
-                                    <field name="checked"/>
-                                    <field name="name"/>
-                                    <field name="qty_delivered"/>
-                                    <field name="qty_invoiced"/>
+                                    <field name="product_id"/>
+                                    <field name="name" string="Description"/>
                                     <field name="date_forecasted"/>
                                     <field name="date_sla"/>
-                                    <field name="date_completed"/>
-                                    <field name="date_handover"/>
+                                    <field name="delivery_date"/>
+                                    <field name="jira_product_template_ids"/>
                                 </tree>
                             </field>
                         </page>
                         <page id="jira_bindings"
                               string="JIRA Bindings">
                             <group>
-                                <field name="backend_id" invisible="1"/>
-                                <field name="gaia_template" required='1'/>
-                                <field name="sync_issue_type_ids"
-                                       widget="many2many_checkboxes"
-                                       invisible="1"/>
-                                <field name="project_project"/>
-                                <field name="jira_key" required="1"/>
+                                <field name="jira_key" invisible="1"/>
+                                <field name="jira_project" required="1"
+                                       attrs="{'readonly':[('jira_key','!=',False)]}"/>
+                                <field name="jira_default_product_template_ids"
+                                       widget="many2many_tags"
+                                       attrs="{'readonly':[('jira_key','!=',False)]}"
+                                />
                             </group>
+                        </page>
+                        <page string="Checklist" attrs="{'invisible':
+                            [('checklist_id', '=', False)]}">
+                            <notebook>
+                                <page string="Admin">
+                                    <group>
+                                        <field name="cutomer_signed_order_form_attached"/>
+                                        <field name="customer_contact_information_available"/>
+                                        <field name="network_diagram_docuement_attached"/>
+                                        <field name="network_diagram_ends_specied"/>
+                                        <field name="network_diagram_cable_system_included"/>
+                                        <field name="network_diagram_docuemnt_matching_solution_to_deploy"/>
+                                        <field name="odoo_sales_order_status_correct"/>
+                                        <field name="odoo_sales_order_information_correct"/>
+                                        <field name="odoo_sales_product_items_correct"/>
+                                        <field name="odoo_dealsheet_status_correct"/>
+                                        <field name="odoo_dealsheet_line_items_correct"/>
+                                        <field name="odoo_dealsheet_project_management_included"/>
+                                        <field name="odoo_dealsheet_net_sys_engineer_time_included"/>
+                                        <field name="odoo_dealsheet_procider_specified"/>
+                                        <field name="odoo_dealsheetout_of_hours_activation_included"/>
+                                        <field name="admin_extra_notes"/>
+                                        <field name="admin_exception_identified"/>
+                                    </group>
+                                </page>
+                                <page string="Order Forms">
+                                    <group string="Local Loop - order form information review">
+                                        <field name="ll_latency_available"/>
+                                        <field name="ll_bandwidth_available"/>
+                                        <field name="ll_handoff_available"/>
+                                        <field name="ll_jumbo_frame_specified"/>
+                                        <field name="ll_protection_specified"/>
+                                        <field name="ll_test_resulted_specified"/>
+                                        <field name="ll_delivery_lead_time_specified"/>
+                                    </group>
+                                    <group string="Backbone - order form information review">
+                                        <field name="bb_latency_available"/>
+                                        <field name="bb_bandwidth_available"/>
+                                        <field name="bb_handoff_available"/>
+                                        <field name="bb_jumbo_frame_specified"/>
+                                        <field name="bb_protection_specified"/>
+                                        <field name="bb_test_resulted_specified"/>
+                                        <field name="bb_delivery_lead_time_specified"/>
+                                        <field name="eq_delivery_lead_time_specified"/>
+                                    </group>
+                                    <group string="Equipment - order form information review">
+                                        <field name="eq_qualtity_correct"/>
+                                        <field name="eq_support_included"/>
+                                        <field name="eq_rack_mount_included"/>
+                                        <field name="eq_power_plug_type_specified"/>
+                                        <field name="eq_power_redundancy_specified"/>
+                                    </group>
+                                    <group string="Extra Notes">
+                                        <field name="order_forms_extra_notes"/>
+                                        <field name="order_forms_exception_identified"/>
+                                    </group>
+                                </page>
+                                <page string="Network Details">
+                                    <group>
+                                        <field name="general"/>
+                                        <field name="port_capacity"/>
+                                        <field name="handoff"/>
+                                    </group>
+                                    <group string="IP Transit - Technical Solution Details">
+                                        <field name="ip_type"/>
+                                        <field name="ip_number_ip_address"/>
+                                        <field name="ip_ipv4_or_ipv6_required"/>
+                                        <field name="ip_nb_port"/>
+                                        <field name="ip_bgp_details"/>
+                                        <field name="ip_bso_platform"/>
+                                    </group>
+                                    <group string="L2 - Technical Solution Details">
+                                        <field name="l2_routing_specificities"/>
+                                        <field name="l2_bso_platform_to_be_used"/>
+                                        <field name="network_details_extra_notes"/>
+                                        <field name="network_details_exception_identified"/>
+                                    </group>
+                                </page>
+                                <page string="System Details">
+                                    <group>
+                                        <field name="system_details_extra_notes"/>
+                                        <field name="system_details_exception_identified"/>
+                                    </group>
+                                </page>
+                                <page string="Other Details">
+                                    <field name="other_details_extra_notes"/>
+                                    <field name="other_details_exception_identified"/>
+                                </page>
+                            </notebook>
                         </page>
                     </notebook>
                 </sheet>
@@ -164,6 +262,33 @@
                            widget="mail_followers"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
+            </form>
+        </field>
+    </record>
+    <record id="delivery_project_form_select_lines"
+            model="ir.ui.view">
+        <field name="name">delivery.project.form.select.lines</field>
+        <field name="model">delivery.project</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form string="Project">
+                <h2>Please select the lines to be shown in the handover document
+                </h2>
+                <field name="delivery_line_ids">
+                    <tree editable="bottom" create="0" delete="0">
+                        <field name="select"/>
+                        <field name="product_id" readonly="1"/>
+                        <field name="name" readonly="1"/>
+                        <field name="delivery_date" readonly="1" />
+                    </tree>
+                </field>
+                <footer>
+                    <button name="action_handover_send"
+                            string="Generate email &amp; document"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
             </form>
         </field>
     </record>

@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #406 bso_delivery & bso_connector_jira
+
 **Bugfixes**
 
 **Build**

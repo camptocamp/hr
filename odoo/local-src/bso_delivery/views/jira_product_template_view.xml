@@ -1,0 +1,83 @@
+<odoo>
+    <record id="jira_product_template_tree" model="ir.ui.view">
+        <field name="name">jira.product.template.tree</field>
+        <field name="model">jira.product.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="category_id"/>
+                <field name="template_key"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="jira_product_template_form" model="ir.ui.view">
+        <field name="name">jira.product.template.form</field>
+        <field name="model">jira.product.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="default"/>
+                        <field name="category_id"/>
+                        <field name="template_key" required="True"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <act_window
+            id="action_product_category_template_settings"
+            name="Product Template"
+            res_model="jira.product.template"
+            view_mode="tree,form"
+    />
+    <menuitem
+            id="menu_settings"
+            name="Settings"
+            parent="menu_delivery"/>
+    <menuitem
+            id="product_template"
+            name="Product Template"
+            action="action_product_category_template_settings"
+            parent="menu_settings"/>
+
+    <record id="jira_project_form" model="ir.ui.view">
+        <field name="name">jira.project.form</field>
+        <field name="model">jira.project</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="key" required="True"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="jira_project_tree" model="ir.ui.view">
+        <field name="name">jira.project.tree</field>
+        <field name="model">jira.project</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="key" required="True"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <act_window
+            id="action_jira_project_form"
+            name="Jira Project"
+            res_model="jira.project"
+            view_mode="tree,form"
+    />
+    <menuitem
+            id="jira_project"
+            name="Jira Projects"
+            action="action_jira_project_form"
+            parent="menu_settings"/>
+
+</odoo>
