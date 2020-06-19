@@ -652,7 +652,7 @@ migration:
       addons:
         upgrade:
           - hubspot
-    - version:
+    - version: 10.40.0
       addons:
         upgrade:
           - bso_connector_jira
