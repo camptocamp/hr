@@ -33,6 +33,7 @@ class JiraProductTemplate(models.Model):
                 'No issue could be found with key "%s"' % self.template_key
             )
 
+
 class JiraProject(models.Model):
     _name = 'jira.project'
 
