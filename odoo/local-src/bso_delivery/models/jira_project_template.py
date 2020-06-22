@@ -2,7 +2,7 @@ from odoo import models, fields, api, exceptions
 from odoo.exceptions import ValidationError
 
 
-class JiraProjectTemplate(models.Model):
+class JiraProductTemplate(models.Model):
     _name = 'jira.product.template'
     _order = 'name ASC, id ASC'
 
@@ -25,6 +25,13 @@ class JiraProjectTemplate(models.Model):
         comodel_name='product.category'
     )
 
+    @api.constrains('template_key')
+    def check_template_exists(self):
+        jira = self.env['jira.api']
+        if not jira.issue(self.template_key):
+            raise ValidationError(
+                'No issue could be found with key "%s"' % self.template_key
+            )
 
 class JiraProject(models.Model):
     _name = 'jira.project'
@@ -51,7 +58,7 @@ class JiraProject(models.Model):
 
     @api.constrains('key')
     def check_project_exist(self):
-        jira = self.env['jira.backend'].search([], limit=1).get_api_client()
+        jira = self.env['jira.api']
         try:
             jira.project(self.key)
         except Exception:
