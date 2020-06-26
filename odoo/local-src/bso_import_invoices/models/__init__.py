@@ -8,3 +8,4 @@ from . import ubersmith_service_plan
 from . import ubersmith_invoice
 from . import ubersmith_invoice_line
 from . import ubersmith_tax
+from . import ubersmith_contract_term

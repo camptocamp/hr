@@ -43,6 +43,10 @@
               sequence="5"
               action="ubersmith_invoice_line_action"
               parent="bso_import_invoices.ubersmith_menu"/>
+        <menuitem id="ubersmith_contract_term_menu" name="Ubersmith Contract Term"
+              sequence="6"
+              action="ubersmith_contract_term_action"
+              parent="bso_import_invoices.ubersmith_menu"/>
 
     <menuitem
             id="ubersmith_settings_menu"

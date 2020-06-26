@@ -13,6 +13,9 @@
                     <button string="Import Brands" type="object"
                             name="import_ubersmith_brands"
                             class="oe_highlight"/>
+                    <button string="Import Terms" type="object"
+                            name="import_ubersmith_terms"
+                            class="oe_highlight"/>
                     <button string="Import ubersmith Service Plans"
                             type="object"
                             name="import_ubersmith_service_plans"
