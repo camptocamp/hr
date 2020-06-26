@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #411 bso_delivery & bso_connector_jira
+
 **Build**
 
 **Documentation**

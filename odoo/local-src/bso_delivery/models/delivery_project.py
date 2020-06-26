@@ -445,10 +445,13 @@ class DeliveryProject(models.Model):
             'delivery_line_ids': [(6, 0, line_ids)]
         })
         template_ids = self.get_jira_default_product_template_ids()
-        rec.write({
+        default_jira_project = self.env['jira.project'].search([])
+        values = {
             'jira_default_product_template_ids': [(6, 0, template_ids.ids)],
-            'jira_project': self.env['jira.project'].search([])[0].id
-        })
+        }
+        if default_jira_project:
+            values['jira_project'] = default_jira_project[0].id
+        rec.write(values)
         return rec
 
     @api.multi

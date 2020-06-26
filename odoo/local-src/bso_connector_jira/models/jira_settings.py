@@ -128,4 +128,4 @@ class JiraSettings(models.Model):
             return self.env['jira.auth'].create(
                 {'settings_id': self.id, 'state': 'done'}
             ).auth_action()
-        raise exceptions.AcessError(_('Auth Broken'))
+        raise exceptions.AccessError(_('Auth Broken'))

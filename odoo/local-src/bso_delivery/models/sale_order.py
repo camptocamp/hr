@@ -13,13 +13,12 @@ class SaleOrder(models.Model):
     @api.multi
     def create_project_delivery(self):
         for rec in self:
-            if rec.state == 'sale':
-                delivery_project = rec.delivery_project_id.sudo().create({
-                    'name': '{} {}'.format(rec.name, rec.partner_id.name),
-                    'sale_order_id': rec.id,
-                    'date_signed': rec.commitment_date
-                })
-                rec.sudo().update({'delivery_project_id': delivery_project.id})
+            delivery_project = rec.delivery_project_id.sudo().create({
+                'name': '{} {}'.format(rec.name, rec.partner_id.name),
+                'sale_order_id': rec.id,
+                'date_signed': rec.confirmation_date
+            })
+            rec.sudo().update({'delivery_project_id': delivery_project.id})
 
     @api.multi
     def action_confirm(self):

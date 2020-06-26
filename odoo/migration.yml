@@ -660,3 +660,8 @@ migration:
           - bso_dealsheet
           - bso_bundle
           - bso_subscription_lines
+    - version: 10.40.1
+      addons:
+        upgrade:
+          - bso_connector_jira
+          - bso_delivery
