@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #412 bso_import_invoices
+
 **Bugfixes**
 
 * #411 bso_delivery & bso_connector_jira

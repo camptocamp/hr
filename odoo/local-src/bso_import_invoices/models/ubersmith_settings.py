@@ -123,6 +123,7 @@ class UbersmithSettings(models.Model):
         brand_model = self_session.env['ubersmith.brand']
         client_model = self_session.env['ubersmith.client']
         invoice_model = self.env['ubersmith.invoice']
+        self.import_ubersmith_terms()
         brands = api.get_brands()
         _logger.info('Brands, service plans and taxes import/sync in progress')
         for brand_id, brand_dict in brands.iteritems():
@@ -143,6 +144,9 @@ class UbersmithSettings(models.Model):
 
     def import_ubersmith_brands(self):
         return self.env['ubersmith.brand'].create_or_sync_brands()
+
+    def import_ubersmith_terms(self):
+        return self.env['ubersmith.contract.term'].create_or_sync_terms()
 
     def import_ubersmith_service_plans(self):
         self.import_ubersmith_brands()

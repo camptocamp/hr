@@ -2,6 +2,7 @@
 import logging
 
 import requests
+
 from odoo import models
 
 _logger = logging.getLogger(__name__)
@@ -88,4 +89,15 @@ class UbersmithApi(models.TransientModel):
     def get_tax_list(self, brand_id):
         method = "uber.tax_rate_list"
         params = {'brand_id': brand_id}
+        return self._get(method, params)
+
+    def get_terms_list(self):
+        method = "uber.contract_term_list"
+        params = {}
+        return self._get(method, params)
+
+    def get_service(self, service_id):
+        method = "client.service_get"
+        params = {'service_id': service_id,
+                  'metadata': 1}
         return self._get(method, params)

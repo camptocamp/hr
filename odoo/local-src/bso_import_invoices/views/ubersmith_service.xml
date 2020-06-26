@@ -7,14 +7,38 @@
         <field name="arch" type="xml">
             <form string="Ubersmith services" create="false">
                 <header>
+                    <field name="status" widget="statusbar"/>
                 </header>
                 <sheet>
                     <group>
                         <field name="service_id" readonly="True"/>
-                        <field name="bill_type" readonly="True"/>
-                        <field name="discount_type" readonly="True"/>
-                        <field name="price" readonly="True"/>
+                        <field name="circuit_id" readonly="True"/>
                         <field name="plan_id" readonly="True"/>
+                        <field name="desserv" readonly="True"/>
+                        <field name="client_id" readonly="True"/>
+                        <field name="start" readonly="True"/>
+                        <field name="end" readonly="True"/>
+                        <!--<field name="renewdate" readonly="True"/>-->
+                        <field name="activation_date" readonly="True"/>
+                    </group>
+                    <group>
+                        <field name="bill_type" readonly="True"/>
+                        <field name="period" readonly="True"/>
+                        <field name="term_id" readonly="True"/>
+                        <!--<field name="is_recurrent"/>-->
+                        <field name="post_renew" readonly="True"/>
+                        <field name="bill_prior" readonly="True"/>
+
+                    </group>
+                    <group>
+                        <field name="discount_type" readonly="True"/>
+                        <field name="discount" readonly="True"/>
+                        <field name="price" readonly="True"/>
+                        <field name="cost" readonly="True"/>
+                        <field name="quantity" readonly="True"/>
+                    </group>
+                    <group>
+                        <field name="odoo_subscription_id" readonly="True"/>
                     </group>
                 </sheet>
             </form>
@@ -30,7 +54,11 @@
                 <field name="bill_type"/>
                 <field name="discount_type"/>
                 <field name="price"/>
+                <field name="cost"/>
                 <field name="plan_id"/>
+                <field name="renewdate"/>
+                <field name="period"/>
+                <field name="status"/>
             </tree>
         </field>
     </record>
