@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.40.1 (2020-06-26)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #412 bso_import_invoices
 
 **Bugfixes**
