@@ -1,0 +1,31 @@
+<odoo>
+    <record model="ir.ui.view" id="sale_subscription_wizard_upsell_button">
+        <field name="name">sale.subscription.wizard.upsell.button</field>
+        <field name="model">sale.subscription</field>
+        <field name="inherit_id"
+               ref="website_contract.sale_subscription_view_form_inherit_sale_contract"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(website_contract.wizard_action)d']"
+                   position="attributes">
+                <attribute name="type">object</attribute>
+                <attribute name="name">upsell_action</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_subscription_view_form_new_buttons">
+        <field name="name">sale.subscription.new_buttons</field>
+        <field name="model">sale.subscription</field>
+        <field name="inherit_id"
+               ref="website_contract.sale_subscription_view_form_inherit_sale_contract"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='recurring_invoice_line_ids']"
+                   position="before">
+                <button string="&#8658; Replace" class="oe_link oe_right"
+                        help="Replace existing options directly"
+                        context="{'replace': True}"
+                        name="action_replace_lines" type="object"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
