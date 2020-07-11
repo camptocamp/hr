@@ -138,8 +138,8 @@ class DeliveryProject(models.Model):
     network_diagram_cable_system_included = fields.Char(
         related='checklist_id.network_diagram_cable_system_included')
     network_diagram_docuemnt_matching_solution_to_deploy = fields.Char(
-        related=
-        'checklist_id.network_diagram_docuemnt_matching_solution_to_deploy')
+        related='checklist_id.'
+                'network_diagram_docuemnt_matching_solution_to_deploy')
     odoo_sales_order_status_correct = fields.Char(
         related='checklist_id.odoo_sales_order_status_correct')
     odoo_sales_order_information_correct = fields.Char(
@@ -367,8 +367,8 @@ class DeliveryProject(models.Model):
             many2one_fields.append(
                 (self_sudo.dealsheet_id.id, self_sudo.dealsheet_id._name))
         for picking_id in (
-              self_sudo.dealsheet_id.purchase_order.picking_ids +
-              self_sudo.sale_order_id.picking_ids) or []:
+                                  self_sudo.dealsheet_id.purchase_order.picking_ids +
+                                  self_sudo.sale_order_id.picking_ids) or []:
             many2one_fields.append((picking_id.id, picking_id._name))
 
         return many2one_fields
