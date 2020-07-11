@@ -366,10 +366,10 @@ class DeliveryProject(models.Model):
         if self_sudo.dealsheet_id:
             many2one_fields.append(
                 (self_sudo.dealsheet_id.id, self_sudo.dealsheet_id._name))
-        for picking_id in (
-                                  self_sudo.dealsheet_id.purchase_order.picking_ids +
-                                  self_sudo.sale_order_id.picking_ids) or []:
-            many2one_fields.append((picking_id.id, picking_id._name))
+        for picking_id in self_sudo.dealsheet_id.purchase_order.picking_ids or []:
+            many2one_fields.append((picking_id.id, 'stock.picking'))
+        for picking_id in self_sudo.sale_order_id.picking_ids or []:
+            many2one_fields.append((picking_id.id, 'stock.picking'))
 
         return many2one_fields
 
