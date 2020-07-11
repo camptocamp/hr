@@ -282,9 +282,9 @@ class DeliveryProject(models.Model):
         if not self_sudo.sale_order_id.picking_ids:
             self_sudo.progress_rate = 100
         else:
-            calc_price = lambda op: (
-                average_price.get(op.product_id.id) * op.product_qty,
-                average_price.get(op.product_id.id) * op.qty_done)
+            def calc_price(op):
+                return (average_price.get(op.product_id.id) * op.product_qty,
+                        average_price.get(op.product_id.id) * op.qty_done)
 
         to_be_delivered, delivered = zip(*map(
             calc_price,
@@ -367,8 +367,8 @@ class DeliveryProject(models.Model):
             many2one_fields.append(
                 (self_sudo.dealsheet_id.id, self_sudo.dealsheet_id._name))
         for picking_id in (
-              self_sudo.dealsheet_id.purchase_order.picking_ids +
-              self_sudo.sale_order_id.picking_ids) or []:
+                                  self_sudo.dealsheet_id.purchase_order.picking_ids +
+                                  self_sudo.sale_order_id.picking_ids) or []:
             many2one_fields.append((picking_id.id, picking_id._name))
 
         return many2one_fields
