@@ -177,4 +177,3 @@ class DeliveryChecklist(models.Model):
     def kickoff_action(self):
         self.delivery_id.update(
             {'kickoff_date': datetime.now(), 'state': 'inprogress'})
-
