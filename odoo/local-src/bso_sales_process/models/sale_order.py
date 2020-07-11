@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import math
 import json
 from lxml import etree
 
