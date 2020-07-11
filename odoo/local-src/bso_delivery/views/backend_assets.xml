@@ -1,9 +1,0 @@
-<odoo>
-    <template id="assets_backend" name="delivery_report assets"
-              inherit_id="web.assets_backend">
-        <xpath expr="." position="inside">
-            <link rel="stylesheet"
-                  href="/bso_delivery/static/src/css/report.css"/>
-        </xpath>
-    </template>
-</odoo>

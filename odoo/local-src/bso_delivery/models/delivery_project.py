@@ -1,5 +1,6 @@
 from collections import defaultdict, OrderedDict
 from odoo import models, fields, api, exceptions, _, SUPERUSER_ID
+from odoo.exceptions import AccessError
 
 
 class DeliveryProject(models.Model):
@@ -45,19 +46,23 @@ class DeliveryProject(models.Model):
     )
     company_id = fields.Many2one(
         related='sale_order_id.company_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     customer_id = fields.Many2one(
         related='sale_order_id.partner_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     dealsheet_id = fields.Many2one(
         related='sale_order_id.dealsheet_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     currency_id = fields.Many2one(
         related='sale_order_id.currency_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     nrr = fields.Monetary(
         related='dealsheet_id.nrr',
@@ -105,14 +110,13 @@ class DeliveryProject(models.Model):
     )
 
     analytic_account_id = fields.Many2one(
-        string='Analyric Account',
+        string='Analytic Account',
         related='sale_order_id.project_id',
-        readonly=True
+        readonly=True,
+        store=True
     )
     progress_rate = fields.Float(
         string='Progress rate',
-        compute='_compute_progress_rate_revenue',
-        store=True
     )
     delivery_count = fields.Integer(
         string='Delivery',
@@ -134,8 +138,7 @@ class DeliveryProject(models.Model):
     network_diagram_cable_system_included = fields.Char(
         related='checklist_id.network_diagram_cable_system_included')
     network_diagram_docuemnt_matching_solution_to_deploy = fields.Char(
-        related='checklist_id.network_diagram_docuemnt_'
-                'matching_solution_to_deploy')
+        related='checklist_id.network_diagram_docuemnt_matching_solution_to_deploy')
     odoo_sales_order_status_correct = fields.Char(
         related='checklist_id.odoo_sales_order_status_correct')
     odoo_sales_order_information_correct = fields.Char(
@@ -259,35 +262,36 @@ class DeliveryProject(models.Model):
         compute='compute_pickings_visible'
     )
 
-    @api.depends(
-        'sale_order_id.picking_ids.pack_operation_product_ids.qty_done',
-    )
-    def _compute_progress_rate_revenue(self):
-        for rec in self:
-            product_price = defaultdict(lambda: 0)
-            qty = defaultdict(lambda: 0)
+    @api.multi
+    def update_progress_rate_revenue(self):
+        self_sudo = self.sudo()
+        product_price = defaultdict(lambda: 0)
+        qty = defaultdict(lambda: 0)
 
-            for order in rec.sale_order_id.order_line:
-                product_price[
-                    order.product_id.id
-                ] += order.price_unit * order.product_uom_qty
-                qty[order.product_id.id] += order.product_uom_qty
+        for order in self_sudo.sale_order_id.order_line:
+            product_price[
+                order.product_id.id
+            ] += order.price_unit * order.product_uom_qty
+            qty[order.product_id.id] += order.product_uom_qty
 
-            average_price = {
-                x: float(product_price[x]) / qty[x] if qty[x] != 0 else 0
-                for x in product_price}
+        average_price = {
+            x: float(product_price[x]) / qty[x] if qty[x] != 0 else 0
+            for x in product_price}
 
-            if not rec.sale_order_id.picking_ids:
-                rec.progress_rate = 100
-                continue
-            to_be_delivered, delivered = zip(*[
-                (average_price.get(op.product_id.id) * op.product_qty,
-                 average_price.get(op.product_id.id) * op.qty_done)
-                for op in rec.sale_order_id.picking_ids.mapped(
-                    'pack_operation_product_ids')])
+        if not self_sudo.sale_order_id.picking_ids:
+            self_sudo.progress_rate = 100
+        else:
+            calc_price = lambda op: (
+                average_price.get(op.product_id.id) * op.product_qty,
+                average_price.get(op.product_id.id) * op.qty_done)
 
-            rec.progress_rate = 100 * sum(delivered) / sum(
-                to_be_delivered) if sum(to_be_delivered) else 100
+        to_be_delivered, delivered = zip(*map(
+            calc_price,
+            self_sudo.sale_order_id.picking_ids.mapped(
+                'pack_operation_product_ids')
+        ))
+        self_sudo.progress_rate = 100 * sum(delivered) / sum(
+            to_be_delivered) if sum(to_be_delivered) else 100
 
     @api.multi
     def _compute_attachment_number(self):
@@ -326,7 +330,7 @@ class DeliveryProject(models.Model):
             return client.assign_issue(self.jira_key, account_id)
 
         except Exception as e:
-            raise exceptions.AccessError(_(e))
+            raise AccessError(_(e))
 
     def _construct_many2fields_domain(self):
         """
@@ -351,18 +355,20 @@ class DeliveryProject(models.Model):
         """ :return: list of tuples containing the many2one target fields
         and their ids
         """
+        self_sudo = self.sudo()
         many2one_fields = list()
-        if self.id:
-            many2one_fields.append((self.id, self._name))
-        if self.sale_order_id.id:
-            many2one_fields.append((self.sale_order_id.id, 'sale.order'))
-        if self.dealsheet_id.id:
-            many2one_fields.append((self.dealsheet_id.id, 'sale.dealsheet'))
-        for picking_id in self.dealsheet_id.purchase_order.picking_ids or []:
-            many2one_fields.append((picking_id.id, 'stock.picking'))
-
-        for picking_id in self.sale_order_id.picking_ids or []:
-            many2one_fields.append((picking_id.id, 'stock.picking'))
+        if self_sudo:
+            many2one_fields.append((self_sudo.id, self_sudo._name))
+        if self_sudo.sale_order_id:
+            many2one_fields.append(
+                (self.sale_order_id.id, self_sudo.sale_order_id._name))
+        if self_sudo.dealsheet_id:
+            many2one_fields.append(
+                (self_sudo.dealsheet_id.id, self_sudo.dealsheet_id._name))
+        for picking_id in (
+                                  self_sudo.dealsheet_id.purchase_order.picking_ids +
+                                  self_sudo.sale_order_id.picking_ids) or []:
+            many2one_fields.append((picking_id.id, picking_id._name))
 
         return many2one_fields
 
@@ -465,7 +471,15 @@ class DeliveryProject(models.Model):
 
     @api.multi
     def action_view_deliveries(self):
-        return self.sale_order_id.action_view_delivery()
+        action = self.env.ref('stock.action_picking_tree_all').read()[0]
+        pickings = self.mapped('sale_order_id.picking_ids')
+        if len(pickings) > 1:
+            action['domain'] = [('id', 'in', pickings.ids)]
+        elif pickings:
+            action['views'] = [
+                (self.env.ref('stock.view_picking_form').id, 'form')]
+            action['res_id'] = pickings.id
+        return action
 
     @api.multi
     def checklist_action(self):

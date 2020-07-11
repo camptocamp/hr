@@ -1,4 +1,0 @@
-.table-fixed{
-    @extend .table;
-    table-layout: fixed;
-}
