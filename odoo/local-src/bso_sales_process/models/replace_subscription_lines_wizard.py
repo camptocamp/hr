@@ -28,3 +28,7 @@ class ReplaceSubsriptionLinesWizard(models.TransientModel):
         res.to_delete_line_ids = selected_lines
         res.order_type = 'replace'
         return view
+
+    @api.multi
+    def write(self, vals):
+        return super(ReplaceSubsriptionLinesWizard, self.sudo()).write(vals)

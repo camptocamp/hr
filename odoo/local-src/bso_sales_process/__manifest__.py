@@ -18,6 +18,7 @@
         'views/subscription_form_new_buttons.xml',
         'views/sale_order_tree_view.xml',
         'views/sale_order_form_renewal.xml',
+        'views/sale_order_form.xml'
     ],
     'application': False,
     'installable': True,

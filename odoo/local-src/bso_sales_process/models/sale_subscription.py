@@ -34,7 +34,8 @@ class SaleSubscription(models.Model):
             {'subscription_id': self.id})
         # wizard = self.env['replace.subscription.lines.wizard'].create(
         #     {'subscription_line_ids': [
-        #         (6, 0, [self.recurring_invoice_line_ids.ids])]})
+        #         (6, 0, [self.recurring_invoice_line_ids.ids])],
+        #     })
         context = dict(self.env.context)
         context['form_view_initial_mode'] = 'edit'
 

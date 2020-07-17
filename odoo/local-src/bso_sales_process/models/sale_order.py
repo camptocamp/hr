@@ -25,23 +25,37 @@ class SaleOrder(models.Model):
     loss_mrr = fields.Monetary(
         string='Loss MRR',
         currency_field='currency_id',
-        compute='compute_absolute_mrr',
+        compute='_compute_loss_mrr',
         store=True
     )
 
     abs_mrr = fields.Monetary(
         string='Absolute MRR',
-        compute='compute_absolute_mrr',
+        compute='_compute_absolute_mrr',
+        store=True
+    )
+    new_mrr = fields.Monetary(
+        string='New MRR',
+        currency_field='currency_id',
+        compute='_compute_new_mrr',
         store=True
     )
 
     @api.depends('mrr', 'to_delete_line_ids')
-    def compute_absolute_mrr(self):
+    def _compute_absolute_mrr(self):
         for rec in self:
             rec.abs_mrr = rec.mrr - sum(
                 rec.to_delete_line_ids.mapped('price_subtotal'))
-            rec.new_mrr = max(0, rec.abs_mrr)
+
+    @api.depends('abs_mrr')
+    def _compute_loss_mrr(self):
+        for rec in self:
             rec.loss_mrr = abs(min(0, rec.abs_mrr))
+
+    @api.depends('abs_mrr')
+    def _compute_new_mrr(self):
+        for rec in self:
+            rec.new_mrr = max(0, rec.abs_mrr)
 
     @api.multi
     def _compute_subscription(self):
