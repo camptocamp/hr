@@ -9,10 +9,9 @@
                 <field name="name"/>
                 <field name="user_id"/>
                 <field name="company_id"/>
-                <field name="nrr" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
-                <field name="mrr" widget="monetary"
-                       options="{'currency_field': 'currency_id'}"/>
+                <field name="nrr" widget="monetary"/>
+                <field name="mrr" widget="monetary"/>
+                <field name="currency_id" invisible="1"/>
                 <field name="date_signed"/>
                 <field name="kickoff_date"/>
                 <field name="display_forecasted_date"/>
@@ -39,49 +38,61 @@
                             string="Send Handover Email"
                             type="object"
                             class="btn-default"
+                            groups="bso_delivery.group_delivery_manager"
+
                     />
                     <button name="checklist_action" string="Kick-off"
                             class="btn-primary" type="object"
+                            groups="bso_delivery.group_delivery_manager"
                             attrs="{'invisible':
                             [('checklist_id', '!=', False)]}"/>
                     <button name="export_project" string="Create project"
                             class="btn-primary"
                             type="object"
+                            groups="bso_delivery.group_delivery_manager"
                             attrs="{'invisible':
                             [('jira_key', '!=', False)]}"/>
                     <button name="complete_project" string="complete"
                             class="btn-primary"
                             type="object"
-                            attrs="{'invisible':
-                            ['|', ('jira_key', '=', False),
-                            ('state', '=', 'complete')]}"/>
+                            groups="bso_delivery.group_delivery_manager"
+                            attrs="{'invisible':[('state', '=', 'complete')]}"/>
                     <button name="hold_project" string="On hold"
                             type="object"
+                            groups="bso_delivery.group_delivery_manager"
                             attrs="{'invisible':
-                            ['|', ('jira_key', '=', False),
-                            ('state', 'in', ('hold', 'complete'))]}"/>
+                            [('state', 'in', ('hold', 'complete'))]}"/>
                     <button name="track_project" string="In progress"
                             type="object"
+                            groups="bso_delivery.group_delivery_manager"
+
                             attrs="{'invisible':
                             ['|', ('jira_key', '=', False),
                             ('state', 'in', ('inprogress', 'complete'))]}"/>
                     <button name="risk_project" string="At risk"
                             type="object"
+                            groups="bso_delivery.group_delivery_manager"
+
                             attrs="{'invisible':
                             ['|', ('jira_key', '=', False),
                             ('state', 'in', ('risk', 'complete'))]}"/>
                     <button name="cancel_project" string="Cancel"
                             type="object"
+                            groups="bso_delivery.group_delivery_manager"
+
                             attrs="{'invisible':
-                            ['|', ('jira_key', '=', False),
-                            ('state', 'in', ('cancel', 'complete'))]}"/>
+                            [('state', 'in', ('cancel', 'complete'))]}"/>
                     <button name="trigger_reset_to_draft"
                             string="reset to draft"
                             type="object"
+                            groups="bso_delivery.group_delivery_manager"
+
                             attrs="{'invisible': [('state', '=', 'kickoff')]}"/>
                     <button name="action_open_jira_project"
                             string="open in JIRA"
                             type="object"
+                            groups="bso_delivery.group_delivery_manager"
+
                             class="btn-info"
                             attrs="{'invisible':
                             [('jira_key', '=', False)]}"/>
@@ -244,11 +255,9 @@
                                         <field name="system_details_exception_identified"/>
                                     </group>
                                 </page>
-                                <page string="Other Details">
-                                    <group>
-                                        <field name="other_details_extra_notes"/>
-                                        <field name="other_details_exception_identified"/>
-                                    </group>
+                                <page strin="Other Details">
+                                    <field name="other_details_extra_notes"/>
+                                    <field name="other_details_exception_identified"/>
                                 </page>
                             </notebook>
                         </page>

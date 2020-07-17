@@ -85,7 +85,7 @@
                             <field name="system_details_exception_identified"/>
                         </group>
                     </page>
-                    <page string="Other Details">
+                    <page strin="Other Details">
                         <field name="other_details_extra_notes"/>
                         <field name="other_details_exception_identified"/>
                     </page>

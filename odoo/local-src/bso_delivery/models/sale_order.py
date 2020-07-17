@@ -13,7 +13,7 @@ class SaleOrder(models.Model):
     @api.multi
     def create_project_delivery(self):
         for rec in self:
-            delivery_project = rec.delivery_project_id.sudo().create({
+            delivery_project = rec.sudo().delivery_project_id.create({
                 'name': '{} {}'.format(rec.name, rec.partner_id.name),
                 'sale_order_id': rec.id,
                 'date_signed': rec.confirmation_date

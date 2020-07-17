@@ -11,5 +11,9 @@ access_product_template_manager,jira.product.template.manager,model_jira_product
 
 access_jira_project_user,jira.project.user,model_jira_project,group_delivery_user,1,0,0,0
 access_jira_project_manager,jira.project.manager,model_jira_project,group_delivery_manager,1,1,1,1
+
 access_delivery_checklist_user,delivery.chekclist.user,model_delivery_checklist,group_delivery_user,1,0,0,0
 access_delivery_checklist_manager,delivery.chekclist.manager,model_delivery_checklist,group_delivery_manager,1,1,1,1
+
+access_service_point_user,service.point.user,model_service_point,group_delivery_user,1,0,0,0
+access_service_point_manager,service.point.manager,model_service_point,group_delivery_manager,1,1,1,1

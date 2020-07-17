@@ -1,6 +1,6 @@
 {
     'name': 'BSO Delivery',
-    'category': 'Delivery',
+    # 'category': 'Placeholder',
     'description': 'BSO Service Delivery',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
@@ -18,7 +18,6 @@
         'views/menus/menuitem.xml',
         'views/delivery_project.xml',
         'views/sale_order.xml',
-        'views/backend_assets.xml',
         'views/checklist_view.xml',
         'views/reports/delivery_report.xml',
         'views/reports/delivery_report_file.xml',
