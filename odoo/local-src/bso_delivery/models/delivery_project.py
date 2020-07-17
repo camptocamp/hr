@@ -265,6 +265,7 @@ class DeliveryProject(models.Model):
 
     @api.multi
     def update_progress_rate_revenue(self):
+        self.ensure_one()
         self_sudo = self.sudo()
         product_price = defaultdict(lambda: 0)
         qty = defaultdict(lambda: 0)
@@ -473,15 +474,7 @@ class DeliveryProject(models.Model):
 
     @api.multi
     def action_view_deliveries(self):
-        action = self.env.ref('stock.action_picking_tree_all').read()[0]
-        pickings = self.mapped('sale_order_id.picking_ids')
-        if len(pickings) > 1:
-            action['domain'] = [('id', 'in', pickings.ids)]
-        elif pickings:
-            action['views'] = [
-                (self.env.ref('stock.view_picking_form').id, 'form')]
-            action['res_id'] = pickings.id
-        return action
+        return self.sale_order_id.action_view_delivery()
 
     @api.multi
     def checklist_action(self):

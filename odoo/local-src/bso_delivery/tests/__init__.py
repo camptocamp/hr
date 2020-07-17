@@ -1,1 +1,1 @@
-from . import test_compute_project_progress_rate
+# from . import test_compute_project_progress_rate
