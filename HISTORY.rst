@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.41.0 (2020-07-17)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #414 bso_sales_process
 
 * #416 hubspot
