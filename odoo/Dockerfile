@@ -22,7 +22,7 @@ RUN set -x; \
         libcups2-dev \
         git \
         wget \
-        && wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.jessie_amd64.deb \
+        && wget -o wkhtmltox.deb https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.jessie_amd64.deb \
         && echo '4d104ff338dc2d2083457b3b1e9baab8ddf14202 wkhtmltox_0.12.5-1.jessie_amd64.deb' | sha1sum -c - \
         # && curl -o wkhtmltox.deb -SL https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.jessie_amd64.deb \
         # && echo '4d104ff338dc2d2083457b3b1e9baab8ddf14202 wkhtmltox.deb' | sha1sum -c - \
