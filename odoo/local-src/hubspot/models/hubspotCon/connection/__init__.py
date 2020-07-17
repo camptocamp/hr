@@ -49,7 +49,7 @@ _HUBSPOT_ERROR_RESPONSE_SCHEMA = Schema(
         'message': text,
         'requestId': text,
         },
-    required=True,
+    # required=True,
     extra=True,
     )
 
@@ -205,8 +205,8 @@ class PortalConnection(object):
             else:
                 exception_class = HubspotClientError
             raise exception_class(
-                error_data['message'],
-                error_data['requestId'],
+                error_data['message'], False
+                # error_data['requestId'],
                 )
         elif 500 <= response.status_code < 600:
             raise HubspotServerError(response.reason, response.status_code)

@@ -2,6 +2,7 @@
 
 import logging
 
+from odoo.addons.queue_job.job import job
 from odoo.exceptions import UserError, ValidationError
 
 from hubspotCon.connection import APIKey
@@ -87,6 +88,12 @@ class CrmLead(models.Model):
         string='Prevent syncing with Hubspot',
         default=False
     )
+    firstname = fields.Char(
+        string='Firstname'
+    )
+    lastname = fields.Char(
+        string='Lastname'
+    )
 
     @api.multi
     @api.constrains('stage_id')
@@ -147,7 +154,8 @@ class CrmLead(models.Model):
                           'planned_revenue_nrc', 'planned_revenue',
                           'planned_revenue_new_mrc',
                           'planned_revenue_renew_mrc',
-                          'planned_duration', 'original_lead_id']
+                          'planned_duration', 'original_lead_id',
+                          'phone', 'function']
         if any(key in vals for key in fields_to_sync):
             hubspot_app_key = self.env['ir.values'].get_default(
                 'base.config.settings', 'hubspot_app_key')
@@ -235,24 +243,31 @@ class CrmLead(models.Model):
                                'value': vals['partner_name'] or ''})
         if 'user_id' in vals or self.env.context.get('is_create'):
             owner_id = self.user_id.hubspot_owner_id or ''
-            employee_id = self._get_employee_by_user()
-            origin = employee_id.sudo().company_id.hubspot_original_company_id
+            employee_id = self._get_employee_by_user(self.user_id.id)
+            origin_company = employee_id.sudo().company_id or self.company_id
+            origin = origin_company.hubspot_original_company_id
             properties.extend([
                 {'property': 'hubspot_owner_id',
                  'value': owner_id},
                 {'property': 'original_company_bso_ixreach_',
                  'value': origin or ''}
             ])
+        if 'function' in vals:
+            properties.append({'property': 'job_function',
+                               'value': self.function or ''})
+        if 'phone' in vals:
+            properties.append({'property': 'phone',
+                               'value': self.phone or ''})
         if self.env.context.get('is_create'):
-            properties.extend([
+            properties.append(
                 {'property': 'lifecyclestage', 'value': 'lead'},
-                {'property': 'odoo_id', 'value': self.id},
-            ])
+            )
+        properties.append({'property': 'odoo_id', 'value': self.id})
         return properties
 
-    def _get_employee_by_user(self):
+    def _get_employee_by_user(self, user_id):
         return self.env['hr.employee'].search([
-            ('user_id', '=', self.user_id.id)
+            ('user_id', '=', user_id)
         ], limit=1)
 
     @log_hubspot_exceptions
@@ -370,9 +385,6 @@ class CrmLead(models.Model):
                 'Error in Synchronization!\nHubspot API Key and App Name need \
                 to be specified for synchronization of data with Odoo.'))
         hubspot_app_key = APIKey(hubspot_app_key)
-        modifiedDateForContact = float(
-            self.env['ir.values'].get_default('base.config.settings',
-                                              'modifiedDateForContact') or 0)
         createdDateForOwner = float(
             self.env['ir.values'].get_default('base.config.settings',
                                               'createdDateForOwner') or 0)
@@ -392,15 +404,6 @@ class CrmLead(models.Model):
             hubspot_app_name,
             modifiedDateForOriginalCompany
         )
-        # Contacts
-        '''From Hubspot to Odoo'''
-        contacts_to_sync = self._get_modified_contacts(
-            hubspot_app_key,
-            hubspot_app_name,
-            modifiedDateForContact
-        )
-        self._create_or_update_leads(contacts_to_sync)
-        logger.info('Synchronization with Hubspot Completed')
 
     @api.model
     def match_users_with_owners(self, key, app_name, createdDateForOwner):
@@ -445,182 +448,6 @@ class CrmLead(models.Model):
         unused_users.write({'hubspot_owner_id': False})
 
     @api.model
-    def _get_modified_contacts(self, key, app_name, modifiedDateForContact):
-        contacts_to_sync = []
-        has_more = True
-        vid_offset = False
-        time_offset = False
-        # first contact returned is most recently updated
-        is_most_recent = True
-        params = {
-            'count': 10,
-            'property': ['firstname', 'lastname', 'email', 'hubspot_owner_id',
-                         'associatedcompanyid', 'name', 'odoo_id']
-        }
-        with PortalConnection(key, app_name) as connection:
-            while has_more:
-                if vid_offset:
-                    params['vidOffset'] = vid_offset
-                if time_offset:
-                    params['timeOffset'] = time_offset
-                modified_contacts = connection.send_get_request(
-                    '/contacts/v1/lists/recently_updated/contacts/recent',
-                    params)
-                for contact in modified_contacts['contacts']:
-                    contact_updated_at = int(
-                        contact['properties']['lastmodifieddate']['value'])
-                    if is_most_recent:
-                        new_contact_update_date = contact_updated_at
-                        is_most_recent = False
-                    if contact_updated_at <= modifiedDateForContact:
-                        has_more = False
-                        break
-                    else:
-                        properties = contact['properties']
-                        properties['company'] = self._get_name_by_companyid(
-                            connection, properties)
-                        properties['canonical-vid'] = contact['canonical-vid']
-                        contacts_to_sync.append(properties)
-                else:
-                    has_more = modified_contacts['has-more']
-                    time_offset = modified_contacts['time-offset']
-                    vid_offset = modified_contacts['vid-offset']
-        self.env['ir.values'].set_default('base.config.settings',
-                                          'modifiedDateForContact',
-                                          new_contact_update_date)
-        return contacts_to_sync
-
-    def _get_name_by_companyid(self, connection, properties):
-        company_id = properties.get('associatedcompanyid', {}).get('value')
-        if not company_id:
-            return False
-        company_dict = connection.send_get_request(
-            '/companies/v2/companies/' + company_id)
-        return company_dict['properties'].get('name', {}).get('value')
-
-    def _create_or_update_leads(self, contacts_to_sync):
-        if not contacts_to_sync:
-            return
-        logger.info('Creating new leads in Odoo')
-        for contact in contacts_to_sync:
-            self._create_or_update_lead(contact)
-
-    def _create_or_update_lead(self, contact):
-        hubspot_contact_id = str(contact['canonical-vid'])
-        odoo_id = contact.get('odoo_id', {}).get('value', False)
-        if odoo_id:
-            lead = self.search([
-                ('id', '=', int(odoo_id))
-            ])
-            if lead and not lead.hubspot_contact_id:
-                lead.with_context({'from_hubspot': True}).write({
-                    'hubspot_contact_id': hubspot_contact_id
-                })
-                return
-        firstname = contact.get('firstname', {}).get('value', False)
-        lastname = contact.get('lastname', {}).get('value', False)
-        hubspot_owner_id = contact.get('hubspot_owner_id', {}).get('value',
-                                                                   False)
-        name = contact.get('name', {}).get('value', False)
-        company_name = contact['company']
-        email = contact.get('email', {}).get('value', False)
-        contact_name = self._get_contact_name(firstname, lastname)
-        partner_id = self._get_partner_by_name(company_name)
-        user_id = self._get_user_by_owner_id(hubspot_owner_id)
-        company_id = self.env['res.users'].browse(user_id).company_id.id
-        lead_values = {
-            'contact_name': contact_name,
-            'user_id': user_id,
-            'email_from': email,
-            'partner_id': partner_id,
-            'name': name,
-            'company_id': company_id
-        }
-        lead = self._get_lead_by_hubspot_id(hubspot_contact_id)
-        if lead:
-            vals = lead._update_lead(lead_values)
-            lead._call_onchange(vals)
-            return lead
-        lead_values['hubspot_contact_id'] = hubspot_contact_id
-        lead = self._get_lead_by_email(email)
-        if lead:
-            lead._update_lead(lead_values)
-        else:
-            partner_name = self.partner_id.browse(partner_id).name
-            name = partner_name or contact_name or email or 'Unknown'
-            lead_values['name'] = name
-            lead = self.with_context({'from_hubspot': True}).create(
-                lead_values)
-        lead._call_onchange(lead_values)
-        return lead
-
-    def _call_onchange(self, vals):
-        for rec in self.with_context({'from_hubspot': False}):
-            if vals.get('user_id'):
-                rec._onchange_user_id()
-            # if vals.get('partner_id'):
-            # rec._onchange_partner_id()
-
-    @staticmethod
-    def _get_contact_name(firstname, lastname):
-        if firstname and lastname:
-            return '%s %s' % (firstname, lastname)
-        if firstname and not lastname:
-            return firstname
-        if not firstname and lastname:
-            return lastname
-        return False
-
-    def _get_user_by_owner_id(self, owner_id):
-        if not owner_id:
-            return False
-        return self.env['res.users'].search([
-            ('hubspot_owner_id', '=', owner_id)
-        ], limit=1).id
-
-    def _get_partner_by_name(self, name):
-        if not name:
-            return False
-        return self.env['res.partner'].search([
-            ('is_company', '=', True),
-            ('name', '=', name)
-        ], limit=1).id
-
-    def _get_lead_by_hubspot_id(self, hubspot_id):
-        return self.search([
-            ('hubspot_contact_id', '=', hubspot_id)
-        ])
-
-    def _get_lead_by_email(self, email):
-        if not email:
-            return
-        return self.search([
-            ('email_from', 'ilike', email)
-        ])
-
-    @api.multi
-    def _update_lead(self, vals_from_hubspot):
-        vals = {}
-        for rec in self:
-            if vals_from_hubspot['name'] and \
-                    rec.name != vals_from_hubspot['name']:
-                vals['name'] = vals_from_hubspot['name']
-            if rec.email_from != vals_from_hubspot['email_from']:
-                vals['email_from'] = vals_from_hubspot['email_from']
-            if rec.user_id.id != vals_from_hubspot['user_id']:
-                vals['user_id'] = vals_from_hubspot['user_id']
-            if rec.contact_name != vals_from_hubspot['contact_name']:
-                vals['contact_name'] = vals_from_hubspot['contact_name']
-            if not rec.partner_id and vals_from_hubspot['partner_id']:
-                vals['partner_id'] = vals_from_hubspot['partner_id']
-            if vals_from_hubspot.get('hubspot_contact_id'):
-                hubspot_contact_id = vals_from_hubspot['hubspot_contact_id']
-                vals['hubspot_contact_id'] = hubspot_contact_id
-            if vals:
-                rec.with_context({'from_hubspot': True}).write(vals)
-        return vals
-
-    @api.model
     def match_original_companies(self, key, app_name, modified_date_company):
         logger.info('Getting all original company values from Hubspot')
         try:
@@ -644,3 +471,47 @@ class CrmLead(models.Model):
                         o_company_values['updatedAt'])
         except Exception, e:
             logger.error("Cannot connect to  Hubspot: %s", e)
+
+    # Webhooks
+
+    @job(default_channel='root.hubspot.sync')
+    @api.model
+    def sync(self, post):
+        contacts = self.env['hubspot.contact'].create_or_update_contacts(post)
+        for contact in contacts:
+            if contact.change_source == 'API' and 'odoo_id' in \
+                    contact.properties.mapped('property_name'):
+                # Action to discard: coming from Odoo
+                contact.unlink()
+            elif contact.change_source == 'IMPORT' and \
+                    'odoo_id' in contact.properties.mapped('property_name'):
+                contact.link_with_lead()
+            elif contact.subscription_type == 'contact.creation':
+                contact.create_lead()
+            elif contact.subscription_type == 'contact.propertyChange':
+                contact.update_lead()
+
+    def get_associatedcompany_name(self, associatedcompanyid):
+        # associatedcompany deleted
+        if not associatedcompanyid:
+            return False
+        app_key = self.env['ir.values'].get_default(
+            'base.config.settings', 'hubspot_app_key')
+        app_name = self.env['ir.values'].get_default(
+            'base.config.settings', 'hubspot_app_name')
+        key = APIKey(app_key)
+        with PortalConnection(key, app_name) as connection:
+            company_dict = connection.send_get_request(
+                '/companies/v2/companies/' + associatedcompanyid)
+            return company_dict['properties'].get('name', {}).get('value')
+
+    def get_partner_id(self, partner_name):
+        return self.env['res.partner'].search([
+            ('is_company', '=', True),
+            ('name', '=', partner_name)
+        ], limit=1).id
+
+    def call_onchange(self, vals):
+        self.ensure_one()
+        if 'user_id' in vals:
+            self._onchange_user_id()

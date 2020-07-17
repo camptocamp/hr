@@ -59,6 +59,10 @@ class BaseConfigSettings(models.TransientModel):
         string='Log Odoo Husbpot sync errors',
         default=True
     )
+    notify_users = fields.Boolean(
+        string='Notify Users',
+        default=True
+    )
 
     @api.multi
     def set_hubspot_app_key(self):
@@ -154,3 +158,11 @@ class BaseConfigSettings(models.TransientModel):
         self.env['ir.values'].set_default('base.config.settings',
                                           'log_sync_exceptions',
                                           config_value)
+
+    @api.multi
+    def set_notify_users(self):
+        config_value = self.notify_users
+        self.env['ir.values'].set_default('base.config.settings',
+                                          'notify_users',
+                                          config_value)
+

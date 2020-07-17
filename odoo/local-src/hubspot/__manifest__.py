@@ -21,7 +21,9 @@ hubspot crm
     'website': 'pragtech.co.in',
     'depends': [
         'base', 'base_setup', 'sale', 'crm', 'specific_crm',
-        'bso_opportunities_reporiting', 'bso_base_import_parameters'
+        'bso_opportunities_reporiting', 'bso_base_import_parameters',
+        'base_json_request',
+        'queue_job',
     ],
     'data': [
         'security/bso_hubspot_security.xml',
@@ -30,7 +32,8 @@ hubspot crm
         'views/hubspot_scheduler.xml',
         'views/configSettings.xml',
         'views/crm_stage.xml',
-        'views/hubspot_log.xml'
+        'views/hubspot_log.xml',
+        'views/hubspot_temp_contacts.xml'
     ],
     "external_dependencies": {
         "python": ["hubspot"]
