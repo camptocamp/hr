@@ -63,8 +63,9 @@ class HubspotContact(models.TransientModel):
         values = self.with_context(is_create=True).get_values_from_contact()
         if not values.get('name') or self.lead_id:
             return
-        notify_users = self.env['ir.values'].get_default('base.config.settings'
-                                                         , 'notify_users')
+        notify_users = self.env['ir.values'].get_default(
+            'base.config.settings',
+            'notify_users')
         ctx = {'from_hubspot': True}
         if not notify_users:
             ctx.update({'mail_auto_subscribe_no_notify': True})
@@ -76,8 +77,9 @@ class HubspotContact(models.TransientModel):
     def update_lead(self):
         if not self.lead_id:
             return
-        notify_users = self.env['ir.values'].get_default('base.config.settings'
-                                                         , 'notify_users')
+        notify_users = self.env['ir.values'].get_default(
+            'base.config.settings',
+            'notify_users')
         ctx = {'from_hubspot': True}
         if not notify_users:
             ctx.update({'mail_auto_subscribe_no_notify': True})

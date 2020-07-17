@@ -165,4 +165,3 @@ class BaseConfigSettings(models.TransientModel):
         self.env['ir.values'].set_default('base.config.settings',
                                           'notify_users',
                                           config_value)
-
