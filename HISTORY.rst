@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #414 bso_sales_process
+
 **Bugfixes**
 
 * #413 bso_delivery

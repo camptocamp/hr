@@ -670,3 +670,4 @@ migration:
       addons:
         upgrade:
           - bso_delivery
+          - bso_sales_process

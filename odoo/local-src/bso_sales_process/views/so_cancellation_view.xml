@@ -1,0 +1,26 @@
+<odoo>
+    <record id="replace_subscription_lines_wizard" model="ir.ui.view">
+        <field name="name">replace.subscription.lines.wizard</field>
+        <field name="model">replace.subscription.lines.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <h2>
+                    Please select the lines to be replaced.
+                </h2>
+
+                <field name="subscription_line_ids">
+                    <tree create="0" delete="0" editable="bottom">
+                        <field name="to_be_deleted" string="Select"/>
+                        <field name="product_id" readonly="1"/>
+                        <field name="name" readonly="1"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="replace_action" type="object"
+                            string="Continue"
+                            class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

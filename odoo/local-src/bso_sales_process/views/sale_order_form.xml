@@ -1,0 +1,13 @@
+<odoo>
+    <record id="sale_order_form_loss_mrr" model="ir.ui.view">
+        <field name="name">sale.order.form.loss.mrr</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id"
+               ref="bso_sales_reporting.sale_order_reporting"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='new_mrr']" position="after">
+                <field name="loss_mrr"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
