@@ -87,6 +87,17 @@
                             </div>
                         </div>
                     </group>
+                    <group name="notifications">
+                        <label for="notifications" string="Users notification"/>
+                        <div>
+                            <div>
+                                <label for="notify_users"/>
+                                <field name="notify_users"
+                                       class="oe_inline"/>
+                                <br/>
+                            </div>
+                        </div>
+                    </group>
                 </xpath>
             </field>
         </record>

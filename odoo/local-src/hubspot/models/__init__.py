@@ -2,3 +2,5 @@ import baseConfig
 import hubspot
 import hubspotCon
 import hubspot_log
+import hubspot_contact
+import hubspot_contact_property

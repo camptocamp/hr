@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hubspot_temp_contacts_view_form" model="ir.ui.view">
+        <field name="name">hubspot.contact.form</field>
+        <field name="model">hubspot.contact</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="object_id"/>
+                        <field name="subscription_type"/>
+                        <field name="change_source"/>
+                        <field name="lead_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Properties" name="properties">
+                            <field name="properties">
+                                <tree>
+                                    <field name="property_name"/>
+                                    <field name="property_value"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hubspot_temp_contacts_view_tree" model="ir.ui.view">
+        <field name="name">hubspot.contact.tree</field>
+        <field name="model">hubspot.contact</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="object_id"/>
+                <field name="subscription_type"/>
+                <field name="change_source"/>
+                <field name="lead_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hubspot_contacts_temp_action" model="ir.actions.act_window">
+        <field name="name">Hubspot Temp Contacts</field>
+        <field name="res_model">hubspot.contact</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="hubspot_temp_contacts_menu"
+              name="Hubspot Temp Contacts"
+              action="hubspot_contacts_temp_action"
+              parent="specific_crm.sales_marketing_menu"
+              groups="hubspot.group_hubspot_manager"/>
+
+</odoo>

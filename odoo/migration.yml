@@ -671,3 +671,5 @@ migration:
         upgrade:
           - bso_delivery
           - bso_sales_process
+          - base_json_request
+          - hubspot

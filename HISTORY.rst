@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * #414 bso_sales_process
 
+* #416 hubspot
+
 **Bugfixes**
 
 * #413 bso_delivery
