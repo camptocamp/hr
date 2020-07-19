@@ -28,6 +28,19 @@ Latest (Unreleased)
 **Documentation**
 
 
+10.41.1 (2020-07-19)
+++++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+* #417 bso_delivery_fix
+
+**Build**
+
+**Documentation**
+
+
 10.41.0 (2020-07-17)
 ++++++++++++++++++++
 

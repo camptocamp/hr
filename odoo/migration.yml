@@ -673,3 +673,7 @@ migration:
           - bso_sales_process
           - base_json_request
           - hubspot
+    - version: 10.41.1
+      addons:
+        upgrade:
+          - bso_delivery
