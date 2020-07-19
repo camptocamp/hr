@@ -267,6 +267,11 @@ class DeliveryProject(models.Model):
     def update_progress_rate_revenue(self):
         self.ensure_one()
         self_sudo = self.sudo()
+
+        if not self_sudo.sale_order_id.picking_ids:
+            self_sudo.progress_rate = 100
+            return
+
         product_price = defaultdict(lambda: 0)
         qty = defaultdict(lambda: 0)
 
@@ -280,12 +285,9 @@ class DeliveryProject(models.Model):
             x: float(product_price[x]) / qty[x] if qty[x] != 0 else 0
             for x in product_price}
 
-        if not self_sudo.sale_order_id.picking_ids:
-            self_sudo.progress_rate = 100
-        else:
-            def calc_price(op):
-                return (average_price.get(op.product_id.id) * op.product_qty,
-                        average_price.get(op.product_id.id) * op.qty_done)
+        def calc_price(op):
+            return (average_price.get(op.product_id.id) * op.product_qty,
+                    average_price.get(op.product_id.id) * op.qty_done)
 
         to_be_delivered, delivered = zip(*map(
             calc_price,
