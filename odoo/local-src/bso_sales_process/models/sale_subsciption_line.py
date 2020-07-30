@@ -8,7 +8,3 @@ class SaleSubscriptionLine(models.Model):
         string='Order to unlink from',
         comodel_name='sale.order'
     )
-
-    to_be_deleted = fields.Boolean(
-        string='To Remove'
-    )

@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions, _
 
 
 class ReplaceSubsriptionLinesWizard(models.TransientModel):
@@ -10,9 +10,11 @@ class ReplaceSubsriptionLinesWizard(models.TransientModel):
         required=True,
         readonly=True
     )
-    subscription_line_ids = fields.One2many(
-        string='Subscription Lines',
-        related='subscription_id.recurring_invoice_line_ids',
+
+    subscription_line_ids = fields.Many2many(
+        string='Lines To Replace',
+        comodel_name='sale.subscription.line',
+        domain="[('analytic_account_id', '=', subscription_id)]"
     )
 
     @api.multi
@@ -23,10 +25,16 @@ class ReplaceSubsriptionLinesWizard(models.TransientModel):
              })
         view = wizard.create_sale_order()
         res = self.env['sale.order'].browse(view['res_id'])
-        selected_lines = self.subscription_line_ids.filtered(
-            lambda x: x.to_be_deleted)
-        res.to_delete_line_ids = selected_lines
-        res.order_type = 'replace'
+        if not self.subscription_line_ids:
+            raise exceptions.ValidationError(_(
+                'Please Select at lease one line to be %s, '
+                'or you might need to use the Upsell option!' % self.order_type
+            ))
+        res.sudo().write({
+            'to_delete_line_ids': [
+                (6, 0, self.subscription_line_ids.ids)],
+            'order_type': 'replace'
+        })
         return view
 
     @api.multi
