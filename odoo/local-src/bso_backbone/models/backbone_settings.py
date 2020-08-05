@@ -55,6 +55,11 @@ class BackboneSettings(models.Model):
         required=True,
         default='[A-Z]+[A-Z0-9]+',
     )
+    separator = fields.Char(
+        string='Separator',
+        required=True,
+        default='.',
+    )
 
     def get(self):
         record = self._get()

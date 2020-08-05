@@ -18,6 +18,14 @@ class BackbonePop(models.Model):
         required=True,
         track_visibility='onchange'
     )
+    ixr_name = fields.Char(
+        string='IXR Name',
+        track_visibility='onchange'
+    )
+    bso_name = fields.Char(
+        string='BSO Name',
+        track_visibility='onchange'
+    )
     code = fields.Char(
         string='Code',
         track_visibility='onchange'
@@ -111,7 +119,8 @@ class BackbonePop(models.Model):
         settings = self.env['backbone.settings'].get()
         for rec in self:
             if not bool(re.findall(
-                    '^%s-%s$' % (settings.regex_city, settings.regex_pop),
+                    '^%s%s%s$' % (settings.regex_pop, settings.separator,
+                                  settings.regex_city),
                     rec.name)):
                 raise exceptions.ValidationError(
                     _('%s does not respect the naming convention') % rec.name
