@@ -23,6 +23,7 @@
                     <field name="regex_pop"/>
                     <field name="regex_device"/>
                     <field name="regex_pop_code"/>
+                    <field name="separator"/>
                 </group>
             </form>
         </field>

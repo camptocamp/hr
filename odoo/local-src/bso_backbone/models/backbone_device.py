@@ -17,6 +17,14 @@ class BackboneDevice(models.Model):
         required=True,
         track_visibility='onchange'
     )
+    ixr_name = fields.Char(
+        string='IXR Name',
+        track_visibility='onchange'
+    )
+    bso_name = fields.Char(
+        string='BSO Name',
+        track_visibility='onchange'
+    )
     pop_id = fields.Many2one(
         string='POP',
         comodel_name='backbone.pop',
@@ -76,7 +84,8 @@ class BackboneDevice(models.Model):
                 continue
             if not bool(
                     re.findall(
-                        "^%s-%s$" % (rec.pop_id.name, settings.regex_device),
-                        rec.name)):
+                        "^%s%s(?i)%s$" % (settings.regex_device,
+                                          settings.separator,
+                                          rec.pop_id.name), rec.name)):
                 raise exceptions.ValidationError(
                     _('%s does not respect the naming convention') % rec.name)

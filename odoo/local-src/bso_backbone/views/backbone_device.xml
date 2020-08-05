@@ -7,6 +7,8 @@
         <field name="arch" type="xml">
             <tree string="Device">
                 <field name="name"/>
+                <field name="ixr_name"/>
+                <field name="bso_name"/>
                 <field name="pop_id"/>
                 <field name="supplier_id"/>
                 <field name="supplier_name" invisible="1"/>
@@ -37,6 +39,8 @@
                     </div>
                     <group>
                         <field name="name"/>
+                        <field name="ixr_name"/>
+                        <field name="bso_name"/>
                         <field name="pop_id"/>
                         <field name="supplier_id"
                                options="{'create': false, 'create_edit': false}"/>
