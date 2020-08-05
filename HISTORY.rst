@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.41.2 (2020-08-05)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #418 bso_sales_process
 
 * #419 bso_backbone
