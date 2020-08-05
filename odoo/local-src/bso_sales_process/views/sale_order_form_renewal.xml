@@ -4,6 +4,10 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='subscription_id']" position="after">
+                <field name="increment_subscription_period"
+                       attrs=" {'invisible': [('order_type', '!=', 'replace')]}"/>
+            </xpath>
             <xpath expr="//notebook/page[1]" position="after">
                 <page string="Removed Lines"
                       attrs="{'invisible': [('order_type','not in',('renew', 'replace'))]}">
@@ -18,20 +22,26 @@
                                    groups="base.group_no_one"/>
                             <field name="actual_quantity"/>
                             <field name="sold_quantity"/>
-                            <field name="uom_id" groups="product.group_uom"/>
+                            <field name="uom_id"/>
                             <field name="price_unit"/>
-                            <field name="discount"
-                                   groups="sale.group_discount_per_so_line"/>
+                            <field name="discount"/>
                             <field name="price_subtotal"/>
                         </tree>
                     </field>
                 </page>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree"
+                   position="attributes">
+                <attribute name="attrs">
+                    {'readonly': [('order_type', '=', 'renew')]}
+                </attribute>
             </xpath>
 
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']"
                    position="before">
                 <field name="order_type" invisible="1"/>
             </xpath>
+
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']"
                    position="attributes">
                 <attribute name="attrs">
@@ -50,6 +60,12 @@
                     {'readonly': [('order_type', '=', 'renew')]}
                 </attribute>
             </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']"
+                   position="attributes">
+                <attribute name="attrs">
+                    {'readonly': [('order_type', '=', 'renew')]}
+                </attribute>
+            </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='analytic_tag_ids']"
                    position="attributes">
                 <attribute name="attrs">
@@ -60,6 +76,11 @@
                    position="attributes">
                 <attribute name="attrs">
                     {'readonly': [('order_type', '=', 'renew')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="attrs">
+                    {'readonly': [('order_type', '!=', 'replace')]}
                 </attribute>
             </xpath>
         </field>

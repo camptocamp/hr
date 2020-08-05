@@ -6,7 +6,6 @@
     'depends': ['website_contract',
                 'sale_contract',
                 'bso_dealsheet',
-                'bso_pop_up_message',
                 'sale_stock',
                 'bso_sales_reporting',
                 'bso_bundle',
@@ -14,8 +13,8 @@
                 ],
     'data': [
         'security/ir.model.access.csv',
-        'views/so_cancellation_view.xml',
-        'views/subscription_form_new_buttons.xml',
+        'views/replace_subscription_lines_wizard.xml',
+        'views/sale_subscription.xml',
         'views/sale_order_tree_view.xml',
         'views/sale_order_form_renewal.xml',
         'views/sale_order_form.xml'

@@ -2,13 +2,15 @@
 import json
 from lxml import etree
 
-from odoo import models, api, fields, SUPERUSER_ID, exceptions, _
-from odoo.addons.sale_contract.models.sale_order import SaleOrder as So
+from odoo import models, api, fields, exceptions
 
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    order_type = fields.Selection(
+        default='create'
+    )
     to_delete_line_ids = fields.One2many(
         comodel_name='sale.subscription.line',
         inverse_name='unlink_order_id'
@@ -40,6 +42,22 @@ class SaleOrder(models.Model):
         compute='_compute_new_mrr',
         store=True
     )
+    abs_mrr_usd = fields.Monetary(
+        string='Abs MRR USD',
+        compute='_compute_abs_mrr_usd',
+        currency_field='usd_currency_id',
+        store=True
+    )
+    loss_mrr_usd = fields.Monetary(
+        string='Loss MRR USD',
+        compute='_compute_loss_mrr_usd',
+        currency_field='usd_currency_id',
+        store=True
+    )
+    increment_subscription_period = fields.Boolean(
+        string='Increment Subscription Period',
+        default=lambda order: order.order_type in ('renew', 'replace')
+    )
 
     @api.depends('mrr', 'to_delete_line_ids')
     def _compute_absolute_mrr(self):
@@ -67,42 +85,25 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        if self.env.uid == SUPERUSER_ID:
-            return self._action_ok()
-        if (self.env.user.employee_ids.company_id !=
-                self.env.user.company_id):
-            return self.env['pop.up.message'].show({
-                'name': 'Confirm',
-                'description': 'You are not on your home entity, '
-                               'Would you like to to proceed with this'
-                               ' action anyway?',
-            })
+        self.ensure_one()
+        confirm = super(SaleOrder, self.with_context(
+            no_update_subscription=True)).action_confirm()
+        self._deliver_pickings_on_renewal_confirmation()
+        return confirm
+
+    @api.multi
+    def _deliver_pickings_on_renewal_confirmation(self):
+        self_sudo = self.sudo()
+        if self_sudo.order_type == 'renew':
+            wiz_view = self_sudo.sudo().picking_ids.do_new_transfer()
+            return self_sudo.env[wiz_view.get('res_model')].browse(
+                wiz_view.get('res_id')).process()
 
     @api.multi
     def action_invoice_create(self, grouped=False, final=False):
         res = super(SaleOrder, self).action_invoice_create(grouped, final)
         self.action_done()
         return res
-
-    @api.multi
-    def _action_ok(self):
-        So.action_confirm = self.anterior_action_confirm_inherits_stack
-        return super(SaleOrder, self).action_confirm()
-
-    @api.multi
-    def anterior_action_confirm_inherits_stack(self):
-        for order in self:
-            if order.partner_id not in order.message_partner_ids:
-                order.message_subscribe([order.partner_id.id])
-            order.state = 'sale'
-            order.confirmation_date = fields.Datetime.now()
-            if self.env.context.get('send_email'):
-                order.force_quotation_send()
-            order.order_line._action_procurement_create()
-        if self.env['ir.values'].get_default(
-                'sale.config.settings', 'auto_done_setting'):
-            self.action_done()
-        return True
 
     @api.multi
     def update_subscription(self):
@@ -115,30 +116,31 @@ class SaleOrder(models.Model):
                         (3, line_id) for line_id in self.to_delete_line_ids.ids
                     ]
                     order.subscription_id.sudo().write(
-                        {'recurring_invoice_line_ids': to_remove,
-                         'description': order.note,
-                         'pricelist_id': order.pricelist_id.id})
-                    order.subscription_id.sudo().set_open()
-                    order.subscription_id.sudo().increment_period()
+                        {'recurring_invoice_line_ids': to_remove})
+                    if order.increment_subscription_period:
+                        order.subscription_id.sudo().write({
+                            'description': order.note,
+                            'pricelist_id': order.pricelist_id.id
+                        })
+                        order.subscription_id.sudo().set_open()
+                        order.subscription_id.sudo().increment_period()
                     values = order.prepare_subscription_lines()
                     order.subscription_id.sudo().write(values)
-
-                order.action_done()
+                    order.action_done()
         return True
 
     def prepare_subscription_lines(self):
+        # add new lines or increment quantities on existing lines
         values = {'recurring_invoice_line_ids': []}
         for line in self.order_line:
             if line.product_id.recurring_invoice:
                 recurring_line_id = False
                 subs_lines_prodcuts = [
                     subscr_line.product_id for subscr_line in
-                    self.subscription_id.recurring_invoice_line_ids.filtered(
-                        lambda x: x.to_be_deleted is False)
-                ]
+                    self.to_delete_line_ids]
+                recur_lines = self.subscription_id.recurring_invoice_line_ids
                 if line.product_id in subs_lines_prodcuts:
-                    for subscr_line in \
-                            self.subscription_id.recurring_invoice_line_ids:
+                    for subscr_line in recur_lines:
                         if (subscr_line.product_id == line.product_id and
                                 subscr_line.product_id.mergeable and
                                 subscr_line.uom_id == line.product_uom):
@@ -165,32 +167,14 @@ class SaleOrder(models.Model):
                           }))
         return values
 
-    @api.multi
-    def replace_action(self):
-        self.ensure_one()
-        self.to_delete_line_ids = self.to_delete_line_ids.filtered(
-            lambda x: x.to_be_deleted)
-        if not self.to_delete_line_ids:
-            raise exceptions.ValidationError(_(
-                'Please Select at lease one line to be %s, '
-                'or you might need to use the Upsell option!' % self.order_type
-            ))
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': self._name,
-            'res_id': self.id,
-            'view_type': 'form',
-            'view_mode': 'form'
-        }
-
     @api.model
     def fields_view_get(self, *args, **kwargs):
         res = super(SaleOrder, self).fields_view_get(*args, **kwargs)
         doc = etree.XML(res['arch'])
         if res['name'] == 'sale.order.form':
+            renew_editable_fields = self.get_renew_editable_fields()
             for node in doc.xpath("//field"):
-                if node.get('name') not in (
-                        'duration', 'order_line'):
+                if node.get('name') not in renew_editable_fields:
                     modifiers_dict = json.loads(node.get('modifiers'))
                     if modifiers_dict.get('readonly') is True:
                         pass
@@ -204,3 +188,31 @@ class SaleOrder(models.Model):
                     node.set('modifiers', json.dumps(modifiers_dict))
             res['arch'] = etree.tostring(doc)
         return res
+
+    @api.depends('abs_mrr', 'rate_usd')
+    def _compute_abs_mrr_usd(self):
+        for rec in self:
+            rec.abs_mrr_usd = rec.abs_mrr * rec.rate_usd
+
+    @api.depends('loss_mrr', 'rate_usd')
+    def _compute_loss_mrr_usd(self):
+        for rec in self:
+            rec.loss_mrr_usd = rec.loss_mrr * rec.rate_usd
+
+    def get_renew_editable_fields(self):
+        return ('duration', 'order_line', 'user_id', 'tag_ids', 'team_id',
+                'company_id')
+
+    @api.multi
+    def write(self, vals):
+        for rec in self:
+            # prevent adding/removing new sale.order.line to a renewal SO,
+            # allow update
+            order_lines_domain = vals.get('order_line', [[1]])[0]
+            if rec.order_type == 'renew' and order_lines_domain[0] != 1:
+                format_string = ('add', 'to') if vals.get(
+                    'order_line', [[1]])[0][0] == 4 else ('remove', 'from')
+                raise exceptions.ValidationError(
+                    'You can not %s lines %s a renewal sale order' %
+                    format_string)
+            return super(SaleOrder, self).write(vals)

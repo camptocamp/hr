@@ -677,3 +677,7 @@ migration:
       addons:
         upgrade:
           - bso_delivery
+    - version: 10.41.2
+      addons:
+        upgrade:
+          - bso_sales_process
