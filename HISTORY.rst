@@ -37,12 +37,6 @@ Latest (Unreleased)
 
 * #419 bso_backbone
 
-**Bugfixes**
-
-**Build**
-
-**Documentation**
-
 
 10.41.1 (2020-07-19)
 ++++++++++++++++++++
