@@ -686,4 +686,6 @@ migration:
       addons:
         upgrade:
           - bso_chat_access_control
+          - bso_api
+
 

@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #422 bso_api
+
 **Bugfixes**
 
 * #421 bso_chat_access_control
@@ -42,6 +44,7 @@ Latest (Unreleased)
 **Features and Improvements**
 
 **Bugfixes**
+
 * #417 bso_delivery_fix
 
 **Build**
