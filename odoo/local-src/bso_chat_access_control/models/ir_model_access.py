@@ -5,7 +5,7 @@ class IrModelAccess(models.Model):
     _inherit = 'ir.model.access'
 
     perm_chat = fields.Boolean(
-        String='Chat Write Access',
+        string='Chat Write Access',
         default=True,
     )
     perm_export = fields.Boolean(

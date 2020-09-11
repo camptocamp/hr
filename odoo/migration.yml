@@ -682,3 +682,8 @@ migration:
         upgrade:
           - bso_sales_process
           - bso_backbone
+    - version: 10.42.0
+      addons:
+        upgrade:
+          - bso_chat_access_control
+

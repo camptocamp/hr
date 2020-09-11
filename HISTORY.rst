@@ -23,9 +23,7 @@ Latest (Unreleased)
 
 **Bugfixes**
 
-**Build**
-
-**Documentation**
+* #421 bso_chat_access_control
 
 
 10.41.2 (2020-08-05)

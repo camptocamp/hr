@@ -5,7 +5,7 @@
                    'module chatter',
     'author': 'BSO',
     'website': 'https://www.bsonetwork.com',
-    'depends': ['base', 'mail'],
+    'depends': ['mail'],
     'data': [
         'security/ir.model.access.csv',
         'views/ir_model.xml',
