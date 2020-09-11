@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.42.0 (2020-09-11)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #422 bso_api
 
 **Bugfixes**
