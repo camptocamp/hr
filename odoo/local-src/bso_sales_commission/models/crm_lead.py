@@ -37,7 +37,7 @@ class CrmLead(models.Model):
         sale_order = self.env['sale.order']
         start_date, end_date = sale_order.get_this_quarter_start_end_date()
         return self.env['sale.order'].search_count([
-            ('state', '=', 'sale'),
+            ('state', 'in', ('sale', 'done')),
             ('confirmation_date', '>=', start_date),
             ('confirmation_date', '<=', end_date),
             '|',
@@ -56,7 +56,7 @@ class CrmLead(models.Model):
         sale_order = self.env['sale.order']
         start_date, end_date = sale_order.get_this_quarter_start_end_date()
         return self.env['salesperson.commission.line'].search([
-            ('order_id.state', '=', 'sale'),
+            ('order_id.state', '=', ('sale', 'done')),
             ('order_id.confirmation_date', '>=', start_date),
             ('order_id.confirmation_date', '<=', end_date),
             ('user_id', '=', self.env.uid),
