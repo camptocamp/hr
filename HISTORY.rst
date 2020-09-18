@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.43.0 (2020-09-18)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #424 bso_account_cutoff
 
 **Bugfixes**
