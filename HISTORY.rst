@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #424 bso_account_cutoff
+
 **Bugfixes**
 
 * #423 bso_sales_commission

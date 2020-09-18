@@ -691,4 +691,4 @@ migration:
       addons:
         upgrade:
           - bso_sales_commission
-
+          - bso_account_cutoff
