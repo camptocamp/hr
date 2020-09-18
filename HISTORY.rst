@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #423 bso_sales_commission
+
 **Build**
 
 **Documentation**

@@ -687,5 +687,8 @@ migration:
         upgrade:
           - bso_chat_access_control
           - bso_api
-
+    - version: 10.43.0
+      addons:
+        upgrade:
+          - bso_sales_commission
 

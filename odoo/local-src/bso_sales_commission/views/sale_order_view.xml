@@ -50,7 +50,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar,graph,pivot</field>
         <field name="domain">
-            [('state','=','sale'),'|',('user_id','=',uid),('salesperson_commission_line_ids.user_id','in',[uid])]
+            [('state','in',('sale','done')),'|',('user_id','=',uid),('salesperson_commission_line_ids.user_id','in',[uid])]
         </field>
         <field name="context">{'search_default_this_quarter':True}</field>
         <field name="search_view_id" ref="sale.view_sales_order_filter"/>
