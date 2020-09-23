@@ -25,6 +25,18 @@ Latest (Unreleased)
 
 **Build**
 
+**Documentation**
+
+
+10.43.1 (2020-09-23)
+++++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+**Build**
+
 * #429 six 1.14.0 added to requirements
 
 **Documentation**
