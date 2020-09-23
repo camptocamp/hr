@@ -80,7 +80,7 @@
             </xpath>
             <xpath expr="//field[@name='company_id']" position="attributes">
                 <attribute name="attrs">
-                    {'readonly': [('order_type', '!=', 'replace')]}
+                    {'readonly': [('order_type', '=', 'replace')]}
                 </attribute>
             </xpath>
         </field>
