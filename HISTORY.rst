@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Build**
 
+* #429 six 1.14.0 added to requirements
+
 **Documentation**
 
 

@@ -692,3 +692,5 @@ migration:
         upgrade:
           - bso_sales_commission
           - bso_account_cutoff
+    - version: 10.43.1
+
