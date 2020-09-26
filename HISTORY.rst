@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 * #430 bso_api pops and devices endpoints added
 
+* #432 bso_chat_access_read
+
 **Bugfixes**
 
 **Build**

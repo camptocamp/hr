@@ -698,4 +698,4 @@ migration:
         upgrade:
           - bso_sales_process
           - bso_api
-
+          - bso_chat_access_read
