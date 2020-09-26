@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.44.0 (2020-09-26)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #427 bso_sales_process
 
 * #430 bso_api pops and devices endpoints added
