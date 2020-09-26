@@ -201,7 +201,7 @@ class SaleOrder(models.Model):
 
     def get_renew_editable_fields(self):
         return ('duration', 'order_line', 'user_id', 'tag_ids', 'team_id',
-                'company_id')
+                'company_id', 'client_order_ref', 'note')
 
     @api.multi
     def write(self, vals):

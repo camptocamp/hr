@@ -693,4 +693,7 @@ migration:
           - bso_sales_commission
           - bso_account_cutoff
     - version: 10.43.1
-
+    - version: 10.44.0
+      addons:
+        upgrade:
+          - bso_sales_process
