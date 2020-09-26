@@ -21,9 +21,11 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
-**Bugfixes**
-
 * #427 bso_sales_process
+
+* #430 bso_api pops and devices endpoints added
+
+**Bugfixes**
 
 **Build**
 

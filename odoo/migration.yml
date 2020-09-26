@@ -697,3 +697,5 @@ migration:
       addons:
         upgrade:
           - bso_sales_process
+          - bso_api
+
