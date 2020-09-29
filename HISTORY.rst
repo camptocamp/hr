@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 **Build**
 
+* BSMNT-138 Upgrade postgres dev to prod version (v12)
+
 **Documentation**
 
 
