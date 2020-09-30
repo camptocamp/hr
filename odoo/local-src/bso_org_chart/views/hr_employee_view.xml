@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Employee -->
+    <record id="view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button name="action_org_chart"
+                        type="object"
+                        class="oe_stat_button org-chart"
+                        context="{'res_id': active_id}"
+                        icon="fa-list-ul">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Hierarchy</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_employee_org_chart" model="ir.ui.view">
+        <field name="name">hr.employee.org.chart</field>
+        <field name="model">hr.employee</field>
+        <field name="sequence">0</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <div class="org_chart"/>
+            </form>
+        </field>
+    </record>
+</odoo>
