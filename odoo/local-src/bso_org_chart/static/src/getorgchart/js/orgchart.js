@@ -3855,7 +3855,7 @@ OrgChart.prototype._mouseDownHandler = function (t, e, r) {
     return t
 }, OrgChart._getViewBox = function (t) {
     var e = null;
-    return t ? (e = (e = "[" + (e = t.getAttribute("viewBox")) + "]").replace(/\ /g, ","), e = JSON.parse(e.replace(/\bNaN\b/g, "null"))) : null
+    return t ? (e = (e = "[" + (e = t.getAttribute("viewBox")) + "]").replace(/\ /g, ","), e = JSON.parse(e.replace(/\bNaN\b/g, "null").replace(',,', ''))) : null
 }, OrgChart.xScrollUI = function (t, e, r, i, a) {
     this.element = t, this.requestParams = r, this.config = e, this.onSetViewBoxCallback = i, this.onDrawCallback = a, this.pos = 0
 }, OrgChart.xScrollUI.prototype.addListener = function (t) {
