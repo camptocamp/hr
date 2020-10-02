@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #434 Removing bso_chat_access_control
+
 **Bugfixes**
 
 **Build**
