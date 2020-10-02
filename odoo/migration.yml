@@ -699,3 +699,7 @@ migration:
           - bso_sales_process
           - bso_api
           - bso_chat_access_read
+    - version: 10.45.0
+      operations:
+        pre:
+          - anthem songs.upgrade.upgrade_10_45_0::main
