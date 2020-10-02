@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.45.0 (2020-10-02)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #434 Removing bso_chat_access_control
 
 * #435 bso_org_chart added
