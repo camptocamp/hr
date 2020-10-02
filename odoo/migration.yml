@@ -703,3 +703,6 @@ migration:
       operations:
         pre:
           - anthem songs.upgrade.upgrade_10_45_0::main
+      addons:
+        upgrade:
+          - bso_org_chart

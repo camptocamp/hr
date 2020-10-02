@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * #434 Removing bso_chat_access_control
 
+* #435 bso_org_chart added
+
 **Bugfixes**
 
 **Build**
