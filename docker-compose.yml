@@ -38,11 +38,12 @@ services:
       MARABUNTA_ALLOW_SERIE: 'True'  # should not be set in production
 
   db:
-    image: camptocamp/postgresql:pg9.5-latest
+    image: camptocamp/postgres:12-postgis3
     command: -c shared_buffers=256MB -c maintenance_work_mem=256MB -c wal_buffers=8MB -c effective_cache_size=1024MB
     ports:
       - 5432
     environment:
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8 --lc-collate=C --lc-ctype=C
       POSTGRES_USER: odoo
       POSTGRES_PASSWORD: odoo
     volumes:
