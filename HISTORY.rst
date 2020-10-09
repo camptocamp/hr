@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.46.0 (2020-10-09)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #437 bso_hr_employee added
 
 **Bugfixes**
