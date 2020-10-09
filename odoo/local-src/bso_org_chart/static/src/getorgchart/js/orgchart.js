@@ -1415,11 +1415,13 @@ OrgChart.editUI.prototype._addField = function (t, e, r, i) {
     return this.replace(new RegExp(t, "g"), e)
 }, String.prototype.splice = function (t, e, r) {
     return this.slice(0, t) + r + this.slice(t + Math.abs(e))
-}, Array.prototype.has = function (t) {
-    for (var e = 0; e < this.length; e++)
-        if (this[e] == t) return !0;
-    return !1
-}, "function" != typeof Object.assign && Object.defineProperty(Object, "assign", {
+},Object.defineProperty(Array.prototype, 'has', {
+    get: function (t) {
+        for (var e = 0; e < this.length; e++)
+            if (this[e] == t) return !0;
+        return !1
+    }
+}), "function" != typeof Object.assign && Object.defineProperty(Object, "assign", {
     value: function (t, e) {
         "use strict";
         if (null == t) throw new TypeError("Cannot convert undefined or null to object");

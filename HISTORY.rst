@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #436 bso_org_chart
+
 **Build**
 
 * BSMNT-138 Upgrade postgres dev to prod version (v12)

@@ -706,3 +706,7 @@ migration:
       addons:
         upgrade:
           - bso_org_chart
+    - version: 10.46.0
+      addons:
+        upgrade:
+          - bso_org_chart
