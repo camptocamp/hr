@@ -710,3 +710,4 @@ migration:
       addons:
         upgrade:
           - bso_org_chart
+          - bso_hr_employee

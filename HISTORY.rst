@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #437 bso_hr_employee added
+
 **Bugfixes**
 
 * #436 bso_org_chart
