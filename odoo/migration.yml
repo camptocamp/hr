@@ -711,3 +711,7 @@ migration:
         upgrade:
           - bso_org_chart
           - bso_hr_employee
+    - version: 10.46.1
+      addons:
+        upgrade:
+          - bso_api

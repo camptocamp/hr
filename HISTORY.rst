@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #438 bso_api: updates on fields returned by employees endpoint
+
 **Bugfixes**
 
 **Build**
