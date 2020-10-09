@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.46.1 (2020-10-09)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #438 bso_api: updates on fields returned by employees endpoint
 
 **Bugfixes**
