@@ -24,6 +24,8 @@
                             <field name="additional_tax_ids"
                                    widget="many2many_tags"/>
                             <field name="price_subtotal"/>
+                            <field name="state"/>
+                            <field name="date"/>
                         </group>
                     </group>
                 </sheet>
@@ -48,6 +50,8 @@
                 <field name="discount"
                        groups="sale.group_discount_per_so_line"/>
                 <field name="price_subtotal" sum="Total"/>
+                <field name="state"/>
+                <field name="date"/>
             </tree>
         </field>
     </record>

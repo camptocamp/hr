@@ -18,3 +18,15 @@ class SaleSubscriptionLine(models.Model):
     price_subtotal = fields.Float(
         store=True
     )
+    state = fields.Selection(
+        related='analytic_account_id.state',
+        store=True,
+        string='Status',
+        readonly=True
+    )
+    date = fields.Date(
+        related='analytic_account_id.date',
+        store=True,
+        string='End Date',
+        readonly=True
+    )
