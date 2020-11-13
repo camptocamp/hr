@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * #439 bso_subscription_lines
 
+* #440 bso_org_chart
+
 **Bugfixes**
 
 **Build**

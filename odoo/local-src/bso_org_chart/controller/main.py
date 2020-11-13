@@ -11,7 +11,7 @@ FIELDS = ['id', 'pid', 'name', 'title', 'work_location', 'company_id']
 class Main(Website):
 
     @http.route(['/hr_employee/get_org_chart/<int:employee_id>'],
-                type='http', auth="public", website=True)
+                type='http', auth="user", website=True)
     def get_org_chart(self, employee_id=0):
         Model = request.env['hr.employee'].sudo()
         employee_ids = Model.browse(employee_id)
@@ -28,7 +28,7 @@ class Main(Website):
         return json.dumps(data)
 
     @http.route(['/hr_employee/name/<string:name>'],
-                type='http', auth="public", website=True)
+                type='http', auth="user", website=True)
     def get_employee_by_name(self, name=''):
         Model = request.env['hr.employee'].sudo()
         employee_ids = Model.search(

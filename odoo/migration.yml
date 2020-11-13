@@ -719,3 +719,4 @@ migration:
       addons:
         upgrade:
           - bso_subscription_lines
+          - bso_org_chart
