@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #439 bso_subscription_lines
+
 **Bugfixes**
 
 **Build**

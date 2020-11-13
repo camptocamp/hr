@@ -715,3 +715,7 @@ migration:
       addons:
         upgrade:
           - bso_api
+    - version: 10.47.0
+      addons:
+        upgrade:
+          - bso_subscription_lines
