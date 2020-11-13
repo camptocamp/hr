@@ -43,8 +43,8 @@ class CeaseOrder(models.Model):
         comodel_name='res.partner',
         domain="[('parent_id', '=', partner_id)]"
     )
-    provisionning_contact = fields.Many2one(
-        string='Provisionning Contact',
+    provisioning_contact = fields.Many2one(
+        string='Provisioning Contact',
         comodel_name='res.partner',
         domain="[('parent_id', '=', partner_id)]"
     )

@@ -57,7 +57,7 @@
                     <group>
                         <field name="partner_id" readonly="1"/>
                         <field name="customer_contact"/>
-                        <field name="provisionning_contact"/>
+                        <field name="provisioning_contact"/>
                     </group>
                     <notebook>
                         <page string="Cease lines">
