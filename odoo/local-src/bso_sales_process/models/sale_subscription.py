@@ -19,10 +19,15 @@ class SaleSubscription(models.Model):
     @api.multi
     def prepare_renewal_order(self):
         so_view = super(SaleSubscription, self).prepare_renewal_order()
+        to_delete_line_ids = []
+        for line in self.recurring_invoice_line_ids:
+            to_delete_line_ids.append(
+                self.env['sale.order.sub_line_remove'].create(
+                    {'subscription_line_id': line.id}).id)
         self.env['sale.order'].browse(so_view['res_id']).sudo().write(
             {'order_type': 'renew',
              'to_delete_line_ids': [
-                 (6, 0, self.recurring_invoice_line_ids.ids)],
+                 (6, 0, to_delete_line_ids)],
              }
         )
         return so_view

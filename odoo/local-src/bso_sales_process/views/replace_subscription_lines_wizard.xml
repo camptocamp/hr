@@ -14,7 +14,7 @@
                             <field name="name"/>
                             <field name="quantity" readonly="1"
                                    groups="base.group_no_one"/>
-                            <field name="actual_quantity"/>
+                            <field name="sold_quantity"/>
                             <field name="sold_quantity"/>
                             <field name="uom_id"/>
                             <field name="price_unit"/>

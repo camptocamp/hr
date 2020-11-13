@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
         default='create'
     )
     to_delete_line_ids = fields.One2many(
-        comodel_name='sale.subscription.line',
+        comodel_name='sale.order.sub_line_remove',
         inverse_name='unlink_order_id'
     )
     rel_amount_untaxed = fields.Monetary(
@@ -113,8 +113,9 @@ class SaleOrder(models.Model):
                 context = self.env.context
                 if not context.get('no_upsell', dict()).get(order.id):
                     to_remove = [
-                        (3, line_id) for line_id in self.to_delete_line_ids.ids
-                    ]
+                        (3, line_id) for line_id in
+                        self.to_delete_line_ids.mapped(
+                            'subscription_line_id').ids]
                     order.subscription_id.sudo().write(
                         {'recurring_invoice_line_ids': to_remove})
                     if order.increment_subscription_period:
@@ -137,7 +138,7 @@ class SaleOrder(models.Model):
                 recurring_line_id = False
                 subs_lines_prodcuts = [
                     subscr_line.product_id for subscr_line in
-                    self.to_delete_line_ids]
+                    self.to_delete_line_ids.mapped('subscription_line_id')]
                 recur_lines = self.subscription_id.recurring_invoice_line_ids
                 if line.product_id in subs_lines_prodcuts:
                     for subscr_line in recur_lines:
