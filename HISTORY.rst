@@ -25,6 +25,8 @@ Latest (Unreleased)
 
 * #440 bso_org_chart
 
+* #442 bso_subscription_cease
+
 **Bugfixes**
 
 **Build**

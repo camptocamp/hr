@@ -720,3 +720,4 @@ migration:
         upgrade:
           - bso_subscription_lines
           - bso_org_chart
+          - bso_subscription_cease

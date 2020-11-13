@@ -1,0 +1,26 @@
+<odoo>
+    <record model="ir.ui.view" id="sale_subscription_cease">
+        <field name="name">sale.subscription.cease</field>
+        <field name="model">sale.subscription</field>
+        <field name="inherit_id"
+               ref="website_contract.sale_subscription_view_form_inherit_sale_contract"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box']" postition="inside">
+                <button name="action_get_purchases"
+                        type="object"
+                        icon="fa-hourglass-end"
+                        class="oe_stat_button">
+                    <field name="cease_count"
+                           widget="statinfo"
+                           string="Ceases"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='recurring_invoice_line_ids']"
+                   position="before">
+                <button string="&#8658; Cease" class="oe_link oe_right"
+                        help="Cease line"
+                        name="action_cease_lines" type="object"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
