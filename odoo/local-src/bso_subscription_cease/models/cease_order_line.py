@@ -45,5 +45,3 @@ class CeaseOrderLine(models.Model):
         related='subscription_line_id.price_subtotal',
         store=True
     )
-
-
