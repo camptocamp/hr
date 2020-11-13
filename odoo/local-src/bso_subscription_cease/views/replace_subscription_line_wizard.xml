@@ -1,0 +1,36 @@
+<odoo>
+    <record id="cease_subscription_lines_wizard" model="ir.ui.view">
+        <field name="name">cease.subscription.lines.wizard</field>
+        <field name="model">replace.subscription.lines.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <h2>
+                    Please select the lines to be ceased.
+                </h2>
+                <field name="subscription_id" invisible="1"/>
+                <field name="subscription_line_ids">
+                    <tree create="1">
+                        <field name="product_id"/>
+                        <field name="name"/>
+                        <field name="quantity" readonly="1"
+                               groups="base.group_no_one"/>
+                        <field name="actual_quantity"/>
+                        <field name="sold_quantity"/>
+                        <field name="price_unit"/>
+                        <field name="discount"/>
+                        <field name="price_subtotal"/>
+                    </tree>
+                </field>
+                <group>
+                    <field name="close_reason_id" required="1"/>
+                    <field name="reason_description"/>
+                </group>
+                <footer>
+                    <button name="cease_action" type="object"
+                            string="Continue"
+                            class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
