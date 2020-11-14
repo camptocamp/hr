@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.47.0 (2020-11-14)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #439 bso_subscription_lines
 
 * #440 bso_org_chart
