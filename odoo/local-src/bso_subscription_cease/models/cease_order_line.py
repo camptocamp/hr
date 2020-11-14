@@ -3,7 +3,6 @@ from odoo import models, fields
 
 class CeaseOrderLine(models.Model):
     _name = 'cease.order.line'
-    # _inherits = {'sale.subscription.line': 'subscription_line_id'}
 
     cease_id = fields.Many2one(
         string='Cease Order',
