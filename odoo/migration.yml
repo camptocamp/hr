@@ -721,3 +721,4 @@ migration:
           - bso_subscription_lines
           - bso_org_chart
           - bso_subscription_cease
+          - bso_sales_process

@@ -27,12 +27,17 @@ class ReplaceSubsriptionLinesWizard(models.TransientModel):
         res = self.env['sale.order'].browse(view['res_id'])
         if not self.subscription_line_ids:
             raise exceptions.ValidationError(_(
-                'Please Select at least one line to be %s, '
-                'or you might need to use the Upsell option!' % self.order_type
+                'Please Select at lease one line to be replaced, '
+                'or you might need to use the Upsell option!'
             ))
+        to_delete_line_ids = []
+        for line in self.subscription_line_ids:
+            to_delete_line_ids.append(
+                self.env['sale.order.sub_line_remove'].sudo().create(
+                    {'subscription_line_id': line.id}).id)
         res.sudo().write({
             'to_delete_line_ids': [
-                (6, 0, self.subscription_line_ids.ids)],
+                (6, 0, to_delete_line_ids)],
             'order_type': 'replace'
         })
         return view

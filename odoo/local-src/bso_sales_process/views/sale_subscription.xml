@@ -23,7 +23,6 @@
                    position="before">
                 <button string="&#8658; Replace" class="oe_link oe_right"
                         help="Replace existing options directly"
-                        context="{'replace': True}"
                         name="action_replace_lines" type="object"/>
             </xpath>
         </field>
