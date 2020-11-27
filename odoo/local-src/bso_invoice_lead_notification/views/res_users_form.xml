@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_users_form_simple_modif" model="ir.ui.view">
+        <field name="name">res.usres.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='notify_email']" position="after">
+                <field name='lead_notification_active' readonly="0"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
