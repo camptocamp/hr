@@ -1,5 +1,4 @@
 from . import sale_order
-from . import product_product
 from . import sale_subscription
 from . import stock_picking
 from . import sale_order_line
