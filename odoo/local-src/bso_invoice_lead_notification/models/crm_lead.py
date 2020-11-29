@@ -6,7 +6,7 @@ class CrmLead(models.Model):
 
     @api.model
     def create(self, vals):
-        if self.env.user.invoice_notification:
+        if not self.env.user.lead_notification_active:
             return super(
                 CrmLead, self.with_context(tracking_disable=True)
             ).create(vals)
