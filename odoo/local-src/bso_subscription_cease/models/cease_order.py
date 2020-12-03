@@ -152,7 +152,7 @@ class CeaseOrder(models.Model):
 
     @api.multi
     def _get_ac_purchase_ids(self):
-        return self.env['purchase.order.line'].search(
+        return self.env['purchase.order.line'].sudo().search(
             [('account_analytic_id', '=', self.project_id.id)]).mapped(
             'order_id').ids
 
@@ -206,3 +206,9 @@ class CeaseOrder(models.Model):
                     'subscription_line_id').ids]
             return self.subscription_id.sudo().write(
                 {'recurring_invoice_line_ids': to_remove})
+
+    @api.model
+    def create(self, vals):
+        res = super(CeaseOrder, self).create(vals)
+        res.write({'name': '{0}{1:05d}'.format('CO', res.id)})
+        return res
