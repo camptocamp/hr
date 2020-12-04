@@ -54,7 +54,6 @@ class CeaseOrder(models.Model):
     requested_date = fields.Date(
         string='Requested Date'
     )
-
     project_id = fields.Many2one(
         string='Project',
         related='subscription_id.analytic_account_id',
@@ -87,7 +86,6 @@ class CeaseOrder(models.Model):
     purchase_count = fields.Integer(
         string='Purchase Count',
         compute='compute_purchase_count',
-        store=True
     )
     cease_type = fields.Selection(
         [('partial', 'Partial'), ('full', 'Full')],
@@ -171,7 +169,7 @@ class CeaseOrder(models.Model):
             'type': 'ir.actions.act_window',
             'target': 'current'}
 
-    @api.depends('subscription_id')
+    @api.multi
     def compute_purchase_count(self):
         for rec in self:
             rec.purchase_count = len(rec._get_ac_purchase_ids())
