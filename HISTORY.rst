@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #445 bso_invoice_lead_notification
+
 **Bugfixes**
 
 * #444 bso_sales_process
