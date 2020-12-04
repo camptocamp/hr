@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * #445 bso_invoice_lead_notification
 
+* Uninstall bso_sales_forecast
+
 **Bugfixes**
 
 * #444 bso_sales_process

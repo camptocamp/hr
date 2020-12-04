@@ -723,6 +723,9 @@ migration:
           - bso_subscription_cease
           - bso_sales_process
     - version: 10.48.0
+      operations:
+        pre:
+          - anthem songs.upgrade.upgrade_10_48_0::main
       addons:
         upgrade:
           - bso_sales_process
