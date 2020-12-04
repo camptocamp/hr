@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.48.0 (2020-12-04)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #445 bso_invoice_lead_notification
 
 * Uninstall bso_sales_forecast
