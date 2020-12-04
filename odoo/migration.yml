@@ -722,3 +722,8 @@ migration:
           - bso_org_chart
           - bso_subscription_cease
           - bso_sales_process
+    - version: 10.48.0
+      addons:
+        upgrade:
+          - bso_sales_process
+

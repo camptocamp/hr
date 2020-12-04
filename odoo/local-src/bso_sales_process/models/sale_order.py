@@ -114,7 +114,7 @@ class SaleOrder(models.Model):
                 if not context.get('no_upsell', dict()).get(order.id):
                     to_remove = [
                         (3, line_id) for line_id in
-                        self.to_delete_line_ids.mapped(
+                        order.to_delete_line_ids.mapped(
                             'subscription_line_id').ids]
                     order.subscription_id.sudo().write(
                         {'recurring_invoice_line_ids': to_remove})
@@ -131,41 +131,21 @@ class SaleOrder(models.Model):
         return True
 
     def prepare_subscription_lines(self):
-        # add new lines or increment quantities on existing lines
         values = {'recurring_invoice_line_ids': []}
         for line in self.order_line:
             if line.product_id.recurring_invoice:
-                recurring_line_id = False
-                subs_lines_prodcuts = [
-                    subscr_line.product_id for subscr_line in
-                    self.to_delete_line_ids.mapped('subscription_line_id')]
-                recur_lines = self.subscription_id.recurring_invoice_line_ids
-                if line.product_id in subs_lines_prodcuts:
-                    for subscr_line in recur_lines:
-                        if (subscr_line.product_id == line.product_id and
-                                subscr_line.product_id.mergeable and
-                                subscr_line.uom_id == line.product_uom):
-                            recurring_line_id = subscr_line.id
-                            quantity = subscr_line.sold_quantity
-                            break
-                if recurring_line_id:
-                    values['recurring_invoice_line_ids'].append(
-                        (1, recurring_line_id, {
-                            'sold_quantity': quantity + line.product_uom_qty,
-                        }))
-                else:
-                    values['recurring_invoice_line_ids'].append(
-                        (0, 0,
-                         {'product_id': line.product_id.id,
-                          'analytic_account_id': self.subscription_id.id,
-                          'name': line.name,
-                          'sold_quantity': line.product_uom_qty,
-                          'uom_id': line.product_uom.id,
-                          'price_unit': line.price_unit,
-                          'discount': line.discount if
-                          line.order_id.order_type == 'renew'
-                          else False,
-                          }))
+                values['recurring_invoice_line_ids'].append(
+                    (0, 0,
+                     {'product_id': line.product_id.id,
+                      'analytic_account_id': self.subscription_id.id,
+                      'name': line.name,
+                      'sold_quantity': line.product_uom_qty,
+                      'uom_id': line.product_uom.id,
+                      'price_unit': line.price_unit,
+                      'discount': line.discount if
+                      line.order_id.order_type == 'renew'
+                      else False,
+                      }))
         return values
 
     @api.model
