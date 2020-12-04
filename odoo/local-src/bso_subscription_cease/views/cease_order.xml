@@ -15,7 +15,7 @@
                             string="Cease"
                             type="object"
                             class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'confirm')]}"
+                            attrs="{'invisible':[('state', '!=', 'confirm')]}"
                     />
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,confirm,cease"/>
@@ -25,7 +25,8 @@
                         <button name="action_get_purchases"
                                 type="object"
                                 icon="fa-credit-card"
-                                class="oe_stat_button">
+                                class="oe_stat_button"
+                                groups="purchase.group_purchase_user">
                             <field name="purchase_count"
                                    widget="statinfo"
                                    string="Purchases"/>

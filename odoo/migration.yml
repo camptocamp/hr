@@ -727,3 +727,4 @@ migration:
         upgrade:
           - bso_sales_process
           - bso_invoice_lead_notification
+          - bso_subscription_cease

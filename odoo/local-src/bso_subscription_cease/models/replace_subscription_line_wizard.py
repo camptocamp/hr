@@ -25,7 +25,6 @@ class ReplaceSubsriptionLinesWizard(models.TransientModel):
             'reason_description': self.reason_description,
             'cease_line_ids': [(6, 0, cease_lines)]
         })
-        cease_id.write({'name': '{0}{1:05d}'.format('CO', cease_id.id)})
 
         if len(self.subscription_id.recurring_invoice_line_ids) == len(
                 self.subscription_line_ids):

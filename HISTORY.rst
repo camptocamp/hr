@@ -27,6 +27,8 @@ Latest (Unreleased)
 
 * #444 bso_sales_process
 
+* #446 bso_subscription_cease
+
 **Build**
 
 **Documentation**
