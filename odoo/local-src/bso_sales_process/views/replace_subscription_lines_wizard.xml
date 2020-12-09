@@ -8,18 +8,18 @@
                     Please select the lines to be replaced.
                 </h2>
                 <field name="subscription_id" invisible="1"/>
-                <field name="subscription_line_ids">
+                <field name="subscription_line_ids" options="{'no_create': True}">
                     <tree create="1">
-                            <field name="product_id"/>
-                            <field name="name"/>
-                            <field name="quantity" readonly="1"
-                                   groups="base.group_no_one"/>
-                            <field name="sold_quantity"/>
-                            <field name="sold_quantity"/>
-                            <field name="uom_id"/>
-                            <field name="price_unit"/>
-                            <field name="discount"/>
-                            <field name="price_subtotal"/>
+                        <field name="product_id"/>
+                        <field name="name"/>
+                        <field name="quantity" readonly="1"
+                               groups="base.group_no_one"/>
+                        <field name="sold_quantity"/>
+                        <field name="sold_quantity"/>
+                        <field name="uom_id"/>
+                        <field name="price_unit"/>
+                        <field name="discount"/>
+                        <field name="price_subtotal"/>
                     </tree>
                 </field>
                 <footer>
