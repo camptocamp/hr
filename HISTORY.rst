@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* #447 bso_sales_process
+
 **Build**
 
 **Documentation**

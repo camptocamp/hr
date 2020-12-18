@@ -731,3 +731,8 @@ migration:
           - bso_sales_process
           - bso_invoice_lead_notification
           - bso_subscription_cease
+    - version: 10.49.0
+      addons:
+        upgrade:
+          - bso_sales_process
+     
