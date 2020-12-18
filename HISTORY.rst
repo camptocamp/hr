@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.49.0 (2020-12-18)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * #448 Update Odoo cloud platform
 
 **Bugfixes**
