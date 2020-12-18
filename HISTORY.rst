@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* #448 Update Odoo cloud platform
+
 **Bugfixes**
 
 * #447 bso_sales_process

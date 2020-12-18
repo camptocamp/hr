@@ -735,4 +735,6 @@ migration:
       addons:
         upgrade:
           - bso_sales_process
-     
+          - attachment_s3
+          - session_redis
+          - base_attachment_object_storage

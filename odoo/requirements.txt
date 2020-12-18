@@ -48,3 +48,12 @@ hubspot-contacts==1.1.1
 
 # account_bank_statement_import_mt940
 mt-940==4.21.0
+
+# odoo-cloud-platform
+boto3==1.9.102
+redis==2.10.5
+python-json-logger==0.1.5
+statsd==3.2.1
+python-keystoneclient==3.22.0
+keystoneauth1==3.14.0
+PyYAML==4.2b4
