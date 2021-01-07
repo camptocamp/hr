@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 from lxml import etree
+from datetime import date
 
 from odoo import models, api, fields, exceptions
 
