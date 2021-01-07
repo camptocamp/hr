@@ -108,26 +108,33 @@ class SaleOrder(models.Model):
     @api.multi
     def update_subscription(self):
         for order in self:
+            to_delete_sub_line_ids = order.to_delete_line_ids.mapped(
+                'subscription_line_id')
+            modified_sub_ids = to_delete_sub_line_ids.mapped(
+                'analytic_account_id')
+            to_delete_sub_line_ids.sudo().write({'analytic_account_id': False})
+
             if order.subscription_id:
-                # no need for updates if the contract was juste created
-                context = self.env.context
-                if not context.get('no_upsell', dict()).get(order.id):
-                    to_remove = [
-                        (3, line_id) for line_id in
-                        order.to_delete_line_ids.mapped(
-                            'subscription_line_id').ids]
-                    order.subscription_id.sudo().write(
-                        {'recurring_invoice_line_ids': to_remove})
-                    if order.increment_subscription_period:
-                        order.subscription_id.sudo().write({
-                            'description': order.note,
-                            'pricelist_id': order.pricelist_id.id
-                        })
-                        order.subscription_id.sudo().set_open()
-                        order.subscription_id.sudo().increment_period()
-                    values = order.prepare_subscription_lines()
-                    order.subscription_id.sudo().write(values)
-                    order.action_done()
+                if order.increment_subscription_period:
+                    order.subscription_id.sudo().write({
+                        'description': order.note,
+                        'pricelist_id': order.pricelist_id.id
+                    })
+                    order.subscription_id.sudo().set_open()
+                    order.subscription_id.sudo().increment_period()
+                values = order.prepare_subscription_lines()
+                order.subscription_id.sudo().write(values)
+                order.action_done()
+
+            merged_reason_id = order.subscription_id.close_reason_id.search(
+                [('name', '=', 'Merged')])
+            for sub in modified_sub_ids:
+                if not len(sub.recurring_invoice_line_ids):
+                    sub.sudo().write({
+                        'close_reason_id': merged_reason_id.id,
+                        'date_cancelled': date.today(),
+                    })
+                    sub.set_close()
         return True
 
     def prepare_subscription_lines(self):
