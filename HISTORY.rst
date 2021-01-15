@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* bso_sales_process
+
 **Bugfixes**
 
 **Build**

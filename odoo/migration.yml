@@ -738,3 +738,7 @@ migration:
           - attachment_s3
           - session_redis
           - base_attachment_object_storage
+    - version: 10.50.0
+      addons:
+        upgrade:
+          - bso_sales_process
