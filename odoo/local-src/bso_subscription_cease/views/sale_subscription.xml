@@ -6,7 +6,7 @@
                ref="website_contract.sale_subscription_view_form_inherit_sale_contract"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@class='oe_button_box']" postition="inside">
-                <button name="action_get_purchases"
+                <button name="action_get_ceases"
                         type="object"
                         icon="fa-hourglass-end"
                         class="oe_stat_button">

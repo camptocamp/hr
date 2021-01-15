@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * bso_sales_process
 
+* bso_subscription_cease
+
 **Bugfixes**
 
 **Build**
