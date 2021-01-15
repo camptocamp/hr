@@ -21,6 +21,18 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Build**
+
+**Documentation**
+
+
+10.50.0 (2021-01-15)
+++++++++++++++++++++
+
+**Features and Improvements**
+
 * bso_sales_process
 
 * bso_subscription_cease
