@@ -26,10 +26,6 @@ class ReplaceSubsriptionLinesWizard(models.TransientModel):
             'cease_line_ids': [(6, 0, cease_lines)]
         })
 
-        if len(self.subscription_id.recurring_invoice_line_ids) == len(
-                self.subscription_line_ids):
-            cease_id.cease_type = 'full'
-
         return {
             'name': 'Cease %s' % str(cease_id),
             'type': 'ir.actions.act_window',

@@ -1,5 +1,6 @@
-from odoo import models, fields, api
 from datetime import date
+
+from odoo import models, fields, api
 
 
 class CeaseOrder(models.Model):
@@ -10,7 +11,7 @@ class CeaseOrder(models.Model):
         string='Name'
     )
     submitter = fields.Many2one(
-        string='Submiter',
+        string='Submitter',
         comodel_name='res.users',
         default=lambda self: self.env.user
     )
@@ -20,18 +21,42 @@ class CeaseOrder(models.Model):
     )
 
     state = fields.Selection(
-        [('draft', 'Quotation'),
+        [('draft', 'New'),
          ('confirm', 'Confirmed'),
-         ('cease', 'Ceased')],
+         ('cease', 'Ceased'),
+         ('hold', 'On Hold'),
+         ('abort', 'Aborted')],
         string='Status',
         default='draft',
         track_visibility='onchange',
     )
+    processing_stage = fields.Selection(
+        [('checkinfo', 'Checking Information'),
+         ('awaitinfo', 'Awaiting Information'),
+         ('createform', 'Creating Form'),
+         ('withcustomer', 'with Customer'),
+         ('valid', 'Validated'),
+         ],
+        string='Processing Stage',
+        default='checkinfo',
+        track_visibility='onchange'
+    )
+
     subscription_id = fields.Many2one(
         string='Subscription',
         comodel_name='sale.subscription',
         store=True,
         track_visibility='onchange'
+    )
+    user_id = fields.Many2one(
+        string='Salesperson',
+        related='subscription_id.user_id'
+    )
+
+    # can not be related, related fields dont work with _track_subtype
+    company_id = fields.Many2one(
+        string='Company',
+        comodel_name='res.company'
     )
     partner_id = fields.Many2one(
         string='Customer',
@@ -54,6 +79,7 @@ class CeaseOrder(models.Model):
     requested_date = fields.Date(
         string='Requested Date'
     )
+
     project_id = fields.Many2one(
         string='Project',
         related='subscription_id.analytic_account_id',
@@ -62,11 +88,11 @@ class CeaseOrder(models.Model):
     cease_date = fields.Date(
         string='Cease Date',
         track_visibility='onchange',
-
     )
-    forcast_date = fields.Date(
-        string='Forcast Date',
+    forecast_date = fields.Date(
+        string='Forecast Date',
         track_visibility='onchange',
+        oldname='forcast_date'
     )
     cease_line_ids = fields.One2many(
         string='Cease Lines',
@@ -90,7 +116,8 @@ class CeaseOrder(models.Model):
     cease_type = fields.Selection(
         [('partial', 'Partial'), ('full', 'Full')],
         string='Cease Type',
-        default='partial'
+        compute='compute_cease_type',
+        store=True,
     )
     currency_id = fields.Many2one(
         string='Currency',
@@ -132,10 +159,12 @@ class CeaseOrder(models.Model):
             if rec.currency_id.id == rec.usd_currency_id.id:
                 rec.rate_usd = 1
             else:
-                rec.rate_usd = rec.currency_id.with_context({
-                    'company_id': rec.subscription_id.company_id.id,
-                    'date': dates[-1],
-                })._get_conversion_rate(rec.currency_id, rec.usd_currency_id)
+                if rec.currency_id.rate != 0:
+                    rec.rate_usd = rec.currency_id.with_context({
+                        'company_id': rec.company_id.id,
+                        'date': dates[-1],
+                    })._get_conversion_rate(rec.currency_id,
+                                            rec.usd_currency_id)
 
     @api.depends('cease_line_ids', 'close_reason_id')
     def _compute_loss_mrr(self):
@@ -177,8 +206,6 @@ class CeaseOrder(models.Model):
     @api.multi
     def action_confirm(self):
         self.ensure_one()
-        # create stock.pickings and moves
-        # create delivery.project
         return self.write(
             {'state': 'confirm', 'confirmation_date': date.today()})
 
@@ -207,6 +234,50 @@ class CeaseOrder(models.Model):
 
     @api.model
     def create(self, vals):
+        if 'subscription_id' in vals:
+            vals['company_id'] = self.subscription_id.browse(
+                vals['subscription_id']).company_id.id
         res = super(CeaseOrder, self).create(vals)
         res.write({'name': '{0}{1:05d}'.format('CO', res.id)})
         return res
+
+    @api.multi
+    def action_hold(self):
+        self.ensure_one()
+        self.state = 'hold'
+
+    @api.multi
+    def action_abort(self):
+        self.ensure_one()
+        self.state = 'abort'
+
+    @api.multi
+    def action_draft(self):
+        self.ensure_one()
+        self.state = 'draft'
+
+    @api.multi
+    def action_next_processing_stage(self):
+        self.ensure_one()
+        selection = self._fields['processing_stage'].selection
+        for index, value in enumerate(selection):
+            if value[0] == self.processing_stage and index != len(
+                    selection) - 1:
+                self.write({'processing_stage': selection[index + 1][0]})
+                break
+
+    @api.multi
+    def _track_subtype(self, init_values):
+        self.ensure_one()
+        if 'state' in init_values and self.state == 'draft':
+            return 'bso_subscription_cease.mt_cease_created'
+        return super(CeaseOrder, self)._track_subtype(init_values)
+
+    @api.depends('cease_line_ids')
+    def compute_cease_type(self):
+        for rec in self:
+            if len(rec.cease_line_ids) == len(
+                    rec.subscription_id.recurring_invoice_line_ids):
+                rec.cease_type = 'full'
+            else:
+                rec.cease_type = 'partial'

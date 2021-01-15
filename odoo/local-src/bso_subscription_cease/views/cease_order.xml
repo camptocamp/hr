@@ -9,7 +9,7 @@
                             string="Confirm"
                             type="object"
                             class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            attrs="{'invisible':[('state', 'in', ('confirm', 'cease', 'abort'))]}"
                     />
                     <button name="action_cease"
                             string="Cease"
@@ -17,8 +17,27 @@
                             class="btn-primary"
                             attrs="{'invisible':[('state', '!=', 'confirm')]}"
                     />
+                    <button name="action_hold"
+                            string="On Hold"
+                            type="object"
+                            class="btn"
+                            attrs="{'invisible':[('state', 'in', ('cease', 'hold'))]}"
+                    />
+                    <button name="action_abort"
+                            string="Abort"
+                            type="object"
+                            class="btn"
+                            attrs="{'invisible':[('state', 'in', ('abort', 'cease'))]}"
+                    />
+                    <button name="action_draft"
+                            string="Reset to draft"
+                            type="object"
+                            class="btn"
+                            attrs="{'invisible':[('state', '=', 'draft')]}"
+                    />
                     <field name="state" widget="statusbar"
-                           statusbar_visible="draft,confirm,cease"/>
+                           statusbar_visible="new,confirm,cease"
+                    />
                 </header>
                 <sheet>
                     <div class="oe_button_box">
@@ -37,29 +56,46 @@
                             <field name="name" readonly="True"/>
                         </h1>
                     </div>
-                    <group>
-                        <group>
-                            <field name="submitter" readonly="1"/>
-                            <field name="subscription_id" readonly="1"/>
-                            <field name="project_id" readonly="1"/>
-                        </group>
-                        <group>
-                            <field name="requested_date"/>
-                            <field name="notice_period"/>
-                            <field name="cease_date"/>
-                            <field name="confirmation_date"/>
-                            <field name="forcast_date"/>
-                        </group>
-                        <group>
-                            <field name="close_reason_id" readonly="1"/>
-                            <field name="reason_description"/>
-                        </group>
+                    <group col="3" colspan="2">
+                        <field name="processing_stage"/>
+                        <button string="&#8658; Next Stage"
+                                class="oe_link oe_right"
+                                help="Next Stage"
+                                name="action_next_processing_stage"
+                                type="object"
+                                attrs="{'invisible':[('processing_stage', '=', 'valid')]}"
+                        />
                     </group>
                     <group>
-                        <field name="partner_id" readonly="1"/>
-                        <field name="customer_contact"/>
-                        <field name="provisioning_contact"/>
+                        <div class="oe_left">
+                            <group>
+                                <field name="submitter" readonly="1"/>
+                                <field name="user_id" readonly="1"/>
+                                <field name="subscription_id" readonly="1"/>
+                                <field name="project_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="customer_contact"/>
+                                <field name="provisioning_contact"/>
+                            </group>
+                        </div>
+                        <div class="oe_right">
+                            <group>
+                                <field name="close_reason_id"
+                                       readonly="1"/>
+                                <field name="reason_description"/>
+                            </group>
+                            <group>
+                                <field name="requested_date"/>
+                                <field name="notice_period"/>
+                                <field name="cease_date"/>
+                                <field name="confirmation_date"/>
+                                <field name="forecast_date"/>
+                            </group>
+                        </div>
                     </group>
+
                     <notebook>
                         <page string="Cease lines">
                             <field name="cease_line_ids">
@@ -110,7 +146,7 @@
                 <field name="partner_id"/>
                 <field name="project_id"/>
                 <field name="cease_date"/>
-                <field name="forcast_date"/>
+                <field name="forecast_date"/>
                 <field name="close_reason_id"/>
                 <field name="cease_type"/>
                 <field name="state"/>

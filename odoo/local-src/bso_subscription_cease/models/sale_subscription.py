@@ -34,7 +34,7 @@ class SaleSubscription(models.Model):
         }
 
     @api.multi
-    def action_get_purchases(self):
+    def action_get_ceases(self):
         self.ensure_one()
         action = self.env.ref(
             'bso_subscription_cease.action_view_cease').read()[0]

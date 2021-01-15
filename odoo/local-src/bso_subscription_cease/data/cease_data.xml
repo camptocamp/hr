@@ -1,0 +1,15 @@
+<odoo>
+    <record id="mt_cease_created" model="mail.message.subtype">
+        <field name="name">Cease Created</field>
+        <field name="res_model">cease.order</field>
+        <field name="default" eval="False"/>
+    </record>
+    <record id="mt_company_new_cease" model="mail.message.subtype">
+        <field name="name">Cease Created</field>
+        <field name="res_model">res.company</field>
+        <field name="default" eval="False"/>
+        <field name="parent_id" eval="ref('mt_cease_created')"/>
+        <field name="description">Cease Order Created</field>
+        <field name="relation_field">company_id</field>
+    </record>
+</odoo>

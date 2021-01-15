@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="partner_form_view" model="ir.ui.view">
+        <field name="name">partner.form.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='toggle_active']" position="after">
+                <button name="action_get_ceases"
+                        type="object"
+                        icon="fa-ban"
+                        class="oe_stat_button">
+                    <field name="cease_count"
+                           widget="statinfo"
+                           string="Ceases"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
