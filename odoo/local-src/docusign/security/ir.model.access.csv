@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_docusign_config_user,docusign.config,model_docusign_config,base.group_user,1,1,1,1
+access_docusign_document_user,docusign.document,model_docusign_document,base.group_user,1,1,1,1
+access_docusign_template_user,docusign.template,model_docusign_template,base.group_user,1,1,1,1

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="wizard_send_or_retrieve_document" model="ir.ui.view">
+            <field name="name">wizard.send.or.retrieve.document.form</field>
+            <field name="model">send.retrieve.document</field>
+            <field name="arch" type="xml">
+                <form string="Send/Retrieve Document">
+                    <group string="Are you sure to Send/Retrive Document from the docusign ?">
+                    </group>
+                    <footer>
+                        <button name="send_or_retrieve_document" string="Send"
+                            type="object" class="oe_highlight" context="{'click_send':True}" />
+                        or
+                        <button name="send_or_retrieve_document" string="Retrieve"
+                            type="object" class="oe_highlight" context="{'click_retrieve':True}" />
+                        or
+                        <button string="Cancel" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="wizard_send_or_retrieve_document_action"
+            name="Send/Retrieve Documents" src_model="docusign.document"
+            res_model="send.retrieve.document" view_type="form" view_mode="form"
+            key2="client_action_multi" target="new" usage="menu" />
+    </data>
+</odoo>
