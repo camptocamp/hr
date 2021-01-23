@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="docusign_wizard_form_view">
+        <field name="name">docusign.wizard.form</field>
+        <field name="model">docusign.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Docusign">
+                <group>
+                    <field name="template_id"
+                           domain="[('model', '=', context.get('model'))]"
+                           required="True"
+                           widget="selection"/>
+                    <field name="attachment_id"
+                           domain="[('res_id', '=', context.get('res_id')),('res_model', '=', context.get('model'))]"
+                           required="True"
+                           widget="selection"/>
+                    <field name="contact_id"
+                           required="not context.get('only_countersign', False)"
+                           invisible="context.get('only_countersign', False)"
+                           domain="[('parent_id', '=', context.get('partner_id'))]"/>
+                    <field name="user_id"
+                           domain="[('groups_id', 'in', [%(bso_docusign.group_allow_signing_by_docusign)d])]"
+                           required="True"/>
+                </group>
+                <footer>
+                    <button name="sign" string="Sign"
+                            type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

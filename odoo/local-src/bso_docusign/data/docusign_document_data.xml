@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="mt_docusign_document_completed"
+                model="mail.message.subtype">
+            <field name="name">Docusign document completed</field>
+            <field name="hidden" eval="False"/>
+            <field name="res_model">docusign.document</field>
+            <field name="default" eval="True"/>
+            <field name="description">Docusign document completed</field>
+        </record>
+        <record id="mt_docusign_document_canceled_parent"
+                model="mail.message.subtype">
+            <field name="name">Docusign document canceled</field>
+            <field name="hidden" eval="False"/>
+            <field name="res_model">docusign.document</field>
+            <field name="description">Docusign document canceled</field>
+        </record>
+        <record id="mt_docusign_document_canceled_child"
+                model="mail.message.subtype">
+            <field name="name">Docusign document canceled</field>
+            <field name="hidden" eval="False"/>
+            <field name="res_model">docusign.template</field>
+            <field name="default" eval="True"/>
+            <field name="parent_id"
+                   eval="ref('bso_docusign.mt_docusign_document_canceled_parent')"/>
+            <field name="relation_field">docusign_template_id</field>
+            <field name="description">Docusign document canceled</field>
+        </record>
+    </data>
+</odoo>

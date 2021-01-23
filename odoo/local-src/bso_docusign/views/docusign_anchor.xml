@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="docusign_anchor_form_view">
+        <field name="name">docusign.anchor.form</field>
+        <field name="model">docusign.anchor</field>
+        <field name="arch" type="xml">
+            <form string="Docusign Anchor">
+                <group>
+                    <field name="signature_type"/>
+                    <field name="field_type"/>
+                    <field name="template_id" invisible="1"/>
+                </group>
+                <group>
+                    <field name="anchor_str"/>
+                    <field name="xoff"/>
+                    <field name="yoff"/>
+                    <field name="units"/>
+                    <field name="ignore_if_not_present"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="docusign_anchor_tree_view" model="ir.ui.view">
+        <field name="name">docusign.anchor.tree</field>
+        <field name="model">docusign.anchor</field>
+        <field name="arch" type="xml">
+            <tree string="Anchors">
+                <field name="signature_type"/>
+                <field name="field_type"/>
+                <field name="anchor_str"/>
+                <field name="xoff"/>
+                <field name="yoff"/>
+                <field name="units"/>
+                <field name="ignore_if_not_present"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

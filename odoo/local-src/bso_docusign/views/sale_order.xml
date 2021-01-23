@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="docusign_sale_order_form" model="ir.ui.view">
+        <field name="name">docusign.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="bso_dealsheet.sale_order_dealsheet"/>
+        <field name="arch" type="xml">
+            <button name="action_quotation_send" position="replace">
+                <button name="action_open_docusign_wizard"
+                        class="btn-primary"
+                        string="Send by Docusign" type="object"
+                        attrs="{'invisible': ['|', ('dealsheet_state', '!=', 'validated'), '|', ('state', 'not in', ('draft','sent')), ('is_retrievable', '=', True)]}"
+                        context="{'sign_and_countersign': True}"
+                        groups="bso_docusign.group_docusign_user"/>
+            </button>
+            <button name="action_quotation_send" position="replace">
+                <button name="action_open_docusign_wizard"
+                        class="btn-primary"
+                        string="Countersign by Docusign" type="object"
+                        context="{'only_countersign': True}"
+                        attrs="{'invisible': ['|',('is_countersigned', '=',True),('state', 'not in', ('sale', 'done'))]}"
+                        groups="bso_docusign.group_docusign_user"/>
+            </button>
+            <button name="print_quotation" position="before">
+                <button name="action_retrieve_document"
+                        string="Retrieve" type="object"
+                        attrs="{'invisible': [('is_retrievable', '=',False)]}"
+                        groups="bso_docusign.group_docusign_manager"/>
+            </button>
+        </field>
+    </record>
+
+    <record id="sale_order_docusign_details" model="ir.ui.view">
+        <field name="name">sale.order.docusign.details</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Docusign"
+                      groups="bso_docusign.group_docusign_user">
+                    <field name="docusign_document_ids" readonly="True"/>
+                    <group>
+                        <field name="is_retrievable"
+                               groups="bso_docusign.group_docusign_manager"/>
+                        <field name="is_signed" readonly="1"
+                               groups="bso_docusign.group_docusign_manager"/>
+                        <field name="is_countersigned" readonly="1"
+                               groups="bso_docusign.group_docusign_manager"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

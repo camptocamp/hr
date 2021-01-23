@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.cron" id="auto_retrieve_signed_documents">
+           <field name="name">Retrieve signed documents by docusign</field>
+           <field name="interval_number">1</field>
+           <field name="interval_type">days</field>
+           <field name="numbercall">-1</field>
+           <field name="doall" eval="False" />
+           <field name="active" eval="True" />
+           <field name="model" eval="'sale.order'" />
+           <field eval="'retrieve_documents'" name="function" />
+           <field name="args" eval="'()'" />
+       </record>
+    </data>
+</odoo>
