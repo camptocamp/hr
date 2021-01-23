@@ -40,7 +40,7 @@ class DocusignDocument(models.Model):
         if docusign_email_ids:
             for email_id in self:
                 file_lst = []
-                if not email_id.state in ['draft', 'fail']:
+                if email_id.state not in ['draft', 'fail']:
                     raise Warning(("You must select the email which is in "
                                    "Draft or Fail state."))
                 login = {

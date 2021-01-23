@@ -41,7 +41,8 @@ class SaleOrder(models.Model):
     @api.multi
     def action_open_docusign_wizard(self):
         '''
-        This function opens a window to select an attachment to sign by Docusign
+        This function opens a window to select
+        an attachment to sign by Docusign
         '''
         self.ensure_one()
         ctx = dict(self.env.context or {})
