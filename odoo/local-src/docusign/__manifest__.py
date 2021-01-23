@@ -16,13 +16,13 @@
 	Odoo Digital Signature with Docusign
     """,
     'data': [
-            'security/ir.model.access.csv',
-            'views/docusign_config_view.xml',
-            'views/docusign_template_view.xml',
-            'views/docusign_document_view.xml',
-            'wizard/send_and_retrive_document_view.xml'
-                   ],
-    'images':['static/description/docubanner.png'],
+        'security/ir.model.access.csv',
+        'views/docusign_config_view.xml',
+        'views/docusign_template_view.xml',
+        'views/docusign_document_view.xml',
+        'wizard/send_and_retrive_document_view.xml'
+    ],
+    'images': ['static/description/docubanner.png'],
     'external_dependencies': {"python": ["httplib2"]},
     'installable': True,
     'application': True,

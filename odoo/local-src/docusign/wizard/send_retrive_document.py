@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 # © 2018 Serpent Consulting Services Pvt. Ltd. (support@serpentcs.com)
 
-from odoo import api, fields, models, _
-from odoo.exceptions import Warning
+from odoo import api, models
 
 
 class SendOrRetrieveDocument(models.TransientModel):
-
     _name = 'send.retrieve.document'
 
     @api.multi
@@ -25,4 +23,3 @@ class SendOrRetrieveDocument(models.TransientModel):
             elif 'click_retrieve' in context and context['click_retrieve']:
                 docsign_ids.download_document_cron()
         return {'type': 'ir.actions.act_window_close'}
-
