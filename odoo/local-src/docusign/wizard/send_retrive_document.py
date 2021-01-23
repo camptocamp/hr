@@ -11,7 +11,6 @@ class SendOrRetrieveDocument(models.TransientModel):
     def send_or_retrieve_document(self):
         '''
             This method will be send and retrieve the document..
-            
             @param self: The object pointer.
         '''
         context = dict(self.env.context)

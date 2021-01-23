@@ -12,9 +12,7 @@
     Odoo Docusign integration
     Odoo Digital Signature
     """,
-    "description": """
-	Odoo Digital Signature with Docusign
-    """,
+    "description": """Odoo Digital Signature with Docusign""",
     'data': [
         'security/ir.model.access.csv',
         'views/docusign_config_view.xml',

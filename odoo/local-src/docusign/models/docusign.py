@@ -28,18 +28,16 @@ def create_envelope(self, login, recipient, body, subject,
                     file_lst, signature, xoff, yoff, datesigned,
                     xoff_date, yoff_date):
     '''
-            This method will be fetch the model id..
-            
-            @param self: The object pointer.
-            @param login: Login user name
-            @param recipient: Recipient name
-            @param body: Email body 
-            @param subject : Email Subject name
-            @param file_lst : List file will atteched
-            @param signature: A signature position.
-            @param xoff: A signature pointer.
-            
-        '''
+    This method will be fetch the model id..
+    @param self: The object pointer.
+    @param login: Login user name
+    @param recipient: Recipient name
+    @param body: Email body
+    @param subject : Email Subject name
+    @param file_lst : List file will atteched
+    @param signature: A signature position.
+    @param xoff: A signature pointer.
+    '''
     rec_email = recipient.email
     rec_name = recipient.name
     if datesigned:
@@ -165,11 +163,10 @@ def create_envelope(self, login, recipient, body, subject,
 
 def req_env_status_url(self, login, envid):
     '''
-            This method will be fetch the login user id and environment id.
-            
-            @param self: The object pointer.
-            @param login : The login user id
-            @param envid: The environment id.
+    This method will be fetch the login user id and environment id.
+    @param self: The object pointer.
+    @param login : The login user id
+    @param envid: The environment id.
     '''
     url = login['baseurl'] + '/envelopes?envelopeId=' + envid
     headers = {'X-DocuSign-Authentication': login['auth_str'],
@@ -184,11 +181,10 @@ def req_env_status_url(self, login, envid):
 
 def req_decline_env_status(self, login, envid):
     '''
-            This method will be fetch the login user id and environment id.
-            
-            @param self: The object pointer.
-            @param login : The login user id
-            @param envid: The environment id.
+    This method will be fetch the login user id and environment id.
+    @param self: The object pointer.
+    @param login : The login user id
+    @param envid: The environment id.
     '''
     url = login['baseurl'] + '/envelopes/' + envid + '/recipients'
     headers = {'X-DocuSign-Authentication': login['auth_str'],
@@ -203,11 +199,10 @@ def req_decline_env_status(self, login, envid):
 
 def download_documents(self, login, req_info):
     '''
-            This method will be download the document from the docusign.
-            
-            @param self: The object pointer.
-            @param login : The login user id
-            @param req_info: This will fetch the request information.
+    This method will be download the document from the docusign.
+    @param self: The object pointer.
+    @param login : The login user id
+    @param req_info: This will fetch the request information.
     '''
     url = login['baseurl'] + req_info + "/documents"
     headers = {'X-DocuSign-Authentication': login['auth_str'],
@@ -237,8 +232,9 @@ def download_documents(self, login, req_info):
             if response_doc.get('status') == '200':
                 file_name = docs.get("name").split('/')
                 directory_name = tempfile.mkdtemp()
-                filename = directory_name + "/%s" % (
-                        file_name and file_name[-1] or 'doc.pdf')
+                filename = directory_name + "/%s" % (file_name and
+                                                     file_name[-1] or
+                                                     'doc.pdf')
                 file_temp = open(filename, 'w')
                 file_temp.write(content_doc)
                 file_temp.close()
