@@ -113,7 +113,7 @@ class DocusignDocument(models.Model):
         if docusign_email_ids:
             for email_id in self:
                 file_lst = []
-                if not email_id.state in ['draft', 'fail']:
+                if email_id.state not in ['draft', 'fail']:
                     raise Warning(("You must select the email which is in "
                                    "Draft or Fail state."))
                 login = {
@@ -188,7 +188,7 @@ class DocusignDocument(models.Model):
         #        if docusign_sent_email_ids:
         for email_id in self:
             attach_ids = []
-            if not email_id.state in ['sent', 'delivered'] and \
+            if email_id.state not in ['sent', 'delivered'] and \
                     email_id.env_id != '':
                 raise Warning("You must select the email which is in Sent"
                               " or Delivered state.")
