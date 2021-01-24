@@ -13,14 +13,14 @@
                         context="{'sign_and_countersign': True}"
                         groups="bso_docusign.group_docusign_user"/>
             </button>
-            <button name="action_quotation_send" position="replace">
+            <!--<button name="action_quotation_send" position="replace">
                 <button name="action_open_docusign_wizard"
                         class="btn-primary"
                         string="Countersign by Docusign" type="object"
                         context="{'only_countersign': True}"
                         attrs="{'invisible': ['|',('is_countersigned', '=',True),('state', 'not in', ('sale', 'done'))]}"
                         groups="bso_docusign.group_docusign_user"/>
-            </button>
+            </button>-->
             <button name="print_quotation" position="before">
                 <button name="action_retrieve_document"
                         string="Retrieve" type="object"
