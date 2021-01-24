@@ -743,3 +743,8 @@ migration:
         upgrade:
           - bso_sales_process
           - bso_subscription_cease
+    - version: 10.51.0
+      addons:
+        upgrade:
+          - docusign
+          - bso_docusign

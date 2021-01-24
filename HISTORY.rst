@@ -21,6 +21,10 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* docusign
+
+* bso_docusign
+
 **Bugfixes**
 
 **Build**

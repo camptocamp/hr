@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_docusign_mail_form">
+            <field name="name">docusign.mail.form</field>
+            <field name="model">docusign.document</field>
+            <field name="arch" type="xml">
+                <form string="Docusign Email">
+                    <header>
+                        <button name="send_document_cron" states="draft"
+                            string="Send" type="object" />
+                        <button name="send_document_cron" states="fail"
+                            string="Re-Send" type="object" />
+                        <button name="download_document_cron" states="sent,delivered"
+                            string="Retrieve" type="object" />
+                        <button name="cancel_document" type="object"
+                            states="draft,sent,delivered,signed,completed,declined,deleted,voided,fail"
+                            string="Cancel" />
+                        <field name="state" widget="statusbar"
+                            statusbar_visible="draft,sent,delivered,completed,fail,cancel" readony="1"/>
+                    </header>
+                    <sheet>
+                        <label for="subject" class="oe_edit_only" />
+                        <h2>
+                            <field name="subject" required="1" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                        </h2>
+                        <div>
+                            by
+                            <field name="author_id" class="oe_inline" string="User" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                            on
+                            <field name="date" class="oe_inline" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                        </div>
+                        <notebook colspan="4">
+                            <page string="Mail Details">
+                                <group>
+                                    <group>
+                                        <field name="email_from" required="1" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                        <field name="email_to" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                        <field name="email_cc" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                        <field name="reply_to" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="partner_ids" widget="many2many_tags_email" attrs="{'readonly':[('state','not in',('draft','fail'))]}"
+                                            required="1" context="{'force_email':True, 'show_email':True}" />
+                                    </group>
+                                </group>
+                                <notebook>
+                                    <page string="Body">
+                                        <field name="body_html" widget="html" required="1" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                    </page>
+                                </notebook>
+                            </page>
+                            <page string="Advanced" groups="base.group_no_one">
+                                <group>
+                                    <group>
+                                        <field name="auto_delete" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                        <field name="docusign_template_id" required="1" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                        <field name="mail_server_id" required="1" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                        <field name="model" required="1" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                        <field name="res_id" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="message_id" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                        <field name="references" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                        <field name="env_id" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Attachments">
+                                <group>
+                                    <field name="attachment_ids" nolabel="1" required="1" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                </group>
+                                <group string="Signed Attachments">
+                                    <field name="sign_attachment_ids" nolabel="1" attrs="{'readonly':[('state','not in',('draft','fail'))]}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"
+                            groups="base.group_user" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_docusign_mail_tree">
+            <field name="name">docusign.mail.tree</field>
+            <field name="model">docusign.document</field>
+            <field name="arch" type="xml">
+                <tree string="Docusign Emails"
+                    colors="grey:state in ('sent', 'cancel');blue:state=='outgoing';red:state=='exception';black:state=='received'">
+                    <field name="date" />
+                    <field name="subject" />
+                    <field name="author_id" string="User" />
+                    <field name="message_id" invisible="1" />
+                    <field name="partner_ids" />
+                    <field name="model" invisible="1" />
+                    <field name="res_id" invisible="1" />
+                    <field name="email_from" invisible="1" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_docusign_mail_search">
+            <field name="name">docusign.mail.search</field>
+            <field name="model">docusign.document</field>
+            <field name="arch" type="xml">
+                <search string="Docusign Emails">
+                    <field name="date" />
+                    <field name="subject" />
+                    <field name="author_id" string="User" />
+                    <field name="message_id" />
+                    <field name="partner_ids" />
+                    <field name="model" />
+                    <field name="res_id" />
+                    <field name="email_from" />
+                    <field name="state" />
+                </search>
+            </field>
+        </record>
+
+        <record id="action_view_docusign_mail" model="ir.actions.act_window">
+            <field name="name">Docusign Emails</field>
+            <field name="res_model">docusign.document</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_docusign_mail_search" />
+        </record>
+
+        <menuitem name="Docusign EMail" id="menu_docusign_email"
+            parent="menu_docusign_con" action="action_view_docusign_mail" />
+
+    </data>
+</odoo>

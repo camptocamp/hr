@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="docusign_template_form_anchors" model="ir.ui.view">
+        <field name="name">docusign.template.form</field>
+        <field name="model">docusign.template</field>
+        <field name="inherit_id" ref="docusign.docusign_template_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='model_id']" position="after">
+                <group>
+                    <field name="update_state"/>
+                </group>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Anchors">
+                    <field name="anchor_ids"/>
+                </page>
+            </xpath>
+            <xpath expr="//sheet" position="after">
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"
+                           groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

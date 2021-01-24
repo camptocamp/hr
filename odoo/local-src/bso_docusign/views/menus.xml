@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+            id="docusign.menu_docusign"
+            name="Docusign"
+            groups="group_docusign_manager"/>
+</odoo>

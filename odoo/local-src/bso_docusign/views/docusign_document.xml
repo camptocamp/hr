@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="docusign_document_form_signers" model="ir.ui.view">
+        <field name="name">docusign.document.form</field>
+        <field name="model">docusign.document</field>
+        <field name="inherit_id" ref="docusign.view_docusign_mail_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Signers">
+                    <field name="signer_ids">
+                        <tree>
+                            <field name="routing_order"/>
+                            <field name="anchor_id"/>
+                            <field name="partner_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

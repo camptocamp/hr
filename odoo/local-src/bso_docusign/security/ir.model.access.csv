@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_docusign_anchor_user,docusign.anchor,model_docusign_anchor,bso_docusign.group_docusign_user,1,1,1,1
+access_docusign_signer_user,docusign.signer,model_docusign_signer,bso_docusign.group_docusign_user,1,1,1,1
