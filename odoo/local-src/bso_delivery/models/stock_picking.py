@@ -14,6 +14,7 @@ class StockPicking(models.Model):
     @api.multi
     def update_delivery_progress_rate(self):
         for rec in self:
-            delivery_id = rec.sale_id.delivery_project_id
+            delivery_id = rec.sale_id.delivery_id or \
+                          rec.purchase_id.delivery_project_id
             if delivery_id:
                 delivery_id.update_progress_rate_revenue()

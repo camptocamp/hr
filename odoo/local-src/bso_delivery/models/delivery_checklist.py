@@ -1,13 +1,18 @@
-from odoo import models, fields, api
 from datetime import datetime
+
+from odoo import models, fields, api
 
 
 class DeliveryChecklist(models.Model):
     _name = 'delivery.checklist'
 
-    delivery_id = fields.Many2one(
+    delivery_so_id = fields.Many2one(
         string='Delivery Project',
-        comodel_name='delivery.project'
+        comodel_name='delivery.project.so'
+    )
+    delivery_po_id = fields.Many2one(
+        string='Delivery Project',
+        comodel_name='delivery.project.po'
     )
 
     cutomer_signed_order_form_attached = fields.Char(
@@ -170,10 +175,18 @@ class DeliveryChecklist(models.Model):
 
     @api.multi
     def create(self, vals):
-        self.delivery_id.update({'kickoff_date': datetime.now()})
-        return super(DeliveryChecklist, self).create(vals)
+        rec = super(DeliveryChecklist, self).create(vals)
+        if rec.delivery_so_id:
+            rec.delivery_so_id.update({'kickoff_date': datetime.now()})
+        elif rec.delivery_po_id:
+            rec.delivery_po_id.update({'kickoff_date': datetime.now()})
+        return rec
 
     @api.multi
     def kickoff_action(self):
-        self.delivery_id.update(
-            {'kickoff_date': datetime.now(), 'state': 'inprogress'})
+        if self.delivery_so_id:
+            self.delivery_so_id.update(
+                {'kickoff_date': datetime.now(), 'state': 'inprogress'})
+        elif self.delivery_po_id:
+            self.delivery_po_id.update(
+                {'kickoff_date': datetime.now(), 'state': 'inprogress'})

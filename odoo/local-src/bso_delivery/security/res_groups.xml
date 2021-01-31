@@ -8,12 +8,19 @@
     <record id="group_delivery_user" model="res.groups">
         <field name="name">User</field>
         <field name="category_id" ref="module_category_delivery"/>
-        <field name="implied_ids" eval="[(4, ref('bso_connector_jira.group_connector_user'))]"/>
+        <field name="implied_ids"
+               eval="[(4, ref('bso_connector_jira.group_connector_user'))]"/>
     </record>
-
+<!--    <record id="group_delivery_officer" model="res.groups">-->
+<!--        <field name="name">Officer</field>-->
+<!--        <field name="category_id" ref="module_category_delivery"/>-->
+<!--        <field name="implied_ids"-->
+<!--               eval="[(4, ref('bso_delivery.group_delivery_user'))]"/>-->
+<!--    </record>-->
     <record id="group_delivery_manager" model="res.groups">
         <field name="name">Manager</field>
         <field name="category_id" ref="module_category_delivery"/>
-        <field name="implied_ids" eval="[(4, ref('bso_delivery.group_delivery_user'))]"/>
+        <field name="implied_ids"
+               eval="[(4, ref('bso_delivery.group_delivery_user'))]"/>
     </record>
 </odoo>

@@ -23,11 +23,18 @@ class JiraProductTemplate(models.Model):
         string='Product',
         comodel_name='product.category'
     )
+    template_type = fields.Selection(
+        [('sale', 'Customer'),
+         ('purchase', 'Backbone'),
+         ('cease', 'Cease')],
+        string='template type',
+        default='sale'
+    )
 
     @api.constrains('template_key')
     def check_template_exists(self):
         jira = self.env['jira.api']
         if not jira.sudo().issue(self.template_key):
             raise exceptions.ValidationError(
-                'No issue could be found with key "%s"' % self.template_key
+                'No template could be found with key "%s"' % self.template_key
             )

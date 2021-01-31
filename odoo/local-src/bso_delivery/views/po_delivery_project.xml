@@ -1,0 +1,82 @@
+<odoo>
+    <record id="po_delivery_project_tree" model="ir.ui.view">
+        <field name="name">delivery.project.po.tree</field>
+        <field name="model">delivery.project.po</field>
+        <field name="inherit_id" ref="bso_delivery.delivery_project_tree"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="field[@name='user_id']" position="after">
+                <field name="date_signed"/>
+                <field name="kickoff_date"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="po_delivery_project_form" model="ir.ui.view">
+        <field name="name">delivery.project.po.form</field>
+        <field name="model">delivery.project.po</field>
+        <field name="inherit_id" ref="bso_delivery.delivery_project_form"/>
+        <field name="mode">primary</field>
+        <field name="domain">[]</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_get_attachment_view']"
+                   position="before">
+                <field name="pickings_visibility" invisible="1"/>
+                <button type="object"
+                        name="action_view_picking"
+                        class="oe_stat_button"
+                        icon="fa-truck"
+                        groups="base.group_user"
+                        attrs="{'invisible': [('pickings_visibility', '=', False)]}">
+                    <field name="delivery_count" widget="statinfo"
+                           string="Delivery"/>
+                </button>
+                <button type="object"
+                        name="action_purchases"
+                        class="oe_stat_button"
+                        icon="fa-shopping-cart"
+                        groups="base.group_user">
+                    <field name="order_ids_count" widget="statinfo"
+                           string="Purchases"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="system_engineer_ids" widget="many2many_tags"/>
+                <field name="network_engineer_ids" widget="many2many_tags"/>
+            </xpath>
+
+            <xpath expr="//group[@id='project_specifics']" position="inside">
+                <field name="order_ids" widget="many2many_tags"/>
+                <field name="usd_currency_id" invisible="1"/>
+                <field name="amount_total_usd" widget="monetary"
+                       options="{'currency_field': 'usd_currency_id'}"/>
+            </xpath>
+            <xpath expr="//group[@id='project_specifics']" position="after">
+                <group>
+                    <field name="create_date" widget="date" readonly="1"/>
+                    <field name="kickoff_date"/>
+                </group>
+            </xpath>
+            <xpath expr="//page[@id='delivery_lines']" position="inside">
+                <field name="delivery_line_ids">
+                    <tree create="false" delete="false" edit="true">
+                        <field name="order_id"/>
+                        <field name="product_id"/>
+                        <field name="name" string="Description"/>
+                        <field name="date_forecasted"/>
+                        <field name="date_sla"/>
+                        <field name="delivery_date"/>
+                        <field name="jira_product_template_ids"/>
+                    </tree>
+                </field>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <div class="oe_edit_only">
+                    <label for="description"/>
+                </div>
+                <span>
+                    <field name="description" style="margin-left:10px" required="1"/>
+                </span>
+            </xpath>
+        </field>
+    </record>
+</odoo>
