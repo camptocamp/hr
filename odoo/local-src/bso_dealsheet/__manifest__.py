@@ -10,6 +10,7 @@
         'bso_backbone',
         'bso_bundle',
         'specific_sale',
+        'sale_order_dates',
     ],
     'data': [
         'security/res_groups.xml',
