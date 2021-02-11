@@ -1,10 +1,16 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
-access_delivery_project_user,delivery.project.user,model_delivery_project,group_delivery_user,1,0,0,0
-access_delivery_project_manager,delivery.project.manager,model_delivery_project,group_delivery_manager,1,1,1,1
+access_delivery_project_so_user,delivery.project.so.user,model_delivery_project_so,group_delivery_user,1,0,0,0
+access_delivery_project_so_manager,delivery.project.so.manager,model_delivery_project_so,group_delivery_manager,1,1,1,1
 
-access_delivery_project_line_user,delivery.project.line.user,model_delivery_project_line,group_delivery_user,1,0,0,0
-access_delivery_line_manager,delivery.project.line.manager,model_delivery_project_line,group_delivery_manager,1,1,1,1
+access_delivery_project_po_user,delivery.project.po.user,model_delivery_project_po,group_delivery_user,1,0,0,0
+access_delivery_project_po_manager,delivery.project.po.manager,model_delivery_project_po,group_delivery_manager,1,1,1,1
+
+access_delivery_line_so_user,delivery.line.so.user,model_delivery_line_so,group_delivery_user,1,0,0,0
+access_delivery_line_so_manager,delivery.line.so.manager,model_delivery_line_so,group_delivery_manager,1,1,1,1
+
+access_delivery_line_po_user,delivery.line.po.user,model_delivery_line_po,group_delivery_user,1,0,0,0
+access_delivery_line_po_manager,delivery.line.po.manager,model_delivery_line_po,group_delivery_manager,1,1,1,1
 
 access_product_template_user,jira.product.template.user,model_jira_product_template,group_delivery_user,1,0,0,0
 access_product_template_manager,jira.product.template.manager,model_jira_product_template,group_delivery_manager,1,1,1,1
@@ -17,3 +23,5 @@ access_delivery_checklist_manager,delivery.chekclist.manager,model_delivery_chec
 
 access_service_point_user,service.point.user,model_service_point,group_delivery_user,1,0,0,0
 access_service_point_manager,service.point.manager,model_service_point,group_delivery_manager,1,1,1,1
+
+access_delivery_doc_manager,delivery.doc.manager,model_delivery_doc,group_delivery_manager,1,1,1,1

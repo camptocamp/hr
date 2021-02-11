@@ -1,11 +1,18 @@
 <odoo>
     <data>
         <report id="handover_document_report"
-                model="delivery.project"
+                model="delivery.project.so"
                 report_type="qweb-pdf"
-                string="Delivery"
-                name="bso_delivery.delivery_report_file"
-                file="bso_delivery.delivery_report_file"
+                string="Handover Document"
+                name="bso_delivery.handover_report_file"
+                file="bso_delivery.handover_report_file"
+        />
+        <report id="factsheet_document_report"
+                model="delivery.project.po"
+                report_type="qweb-pdf"
+                string="Factsheet Document"
+                name="bso_delivery.factsheet_report_file"
+                file="bso_delivery.factsheet_report_file"
         />
     </data>
 </odoo>

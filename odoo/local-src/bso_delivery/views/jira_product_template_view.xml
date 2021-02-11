@@ -6,6 +6,7 @@
             <tree>
                 <field name="category_id"/>
                 <field name="template_key"/>
+                <field name="template_type"/>
                 <field name="name"/>
             </tree>
         </field>
@@ -21,26 +22,13 @@
                         <field name="default"/>
                         <field name="category_id"/>
                         <field name="template_key" required="True"/>
+                        <field name="template_type" required="True"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
-    <act_window
-            id="action_product_category_template_settings"
-            name="Product Template"
-            res_model="jira.product.template"
-            view_mode="tree,form"
-    />
-    <menuitem
-            id="menu_settings"
-            name="Settings"
-            parent="menu_delivery"/>
-    <menuitem
-            id="product_template"
-            name="Product Template"
-            action="action_product_category_template_settings"
-            parent="menu_settings"/>
+
 
     <record id="jira_project_form" model="ir.ui.view">
         <field name="name">jira.project.form</field>
@@ -68,16 +56,5 @@
             </tree>
         </field>
     </record>
-    <act_window
-            id="action_jira_project_form"
-            name="Jira Project"
-            res_model="jira.project"
-            view_mode="tree,form"
-    />
-    <menuitem
-            id="jira_project"
-            name="Jira Projects"
-            action="action_jira_project_form"
-            parent="menu_settings"/>
 
 </odoo>

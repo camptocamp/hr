@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* Testing data migration script related to bso_delivery
+
 **Bugfixes**
 
 **Build**
