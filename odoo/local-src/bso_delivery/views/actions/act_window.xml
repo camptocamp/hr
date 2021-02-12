@@ -1,9 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <act_window
-            id="action_delivery_project"
-            name="Projects"
-            res_model="delivery.project"
+            id="action_so_delivery_project"
+            name="Sales Projects"
+            res_model="delivery.project.so"
             view_mode="tree,form,graph,pivot"
     />
+    <act_window
+            id="action_po_delivery_project"
+            name="Purchases Projects"
+            res_model="delivery.project.po"
+            view_mode="tree,form,graph,pivot"
+    />
+    <act_window
+            id="action_so_delivery_line"
+            name="Sale Projects Lines"
+            res_model="delivery.line.so"
+            view_mode="tree,form,graph,pivot"
+    />
+    <record model="ir.actions.act_window.view" id="tree_view_so_line">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="delivery_line_so_tree_view"/>
+        <field name="act_window_id" ref="action_so_delivery_line"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="form_view_so_line">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="delivery_line_so_form_view"/>
+        <field name="act_window_id" ref="action_so_delivery_line"/>
+    </record>
+    <act_window
+            id="action_po_delivery_line"
+            name="Purchase Projects Lines"
+            res_model="delivery.line.po"
+            view_mode="tree,form,graph,pivot"
+    />
+     <act_window
+            id="action_jira_project_form"
+            name="Jira Project"
+            res_model="jira.project"
+            view_mode="tree,form"
+    />
+    <act_window
+            id="action_product_category_template_settings"
+            name="Product Template"
+            res_model="jira.product.template"
+            view_mode="tree,form"
+    />
+    <record model="ir.actions.act_window.view" id="tree_view_po_line">
+        <field name="view_mode">tree</field>
+        <field eval="1" name="sequence"/>
+        <field name="view_id" ref="delivery_line_po_tree_view"/>
+        <field name="act_window_id" ref="action_po_delivery_line"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="form_view_po_line">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="delivery_line_po_form_view"/>
+        <field name="act_window_id" ref="action_po_delivery_line"/>
+    </record>
+
 </odoo>

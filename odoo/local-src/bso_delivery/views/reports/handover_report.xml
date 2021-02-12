@@ -1,6 +1,6 @@
 <odoo>
-    <data>
-        <template id="delivery_report_file">
+    <data noupdate="0">
+        <template id="handover_report_file">
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
@@ -35,21 +35,16 @@
                         </p>
                     </div>
                     <t t-foreach="o.delivery_line_ids" t-as="line">
-                        <t t-if="line.select">
+                        <t t-if="line.report_line">
                             <div class="page">
                                 <h2 style="color: #690069;">Service Details
                                 </h2>
                                 <table class="table">
-                                    <!--                                    <colgroup>-->
-                                    <!--                                        <col class="col-xs-2"></col>-->
-                                    <!--                                        <col class="col-xs-6"></col>-->
-                                    <!--                                        <col class="col-xs-4"></col>-->
-                                    <!--                                    </colgroup>-->
                                     <tr>
                                         <th width="30%">Order reference
                                         </th>
                                         <td width="70%">
-                                            <t t-esc="o.sale_order_id.name"/>
+                                            <t t-esc="o.order_id.name"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -481,17 +476,6 @@
                     </div>
                 </t>
             </t>
-        </template>
-
-        <template id="delivery_report_footer">
-            <xpath expr="//div[@class='footer']" position="replace">
-                <div class="footer">
-                    <div class="row">
-                        <img src="/bso_delivery/static/src/img/handover-footer.png"
-                             style="max-width:100%;"/>
-                    </div>
-                </div>
-            </xpath>
         </template>
     </data>
 </odoo>

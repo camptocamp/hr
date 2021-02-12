@@ -1,0 +1,28 @@
+<odoo>
+    <record id="delivery_choose_report_line"
+            model="ir.ui.view">
+        <field name="name">delivery.project.choose.report.line</field>
+        <field name="model">delivery.project.so</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <form string="Project Lines">
+                <h2>Please select report lines</h2>
+                <field name="delivery_line_ids" create="0" delete="0">
+                    <tree editable="bottom" delete="0" create="0">
+                        <field name="report_line"/>
+                        <field name="product_id" readonly="1"/>
+                        <field name="name" readonly="1"/>
+                        <field name="delivery_date" readonly="1"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="action_document_send"
+                            string="Generate email &amp; document"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

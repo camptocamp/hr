@@ -7,7 +7,7 @@
                ref="bso_dealsheet.sale_order_dealsheet"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='dealsheet_id']" position="after">
-                <field name="delivery_project_id" widget="many2onebutton" />
+                <field name="delivery_id"/>
             </xpath>
         </field>
     </record>
