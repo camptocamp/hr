@@ -9,24 +9,24 @@
                 <button name="action_open_docusign_wizard"
                         class="btn-primary"
                         string="Send by Docusign" type="object"
-                        attrs="{'invisible': ['|', ('dealsheet_state', '!=', 'validated'), '|', ('state', 'not in', ('draft','sent')), ('is_retrievable', '=', True)]}"
+                        attrs="{'invisible': ['|', ('dealsheet_state', '!=', 'validated'), '|', ('state', 'not in', ('draft','sent')),'|', ('is_retrievable', '=', True),'|', ('is_signed', '=', True), ('is_countersigned', '=', True) ]}"
                         context="{'sign_and_countersign': True}"
                         groups="bso_docusign.group_docusign_user"/>
             </button>
-            <!--<button name="action_quotation_send" position="replace">
+            <button name="action_quotation_send" position="replace">
                 <button name="action_open_docusign_wizard"
                         class="btn-primary"
                         string="Countersign by Docusign" type="object"
                         context="{'only_countersign': True}"
-                        attrs="{'invisible': ['|',('is_countersigned', '=',True),('state', 'not in', ('sale', 'done'))]}"
+                        attrs="{'invisible': ['|',('state', 'not in', ('sale', 'done')),'|',('is_countersigned', '=',True),('is_retrievable', '=', True)]}"
                         groups="bso_docusign.group_docusign_user"/>
-            </button>-->
-            <button name="print_quotation" position="before">
+            </button>
+            <!--<button name="print_quotation" position="before">
                 <button name="action_retrieve_document"
                         string="Retrieve" type="object"
                         attrs="{'invisible': [('is_retrievable', '=',False)]}"
                         groups="bso_docusign.group_docusign_manager"/>
-            </button>
+            </button>-->
         </field>
     </record>
 

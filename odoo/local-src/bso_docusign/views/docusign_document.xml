@@ -13,6 +13,7 @@
                             <field name="routing_order"/>
                             <field name="anchor_id"/>
                             <field name="partner_id"/>
+                            <field name="status" readonly="1"/>
                         </tree>
                     </field>
                 </page>

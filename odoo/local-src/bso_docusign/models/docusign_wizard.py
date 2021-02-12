@@ -59,7 +59,7 @@ class DocusignWizard(models.TransientModel):
     def create_docusign_document(self):
         self.ensure_one()
         signer_ids = self._get_signer_ids()
-        return self.env['docusign.document'].create({
+        doc_vals = {
             'subject': '%s' % self.attachment_id.res_name,
             'email_from': self.template_id.email_from,
             'signer_ids': [(6, 0, signer_ids)],
@@ -70,7 +70,10 @@ class DocusignWizard(models.TransientModel):
             'date': datetime.now(),
             'attachment_ids': [(6, 0, [self.attachment_id.id])],
             'body_html': self.template_id.body_html
-        })
+        }
+        if self.template_id.mail_server_id:
+            doc_vals['mail_server_id'] = self.template_id.mail_server_id.id
+        return self.env['docusign.document'].create(doc_vals)
 
     def _get_signer_ids(self):
         signer_ids = []
@@ -89,7 +92,7 @@ class DocusignWizard(models.TransientModel):
         signer_ids.extend([signer_id, countersigner_id])
         return signer_ids
 
-    def _create_signer(self, partner_id, anchor_id, routing_order=0):
+    def _create_signer(self, partner_id, anchor_id, routing_order=1):
         return self.env['docusign.signer'].create({
             'partner_id': partner_id.id,
             'anchor_id': anchor_id.id,
