@@ -38,7 +38,8 @@ class ReplaceSubsriptionLinesWizard(models.TransientModel):
         res.sudo().write({
             'to_delete_line_ids': [
                 (6, 0, to_delete_line_ids)],
-            'order_type': 'replace'
+            'order_type': 'replace',
+            'template_id': self.subscription_id.template_id.id
         })
         return view
 

@@ -26,6 +26,7 @@ class SaleSubscription(models.Model):
                     {'subscription_line_id': line.id}).id)
         self.env['sale.order'].browse(so_view['res_id']).sudo().write(
             {'order_type': 'renew',
+             'template_id': self.template_id.id,
              'to_delete_line_ids': [
                  (6, 0, to_delete_line_ids)],
              }

@@ -29,6 +29,8 @@ Latest (Unreleased)
 
 * bso_dealsheet
 
+* bso_sales_process
+
 **Build**
 
 **Documentation**

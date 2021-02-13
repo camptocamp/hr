@@ -757,3 +757,4 @@ migration:
           - bso_dealsheet
           - bso_delivery
           - bso_docusign
+          - bso_sales_process
