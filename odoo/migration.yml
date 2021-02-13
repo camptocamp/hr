@@ -748,3 +748,7 @@ migration:
         upgrade:
           - docusign
           - bso_docusign
+    - version: 10.52.0
+      addons:
+        upgrade:
+          - bso_dealsheet

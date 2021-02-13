@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 **Bugfixes**
 
+* bso_dealsheet
+
 **Build**
 
 **Documentation**
