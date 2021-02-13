@@ -30,9 +30,10 @@ def new_create_envelope(self, login, recipient, body, subject,
         documents.append(doc_envelop)
         fileContents = open(file_con['fname'], "rb").read()
         my_boundary = "\r\n\r\n--MYBOUNDARY\r\n" + \
-                      "Content-Type:" + str(file_con['ftype']) + "\r\n" + \
+                      "Content-Type:" + file_con['ftype'].encode('utf-8') + \
+                      "\r\n" + \
                       "Content-Disposition: file; filename=\"" + \
-                      str(file_con['fname']) + \
+                      file_con['fname'].encode('utf-8') + \
                       "\"; documentId=" + str(count) + "\r\n" + \
                       "\r\n" + \
                       fileContents + "\r\n"

@@ -23,6 +23,8 @@ Latest (Unreleased)
 
 * bso_delivery
 
+* bso_docusign
+
 **Bugfixes**
 
 * bso_dealsheet

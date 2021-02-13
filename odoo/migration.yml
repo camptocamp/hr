@@ -756,3 +756,4 @@ migration:
         upgrade:
           - bso_dealsheet
           - bso_delivery
+          - bso_docusign

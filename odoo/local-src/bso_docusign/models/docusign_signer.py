@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from odoo import models, fields
 
 
@@ -7,6 +6,20 @@ class DocusignSigner(models.Model):
     _name = 'docusign.signer'
     _rec_name = 'partner_id'
     _order = 'routing_order'
+
+    DOCUSIGN_RECIPIENT_STATES = [
+        ('draft', 'Draft'),
+        ('created', 'Created'),
+        ('sent', 'Sent'),
+        ('delivered', 'Delivered'),
+        ('signed', 'Signed'),
+        ('completed', 'Completed'),
+        ('declined', 'Declined'),
+        ('deleted', 'Deleted'),
+        ('voided', 'Voided'),
+        ('fail', 'Failed'),
+        ('cancel', 'Cancelled')
+    ]
 
     partner_id = fields.Many2one(
         comodel_name='res.partner',
@@ -23,3 +36,7 @@ class DocusignSigner(models.Model):
         comodel_name='docusign.document',
         string='Docusign Document'
     )
+    status = fields.Selection(
+        DOCUSIGN_RECIPIENT_STATES,
+        'Status',
+        default="draft")

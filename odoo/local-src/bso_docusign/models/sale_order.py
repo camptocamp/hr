@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from odoo import models, api, fields
 
 
@@ -68,19 +67,47 @@ class SaleOrder(models.Model):
         }
 
     def _create_docusign_wizard(self):
-        wizard_vals = {}
+        wizard_vals = self._get_wizard_values()
+        return self.env['docusign.wizard'].create(wizard_vals).id
+
+    def _get_wizard_values(self):
+        wizard_values = {}
+        attachment_id = self._get_attachment_id()
+        if attachment_id:
+            wizard_values['attachment_id'] = attachment_id
+        template_id = self._get_docusign_template_id()
+        if template_id:
+            wizard_values['template_id'] = template_id
+        return wizard_values
+
+    def _get_attachment_id(self):
         attachment_ids = self.env['ir.attachment'].search([
             ('res_id', '=', self.id),
             ('res_model', '=', self._name)
         ])
+        if not attachment_ids:
+            return self._create_attachment()
         if len(attachment_ids) == 1:
-            wizard_vals.update({'attachment_id': attachment_ids.id})
+            return attachment_ids.id
+        return False
+
+    def _create_attachment(self):
+        self.env['report'].get_pdf([self.id], 'sale.report_saleorder')
+        attachment = self.env['ir.attachment'].search([
+            ('res_id', '=', self.id),
+            ('res_model', '=', self._name)
+        ], limit=1)
+        if not attachment:
+            return False
+        return attachment.id
+
+    def _get_docusign_template_id(self):
         template_ids = self.env['docusign.template'].search([
             ('model', '=', self._name)
         ])
         if len(template_ids) == 1:
-            wizard_vals.update({'template_id': template_ids.id})
-        return self.env['docusign.wizard'].create(wizard_vals).id
+            return template_ids.id
+        return False
 
     @api.model
     def retrieve_documents(self):
@@ -105,7 +132,7 @@ class SaleOrder(models.Model):
             rec._update_so(template_id.update_state)
 
     def _update_so(self, update_state):
-        if self.state not in ('sale', 'sent'):
+        if self.state not in ('sale', 'sent', 'done'):
             return
         if self.state == 'sent':
             self.write({
@@ -113,12 +140,19 @@ class SaleOrder(models.Model):
                 'is_countersigned': True
             })
             if update_state:
-                self.action_confirm()
+                self._confirm_so_and_log_exceptions()
         else:
             self.write({
                 'is_countersigned': True
             })
         return
+
+    def _confirm_so_and_log_exceptions(self):
+        try:
+            self.action_confirm()
+        except Exception, e:
+            msg = "%s can't be confirmed: %s" % (self.name, e)
+            self.message_post(body=msg)
 
     @staticmethod
     def _get_template(docs):
