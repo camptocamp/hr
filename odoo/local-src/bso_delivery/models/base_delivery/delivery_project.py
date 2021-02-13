@@ -1,9 +1,10 @@
-from collections import defaultdict, OrderedDict
-from odoo import models, fields, api, exceptions, _, SUPERUSER_ID
+from collections import OrderedDict
+
+from odoo import models, fields, api, exceptions, _
 from odoo.exceptions import AccessError
 
 
-class DeliveryProject(models.Model):
+class DeliveryProject(models.AbstractModel):
     _name = 'delivery.project'
     _inherit = 'mail.thread'
 
@@ -27,61 +28,13 @@ class DeliveryProject(models.Model):
         comodel_name='res.users',
         track_visibility='onchange',
     )
-    network_engineer_ids = fields.Many2many(
-        string='Network Engineer',
-        comodel_name='res.users',
-        relation='delivery_net_eng_rel',
-        track_visibility='onchange',
-    )
-    system_engineer_ids = fields.Many2many(
-        string='System Engineer',
-        comodel_name='res.users',
-        relation='delivery_sys_eng_rel',
-        track_visibility='onchange',
-    )
-    sale_order_id = fields.Many2one(
-        string='Sale Order',
-        comodel_name='sale.order',
-        required=True
-    )
-    company_id = fields.Many2one(
-        related='sale_order_id.company_id',
-        readonly=True,
-        store=True
-    )
-    customer_id = fields.Many2one(
-        related='sale_order_id.partner_id',
-        readonly=True,
-        store=True
-    )
-    dealsheet_id = fields.Many2one(
-        related='sale_order_id.dealsheet_id',
-        readonly=True,
-        store=True
-    )
-    currency_id = fields.Many2one(
-        related='sale_order_id.currency_id',
-        readonly=True,
-        store=True
-    )
-    nrr = fields.Monetary(
-        related='dealsheet_id.nrr',
-        readonly=True
-    )
-    mrr = fields.Monetary(
-        related='dealsheet_id.mrr',
-        readonly=True
-    )
+
     kickoff_date = fields.Date(
         string='Kick-off Date',
         track_visibility='onchange'
     )
     date_signed = fields.Date(
         string='Signed Date',
-    )
-
-    date_cease_requested = fields.Date(
-        string='Requested Cease Date'
     )
     notes = fields.Text(
         string='Notes'
@@ -95,12 +48,13 @@ class DeliveryProject(models.Model):
     )
 
     jira_default_product_template_ids = fields.Many2many(
-        comodel_name='jira.product.template',
         string='Jira Templates',
+        comodel_name='jira.product.template',
     )
     jira_project = fields.Many2one(
         comodel_name='jira.project',
         string='Project',
+        default=lambda self: self.jira_project.search([], limit=1)
     )
 
     jira_key = fields.Char(
@@ -109,19 +63,10 @@ class DeliveryProject(models.Model):
         track_visibility='onchange',
     )
 
-    analytic_account_id = fields.Many2one(
-        string='Analytic Account',
-        related='sale_order_id.project_id',
-        readonly=True,
-        store=True
-    )
     progress_rate = fields.Float(
         string='Progress rate',
     )
-    delivery_count = fields.Integer(
-        string='Delivery',
-        related='sale_order_id.delivery_count'
-    )
+
     checklist_id = fields.Many2one(
         string='Checklist',
         comodel_name='delivery.checklist'
@@ -253,60 +198,29 @@ class DeliveryProject(models.Model):
     other_details_exception_identified = fields.Boolean(
         related='checklist_id.other_details_exception_identified')
 
-    display_forecasted_date = fields.Date(
-        string='Forecasted Date',
-        compute='compute_display_forecasted_date',
-        store=True
-    )
-    pickings_visibility = fields.Boolean(
-        string='Picking Visible',
-        compute='compute_pickings_visible'
+    is_officer = fields.Boolean(
+        string='Is Officer',
+        compute='_compute_is_officer'
     )
 
     @api.multi
-    def update_progress_rate_revenue(self):
-        self.ensure_one()
-        self_sudo = self.sudo()
-
-        if not self_sudo.sale_order_id.picking_ids:
-            self_sudo.progress_rate = 100
-            return
-
-        product_price = defaultdict(lambda: 0)
-        qty = defaultdict(lambda: 0)
-
-        for order in self_sudo.sale_order_id.order_line:
-            product_price[
-                order.product_id.id
-            ] += order.price_unit * order.product_uom_qty
-            qty[order.product_id.id] += order.product_uom_qty
-
-        average_price = {
-            x: float(product_price[x]) / qty[x] if qty[x] != 0 else 0
-            for x in product_price}
-
-        def calc_price(op):
-            return (average_price.get(op.product_id.id) * op.product_qty,
-                    average_price.get(op.product_id.id) * op.qty_done)
-
-        to_be_delivered, delivered = zip(*map(
-            calc_price,
-            self_sudo.sale_order_id.picking_ids.mapped(
-                'pack_operation_product_ids')
-        ))
-        self_sudo.progress_rate = 100 * sum(delivered) / sum(
-            to_be_delivered) if sum(to_be_delivered) else 100
+    def _compute_is_officer(self):
+        for rec in self:
+            rec.is_officer = rec.env.user.has_group(
+                'bso_delivery.group_delivery_officer'
+            ) and not rec.env.user.has_group(
+                'bso_delivery.group_delivery_manager')
 
     @api.multi
     def _compute_attachment_number(self):
-        attachment_data = self.env['ir.attachment'].read_group(
-            self._construct_many2fields_domain(),
-            ['res_id'], ['res_id'])
-        attachment = dict((data['res_id'], data['res_id_count'])
-                          for data in attachment_data)
         for rec in self:
+            attachment_data = rec.env['ir.attachment'].read_group(
+                rec._construct_many2fields_domain(),
+                ['res_id'], ['res_id'])
+            attachment = dict((data['res_id'], data['res_id_count'])
+                              for data in attachment_data)
             rec.attachment_number = int(attachment.get(rec.id, 0))
-            for field in self.many2one_fields():
+            for field in rec.many2one_fields():
                 rec.attachment_number += int(attachment.get(field[0], 0))
 
     @api.multi
@@ -325,7 +239,7 @@ class DeliveryProject(models.Model):
     def export_project(self):
         self.ensure_one()
         client = self.get_jira_api_client()
-        self.jira_key = self.create_epic(client)
+        self.jira_key = self.create_epic(client).key
         self.jira_url = self.env['jira.settings'].get(
         ).jira_url + '/browse/{}'.format(self.jira_key)
         try:
@@ -343,8 +257,7 @@ class DeliveryProject(models.Model):
         """
         many2one_fields = self.many2one_fields()
         domain = list()
-        for res_id, model_name in \
-                many2one_fields:
+        for res_id, model_name in many2one_fields:
             domain.append('|')
             domain.append('&')
             domain.append(('res_id', '=', res_id))
@@ -355,27 +268,9 @@ class DeliveryProject(models.Model):
         domain.pop(-4)
         return domain
 
+    @api.multi
     def many2one_fields(self):
-        """ :return: list of tuples containing the many2one target fields
-        and their ids
-        """
-        self_sudo = self.sudo()
-        many2one_fields = list()
-        if self_sudo:
-            many2one_fields.append((self_sudo.id, self_sudo._name))
-        if self_sudo.sale_order_id:
-            many2one_fields.append(
-                (self.sale_order_id.id, self_sudo.sale_order_id._name))
-        if self_sudo.dealsheet_id:
-            many2one_fields.append(
-                (self_sudo.dealsheet_id.id, self_sudo.dealsheet_id._name))
-        for picking_id in (
-                self_sudo.dealsheet_id.purchase_order.picking_ids or []):
-            many2one_fields.append((picking_id.id, 'stock.picking'))
-        for picking_id in self_sudo.sale_order_id.picking_ids or []:
-            many2one_fields.append((picking_id.id, 'stock.picking'))
-
-        return many2one_fields
+        return []
 
     @api.multi
     def hold_project(self):
@@ -426,44 +321,9 @@ class DeliveryProject(models.Model):
         self.jira_key = False
         self.state = 'kickoff'
 
-    delivery_line_ids = fields.One2many(
-        comodel_name='delivery.project.line',
-        inverse_name='delivery_id',
-        string='Order Lines')
-
     jira_url = fields.Char(
         string='JIRA Project URL',
     )
-
-    @api.multi
-    def get_delivery_lines(self):
-        line_ids = []
-        for line in self.sale_order_id.order_line:
-            line_ids.append(self.env['delivery.project.line'].create(
-                {
-                    'name': line.name,
-                    'delivery_id': self.id,
-                    'order_line_id': line.id,
-                }
-            ).id)
-        return line_ids
-
-    @api.model
-    def create(self, vals):
-        rec = super(DeliveryProject, self).create(vals)
-        line_ids = rec.get_delivery_lines()
-        rec.write({
-            'delivery_line_ids': [(6, 0, line_ids)]
-        })
-        template_ids = self.get_jira_default_product_template_ids()
-        default_jira_project = self.env['jira.project'].search([])
-        values = {
-            'jira_default_product_template_ids': [(6, 0, template_ids.ids)],
-        }
-        if default_jira_project:
-            values['jira_project'] = default_jira_project[0].id
-        rec.write(values)
-        return rec
 
     @api.multi
     def action_open_jira_project(self):
@@ -472,28 +332,6 @@ class DeliveryProject(models.Model):
             'type': 'ir.actions.act_url',
             'url': self.jira_url,
             'target': 'new'
-        }
-
-    @api.multi
-    def action_view_deliveries(self):
-        return self.sale_order_id.action_view_delivery()
-
-    @api.multi
-    def checklist_action(self):
-        self.ensure_one()
-        if not self.checklist_id:
-            checklist_id = self.checklist_id.create({'delivery_id': self.id})
-            self.write({'checklist_id': checklist_id.id})
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Kick-off checklist',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': self.checklist_id._name,
-            'res_id': self.checklist_id.id,
-            'views': [
-                (self.env.ref('bso_delivery.checklist_form_view').id, 'form')],
-            'target': 'new',
         }
 
     @api.multi
@@ -511,10 +349,15 @@ class DeliveryProject(models.Model):
                     'Make sure the issue types in the template project are '
                     'identical to those in your target project')
             )
+        if 'description' in self.fields_get_keys():
+            name = '{} {}'.format(self.name, self.description)
+        else:
+            name = self.name
+
         fields = {
             'project': {'id': client.project(self.jira_project.key).id},
             'issuetype': {'id': int(epictype_id)},
-            'summary': self.name,
+            'summary': name,
             'reporter': {
                 'accountId': self.get_assignee_jira_account_id(client)}
         }
@@ -523,12 +366,7 @@ class DeliveryProject(models.Model):
         for template in self.jira_default_product_template_ids:
             self.clone_template_to_issue(client, template.template_key,
                                          parent_epic.key)
-        for line in self.delivery_line_ids:
-            for template in line.jira_product_template_ids:
-                self.clone_template_to_issue(
-                    client, template.template_key, parent_epic.key, line.name
-                )
-        return parent_epic.key
+        return parent_epic
 
     def clone_template_to_issue(self, client, template_key, parent_key,
                                 issue_name=''):
@@ -614,75 +452,29 @@ class DeliveryProject(models.Model):
         return [child.key for child in ls]
 
     @api.multi
-    def action_handover_send(self):
-        self.ensure_one()
-        ir_model_data = self.env['ir.model.data']
-        try:
-            template_id = self.env.ref(
-                'bso_delivery.email_template_send_handover')
-        except ValueError:
-            template_id = False
-        try:
-            compose_form_id = ir_model_data.get_object_reference(
-                'mail',
-                'email_compose_message_wizard_form')[1]
-        except ValueError:
-            compose_form_id = False
-        ctx = {
-            'default_model': self._name,
-            'default_res_id': self.ids[0],
-            'default_use_template': bool(template_id),
-            'default_template_id': template_id.id,
-            'default_composition_mode': 'comment',
-        }
-        return {
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'mail.compose.message',
-            'views': [(compose_form_id, 'form')],
-            'view_id': compose_form_id,
-            'target': 'new',
-            'context': ctx,
-        }
-
-    @api.multi
     def select_line_pop_up_action(self):
-        self.ensure_one()
-        view_id = self.env.ref(
-            'bso_delivery.delivery_project_form_select_lines').id
-        context = {'form_view_initial_mode': 'edit'}
+        view_id = self.env.ref('bso_delivery.delivery_choose_report_line')
         return {
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'form',
-            'res_model': self._name,
             'res_id': self.id,
-            'views': [(view_id, 'form')],
-            'view_id': view_id,
+            'res_model': self._name,
+            'views': [(view_id.id, 'form')],
+            'view_id': view_id.id,
             'target': 'new',
-            'context': context
         }
-
-    @api.multi
-    def get_jira_default_product_template_ids(self):
-        template_ids = self.env['jira.product.template'].search(
-            [('default', '=', True)])
-        return template_ids
 
     @api.multi
     def get_assignee_jira_account_id(self, client):
         return client.user(self.user_id.email).account_id
 
-    @api.depends('delivery_line_ids.date_forecasted')
-    def compute_display_forecasted_date(self):
-        for rec in self:
-            dates = rec.delivery_line_ids.mapped('date_forecasted')
-            rec.display_forecasted_date = max(dates) if dates else False
-
     @api.model
-    def compute_pickings_visible(self):
-        for rec in self:
-            uid = self.env.context.get('uid')
-            rec.pickings_visibility = rec.company_id == rec.user_id.browse(
-                uid).company_id if uid != SUPERUSER_ID else True
+    def create(self, vals):
+        rec = super(DeliveryProject, self).create(vals)
+        default_jira_project = self.env['jira.project'].search([], limit=1)
+        values = {}
+        if default_jira_project:
+            values['jira_project'] = default_jira_project.id
+        rec.write(values)
+        return rec

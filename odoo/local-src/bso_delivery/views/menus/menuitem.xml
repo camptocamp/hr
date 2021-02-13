@@ -3,14 +3,63 @@
     <menuitem
             id="menu_delivery"
             name="Service Delivery"
-            action="action_delivery_project"
+            action="action_so_delivery_project"
             parent=""
             web_icon="bso_delivery,static/description/icon.png"/>
     <menuitem
             id="submenu_delivery"
             name="Projects"
-            action="action_delivery_project"
             parent="menu_delivery"
             sequence="1"
     />
+    <menuitem
+            id="submenu_delivery_lines"
+            name="Delivery Lines"
+            parent="menu_delivery"
+            sequence="2"
+    />
+    <menuitem
+            id="sale_delivery_submenu"
+            name="Sale Projects"
+            action="action_so_delivery_project"
+            parent="submenu_delivery"
+            sequence="1"
+    />
+    <menuitem
+            id="purchase_delivery_submenu"
+            name="Purchase Projects"
+            action="action_po_delivery_project"
+            parent="submenu_delivery"
+            sequence="2"
+    />
+    <menuitem
+            id="sale_delivery_lines"
+            name="Sale Delivery Lines"
+            action="action_so_delivery_line"
+            parent="submenu_delivery_lines"
+            sequence="1"
+    />
+    <menuitem
+            id="purchase_delivery_lines"
+            name="Purchase delivery lines"
+            action="action_po_delivery_line"
+            parent="submenu_delivery_lines"
+            sequence="1"
+    />
+    <menuitem
+            id="menu_settings"
+            name="Settings"
+            parent="menu_delivery"/>
+    <menuitem
+            id="product_template"
+            name="Product Template"
+            action="action_product_category_template_settings"
+            parent="menu_settings"/>
+
+    <menuitem
+            id="jira_project"
+            name="Jira Projects"
+            action="action_jira_project_form"
+            parent="menu_settings"/>
+
 </odoo>

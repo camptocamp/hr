@@ -1,0 +1,222 @@
+<odoo>
+    <data>
+        <template id="factsheet_report_file">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!--                    <t t-foreach="p.delivery_id" t-as="o">-->
+                    <div class="page">
+                        <dig class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <img class="logo"
+                                         src='/bso_delivery/static/src/img/bso-logo.png'/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 col-xs-offset-3 mt-50 black-solid-border">
+                                    <h1>PMO Office - Delivery Factsheet
+                                    </h1>
+                                    <h2>Project
+                                        <span style="float:right; color: yellow">
+                                            <t t-esc="o.name"/>
+                                        </span>
+                                    </h2>
+
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-xs-offset-3 mt-50 black-solid-border center-text">
+                                <h2>Your service delivery team</h2>
+                            </div>
+
+                            <div class="col-xs-4 col-xs-offset-2 mt-10 yellow-solid-border">
+                                <h3>
+                                    <t t-esc="o.user_id.name"/>
+                                </h3>
+                                <h4>
+                                    <t t-esc="o.user_id.employee_ids.title"/>
+                                </h4>
+                                <h4>
+                                    <t t-esc="o.user_id.employee_ids.work_phone"/>
+                                </h4>
+                                <h4>
+                                    <t t-esc="o.user_id.email"/>
+                                </h4>
+                            </div>
+                            <div class="col-xs-4 mt-10 yellow-solid-border">
+                                <h3>
+                                    <t t-esc="o.pmo_director_id.name"/>
+                                </h3>
+                                <h4>
+                                    <t t-esc="o.pmo_director_id.title"/>
+                                </h4>
+                                <h4>
+                                    <t t-esc="o.pmo_director_id.work_phone"/>
+                                </h4>
+                                <h4>
+                                    <t t-esc="o.pmo_director_id.user_id.email"/>
+                                </h4>
+                            </div>
+                        </dig>
+                    </div>
+                    <t t-foreach="o.delivery_line_ids" t-as="line">
+                        <t t-if="line.report_line">
+                            <div class="page">
+                                <div class="row">
+                                    <h1 class="text-center">PROJECT COMPLETED
+                                        <span>
+                                            <t t-esc="line.delivery_date"/>
+                                        </span>
+                                    </h1>
+                                    <h3 class="text-center">
+                                        <t t-esc="line.name"/>
+                                    </h3>
+                                </div>
+                                <t t-if="line.product_category == 'hosting'">
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            Hosting site
+                                            Address
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.hosting_site_address"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            Rack Location(s)
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.rack_location"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            PoP Name
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.pop_name"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark bb">
+                                        <div class="col-xs-12">
+                                            <t t-esc="line.extra_note"/>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="line.product_category == 'iptransit'">
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            <t t-esc="line._fields['site_address'].string"/>
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.site_address"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            <t t-esc="line._fields['demarcation'].string"/>
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.demarcation"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            <t t-esc="line._fields['ip_details'].string"/>
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.ip_details"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            <t t-esc="line._fields['bandwidth'].string"/>
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.bandwidth"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark bb">
+                                        <div class="col-xs-12">
+                                            <t t-esc="line.extra_note"/>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="line.product_category == 'l2l'">
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            <t t-esc="line._fields['bandwidth'].string"/>
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t style="text-align:middle"
+                                               t-esc="line.bandwidth"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            <t t-esc="line._fields['latency'].string"/>
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.latency"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            Address A
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.service_point[0].site_address"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            Address B
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.service_point[-1].site_address"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark bb">
+                                        <div class="col-xs-12">
+                                            <t t-esc="line.extra_note"/>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="line.product_category == 'other'">
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            <t t-esc="line._fields['site_address'].string"/>
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.site_address"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark">
+                                        <div class="col-xs-4">
+                                            <t t-esc="line._fields['serivce_details'].string"/>
+                                        </div>
+                                        <div class="col-xs-8 bl">
+                                            <t t-esc="line.serivce_details"/>
+                                        </div>
+                                    </div>
+                                    <div class="row border-dark bb">
+                                        <div class="col-xs-12">
+                                            <t t-esc="line.extra_note"/>
+                                        </div>
+                                    </div>
+                                </t>
+
+                            </div>
+                        </t>
+                    </t>
+                    <div class="page">
+                        <div class="col-xs-6 col-xs-offset-3 mt-50 black-solid-border">
+                            <h1>Thank you</h1>
+                            <h3>Happy selling</h3>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

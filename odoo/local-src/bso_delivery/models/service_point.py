@@ -7,9 +7,9 @@ class ServicePoint(models.Model):
     point_name = fields.Char(
         string='Point',
     )
-    delivery_line_id = fields.Many2one(
+    document_id = fields.Many2one(
         string='Delivery Line',
-        comodel_name='delivery.project.line'
+        comodel_name='delivery.doc'
     )
     site_address = fields.Char(
         string='Site Address',
@@ -21,7 +21,7 @@ class ServicePoint(models.Model):
         string='handoff'
     )
     ref = fields.Integer(
-        related='delivery_line_id.service_point_name_ref'
+        related='document_id.service_point_name_ref'
     )
 
     @api.model

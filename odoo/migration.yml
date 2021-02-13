@@ -749,6 +749,10 @@ migration:
           - docusign
           - bso_docusign
     - version: 10.52.0
+      operations:
+        pre:
+          - anthem songs.upgrade.upgrade_10_52_0::main
       addons:
         upgrade:
           - bso_dealsheet
+          - bso_delivery

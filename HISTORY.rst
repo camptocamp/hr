@@ -21,6 +21,8 @@ Latest (Unreleased)
 
 **Features and Improvements**
 
+* bso_delivery
+
 **Bugfixes**
 
 * bso_dealsheet

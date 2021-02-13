@@ -1,0 +1,121 @@
+/*
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(11, 1fr);
+    grid-gap: 10px;
+    background-color: purple;
+    height: 100vh;
+}
+
+.grid #project-desc {
+    color: white;
+    grid-column: 2/4;
+    grid-row: 3/4;
+    padding: 10px;
+    border: 2px black solid;
+    width: 100%;
+}
+
+#project-desc h1 {
+    text-align: center;
+    text-justify: auto;
+}
+
+.grid #service-delivery {
+    color: white;
+    grid-column: 2/4;
+    grid-row: 7/8;
+    padding: 5px;
+    border: 2px black solid;
+    width: 100%;
+    text-align: center;
+    text-justify: auto;
+}
+
+.grid #sdm-info {
+    color: white;
+    grid-column: 2/4;
+    grid-row: 8/9;
+    padding: 5px;
+    border: 2px yellow solid;
+    width: 100%;
+}
+
+.grid #pmo-director {
+    color: white;
+    grid-column: 3/4;
+    grid-row: 8/9;
+    padding: 5px;
+    border: 2px yellow solid;
+    width: 100%;
+}
+
+.grid .bso-logo {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    padding: 10px;
+}
+
+.bso-logo .img {
+    max-width: 100%;
+    height: auto;
+    padding: 30px;
+}
+*/
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-50 {
+    margin-top: 100px;
+}
+
+/*.bg-purple {*/
+/*    background-color: purple;*/
+/*}*/
+
+.logo {
+    width: 250px;
+    padding: 10px;
+}
+
+.black-solid-border {
+    border: 2px black solid;
+}
+
+.yellow-solid-border {
+    border: 2px yellow solid;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.bg-purple {
+    height: 100vh;
+    background-color: purple !important;
+    -webkit-print-color-adjust: exact;
+    margin: 0;
+    padding: 0;
+}
+
+.border-dark {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    height: 30px;
+    font-size: medium;
+    vertical-align: middle;
+
+}
+.bb{
+    border-bottom:1px solid black;
+}
+.bl{
+    border-left: 1px solid black;
+}
+
+.pl-15 {
+    padding-left: 15px;
+}
