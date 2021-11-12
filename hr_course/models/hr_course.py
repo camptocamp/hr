@@ -1,8 +1,10 @@
 # Copyright 2019 Creu Blanca
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from datetime import timedelta
+
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class HrCourse(models.Model):
@@ -11,12 +13,12 @@ class HrCourse(models.Model):
     _inherit = "mail.thread"
 
     name = fields.Char(string="Name", required=True, tracking=True)
+    alerted = fields.Boolean()
     category_id = fields.Many2one(
         "hr.course.category",
         string="Category",
         required=True,
     )
-
     start_date = fields.Date(
         string="Start date",
         readonly=True,
@@ -29,6 +31,7 @@ class HrCourse(models.Model):
         states={"draft": [("readonly", False)]},
         tracking=True,
     )
+    validity_end_date = fields.Date(string="Validity end date")
     currency_id = fields.Many2one(
         "res.currency",
         string="Currency",
@@ -180,6 +183,42 @@ class HrCourse(models.Model):
         for record in self:
             record.write(record._cancel_course_values())
 
+    @api.model
+    def send_email(self, partner):
+        email = partner.email
+        if email and email.strip():
+            email_template = self.env.ref("hr_course.mail_template_en")
+            options = {
+                "email_to": email,
+                "email_from": self.env["res.company"].search([]).email.strip(),
+            }
+            if email_template:
+                email_template.send_mail(self.id, email_values=options, force_send=True)
+                return True
+        raise UserError(
+            _(
+                """Could not send mail to partner %s because it does not\
+                have any email address defined""",
+                partner.display_name,
+            )
+        )
+
+    @api.model
+    def process_validity(self):
+        alerting_delay = self.env["res.company"].search([]).alerting_delay
+        mailing_list = self.env["res.company"].search([]).mailing_list_to_alert
+        for course in self:
+            if course.validity_end_date:
+                if course.alerted is False and course.validity_end_date >= (
+                    fields.Date.today() - timedelta(days=alerting_delay)
+                ):
+                    course.alerted = True
+                    course.send_email(mailing_list)
+
+    def _cron_check_validity_date(self):
+        items = self.search([("alerted", "=", False)])
+        items.process_validity()
+
 
 class HRCourseAttendee(models.Model):
     _name = "hr.course.attendee"
@@ -207,6 +246,8 @@ class HRCourseAttendee(models.Model):
         default="pending",
     )
     active = fields.Boolean(default=True, readonly=True)
+
+    course_validity_end_date = fields.Date(related="course_id.validity_end_date")
 
     def _remove_from_course(self):
         return [(1, self.id, {"active": False})]
