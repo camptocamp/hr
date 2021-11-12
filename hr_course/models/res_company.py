@@ -1,0 +1,11 @@
+# Copyright 2021 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
+
+from odoo import fields, models
+
+
+class ResCompany(models.Model):
+    _inherit = "res.company"
+
+    mailing_list_to_alert = fields.Many2one("res.users", string="Mailing list to alert")
+    alerting_delay = fields.Float(string="Alerting delay before end of validity (days)")
