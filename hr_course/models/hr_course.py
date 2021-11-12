@@ -1,8 +1,10 @@
 # Copyright 2019 Creu Blanca
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from datetime import timedelta
+
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class HrCourse(models.Model):
@@ -11,12 +13,12 @@ class HrCourse(models.Model):
     _inherit = "mail.thread"
 
     name = fields.Char(string="Name", required=True, tracking=True)
+    alerted = fields.Boolean()
     category_id = fields.Many2one(
         "hr.course.category",
         string="Category",
         required=True,
     )
-
     start_date = fields.Date(
         string="Start date",
         readonly=True,
@@ -29,6 +31,7 @@ class HrCourse(models.Model):
         states={"draft": [("readonly", False)]},
         tracking=True,
     )
+    validity_end_date = fields.Date(string="Validity end date")
     currency_id = fields.Many2one(
         "res.currency",
         string="Currency",
@@ -180,6 +183,63 @@ class HrCourse(models.Model):
         for record in self:
             record.write(record._cancel_course_values())
 
+    # TODO: test this method
+    @api.model
+    def send_email(self, partner):
+        """
+        Send by mail the followup to the customer
+        """
+        email = partner.email
+        if email and email.strip():
+            fr_title = "Fin de validité d'une formation"
+            fr_body = "Bonjour,\n La durée de validité de la formation {} arrive à son terme. \
+            Vous avez peut-être besoin de la replanifier. \n \
+            Les employés concernés sont {}".format(
+                self.name, self.course_attendee_ids
+            )
+
+            en_title = "End of validity for a course."
+            en_body = "Hi, \n \
+            The validity time of the course {} will end up soon. \
+            You maybe need to plan a new one. \n \
+            The concerned employees are {}".format(
+                self.name, self.course_attendee_ids
+            )
+
+            partner.with_context(mail_post_autofollow=True).message_post(
+                partner_ids=[partner.id],
+                body=fr_body if partner.lang == "FR_fr" else en_body,
+                subject=fr_title if partner.lang == "FR_fr" else en_title,
+                subtype_id=self.env.ref("mail.mt_note").id,
+                model_description=_("course reminder"),
+                email_layout_xmlid="mail.mail_notification_light",
+                attachment_ids=[],
+            )
+            return True
+        raise UserError(
+            _(
+                "Could not send mail to partner %s because it does not \
+                have any email address defined",
+                partner.display_name,
+            )
+        )
+
+    @api.model
+    def process_validity(self):
+        alerting_delay = self.env["res.company"].search([]).alerting_delay
+        mailing_list = self.env["res.company"].search([]).mailing_list_to_alert
+        for course in self:
+            if course.validity_end_date:
+                if course.alerted is False and course.validity_end_date >= (
+                    fields.Date.today() - timedelta(days=alerting_delay)
+                ):
+                    course.alerted = True
+                    course.send_email(mailing_list)
+
+    def _cron_check_validity_date(self):
+        items = self.search([("alerted", "=", False)])
+        items.process_validity()
+
 
 class HRCourseAttendee(models.Model):
     _name = "hr.course.attendee"
@@ -207,6 +267,8 @@ class HRCourseAttendee(models.Model):
         default="pending",
     )
     active = fields.Boolean(default=True, readonly=True)
+
+    course_validity_end_date = fields.Date(related="course_id.validity_end_date")
 
     def _remove_from_course(self):
         return [(1, self.id, {"active": False})]
