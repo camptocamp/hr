@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data noupdate="1">
-        <record id="mail_template_validity_reminder_en" model="mail.template">
+        <record id="mail_template_validity_reminder" model="mail.template">
             <field name="name">Course Validity Notification</field>
             <field name="email_from">${object.email_from}</field>
             <field name="email_to">${object.email_to}</field>

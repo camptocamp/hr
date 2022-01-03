@@ -16,13 +16,10 @@
                 >
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div>
-                                <label for="mailing_list_to_alert" />
-                                <field
-                                name="mailing_list_to_alert"
-                                widget="many2many"
-                            />
-                                <label for="alerting_delay" />
-                                <field name="alerting_delay" />
+                                <label for="course_expiration_channel_id" />
+                                <field name="course_expiration_channel_id" />
+                                <label for="course_expiration_alerting_delay" />
+                                <field name="course_expiration_alerting_delay" />
                             </div>
                         </div>
                     </div>

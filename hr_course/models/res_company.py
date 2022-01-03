@@ -7,9 +7,12 @@ from odoo import fields, models
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    mailing_list_to_alert = fields.One2many(
-        "res.partner", "company_mailing_list", string="Users to inform course end"
+    course_expiration_channel_id = fields.Many2one(
+        "mail.channel",
+        default=lambda self: self.env.ref(
+            "hr_course.mail_channel_course_validity", raise_if_not_found=False
+        ),
     )
-    alerting_delay = fields.Integer(
+    course_expiration_alerting_delay = fields.Integer(
         string="Alerting delay before end of validity (days)"
     )

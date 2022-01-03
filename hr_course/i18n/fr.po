@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: hr_course
-#: model:mail.template,body_html:hr_course.mail_template_validity_reminder_en
+#: model:mail.template,body_html:hr_course.mail_template_validity_reminder
 msgid ""
 "<div>\n"
 "                    <p>Hi,</p>\n"
@@ -53,8 +53,8 @@ msgid "Alerted"
 msgstr ""
 
 #. module: hr_course
-#: model:ir.model.fields,field_description:hr_course.field_res_company__alerting_delay
-#: model:ir.model.fields,field_description:hr_course.field_res_config_settings__alerting_delay
+#: model:ir.model.fields,field_description:hr_course.field_res_company__course_expiration_alerting_delay
+#: model:ir.model.fields,field_description:hr_course.field_res_config_settings__course_expiration_alerting_delay
 msgid "Alerting delay before end of validity (days)"
 msgstr "Délai d'alerte avant fin de validité"
 
@@ -282,7 +282,7 @@ msgid "End date"
 msgstr "Date de fin"
 
 #. module: hr_course
-#: model:mail.template,subject:hr_course.mail_template_validity_reminder_en
+#: model:mail.template,subject:hr_course.mail_template_validity_reminder
 msgid "End of validity for a course"
 msgstr "Fin de validité d'une formation"
 
@@ -496,8 +496,8 @@ msgid "Unread Messages Counter"
 msgstr ""
 
 #. module: hr_course
-#: model:ir.model.fields,field_description:hr_course.field_res_company__mailing_list_to_alert
-#: model:ir.model.fields,field_description:hr_course.field_res_config_settings__mailing_list_to_alert
+#: model:ir.model.fields,field_description:hr_course.field_res_company__course_expiration_channel_id
+#: model:ir.model.fields,field_description:hr_course.field_res_config_settings__course_expiration_channel_id
 msgid "Users to inform course end"
 msgstr "Liste des personnes à alerter"
 
