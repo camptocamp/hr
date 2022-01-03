@@ -13,7 +13,7 @@ class HrCourse(models.Model):
     _inherit = "mail.thread"
 
     name = fields.Char(string="Name", required=True, tracking=True)
-    alerted = fields.Boolean()
+    alerted = fields.Boolean(help="Shows if notification email for course was sent")
     category_id = fields.Many2one(
         "hr.course.category",
         string="Category",
@@ -189,30 +189,42 @@ class HrCourse(models.Model):
         company = self.env["res.company"].browse(
             self.env.context.get("company_id") or self.env.company.id
         )
+        channel_id = self.env.ref("hr_course.mail_channel_course_validity").id
         if email_list:
-            email_template = self.env.ref(
-                "hr_course.mail_template_validity_reminder_en"
-            )
+            email_template = self.env.ref("hr_course.mail_template_validity_reminder")
             for email in email_list:
                 options = {
                     "email_to": email.strip(),
                     "email_from": company.email.strip(),
                 }
-                email_template.send_mail(self.id, email_values=options, force_send=True)
+                self.message_post_with_template(
+                    self.id,
+                    channel_id=channel_id,
+                    template_id=email_template,
+                    email_values=options,
+                    force_send=True,
+                )
                 return True
 
     @api.model
     def process_validity(self):
         company_id = self.env.context.get("company_id") or self.env.company.id
-        alerting_delay = self.env["res.company"].browse(company_id).alerting_delay
-        mailing_list = self.env["res.company"].browse(company_id).mailing_list_to_alert
+        course_expiration_alerting_delay = (
+            self.env["res.company"].browse(company_id).course_expiration_alerting_delay
+        )
+        course_expiration_channel_id = (
+            self.env["res.company"].browse(company_id).course_expiration_channel_id
+        )
         for course in self:
             if course.validity_end_date:
-                if course.validity_end_date >= (
-                    fields.Date.today() - timedelta(days=alerting_delay)
+
+                if (
+                    course.validity_end_date
+                    - timedelta(days=course_expiration_alerting_delay)
+                    <= fields.Date.today()
                 ):
                     course.alerted = True
-                    course.send_course_notification_email(mailing_list)
+                    course.send_course_notification_email(course_expiration_channel_id)
 
     def _cron_check_validity_date(self):
         items = self.search([("alerted", "=", False)])
