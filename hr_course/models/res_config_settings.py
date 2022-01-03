@@ -7,7 +7,9 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
-    mailing_list_to_alert = fields.One2many(
-        related="company_id.mailing_list_to_alert", readonly=False
+    course_expiration_channel_id = fields.Many2one(
+        related="company_id.course_expiration_channel_id", readonly=False
     )
-    alerting_delay = fields.Integer(related="company_id.alerting_delay", readonly=False)
+    course_expiration_alerting_delay = fields.Integer(
+        related="company_id.course_expiration_alerting_delay", readonly=False
+    )
