@@ -1,6 +1,8 @@
 # Copyright 2019 Creu Blanca
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from datetime import timedelta
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -11,12 +13,12 @@ class HrCourse(models.Model):
     _inherit = "mail.thread"
 
     name = fields.Char(string="Name", required=True, tracking=True)
+    alerted = fields.Boolean(help="Shows if notification email for course was sent")
     category_id = fields.Many2one(
         "hr.course.category",
         string="Category",
         required=True,
     )
-
     start_date = fields.Date(
         string="Start date",
         readonly=True,
@@ -29,6 +31,7 @@ class HrCourse(models.Model):
         states={"draft": [("readonly", False)]},
         tracking=True,
     )
+    validity_end_date = fields.Date(string="Validity end date")
     currency_id = fields.Many2one(
         "res.currency",
         string="Currency",
@@ -180,6 +183,53 @@ class HrCourse(models.Model):
         for record in self:
             record.write(record._cancel_course_values())
 
+    @api.model
+    def send_course_notification_email(self):
+        company_id = self.env.context.get("company_id") or self.env.company.id
+        channel_id = (
+            self.env["res.company"].browse(company_id).course_expiration_channel_id
+        )
+        email_list = channel_id.channel_last_seen_partner_ids.mapped("partner_email")
+        company = self.env["res.company"].browse(
+            self.env.context.get("company_id") or self.env.company.id
+        )
+        if email_list:
+            email_template = self.env.ref("hr_course.mail_template_validity_reminder")
+            for email in email_list:
+                options = {
+                    "email_to": email.strip(),
+                    "email_from": company.email.strip(),
+                }
+                self.message_post_with_template(
+                    self.id,
+                    template_id=email_template,
+                    email_values=options,
+                    force_send=True,
+                )
+                return True
+
+    @api.model
+    def process_validity(self):
+        company_id = self.env.context.get("company_id") or self.env.company.id
+        course_expiration_alerting_delay = (
+            self.env["res.company"].browse(company_id).course_expiration_alerting_delay
+        )
+
+        for course in self:
+            if course.validity_end_date:
+
+                if (
+                    course.validity_end_date
+                    - timedelta(days=course_expiration_alerting_delay)
+                    <= fields.Date.today()
+                ):
+                    course.alerted = True
+                    course.send_course_notification_email()
+
+    def _cron_check_validity_date(self):
+        items = self.search([("alerted", "=", False)])
+        items.process_validity()
+
 
 class HRCourseAttendee(models.Model):
     _name = "hr.course.attendee"
@@ -207,6 +257,8 @@ class HRCourseAttendee(models.Model):
         default="pending",
     )
     active = fields.Boolean(default=True, readonly=True)
+
+    course_validity_end_date = fields.Date(related="course_id.validity_end_date")
 
     def _remove_from_course(self):
         return [(1, self.id, {"active": False})]
