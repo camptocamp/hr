@@ -99,6 +99,7 @@
                         <group>
                             <field name="start_date" />
                             <field name="end_date" />
+                            <field name="validity_end_date" />
                         </group>
                     </group>
                     <notebook>
