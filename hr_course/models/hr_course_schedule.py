@@ -11,7 +11,7 @@ class HrCourseSchedule(models.Model):
 
     name = fields.Char(string="Name", required=True, tracking=True)
     course_id = fields.Many2one("hr.course", string="Course", required=True)
-
+    validity_end_date = fields.Date()
     start_date = fields.Date(
         string="Start date",
         readonly=True,
