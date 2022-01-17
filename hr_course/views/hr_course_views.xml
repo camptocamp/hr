@@ -21,6 +21,7 @@
                                 name="permanence_time"
                                 attrs="{'invisible': [('permanence','=',False)]}"
                             />
+                            <field name="validity_end_date" />
                         </group>
                     </group>
                     <notebook>
@@ -50,6 +51,7 @@
                 <field name="category_id" />
                 <field name="content" />
                 <field name="objective" />
+                <field name="validity_end_date" />
             </tree>
         </field>
     </record>
