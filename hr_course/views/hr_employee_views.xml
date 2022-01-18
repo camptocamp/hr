@@ -16,6 +16,19 @@
                     <field name='courses_ids' invisible="1" />
                 </button>
             </div>
+            <xpath expr="//notebook" position="inside">
+                <page name="courses" string="Courses">
+                    <field name="courses_ids">
+                        <tree editable="bottom" string="Courses">
+                            <field name="course_id" />
+                            <field name="course_start" />
+                            <field name="course_end" />
+                            <field name="result" />
+                            <field name="course_validity_end_date" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
         </field>
     </record>
     <record model="ir.ui.view" id="hr_course_attendee_tree_employee_view">
@@ -30,7 +43,7 @@
                 decoration-success="state!='cancelled' and result=='passed'"
                 decoration-danger="state!='cancelled' and (result=='failed' or result=='absent')"
             >
-                <field name="course_id" />
+                <field name="course_schedule_id" />
                 <field name="state" />
                 <field name="course_start" />
                 <field name="course_end" />
