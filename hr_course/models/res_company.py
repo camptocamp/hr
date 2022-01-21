@@ -9,6 +9,7 @@ class ResCompany(models.Model):
 
     course_expiration_channel_id = fields.Many2one(
         "mail.channel",
+        string="Mailing list to alert",
         default=lambda self: self.env.ref(
             "hr_course.mail_channel_course_validity", raise_if_not_found=False
         ),

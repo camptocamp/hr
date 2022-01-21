@@ -10,7 +10,7 @@
             eval="(DateTime.now().replace(hour=1, minute=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"
         />
         <field name="doall" eval="False" />
-        <field name="model_id" ref="model_hr_course" />
+        <field name="model_id" ref="model_hr_course_schedule" />
         <field name="code">model._cron_check_validity_date()</field>
         <field name="state">code</field>
     </record>
