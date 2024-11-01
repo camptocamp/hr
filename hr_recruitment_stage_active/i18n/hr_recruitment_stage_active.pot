@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hr_recruitment_stage_active
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-01 12:08+0000\n"
+"PO-Revision-Date: 2024-11-01 12:08+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: hr_recruitment_stage_active
+#: model:ir.model.fields,field_description:hr_recruitment_stage_active.field_hr_recruitment_stage__active
+msgid "Active"
+msgstr ""
+
+#. module: hr_recruitment_stage_active
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_stage_active.hr_recruitment_stage_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_stage_active.hr_recruitment_stage_search
+msgid "Archived"
+msgstr ""
+
+#. module: hr_recruitment_stage_active
+#: model:ir.model,name:hr_recruitment_stage_active.model_hr_recruitment_stage
+msgid "Recruitment Stages"
+msgstr ""
+
+#. module: hr_recruitment_stage_active
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_stage_active.hr_recruitment_stage_search
+msgid "Search Recruitment Stages"
+msgstr ""
+
+#. module: hr_recruitment_stage_active
+#: model:ir.model.fields,help:hr_recruitment_stage_active.field_hr_recruitment_stage__active
+msgid "The active field allows you to hide the stage without removing it."
+msgstr ""
